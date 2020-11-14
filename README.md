@@ -1,6 +1,6 @@
 # jews_harp
 
-A cross-platform mobile app for teaching jew's harp techniques.
+A mobile app for tutoring jew's hapr techniques.
 
 ## Getting Started
 

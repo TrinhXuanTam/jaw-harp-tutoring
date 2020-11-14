@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "694795436949",
+    "firebase_url": "https://jews-harp.firebaseio.com",
+    "project_id": "jews-harp",
+    "storage_bucket": "jews-harp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:694795436949:android:ee58cc38df4be17f78ec9c",
+        "android_client_info": {
+          "package_name": "cvut.fit.trinhxu2.jews_harp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "694795436949-45pq2fr25t64f639tqhe72i17a782ijj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuYateyG0dCajZ18p2XpucECoxvfyLApo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "694795436949-45pq2fr25t64f639tqhe72i17a782ijj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
