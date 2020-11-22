@@ -3,6 +3,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:jews_harp/core/utils/colors.dart';
+import 'package:jews_harp/core/utils/constants.dart';
 import 'package:jews_harp/features/login/domain/entities/user.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -34,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
         child: Center(
           child: SvgPicture.asset(
-            'assets/images/logo.svg',
+            Constants.logoLocation,
             color: Colors.white,
             alignment: Alignment.center,
             width: MediaQuery.of(context).size.width * 0.25,

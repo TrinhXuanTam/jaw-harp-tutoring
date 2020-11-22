@@ -14,7 +14,9 @@ class FirebaseDataSource implements IAuthenticationRemoteDataSource, IAuthentica
     if (user == null) throw NoLoggedUserError();
 
     return UserModel(
-
+      uid: user.uid,
+      name: user.displayName,
+      email: user.email,
     );
   }
 }
