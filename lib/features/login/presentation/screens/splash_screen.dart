@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:jews_harp/core/utils/colors.dart';
 import 'package:jews_harp/core/utils/constants.dart';
 import 'package:jews_harp/features/login/domain/entities/user.dart';
 
@@ -26,8 +25,8 @@ class _SplashScreenState extends State<SplashScreen> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              CustomColors.baseColor,
-              CustomColors.baseColorLight,
+              Constants.baseColor,
+              Constants.baseColorLight,
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
