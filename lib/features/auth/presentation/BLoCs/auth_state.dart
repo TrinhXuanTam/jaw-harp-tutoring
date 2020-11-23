@@ -8,3 +8,15 @@ class AuthInitial extends AuthState {
   @override
   List<Object> get props => [];
 }
+
+class Unauthenticated extends AuthState {
+  @override
+  // TODO: implement props
+  List<Object> get props => throw UnimplementedError();
+}
+
+class Authenticated extends AuthState {
+  @override
+  // TODO: implement props
+  List<Object> get props => throw UnimplementedError();
+}

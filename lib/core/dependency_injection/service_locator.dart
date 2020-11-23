@@ -5,14 +5,10 @@ import 'package:jews_harp/features/auth/data/data_sources/firebase_data_source.d
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
 import 'package:jews_harp/features/auth/data/data_source_interfaces/local/authentication_local.dart';
 import 'package:jews_harp/features/auth/data/data_source_interfaces/remote/authentication_remote.dart';
-import 'package:jews_harp/features/auth/domain/use_cases/offline_authentication_use_case.dart';
+import 'package:jews_harp/features/auth/domain/use_cases/offline_authentication.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/auth_bloc.dart';
 
 final dependencyInjectionContainer = GetIt.instance;
-
-Future<void> registerBLoCs() async {
-  dependencyInjectionContainer.registerFactory<AuthBloc>(() => AuthBloc());
-}
 
 Future<void> registerDataSources() async {
   dependencyInjectionContainer.registerLazySingleton<IAuthenticationLocalDataSource>(() => FirebaseDataSource());
@@ -24,7 +20,11 @@ Future<void> registerRepositories() async {
 }
 
 Future<void> registerUseCases() async {
-  dependencyInjectionContainer.registerLazySingleton<OfflineAuthenticationUseCase>(() => OfflineAuthenticationUseCase(dependencyInjectionContainer()));
+  dependencyInjectionContainer.registerLazySingleton<OfflineAuthentication>(() => OfflineAuthentication(dependencyInjectionContainer()));
+}
+
+Future<void> registerBLoCs() async {
+  dependencyInjectionContainer.registerFactory<AuthBloc>(() => AuthBloc(dependencyInjectionContainer()));
 }
 
 Future<void> initServiceLocator() async {
