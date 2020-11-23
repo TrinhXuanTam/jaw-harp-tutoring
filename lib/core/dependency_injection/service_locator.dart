@@ -1,23 +1,34 @@
 import 'package:get_it/get_it.dart';
 
-import 'package:jews_harp/features/login/data/repositories/user_repository.dart';
-import 'package:jews_harp/features/login/data/data_sources/firebase_data_source.dart';
-import 'package:jews_harp/features/login/domain/repository_interfaces/user_repository_interface.dart';
-import 'package:jews_harp/features/login/data/data_source_interfaces/local/authentication_local.dart';
-import 'package:jews_harp/features/login/data/data_source_interfaces/remote/authentication_remote.dart';
+import 'package:jews_harp/features/auth/data/repositories/user_repository.dart';
+import 'package:jews_harp/features/auth/data/data_sources/firebase_data_source.dart';
+import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
+import 'package:jews_harp/features/auth/data/data_source_interfaces/local/authentication_local.dart';
+import 'package:jews_harp/features/auth/data/data_source_interfaces/remote/authentication_remote.dart';
+import 'package:jews_harp/features/auth/domain/use_cases/offline_authentication_use_case.dart';
+import 'package:jews_harp/features/auth/presentation/BLoCs/auth_bloc.dart';
 
-final serviceLocator = GetIt.instance;
+final dependencyInjectionContainer = GetIt.instance;
+
+Future<void> registerBLoCs() async {
+  dependencyInjectionContainer.registerFactory<AuthBloc>(() => AuthBloc());
+}
 
 Future<void> registerDataSources() async {
-  serviceLocator.registerLazySingleton<IAuthenticationLocalDataSource>(() => FirebaseDataSource());
-  serviceLocator.registerLazySingleton<IAuthenticationRemoteDataSource>(() => FirebaseDataSource());
+  dependencyInjectionContainer.registerLazySingleton<IAuthenticationLocalDataSource>(() => FirebaseDataSource());
+  dependencyInjectionContainer.registerLazySingleton<IAuthenticationRemoteDataSource>(() => FirebaseDataSource());
 }
 
 Future<void> registerRepositories() async {
-  serviceLocator.registerLazySingleton<IUserRepository>(() => UserRepository(serviceLocator(), serviceLocator()));
+  dependencyInjectionContainer.registerLazySingleton<IUserRepository>(() => UserRepository(dependencyInjectionContainer(), dependencyInjectionContainer()));
+}
+
+Future<void> registerUseCases() async {
+  dependencyInjectionContainer.registerLazySingleton<OfflineAuthenticationUseCase>(() => OfflineAuthenticationUseCase(dependencyInjectionContainer()));
 }
 
 Future<void> initServiceLocator() async {
   registerDataSources();
   registerRepositories();
+  registerUseCases();
 }

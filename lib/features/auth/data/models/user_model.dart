@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:jews_harp/features/login/domain/entities/user.dart';
+import 'package:jews_harp/features/auth/domain/entities/user.dart';
 
 class UserModel extends User {
   UserModel({

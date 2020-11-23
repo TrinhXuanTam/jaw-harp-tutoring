@@ -1,4 +1,4 @@
-import 'package:jews_harp/features/login/domain/entities/user.dart';
+import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:optional/optional_internal.dart';
 
 abstract class IUserRepository {
