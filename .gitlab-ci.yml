@@ -1,0 +1,13 @@
+image: cirrusci/flutter
+
+before_script:
+  - flutter pub get
+
+stages:
+  - analyze-and-test
+  stage: analyze-and-test
+    script:
+      - flutter build aot
+      - flutter analyze
+      - flutter test --coverage
+
