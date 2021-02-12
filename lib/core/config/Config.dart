@@ -14,7 +14,7 @@ class Config {
 
   static Future<void> initApp() async {
     WidgetsFlutterBinding.ensureInitialized();
-    Firebase.initializeApp();
+    await Firebase.initializeApp();
     configureDependencies();
   }
 

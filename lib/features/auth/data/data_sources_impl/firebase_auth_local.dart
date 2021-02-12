@@ -4,7 +4,6 @@ import 'package:jews_harp/core/errors/no_logged_user_error.dart';
 import 'package:jews_harp/features/auth/data/data_source_interfaces/local/authentication_local.dart';
 import 'package:jews_harp/features/auth/data/models/user_model.dart';
 
-@prod
 @LazySingleton(as: IAuthenticationLocalDataSource)
 class FirebaseAuthLocal implements IAuthenticationLocalDataSource {
   final FirebaseAuth _auth = FirebaseAuth.instance;

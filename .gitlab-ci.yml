@@ -9,7 +9,7 @@ stages:
 analyze-and-test:
   stage: analyze-and-test
   script:
-    - flutter build aot
+    - flutter build
     - flutter analyze
     - flutter test --coverage
 

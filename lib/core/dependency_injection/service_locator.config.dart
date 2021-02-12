@@ -16,9 +16,6 @@ import '../../features/auth/domain/repository_interfaces/user_repository_interfa
 import '../../features/auth/domain/use_cases/offline_authentication.dart';
 import '../../features/auth/data/repositories/user_repository.dart';
 
-/// Environment names
-const _prod = 'prod';
-
 /// adds generated dependencies
 /// to the provided [GetIt] instance
 
@@ -28,8 +25,7 @@ GetIt initGetIt(
   EnvironmentFilter environmentFilter,
 }) {
   final gh = GetItHelper(get, environment, environmentFilter);
-  gh.lazySingleton<IAuthenticationLocalDataSource>(() => FirebaseAuthLocal(),
-      registerFor: {_prod});
+  gh.lazySingleton<IAuthenticationLocalDataSource>(() => FirebaseAuthLocal());
   gh.lazySingleton<IAuthenticationRemoteDataSource>(() => FirebaseAuthRemote());
   gh.lazySingleton<IUserRepository>(() => UserRepository(
       get<IAuthenticationRemoteDataSource>(),
