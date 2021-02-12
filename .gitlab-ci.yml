@@ -5,9 +5,11 @@ before_script:
 
 stages:
   - analyze-and-test
+
+analyze-and-test:
   stage: analyze-and-test
-    script:
-      - flutter build aot
-      - flutter analyze
-      - flutter test --coverage
+  script:
+    - flutter build aot
+    - flutter analyze
+    - flutter test --coverage
 
