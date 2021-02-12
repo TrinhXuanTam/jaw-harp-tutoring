@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:optional/optional_internal.dart';
 
 import 'package:jews_harp/core/errors/no_logged_user_error.dart';
@@ -7,6 +8,7 @@ import 'package:jews_harp/features/auth/domain/repository_interfaces/user_reposi
 import 'package:jews_harp/features/auth/data/data_source_interfaces/local/authentication_local.dart';
 import 'package:jews_harp/features/auth/data/data_source_interfaces/remote/authentication_remote.dart';
 
+@LazySingleton(as: IUserRepository)
 class UserRepository implements IUserRepository {
   final IAuthenticationRemoteDataSource _remoteAuth;
   final IAuthenticationLocalDataSource _localAuth;

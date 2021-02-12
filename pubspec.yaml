@@ -32,6 +32,8 @@ dependencies:
   flutter_bloc: ^6.1.1
   # Optional data type
   optional: ^5.0.0+1
+  # Dependency injection
+  injectable: ^1.0.7
   # Service locator
   get_it: ^5.0.1
   # Object value comparison
@@ -42,6 +44,8 @@ dependencies:
   cupertino_icons: ^1.0.0
 
 dev_dependencies:
+  injectable_generator:
+  build_runner:
   flutter_test:
     sdk: flutter
 
