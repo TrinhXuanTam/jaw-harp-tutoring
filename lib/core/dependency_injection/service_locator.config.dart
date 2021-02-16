@@ -7,7 +7,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../features/auth/presentation/BLoCs/auth_bloc.dart';
+import '../../features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
 import '../../features/auth/data/data_sources_impl/firebase_auth_local.dart';
 import '../../features/auth/data/data_sources_impl/firebase_auth_remote.dart';
 import '../../features/auth/data/data_source_interfaces/local/authentication_local.dart';

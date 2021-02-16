@@ -5,16 +5,9 @@ before_script:
 
 stages:
   - analyze-and-test
-  - documentation
 
 analyze-and-test:
   stage: analyze-and-test
   script:
-#    - flutter analyze
+    - flutter analyze
     - flutter test --coverage
-
-
-documentation:
-  stage: documentation
-  script:
-    - dartdoc

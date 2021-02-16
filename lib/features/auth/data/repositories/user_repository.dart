@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:optional/optional_internal.dart';
 
-import 'package:jews_harp/core/errors/no_logged_user_error.dart';
+import 'package:jews_harp/core/errors/user_not_signed_in_error.dart';
 
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
@@ -9,7 +9,7 @@ import 'package:jews_harp/features/auth/data/data_source_interfaces/local/authen
 import 'package:jews_harp/features/auth/data/data_source_interfaces/remote/authentication_remote.dart';
 
 @LazySingleton(as: IUserRepository)
-class UserRepository implements IUserRepository {
+class UserRepository extends IUserRepository {
   final IAuthenticationRemoteDataSource _remoteAuth;
   final IAuthenticationLocalDataSource _localAuth;
 
@@ -25,7 +25,7 @@ class UserRepository implements IUserRepository {
     try {
       final currentUser = await _localAuth.getCurrentUser();
       return Optional.of(currentUser);
-    } on NoLoggedUserError {
+    } on UserNotSignedInError {
       return Optional.empty();
     }
   }

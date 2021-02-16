@@ -13,12 +13,19 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final OfflineAuthentication _offlineAuth;
 
-  AuthBloc(this._offlineAuth) : super(AuthInitial());
+  AuthBloc(this._offlineAuth) : super(AuthInitialState());
 
   @override
   Stream<AuthState> mapEventToState(
     AuthEvent event,
   ) async* {
-    // TODO: implement mapEventToState
+    if (event is SplashScreenDisplayedEvent) {
+      final user = await _offlineAuth();
+
+      if (user.isEmpty)
+        yield UnauthenticatedState();
+      else
+        yield AuthenticatedState();
+    }
   }
 }

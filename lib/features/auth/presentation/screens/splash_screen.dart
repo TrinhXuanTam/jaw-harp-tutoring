@@ -11,8 +11,8 @@ class SplashScreen extends StatelessWidget {
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Constants.baseColor,
-            Constants.baseColorLight,
+            Constants.BASE_COLOR,
+            Constants.BASE_COLOR_LIGHT,
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -20,7 +20,7 @@ class SplashScreen extends StatelessWidget {
       ),
       child: Center(
         child: SvgPicture.asset(
-          Constants.logoLocation,
+          Constants.LOGO_LOCATION,
           color: Colors.white,
           alignment: Alignment.center,
           width: MediaQuery.of(context).size.width * 0.25,
