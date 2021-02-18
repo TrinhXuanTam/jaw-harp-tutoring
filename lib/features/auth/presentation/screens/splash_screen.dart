@@ -12,8 +12,8 @@ class SplashScreen extends StatelessWidget {
         // render linear gradient background
         gradient: LinearGradient(
           colors: [
-            Theme.of(context).primaryColor,
-            Theme.of(context).accentColor,
+            BASE_COLOR,
+            BASE_COLOR_LIGHT,
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -22,7 +22,7 @@ class SplashScreen extends StatelessWidget {
       child: Center(
         // render logo picture
         child: SvgPicture.asset(
-          Constants.LOGO_LOCATION,
+          LOGO_LOCATION,
           color: Colors.white,
           alignment: Alignment.center,
           width: MediaQuery.of(context).size.width * 0.25,

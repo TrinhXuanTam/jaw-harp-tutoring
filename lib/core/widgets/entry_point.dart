@@ -15,7 +15,7 @@ class EntryPoint extends StatelessWidget {
   Future<void> _splashScreenRedirectWithDelay(BuildContext ctx) async {
     // Future that is called after a period of [Duration]
     return Future.delayed(
-      const Duration(seconds: Constants.SPLASH_SCREEN_DURATION),
+      const Duration(seconds: SPLASH_SCREEN_DURATION),
       () => BlocProvider.of<AuthBloc>(ctx).add(
         SplashScreenDisplayedEvent(),
       ),
@@ -29,11 +29,7 @@ class EntryPoint extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: Constants.APP_TITLE,
-      theme: ThemeData(
-        primaryColor: Constants.BASE_COLOR,
-        accentColor: Constants.BASE_COLOR_VERY_LIGHT,
-      ),
+      title: APP_TITLE,
       routes: routes,
       home: BlocProvider(
         create: (_) => serviceLocator<AuthBloc>(),
@@ -45,7 +41,7 @@ class EntryPoint extends StatelessWidget {
             } else if (state is AuthenticatedState)
               return fadeTransition(DummyScreen());
             else
-              return fadeTransition(DummyScreen());
+              return fadeTransition(AuthenticationScreen());
           },
         ),
       ),
