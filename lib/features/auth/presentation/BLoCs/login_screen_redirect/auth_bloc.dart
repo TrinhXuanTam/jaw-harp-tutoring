@@ -20,7 +20,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthEvent event,
   ) async* {
     if (event is SplashScreenDisplayedEvent) {
-      final user = await _offlineAuth();
+      // Check if user is authenticated
+      var user = await _offlineAuth();
 
       if (user.isEmpty)
         yield UnauthenticatedState();

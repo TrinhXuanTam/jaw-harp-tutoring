@@ -8,17 +8,19 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
+        // render linear gradient background
         gradient: LinearGradient(
           colors: [
-            Constants.BASE_COLOR,
-            Constants.BASE_COLOR_LIGHT,
+            Theme.of(context).primaryColor,
+            Theme.of(context).accentColor,
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
       ),
       child: Center(
+        // render logo picture
         child: SvgPicture.asset(
           Constants.LOGO_LOCATION,
           color: Colors.white,

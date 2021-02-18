@@ -20,6 +20,7 @@ class UserRepository extends IUserRepository {
     return Future.value(false);
   }
 
+  /// Get signed in user
   @override
   Future<Optional<User>> getCurrentUser() async {
     try {

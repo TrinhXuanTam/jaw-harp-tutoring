@@ -1,18 +1,20 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/utils/constants.dart';
 import 'package:jews_harp/core/utils/dummy_screen.dart';
 import 'package:jews_harp/core/utils/routes.dart';
+import 'package:jews_harp/core/utils/transitions.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
+import 'package:jews_harp/features/auth/presentation/screens/authentication_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/splash_screen.dart';
 
 /// Entry point of the application
 class EntryPoint extends StatelessWidget {
-  /// After a period of [Constants.SPLASH_SCREEN_DURATION] send a [SplashScreenDisplayedEvent] to [AuthBloc]
-  void _splashScreenRedirectWithDelay(BuildContext ctx) {
-    Future.delayed(
+  /// After a period of [Constants.SPLASH_SCREEN_DURATION] send a [SplashScreenDisplayedEvent] to [AuthBloc].
+  Future<void> _splashScreenRedirectWithDelay(BuildContext ctx) async {
+    // Future that is called after a period of [Duration]
+    return Future.delayed(
       const Duration(seconds: Constants.SPLASH_SCREEN_DURATION),
       () => BlocProvider.of<AuthBloc>(ctx).add(
         SplashScreenDisplayedEvent(),
@@ -28,6 +30,10 @@ class EntryPoint extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: Constants.APP_TITLE,
+      theme: ThemeData(
+        primaryColor: Constants.BASE_COLOR,
+        accentColor: Constants.BASE_COLOR_VERY_LIGHT,
+      ),
       routes: routes,
       home: BlocProvider(
         create: (_) => serviceLocator<AuthBloc>(),
@@ -35,11 +41,11 @@ class EntryPoint extends StatelessWidget {
           builder: (ctx, state) {
             if (state is AuthInitialState) {
               _splashScreenRedirectWithDelay(ctx);
-              return SplashScreen();
+              return fadeTransition(SplashScreen());
             } else if (state is AuthenticatedState)
-              return Container();
+              return fadeTransition(DummyScreen());
             else
-              return DummyScreen();
+              return fadeTransition(DummyScreen());
           },
         ),
       ),

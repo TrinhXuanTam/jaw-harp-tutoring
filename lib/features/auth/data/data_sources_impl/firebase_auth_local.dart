@@ -8,6 +8,7 @@ import 'package:jews_harp/features/auth/data/models/user_model.dart';
 class FirebaseAuthLocal extends IAuthenticationLocalDataSource {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  /// Check if user is signed in and return [UserModel], otherwise throw [UserNotSignedInError] exception.
   @override
   Future<UserModel> getCurrentUser() async {
     var user = _auth.currentUser;
