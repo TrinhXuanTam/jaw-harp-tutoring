@@ -8,14 +8,33 @@ class ThirdPartyAuthOptions extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        // Facebook auth
         ThirdPartyAuthButton(
           icon: ImageIcon(
             AssetImage(FACEBOOK_ICON_LOCATION),
             color: Colors.white,
           ),
-          colors: [Colors.blue, Colors.blueAccent],
+          colors: [
+            Colors.blue,
+            Colors.blueAccent,
+            Colors.lightBlueAccent,
+          ],
           onPressed: () {},
         ),
+        // Google auth
+        ThirdPartyAuthButton(
+          icon: ImageIcon(
+            AssetImage(GOOGLE_ICON_LOCATION),
+            color: Colors.white,
+          ),
+          colors: [
+            Colors.red,
+            Colors.redAccent,
+            Colors.orange,
+          ],
+          onPressed: () {},
+        ),
+        // Google auth
       ],
     );
   }

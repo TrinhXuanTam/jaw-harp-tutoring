@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/BLoCs/hide_field_input/hide_field_input_bloc.dart';
+import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/utils/constants.dart';
 import 'package:jews_harp/core/widgets/rounded_input_field_container.dart';
 
@@ -23,7 +24,7 @@ class RoundedPasswordField extends StatelessWidget {
     return RoundedInputField(
       color: this.color,
       child: BlocProvider(
-        create: (_) => HideFieldInputBloc(),
+        create: (_) => serviceLocator<HideFieldInputBloc>(),
         child: BlocBuilder<HideFieldInputBloc, HideFieldInputState>(
           builder: (ctx, state) {
             return TextField(

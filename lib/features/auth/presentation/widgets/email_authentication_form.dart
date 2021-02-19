@@ -4,11 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/core/widgets/rounded_password_field.dart';
 import 'package:jews_harp/core/widgets/rounded_text_field.dart';
-import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
+import 'package:jews_harp/features/auth/presentation/BLoCs/authetication_screen/auth_screen_bloc.dart';
 
 class EmailAuthenticationForm extends StatefulWidget {
   @override
-  _EmailAuthenticationFormState createState() => _EmailAuthenticationFormState();
+  _EmailAuthenticationFormState createState() =>
+      _EmailAuthenticationFormState();
 }
 
 class _EmailAuthenticationFormState extends State<EmailAuthenticationForm> {
@@ -33,7 +34,7 @@ class _EmailAuthenticationFormState extends State<EmailAuthenticationForm> {
         RoundedButton(
           text: "Sign In",
           onPressed: () {
-            BlocProvider.of<AuthBloc>(context).add(
+            BlocProvider.of<AuthScreenBloc>(context).add(
               EmailAuthenticationEvent(
                 emailController.text,
                 passwordController.text,

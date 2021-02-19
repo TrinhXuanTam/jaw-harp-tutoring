@@ -26,6 +26,8 @@ dependencies:
   # Firebase
   firebase_core: ^0.5.2
   firebase_auth: ^0.18.3
+  # Facebook authentication
+  flutter_facebook_auth: ^2.0.2
   # Business logic components
   flutter_bloc: ^6.1.1
   # Optional data type

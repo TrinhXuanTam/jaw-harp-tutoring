@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 
 part 'hide_field_input_event.dart';
@@ -8,6 +9,7 @@ part 'hide_field_input_event.dart';
 part 'hide_field_input_state.dart';
 
 /// Show or hide input field text
+@injectable
 class HideFieldInputBloc
     extends Bloc<HideFieldInputEvent, HideFieldInputState> {
   HideFieldInputBloc() : super(InputHiddenState());
