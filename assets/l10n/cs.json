@@ -2,10 +2,16 @@
   "Welcome!": "Vítejte!",
   "please sign in to continue": "k pokračování se přihlašte",
   "OR": "NEBO",
+  "OK": "OK",
   "Email": "Email",
   "Password": "Heslo",
   "Sign In": "Přihlásit",
   "Forgot Password?": "Zapomenuté heslo?",
   "Don't have an Account?": "Nemáte účet?",
-  "Sign Up": "Zaregistrujte se"
+  "Sign Up": "Zaregistrujte se",
+  "Please fill out all fields!": "Vyplňte prosím všechny údaje!",
+  "Invalid email format!": "Špatný formát emailové adresy!",
+  "Invalid password format!": "Špatný formát hesla!",
+  "Email or password is incorrect!": "Špatná emailová adresa nebo heslo!",
+  "Failed to sign in": "Neúspěšné přihlášení"
 }

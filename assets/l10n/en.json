@@ -2,10 +2,16 @@
   "Welcome!": "Welcome!",
   "please sign in to continue": "please sign in to continue",
   "OR": "OR",
+  "OK": "OK",
   "Email": "Email",
   "Password": "Password",
   "Sign In": "Sign In",
   "Forgot Password?": "Forgot Password?",
   "Don't have an Account?": "Don't have an Account?",
-  "Sign Up": "Sign Up"
+  "Sign Up": "Sign Up",
+  "Please fill out all fields!": "Please fill out all fields!",
+  "Invalid email format!": "Invalid email format!",
+  "Invalid password format!": "Invalid password format!",
+  "Email or password is incorrect!": "Email or password is incorrect!",
+  "Failed to sign in": "Failed to sign in"
 }

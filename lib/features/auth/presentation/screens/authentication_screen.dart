@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/l10n/app_localizations.dart';
+import 'package:jews_harp/core/widgets/one_button_alert_dialog.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/authentication_screen/auth_screen_bloc.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
 import 'package:jews_harp/features/auth/presentation/widgets/authentication_screen_background.dart';
@@ -19,13 +19,24 @@ class AuthenticationScreen extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: BlocProvider(
         create: (_) => serviceLocator<AuthScreenBloc>(),
         child: BlocListener<AuthScreenBloc, AuthScreenState>(
           listener: (ctx, state) {
             if (state is AuthSuccessState)
               BlocProvider.of<AuthBloc>(ctx).add(UserAuthenticatedEvent());
-            else if (state is AuthFailedState) print(state.message);
+            else if (state is AuthFailedState) {
+              showDialog(
+                context: ctx,
+                builder: (_) {
+                  return OneButtonAlertDialog(
+                    title: "Failed to sign in",
+                    message: state.message,
+                  );
+                },
+              );
+            }
           },
           child: Container(
             height: size.height,
