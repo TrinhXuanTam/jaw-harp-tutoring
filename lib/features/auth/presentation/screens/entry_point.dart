@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
+import 'package:jews_harp/core/l10n/app_localizations.dart';
 import 'package:jews_harp/core/utils/constants.dart';
 import 'package:jews_harp/core/utils/dummy_screen.dart';
 import 'package:jews_harp/core/utils/routes.dart';
@@ -30,6 +32,24 @@ class EntryPoint extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: APP_TITLE,
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('en', ''),
+        Locale('cs', 'CZ'),
+      ],
+      localeResolutionCallback: (locale, supportedLocales) {
+        for (var supportedLocale in supportedLocales) {
+          if (supportedLocale.languageCode == locale.languageCode &&
+              supportedLocale.countryCode == locale.countryCode)
+            return supportedLocale;
+        }
+
+        return supportedLocales.first;
+      },
       routes: routes,
       home: BlocProvider(
         create: (_) => serviceLocator<AuthBloc>(),

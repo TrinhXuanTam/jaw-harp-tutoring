@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jews_harp/core/l10n/app_localizations.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/core/widgets/rounded_password_field.dart';
 import 'package:jews_harp/core/widgets/rounded_text_field.dart';
-import 'package:jews_harp/features/auth/presentation/BLoCs/authetication_screen/auth_screen_bloc.dart';
+import 'package:jews_harp/features/auth/presentation/BLoCs/authentication_screen/auth_screen_bloc.dart';
 
 class EmailAuthenticationForm extends StatefulWidget {
   @override
@@ -18,21 +19,23 @@ class _EmailAuthenticationFormState extends State<EmailAuthenticationForm> {
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations localizations = AppLocalizations.of(context);
+
     return Column(
       children: [
         RoundedTextField(
           icon: Icons.mail,
-          placeholderText: "Email",
+          placeholderText: localizations.translate("Email"),
           controller: emailController,
         ),
         SizedBox(height: 10),
         RoundedPasswordField(
-          placeholderText: "Password",
+          placeholderText: localizations.translate("Password"),
           controller: passwordController,
         ),
         SizedBox(height: 10),
         RoundedButton(
-          text: "Sign In",
+          text: localizations.translate("Sign In"),
           onPressed: () {
             BlocProvider.of<AuthScreenBloc>(context).add(
               EmailAuthenticationEvent(

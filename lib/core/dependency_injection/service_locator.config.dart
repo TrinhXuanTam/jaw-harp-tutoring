@@ -8,7 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
-import '../../features/auth/presentation/BLoCs/authetication_screen/auth_screen_bloc.dart';
+import '../../features/auth/presentation/BLoCs/authentication_screen/auth_screen_bloc.dart';
 import '../../features/auth/domain/use_cases/email_authentication.dart';
 import '../../features/auth/data/data_sources_impl/firebase_auth_local.dart';
 import '../../features/auth/data/data_sources_impl/firebase_auth_remote.dart';
