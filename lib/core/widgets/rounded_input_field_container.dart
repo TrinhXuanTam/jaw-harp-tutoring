@@ -18,7 +18,6 @@ class RoundedInputField extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
 
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       width: size.width * 0.8,
       decoration: BoxDecoration(

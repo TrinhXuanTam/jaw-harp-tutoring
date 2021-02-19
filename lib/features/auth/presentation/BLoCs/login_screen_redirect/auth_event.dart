@@ -1,11 +1,15 @@
 part of 'auth_bloc.dart';
 
-abstract class AuthEvent extends Equatable {
-  const AuthEvent();
-}
+@immutable
+abstract class AuthEvent {}
 
 /// Indicates that splash screen has been displayed
-class SplashScreenDisplayedEvent extends AuthEvent {
-  @override
-  List<Object> get props => [];
+class SplashScreenDisplayedEvent extends AuthEvent {}
+
+/// Indicates that user tries to sign in with email.
+class EmailAuthenticationEvent extends AuthEvent {
+  final String email;
+  final String password;
+
+  EmailAuthenticationEvent(this.email, this.password);
 }

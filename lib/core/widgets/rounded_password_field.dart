@@ -8,12 +8,14 @@ class RoundedPasswordField extends StatelessWidget {
   final String placeholderText;
   final Color color;
   final Color iconColor;
+  final TextEditingController controller;
 
   const RoundedPasswordField({
     Key key,
     this.placeholderText = "",
     this.color = BASE_COLOR_VERY_LIGHT,
     this.iconColor = BASE_COLOR,
+    this.controller,
   }) : super(key: key);
 
   @override
@@ -25,6 +27,7 @@ class RoundedPasswordField extends StatelessWidget {
         child: BlocBuilder<HideFieldInputBloc, HideFieldInputState>(
           builder: (ctx, state) {
             return TextField(
+              controller: this.controller,
               obscureText: state is InputHiddenState,
               decoration: InputDecoration(
                 icon: Icon(
@@ -33,7 +36,9 @@ class RoundedPasswordField extends StatelessWidget {
                 ),
                 suffixIcon: IconButton(
                   icon: Icon(
-                    Icons.visibility,
+                    state is InputHiddenState
+                        ? Icons.visibility_off
+                        : Icons.visibility,
                     color: this.iconColor,
                   ),
                   onPressed: () {

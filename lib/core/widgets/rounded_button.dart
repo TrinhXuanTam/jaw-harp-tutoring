@@ -4,7 +4,7 @@ import 'package:jews_harp/core/utils/constants.dart';
 class RoundedButton extends StatelessWidget {
   final String text;
   final Function onPressed;
-  final Color color, textColor;
+  final Color color, textColor, borderColor;
 
   const RoundedButton({
     Key key,
@@ -12,6 +12,7 @@ class RoundedButton extends StatelessWidget {
     @required this.onPressed,
     this.color = BASE_COLOR,
     this.textColor = Colors.white,
+    this.borderColor = BASE_COLOR,
   }) : super(key: key);
 
   @override
@@ -20,16 +21,17 @@ class RoundedButton extends StatelessWidget {
 
     return Container(
       width: size.width * 0.8,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(29),
-        child: FlatButton(
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-          color: this.color,
-          onPressed: this.onPressed,
-          child: Text(
-            this.text,
-            style: TextStyle(color: this.textColor),
-          ),
+      child: FlatButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(29),
+          side: BorderSide(color: this.borderColor),
+        ),
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+        color: this.color,
+        onPressed: this.onPressed,
+        child: Text(
+          this.text,
+          style: TextStyle(color: this.textColor),
         ),
       ),
     );

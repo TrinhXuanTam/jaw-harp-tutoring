@@ -7,6 +7,7 @@ class RoundedTextField extends StatelessWidget {
   final IconData icon;
   final Color color;
   final Color iconColor;
+  final TextEditingController controller;
 
   const RoundedTextField({
     Key key,
@@ -14,6 +15,7 @@ class RoundedTextField extends StatelessWidget {
     @required this.icon,
     this.color = BASE_COLOR_VERY_LIGHT,
     this.iconColor = BASE_COLOR,
+    this.controller,
   }) : super(key: key);
 
   @override
@@ -21,6 +23,7 @@ class RoundedTextField extends StatelessWidget {
     return RoundedInputField(
       color: this.color,
       child: TextField(
+        controller: this.controller,
         decoration: InputDecoration(
           icon: Icon(
             this.icon,

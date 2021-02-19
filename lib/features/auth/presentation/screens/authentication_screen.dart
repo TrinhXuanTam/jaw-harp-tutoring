@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:jews_harp/core/widgets/rounded_button.dart';
-import 'package:jews_harp/core/widgets/rounded_password_field.dart';
-import 'package:jews_harp/core/widgets/rounded_text_field.dart';
+import 'package:jews_harp/core/utils/constants.dart';
+import 'package:jews_harp/features/auth/presentation/widgets/email_authentication_form.dart';
 import 'package:jews_harp/features/auth/presentation/widgets/text_divider.dart';
+import 'package:jews_harp/features/auth/presentation/widgets/third_party_authentication.dart';
 
 class AuthenticationScreen extends StatelessWidget {
   @override
@@ -19,18 +19,9 @@ class AuthenticationScreen extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                RoundedTextField(
-                  icon: Icons.person,
-                  placeholderText: "Email",
-                ),
-                RoundedPasswordField(
-                  placeholderText: "Password",
-                ),
-                RoundedButton(
-                  text: "Sign In",
-                  onPressed: () {},
-                ),
+                EmailAuthenticationForm(),
                 TextDivider(text: "OR"),
+                ThirdPartyAuthOptions(),
               ],
             )
           ],
