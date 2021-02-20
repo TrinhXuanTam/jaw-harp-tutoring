@@ -13,5 +13,8 @@
   "Invalid email format!": "Invalid email format!",
   "Invalid password format!": "Invalid password format!",
   "Email or password is incorrect!": "Email or password is incorrect!",
-  "Failed to sign in": "Failed to sign in"
+  "Failed to sign in": "Failed to sign in",
+  "Full Name": "Full Name",
+  "Repeat Password": "Repeat Password",
+  "create an account for free": "create an account for free"
 }

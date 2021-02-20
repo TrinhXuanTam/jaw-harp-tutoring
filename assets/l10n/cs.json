@@ -13,5 +13,8 @@
   "Invalid email format!": "Špatný formát emailové adresy!",
   "Invalid password format!": "Špatný formát hesla!",
   "Email or password is incorrect!": "Špatná emailová adresa nebo heslo!",
-  "Failed to sign in": "Neúspěšné přihlášení"
+  "Failed to sign in": "Neúspěšné přihlášení",
+  "Full Name": "Celé jméno",
+  "Repeat Password": "Zopakovat heslo",
+  "create an account for free": "vytvořte si účet zdarma"
 }

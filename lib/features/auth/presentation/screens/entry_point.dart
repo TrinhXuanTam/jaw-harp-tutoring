@@ -5,10 +5,10 @@ import 'package:jews_harp/core/constants.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/dummy_screen.dart';
 import 'package:jews_harp/core/l10n.dart';
-import 'package:jews_harp/core/routes.dart';
 import 'package:jews_harp/core/transitions.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
 import 'package:jews_harp/features/auth/presentation/screens/authentication_screen.dart';
+import 'package:jews_harp/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/splash_screen.dart';
 
 /// Entry point of the application
@@ -50,7 +50,10 @@ class EntryPoint extends StatelessWidget {
 
         return supportedLocales.first;
       },
-      routes: routes,
+      routes: {
+        AuthenticationScreen.route: (_) => AuthenticationScreen(),
+        SignUpScreen.route: (_) => SignUpScreen(),
+      },
       home: BlocProvider(
         create: (_) => serviceLocator<AuthBloc>(),
         child: BlocBuilder<AuthBloc, AuthState>(

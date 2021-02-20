@@ -22,16 +22,17 @@ class RoundedPasswordField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RoundedInputField(
-      color: this.color,
-      child: BlocProvider(
-        create: (_) => serviceLocator<HideFieldInputBloc>(),
+    return BlocProvider(
+      create: (_) => serviceLocator<HideFieldInputBloc>(),
+      child: RoundedInputField(
+        color: this.color,
         child: BlocBuilder<HideFieldInputBloc, HideFieldInputState>(
           builder: (ctx, state) {
             return TextField(
               controller: this.controller,
               obscureText: state is InputHiddenState,
               decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(top: 16),
                 icon: Icon(
                   Icons.lock,
                   color: this.iconColor,
@@ -44,8 +45,9 @@ class RoundedPasswordField extends StatelessWidget {
                     color: this.iconColor,
                   ),
                   onPressed: () {
-                    BlocProvider.of<HideFieldInputBloc>(ctx)
-                        .add(ToggleVisibilityEvent());
+                    BlocProvider.of<HideFieldInputBloc>(ctx).add(
+                      ToggleVisibilityEvent(),
+                    );
                   },
                 ),
                 hintText: this.placeholderText,

@@ -13,6 +13,8 @@ import 'package:jews_harp/features/auth/presentation/widgets/text_divider.dart';
 import 'package:jews_harp/features/auth/presentation/widgets/third_party_authentication.dart';
 
 class AuthenticationScreen extends StatelessWidget {
+  static const String route = "/authentication";
+
   @override
   Widget build(BuildContext context) {
     final AppLocalizations localizations = AppLocalizations.of(context);

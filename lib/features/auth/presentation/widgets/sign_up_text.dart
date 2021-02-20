@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants.dart';
 import 'package:jews_harp/core/l10n.dart';
+import 'package:jews_harp/features/auth/presentation/screens/sign_up_screen.dart';
 
 class SignUpText extends StatelessWidget {
   @override
@@ -8,7 +9,7 @@ class SignUpText extends StatelessWidget {
     final AppLocalizations localizations = AppLocalizations.of(context);
 
     return InkWell(
-      onTap: () {},
+      onTap: () => Navigator.pushNamed(context, SignUpScreen.route),
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         child: RichText(

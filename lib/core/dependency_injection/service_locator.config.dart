@@ -17,6 +17,7 @@ import '../../features/auth/data/data_source_interfaces/local/authentication_loc
 import '../../features/auth/data/data_source_interfaces/remote/authentication_remote.dart';
 import '../../features/auth/domain/repository_interfaces/user_repository_interface.dart';
 import '../../features/auth/domain/use_cases/offline_authentication.dart';
+import '../../features/auth/presentation/BLoCs/sign_up_screen/sign_up_bloc.dart';
 import '../../features/auth/data/repositories/user_repository.dart';
 
 /// adds generated dependencies
@@ -36,6 +37,7 @@ GetIt initGetIt(
       get<IAuthenticationLocalDataSource>()));
   gh.lazySingleton<OfflineAuthentication>(
       () => OfflineAuthentication(get<IUserRepository>()));
+  gh.factory<SignUpBloc>(() => SignUpBloc());
   gh.factory<AuthBloc>(() => AuthBloc(get<OfflineAuthentication>()));
   gh.lazySingleton<EmailAuthentication>(
       () => EmailAuthentication(get<IUserRepository>()));
