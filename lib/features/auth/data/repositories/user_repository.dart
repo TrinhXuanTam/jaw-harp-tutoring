@@ -1,12 +1,11 @@
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/errors/wrong_email_or_password_error.dart';
+import 'package:jews_harp/features/auth/data/data_source_interfaces/remote/authentication_remote.dart';
 import 'package:optional/optional_internal.dart';
-
 import 'package:jews_harp/core/errors/user_not_signed_in_error.dart';
-
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
 import 'package:jews_harp/features/auth/data/data_source_interfaces/local/authentication_local.dart';
-import 'package:jews_harp/features/auth/data/data_source_interfaces/remote/authentication_remote.dart';
 
 @LazySingleton(as: IUserRepository)
 class UserRepository extends IUserRepository {
@@ -20,13 +19,22 @@ class UserRepository extends IUserRepository {
     return Future.value(false);
   }
 
-  /// Get signed in user
   @override
   Future<Optional<User>> getCurrentUser() async {
     try {
       final currentUser = await _localAuth.getCurrentUser();
       return Optional.of(currentUser);
     } on UserNotSignedInError {
+      return Optional.empty();
+    }
+  }
+
+  @override
+  Future<Optional<User>> signInWithEmail(String email, String password) async {
+    try {
+      final user = await _remoteAuth.signInWithEmail(email, password);
+      return Optional.of(user);
+    } on WrongEmailOrPasswordError {
       return Optional.empty();
     }
   }

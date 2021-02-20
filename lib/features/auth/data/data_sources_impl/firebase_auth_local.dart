@@ -11,14 +11,10 @@ class FirebaseAuthLocal extends IAuthenticationLocalDataSource {
   /// Check if user is signed in and return [UserModel], otherwise throw [UserNotSignedInError] exception.
   @override
   Future<UserModel> getCurrentUser() async {
-    var user = _auth.currentUser;
+    final user = _auth.currentUser;
 
     if (user == null) throw UserNotSignedInError();
 
-    return UserModel(
-      uid: user.uid,
-      name: user.displayName,
-      email: user.email,
-    );
+    return UserModel.fromFirebaseUser(user);
   }
 }

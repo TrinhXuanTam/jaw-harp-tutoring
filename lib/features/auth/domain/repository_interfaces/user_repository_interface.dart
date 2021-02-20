@@ -4,5 +4,9 @@ import 'package:optional/optional_internal.dart';
 abstract class IUserRepository {
   Future<bool> userIsAdmin(User user);
 
+  /// Get signed in user
   Future<Optional<User>> getCurrentUser();
+
+  /// Sign user in with email and password
+  Future<Optional<User>> signInWithEmail(String email, String password);
 }

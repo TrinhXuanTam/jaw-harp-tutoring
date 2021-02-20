@@ -9,7 +9,7 @@ class EmailAuthentication {
 
   EmailAuthentication(this._userRepository);
 
-  Future<Optional<User>> call(String email, String password) async {
-    return _userRepository.getCurrentUser();
+  Future<Optional<User>> call(String email, String password) {
+    return _userRepository.signInWithEmail(email, password);
   }
 }
