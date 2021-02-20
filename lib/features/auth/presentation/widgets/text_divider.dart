@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jews_harp/core/utils/constants.dart';
+import 'package:jews_harp/core/constants.dart';
 
 class TextDivider extends StatelessWidget {
   final String text;

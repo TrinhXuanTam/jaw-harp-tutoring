@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jews_harp/core/l10n/app_localizations.dart';
-import 'package:jews_harp/core/utils/constants.dart';
+import 'package:jews_harp/core/constants.dart';
+import 'package:jews_harp/core/l10n.dart';
 
 class SignUpText extends StatelessWidget {
   @override

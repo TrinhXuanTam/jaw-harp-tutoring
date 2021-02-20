@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jews_harp/core/utils/constants.dart';
+import 'package:jews_harp/core/constants.dart';
 import 'package:jews_harp/features/auth/presentation/widgets/third_party_auth_button.dart';
 
 class ThirdPartyAuthOptions extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jews_harp/core/utils/constants.dart';
+import 'package:jews_harp/core/constants.dart';
 
 class SplashScreen extends StatelessWidget {
   @override

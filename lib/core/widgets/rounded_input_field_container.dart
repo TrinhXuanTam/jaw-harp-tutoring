@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:jews_harp/core/utils/constants.dart';
+
+import '../constants.dart';
 
 class RoundedInputField extends StatelessWidget {
   final Widget child;

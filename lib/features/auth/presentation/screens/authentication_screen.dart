@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
-import 'package:jews_harp/core/l10n/app_localizations.dart';
+import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/one_button_alert_dialog.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/authentication_screen/auth_screen_bloc.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
