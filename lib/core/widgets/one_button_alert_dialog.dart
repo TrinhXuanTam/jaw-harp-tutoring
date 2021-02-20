@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../constants.dart';
-import '../l10n.dart';
+import 'package:jews_harp/core/constants.dart';
+import 'package:jews_harp/core/l10n.dart';
 
 class OneButtonAlertDialog extends StatelessWidget {
   final String title;
@@ -9,10 +8,11 @@ class OneButtonAlertDialog extends StatelessWidget {
   final String buttonText;
 
   const OneButtonAlertDialog({
+    Key key,
     @required this.title,
     @required this.message,
     this.buttonText = "OK",
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

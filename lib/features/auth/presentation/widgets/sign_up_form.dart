@@ -3,6 +3,8 @@ import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/core/widgets/rounded_password_field.dart';
 import 'package:jews_harp/core/widgets/rounded_text_field.dart';
+import 'package:jews_harp/features/auth/domain/entities/user.dart';
+import 'package:jews_harp/features/auth/presentation/screens/email_verification_screen.dart';
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -45,7 +47,11 @@ class _SignUpFormState extends State<SignUpForm> {
         SizedBox(height: 10),
         RoundedButton(
           text: localizations.translate("Sign Up"),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushReplacementNamed(
+                context, EmailVerificationScreen.route,
+                arguments: User(uid: "1", name: "Test", email: "Test"));
+          },
         ),
       ],
     );

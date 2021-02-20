@@ -6,10 +6,11 @@ class ThirdPartyAuthButton extends StatelessWidget {
   final Widget icon;
 
   const ThirdPartyAuthButton({
+    Key key,
     @required this.icon,
     @required this.colors,
     @required this.onPressed,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

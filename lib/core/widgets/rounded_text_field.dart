@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:jews_harp/core/constants.dart';
 import 'package:jews_harp/core/widgets/rounded_input_field_container.dart';
-
-import '../constants.dart';
 
 class RoundedTextField extends StatelessWidget {
   final String placeholderText;

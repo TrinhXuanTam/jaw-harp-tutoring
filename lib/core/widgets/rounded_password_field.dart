@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/BLoCs/hide_field_input/hide_field_input_bloc.dart';
+import 'package:jews_harp/core/constants.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/rounded_input_field_container.dart';
-
-import '../constants.dart';
 
 class RoundedPasswordField extends StatelessWidget {
   final String placeholderText;

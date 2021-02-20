@@ -50,7 +50,7 @@ class SignUpScreen extends StatelessWidget {
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 45),
                     ),
                     Text(
-                      localizations.translate("create an account for free"),
+                      localizations.translate("create a new account"),
                       style: TextStyle(color: Colors.grey, fontSize: 16),
                     ),
                     SizedBox(height: 20),
