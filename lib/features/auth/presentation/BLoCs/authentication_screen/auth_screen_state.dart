@@ -11,6 +11,12 @@ class AuthSuccessState extends AuthScreenState {
   AuthSuccessState(this.user);
 }
 
+class AuthNotVerifiedState extends AuthScreenState {
+  final User user;
+
+  AuthNotVerifiedState(this.user);
+}
+
 class AuthFailedState extends AuthScreenState {
   final String message;
 

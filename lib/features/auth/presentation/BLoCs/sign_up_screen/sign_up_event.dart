@@ -2,3 +2,17 @@ part of 'sign_up_bloc.dart';
 
 @immutable
 abstract class SignUpEvent {}
+
+class SignUpButtonPressedEvent extends SignUpEvent {
+  final String name;
+  final String email;
+  final String password;
+  final String passwordRepeat;
+
+  SignUpButtonPressedEvent(
+    this.name,
+    this.email,
+    this.password,
+    this.passwordRepeat,
+  );
+}

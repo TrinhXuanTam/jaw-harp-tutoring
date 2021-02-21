@@ -37,8 +37,13 @@ class AuthScreenBloc extends Bloc<AuthScreenEvent, AuthScreenState> {
 
         if (optionalUser.isEmpty)
           yield AuthFailedState("Email or password is incorrect!");
-        else
-          yield AuthSuccessState(optionalUser.value);
+        else {
+          final user = optionalUser.value;
+
+          //TODO is verified?
+
+          yield AuthSuccessState(user);
+        }
       }
     }
   }

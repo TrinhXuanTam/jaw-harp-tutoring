@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/errors/email_already_used_error.dart';
 import 'package:jews_harp/core/errors/wrong_email_or_password_error.dart';
 import 'package:jews_harp/features/auth/data/data_source_interfaces/remote/authentication_remote.dart';
 import 'package:optional/optional_internal.dart';
@@ -35,6 +36,20 @@ class UserRepository extends IUserRepository {
       final user = await _remoteAuth.signInWithEmail(email, password);
       return Optional.of(user);
     } on WrongEmailOrPasswordError {
+      return Optional.empty();
+    }
+  }
+
+  @override
+  Future<Optional<User>> signUp(
+    String name,
+    String email,
+    String password,
+  ) async {
+    try {
+      final user = await _remoteAuth.signUp(name, email, password);
+      return Optional.of(user);
+    } on EmailAlreadyUsedError {
       return Optional.empty();
     }
   }

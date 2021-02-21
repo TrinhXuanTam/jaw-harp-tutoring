@@ -64,8 +64,9 @@ class EmailVerificationScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   RoundedButton(
-                    text: localizations.translate("Sign In"),
+                    text: localizations.translate("Continue"),
                     onPressed: () {
+                      // TODO
                       Navigator.pop(context);
                     },
                   ),
