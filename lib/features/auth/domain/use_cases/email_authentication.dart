@@ -3,6 +3,7 @@ import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
 import 'package:optional/optional.dart';
 
+/// Sing in user with email and password use case
 @lazySingleton
 class EmailAuthentication {
   final IUserRepository _userRepository;

@@ -46,9 +46,7 @@ class EntryPoint extends StatelessWidget {
         ],
         localeResolutionCallback: (locale, supportedLocales) {
           for (var supportedLocale in supportedLocales) {
-            if (supportedLocale.languageCode == locale.languageCode &&
-                supportedLocale.countryCode == locale.countryCode)
-              return supportedLocale;
+            if (supportedLocale.languageCode == locale.languageCode && supportedLocale.countryCode == locale.countryCode) return supportedLocale;
           }
 
           return supportedLocales.first;
@@ -56,8 +54,7 @@ class EntryPoint extends StatelessWidget {
         routes: {
           AuthenticationScreen.route: (_) => AuthenticationScreen(),
           SignUpScreen.route: (_) => SignUpScreen(),
-          EmailVerificationScreen.route: (ctx) => EmailVerificationScreen(
-              user: ModalRoute.of(ctx).settings.arguments),
+          EmailVerificationScreen.route: (ctx) => EmailVerificationScreen(user: ModalRoute.of(ctx).settings.arguments),
         },
         home: BlocBuilder<AuthBloc, AuthState>(
           builder: (ctx, state) {

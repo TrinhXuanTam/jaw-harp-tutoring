@@ -3,6 +3,7 @@ import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
 import 'package:optional/optional.dart';
 
+/// Create a new account use case
 @lazySingleton
 class SignUp {
   final IUserRepository _userRepository;

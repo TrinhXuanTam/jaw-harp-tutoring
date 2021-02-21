@@ -5,17 +5,17 @@ import 'package:jews_harp/core/errors/wrong_email_or_password_error.dart';
 import 'package:jews_harp/features/auth/data/data_source_interfaces/remote/authentication_remote.dart';
 import 'package:jews_harp/features/auth/data/models/user_model.dart';
 
+/// Firebase [IAuthenticationRemoteDataSource] implementation
 @LazySingleton(as: IAuthenticationRemoteDataSource)
 class FirebaseAuthRemote extends IAuthenticationRemoteDataSource {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  /// Sign in with email and password
   @override
   Future<UserModel> getUser(String email, String password) async {
     try {
-      final userCredential = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      // If no user is found [FirebaseAuthException] is thrown
+      final userCredential = await _auth.signInWithEmailAndPassword(email: email, password: password);
 
       return UserModel.fromFirebaseCredentials(userCredential);
     } on FirebaseAuthException {
@@ -23,18 +23,14 @@ class FirebaseAuthRemote extends IAuthenticationRemoteDataSource {
     }
   }
 
+  /// Sign up with email and password
   @override
-  Future<UserModel> createNewUser(
-    String name,
-    String email,
-    String password,
-  ) async {
+  Future<UserModel> createNewUser(String name, String email, String password) async {
     try {
-      final credentials = await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      final credentials = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       final user = credentials.user;
+
+      // Save full name
       user.updateProfile(displayName: name);
       return UserModel.fromFirebaseUser(user);
     } on FirebaseAuthException {

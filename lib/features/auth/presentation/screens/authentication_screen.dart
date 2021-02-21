@@ -41,7 +41,6 @@ class AuthenticationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations localizations = AppLocalizations.of(context);
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -57,21 +56,7 @@ class AuthenticationScreen extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 _Background(),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TitleWithSubtitle(
-                      titleText: "Welcome!",
-                      subtitleText: "please sign in to continue",
-                    ),
-                    SizedBox(height: 20),
-                    _EmailAuthenticationForm(),
-                    SizedBox(height: 5),
-                    _ForgotPasswordText(),
-                    TextDivider(text: localizations.translate("OR")),
-                    ThirdPartyAuthOptions(),
-                  ],
-                ),
+                _AuthMethods(),
                 Positioned(
                   bottom: 20,
                   child: _SignUpText(),
@@ -85,6 +70,31 @@ class AuthenticationScreen extends StatelessWidget {
   }
 }
 
+/// Authentication methods
+class _AuthMethods extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final AppLocalizations localizations = AppLocalizations.of(context);
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TitleWithSubtitle(
+          titleText: "Welcome!",
+          subtitleText: "please sign in to continue",
+        ),
+        SizedBox(height: 20),
+        _EmailAuthenticationForm(),
+        SizedBox(height: 5),
+        _ForgotPasswordText(),
+        TextDivider(text: localizations.translate("OR")),
+        ThirdPartyAuthOptions(),
+      ],
+    );
+  }
+}
+
+/// Authentication screen background
 class _Background extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -92,10 +102,10 @@ class _Background extends StatelessWidget {
   }
 }
 
+/// Email authentication form
 class _EmailAuthenticationForm extends StatefulWidget {
   @override
-  _EmailAuthenticationFormState createState() =>
-      _EmailAuthenticationFormState();
+  _EmailAuthenticationFormState createState() => _EmailAuthenticationFormState();
 }
 
 class _EmailAuthenticationFormState extends State<_EmailAuthenticationForm> {
@@ -135,6 +145,7 @@ class _EmailAuthenticationFormState extends State<_EmailAuthenticationForm> {
   }
 }
 
+/// Forgotten password link
 class _ForgotPasswordText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -156,6 +167,7 @@ class _ForgotPasswordText extends StatelessWidget {
   }
 }
 
+/// Sign up link
 class _SignUpText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

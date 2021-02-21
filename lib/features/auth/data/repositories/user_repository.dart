@@ -34,8 +34,7 @@ class UserRepository extends IUserRepository {
   }
 
   @override
-  Future<Optional<User>> getUserWithEmailAndPassword(
-      String email, String password) async {
+  Future<Optional<User>> getUserWithEmailAndPassword(String email, String password) async {
     try {
       final user = await _remoteAuth.getUser(email, password);
       return Optional.of(user);
@@ -45,11 +44,7 @@ class UserRepository extends IUserRepository {
   }
 
   @override
-  Future<Optional<User>> createUser(
-    String name,
-    String email,
-    String password,
-  ) async {
+  Future<Optional<User>> createUser(String name, String email, String password) async {
     try {
       final user = await _remoteAuth.createNewUser(name, email, password);
       return Optional.of(user);

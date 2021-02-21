@@ -30,16 +30,12 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       final passwordRepeat = event.passwordRepeat;
 
       // validation
-      if (name.isEmpty ||
-          email.isEmpty ||
-          password.isEmpty ||
-          passwordRepeat.isEmpty)
+      if (name.isEmpty || email.isEmpty || password.isEmpty || passwordRepeat.isEmpty)
         yield SignUpFailedState("Please fill out all fields!");
       else if (!RegExMatchers.email.hasMatch(email))
         yield SignUpFailedState("Invalid email format!");
       else if (!RegExMatchers.password.hasMatch(password))
-        yield SignUpFailedState(
-            "Password must contain 6 to 20 characters with at least one digit and character!");
+        yield SignUpFailedState("Password must contain 6 to 20 characters with at least one digit and character!");
       else if (password != passwordRepeat)
         yield SignUpFailedState("Passwords don't match!");
       else {

@@ -15,9 +15,3 @@ class AuthenticatedState extends AuthState {
 
   AuthenticatedState(this.user);
 }
-
-class UnverifiedState extends AuthState {
-  final User user;
-
-  UnverifiedState(this.user);
-}

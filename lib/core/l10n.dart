@@ -9,8 +9,7 @@ class AppLocalizations {
 
   AppLocalizations(this.locale);
 
-  static const LocalizationsDelegate<AppLocalizations> delegate =
-      _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
   /// InheritedWidget "of" style syntax helper function
   static AppLocalizations of(BuildContext context) {
@@ -19,8 +18,7 @@ class AppLocalizations {
 
   /// Load map of localized strings
   Future<void> load() async {
-    String json =
-        await rootBundle.loadString("assets/l10n/${locale.languageCode}.json");
+    String json = await rootBundle.loadString("assets/l10n/${locale.languageCode}.json");
     _localizedStrings = Map<String, String>.from(jsonDecode(json));
   }
 
@@ -33,8 +31,7 @@ class AppLocalizations {
   }
 }
 
-class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   /// Check if locale is supported
@@ -51,6 +48,5 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool shouldReload(covariant LocalizationsDelegate<AppLocalizations> old) =>
-      false;
+  bool shouldReload(covariant LocalizationsDelegate<AppLocalizations> old) => false;
 }

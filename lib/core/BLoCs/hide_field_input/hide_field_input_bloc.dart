@@ -10,8 +10,7 @@ part 'hide_field_input_state.dart';
 
 /// Show or hide input field text
 @injectable
-class HideFieldInputBloc
-    extends Bloc<HideFieldInputEvent, HideFieldInputState> {
+class HideFieldInputBloc extends Bloc<HideFieldInputEvent, HideFieldInputState> {
   HideFieldInputBloc() : super(InputHiddenState());
 
   @override

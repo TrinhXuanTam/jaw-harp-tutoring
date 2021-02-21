@@ -35,16 +35,12 @@ GetIt initGetIt(
   gh.factory<HideFieldInputBloc>(() => HideFieldInputBloc());
   gh.lazySingleton<IAuthenticationLocalDataSource>(() => FirebaseAuthLocal());
   gh.lazySingleton<IAuthenticationRemoteDataSource>(() => FirebaseAuthRemote());
-  gh.lazySingleton<IUserRepository>(() => UserRepository(
-      get<IAuthenticationRemoteDataSource>(),
-      get<IAuthenticationLocalDataSource>()));
-  gh.lazySingleton<OfflineAuthentication>(
-      () => OfflineAuthentication(get<IUserRepository>()));
+  gh.lazySingleton<IUserRepository>(() => UserRepository(get<IAuthenticationRemoteDataSource>(), get<IAuthenticationLocalDataSource>()));
+  gh.lazySingleton<OfflineAuthentication>(() => OfflineAuthentication(get<IUserRepository>()));
   gh.lazySingleton<SignUp>(() => SignUp(get<IUserRepository>()));
   gh.factory<SignUpBloc>(() => SignUpBloc(get<SignUp>()));
   gh.factory<AuthBloc>(() => AuthBloc(get<OfflineAuthentication>()));
-  gh.lazySingleton<EmailAuthentication>(
-      () => EmailAuthentication(get<IUserRepository>()));
+  gh.lazySingleton<EmailAuthentication>(() => EmailAuthentication(get<IUserRepository>()));
   gh.factory<AuthScreenBloc>(() => AuthScreenBloc(get<EmailAuthentication>()));
   return get;
 }

@@ -12,8 +12,7 @@ class UserModel extends User {
   }) : super(uid: uid, name: name, email: email);
 
   /// Create [FirebaseUserModel] from [FirebaseAuth.UserCredential]
-  factory UserModel.fromFirebaseCredentials(
-      Firebase.UserCredential credentials) {
+  factory UserModel.fromFirebaseCredentials(Firebase.UserCredential credentials) {
     return UserModel.fromFirebaseUser(credentials.user);
   }
 
@@ -26,6 +25,7 @@ class UserModel extends User {
     );
   }
 
+  /// Check if user email is verified
   @override
   Future<bool> isVerified() async {
     await _auth.currentUser.reload();
@@ -33,11 +33,14 @@ class UserModel extends User {
     return user.emailVerified;
   }
 
+  /// Send a new verification email
   @override
   Future<void> sendVerificationEmail() {
     return _auth.currentUser.sendEmailVerification();
   }
 
+
+  /// Sign out the user
   @override
   Future<void> signOut() {
     return _auth.signOut();

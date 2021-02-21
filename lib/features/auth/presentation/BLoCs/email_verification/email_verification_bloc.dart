@@ -10,8 +10,7 @@ part 'email_verification_event.dart';
 part 'email_verification_state.dart';
 
 @injectable
-class EmailVerificationBloc
-    extends Bloc<EmailVerificationEvent, EmailVerificationState> {
+class EmailVerificationBloc extends Bloc<EmailVerificationEvent, EmailVerificationState> {
   EmailVerificationBloc() : super(EmailVerificationInitialState());
 
   @override
