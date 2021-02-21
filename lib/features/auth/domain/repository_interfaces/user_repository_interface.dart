@@ -8,9 +8,8 @@ abstract class IUserRepository {
   Future<Optional<User>> getCurrentUser();
 
   /// Sign user in with email and password
-  Future<Optional<User>> signInWithEmail(String email, String password);
+  Future<Optional<User>> getUserWithEmailAndPassword(String email, String password);
 
   /// Sign up user
-  Future<Optional<User>> signUp(
-      String name, String email, String password);
+  Future<Optional<User>> createUser(String name, String email, String password);
 }

@@ -15,7 +15,9 @@ part 'auth_screen_state.dart';
 class AuthScreenBloc extends Bloc<AuthScreenEvent, AuthScreenState> {
   final EmailAuthentication _emailAuthentication;
 
-  AuthScreenBloc(this._emailAuthentication) : super(AuthScreenInitialState());
+  AuthScreenBloc(
+    this._emailAuthentication,
+  ) : super(AuthScreenInitialState());
 
   @override
   Stream<AuthScreenState> mapEventToState(
@@ -40,9 +42,10 @@ class AuthScreenBloc extends Bloc<AuthScreenEvent, AuthScreenState> {
         else {
           final user = optionalUser.value;
 
-          //TODO is verified?
-
-          yield AuthSuccessState(user);
+          if (await user.isVerified())
+            yield AuthNotVerifiedState(user);
+          else
+            yield AuthSuccessState(user);
         }
       }
     }

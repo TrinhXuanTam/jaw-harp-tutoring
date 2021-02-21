@@ -10,7 +10,7 @@ class FirebaseAuthRemote extends IAuthenticationRemoteDataSource {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
-  Future<UserModel> signInWithEmail(String email, String password) async {
+  Future<UserModel> getUser(String email, String password) async {
     try {
       final userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
@@ -24,7 +24,7 @@ class FirebaseAuthRemote extends IAuthenticationRemoteDataSource {
   }
 
   @override
-  Future<UserModel> signUp(
+  Future<UserModel> createNewUser(
     String name,
     String email,
     String password,
@@ -36,17 +36,9 @@ class FirebaseAuthRemote extends IAuthenticationRemoteDataSource {
       );
       final user = credentials.user;
       user.updateProfile(displayName: name);
-      // Sign out the user
-      _auth.signOut();
       return UserModel.fromFirebaseUser(user);
     } on FirebaseAuthException {
       throw EmailAlreadyUsedError();
     }
-  }
-
-  @override
-  Future<bool> sendVerificationEmail(String email) {
-    // TODO: implement sendVerificationEmail
-    throw UnimplementedError();
   }
 }

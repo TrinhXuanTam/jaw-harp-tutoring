@@ -24,6 +24,23 @@ class EmailVerificationScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => serviceLocator<EmailVerificationBloc>(),
       child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          leading: IconButton(
+            onPressed: () {
+              // Sign the user if screen is closed
+              user.signOut();
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.close_rounded,
+              color: BASE_COLOR,
+              size: 35,
+            ),
+          ),
+        ),
         body: Container(
           height: size.height,
           width: double.infinity,
@@ -55,7 +72,8 @@ class EmailVerificationScreen extends StatelessWidget {
                         SizedBox(height: 10),
                         Text(
                           localizations.translate(
-                              "If you do not receive a confirmation email, please check your spam folder. Also, please verify that you entered a valid email address in our sign-up form."),
+                                  "If you do not receive a confirmation email, please check your spam folder. Also, please verify that you entered a valid email address:") +
+                              ' "${user.email}."',
                           textAlign: TextAlign.justify,
                           style: TextStyle(fontSize: 15),
                         ),
@@ -67,7 +85,6 @@ class EmailVerificationScreen extends StatelessWidget {
                     text: localizations.translate("Continue"),
                     onPressed: () {
                       // TODO
-                      Navigator.pop(context);
                     },
                   ),
                   SizedBox(height: 5),

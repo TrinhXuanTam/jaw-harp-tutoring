@@ -15,7 +15,9 @@ part 'sign_up_state.dart';
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   final SignUp _signUp;
 
-  SignUpBloc(this._signUp) : super(SignUpInitialState());
+  SignUpBloc(
+    this._signUp,
+  ) : super(SignUpInitialState());
 
   @override
   Stream<SignUpState> mapEventToState(
@@ -36,15 +38,19 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       else if (!RegExMatchers.email.hasMatch(email))
         yield SignUpFailedState("Invalid email format!");
       else if (!RegExMatchers.password.hasMatch(password))
-        yield SignUpFailedState("Password must contain 6 to 20 characters with at least one digit and character!");
+        yield SignUpFailedState(
+            "Password must contain 6 to 20 characters with at least one digit and character!");
       else if (password != passwordRepeat)
         yield SignUpFailedState("Passwords don't match!");
       else {
         final optionalUser = await _signUp(name, email, password);
         if (optionalUser.isEmpty)
           yield SignUpFailedState("This email is already in use!");
-        else
-          yield SignUpSuccessState(optionalUser.value);
+        else {
+          final user = optionalUser.value;
+          user.sendVerificationEmail();
+          yield SignUpSuccessState(user);
+        }
       }
     }
   }

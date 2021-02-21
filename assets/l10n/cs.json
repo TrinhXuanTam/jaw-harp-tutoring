@@ -21,7 +21,7 @@
   "Resend Verification Email": "Poslat znovu aktivační email",
   "Verification Email Sent": "Aktivační email poslán",
   "We have sent an email with a confirmation link to your email address. In order to complete the sign-up process, please click the confirmation link.": "Na uvedenou e-mailovou adresu jsme Vám poslali zprávu s aktivačním odkazem. Pro dokončení registrace klikněte na tento odkaz.",
-  "If you do not receive a confirmation email, please check your spam folder. Also, please verify that you entered a valid email address in our sign-up form.": "Pokud neobdržíte potvrzovací e-mail, zkontrolujte prosím složku se spamem. Ověřte také, že jste v registračním formuláři zadali platnou e-mailovou adresu.",
+  "If you do not receive a confirmation email, please check your spam folder. Also, please verify that you entered a valid email address:": "Pokud neobdržíte potvrzovací e-mail, zkontrolujte prosím složku se spamem. Ověřte také, že jste v registračním formuláři zadali platnou e-mailovou adresu:",
   "Passwords don't match!": "Hesla se neshodují!",
   "This email is already in use!": "Tento email se již používá!",
   "Failed to sign up": "Neúspěšná registrace",

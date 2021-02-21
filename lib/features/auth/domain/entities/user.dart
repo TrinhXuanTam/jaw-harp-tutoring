@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
-class User extends Equatable {
+abstract class User extends Equatable {
   final String uid;
   final String name;
   final String email;
@@ -14,4 +14,10 @@ class User extends Equatable {
 
   @override
   List<Object> get props => [this.uid, this.name, this.email];
+
+  Future<bool> isVerified();
+
+  Future<void> sendVerificationEmail();
+
+  Future<void> signOut();
 }
