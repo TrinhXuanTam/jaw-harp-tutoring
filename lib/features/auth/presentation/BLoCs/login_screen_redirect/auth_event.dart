@@ -7,4 +7,8 @@ abstract class AuthEvent {}
 class SplashScreenDisplayedEvent extends AuthEvent {}
 
 /// Indicates that user has successfully been authenticated.
-class UserAuthenticatedEvent extends AuthEvent {}
+class UserAuthenticatedEvent extends AuthEvent {
+  final User user;
+
+  UserAuthenticatedEvent(this.user);
+}

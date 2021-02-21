@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/use_cases/offline_authentication.dart';
 import 'package:meta/meta.dart';
 
@@ -26,9 +27,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (user.isEmpty)
         yield UnauthenticatedState();
       else
-        yield AuthenticatedState();
+        yield AuthenticatedState(user.value);
     } else if (event is UserAuthenticatedEvent) {
-      yield AuthenticatedState();
+      yield AuthenticatedState(event.user);
     }
   }
 }

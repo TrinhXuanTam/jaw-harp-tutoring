@@ -10,4 +10,14 @@ class AuthInitialState extends AuthState {}
 class UnauthenticatedState extends AuthState {}
 
 /// User is authenticated state.
-class AuthenticatedState extends AuthState {}
+class AuthenticatedState extends AuthState {
+  final User user;
+
+  AuthenticatedState(this.user);
+}
+
+class UnverifiedState extends AuthState {
+  final User user;
+
+  UnverifiedState(this.user);
+}

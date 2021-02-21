@@ -19,7 +19,6 @@ class UserModel extends User {
 
   /// Create [FirebaseUserModel] from [Firebase.User]
   factory UserModel.fromFirebaseUser(Firebase.User firebaseUser) {
-    firebaseUser.reload();
     return UserModel(
       uid: firebaseUser.uid,
       name: firebaseUser.displayName,
@@ -28,8 +27,10 @@ class UserModel extends User {
   }
 
   @override
-  Future<bool> isVerified() {
-    return Future.value(_auth.currentUser.emailVerified);
+  Future<bool> isVerified() async {
+    await _auth.currentUser.reload();
+    final user = _auth.currentUser;
+    return user.emailVerified;
   }
 
   @override

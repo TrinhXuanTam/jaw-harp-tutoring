@@ -30,36 +30,36 @@ class EntryPoint extends StatelessWidget {
   /// Otherwise, redirect the user into the main screen.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: APP_TITLE,
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: [
-        Locale('en', ''),
-        Locale('cs', 'CZ'),
-      ],
-      localeResolutionCallback: (locale, supportedLocales) {
-        for (var supportedLocale in supportedLocales) {
-          if (supportedLocale.languageCode == locale.languageCode &&
-              supportedLocale.countryCode == locale.countryCode)
-            return supportedLocale;
-        }
+    return BlocProvider(
+      create: (_) => serviceLocator<AuthBloc>(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: APP_TITLE,
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          Locale('en', ''),
+          Locale('cs', 'CZ'),
+        ],
+        localeResolutionCallback: (locale, supportedLocales) {
+          for (var supportedLocale in supportedLocales) {
+            if (supportedLocale.languageCode == locale.languageCode &&
+                supportedLocale.countryCode == locale.countryCode)
+              return supportedLocale;
+          }
 
-        return supportedLocales.first;
-      },
-      routes: {
-        AuthenticationScreen.route: (_) => AuthenticationScreen(),
-        SignUpScreen.route: (_) => SignUpScreen(),
-        EmailVerificationScreen.route: (ctx) => EmailVerificationScreen(
-            user: ModalRoute.of(ctx).settings.arguments),
-      },
-      home: BlocProvider(
-        create: (_) => serviceLocator<AuthBloc>(),
-        child: BlocBuilder<AuthBloc, AuthState>(
+          return supportedLocales.first;
+        },
+        routes: {
+          AuthenticationScreen.route: (_) => AuthenticationScreen(),
+          SignUpScreen.route: (_) => SignUpScreen(),
+          EmailVerificationScreen.route: (ctx) => EmailVerificationScreen(
+              user: ModalRoute.of(ctx).settings.arguments),
+        },
+        home: BlocBuilder<AuthBloc, AuthState>(
           builder: (ctx, state) {
             if (state is AuthInitialState) {
               _splashScreenRedirectWithDelay(ctx);

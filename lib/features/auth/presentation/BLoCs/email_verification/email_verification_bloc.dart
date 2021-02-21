@@ -12,9 +12,7 @@ part 'email_verification_state.dart';
 @injectable
 class EmailVerificationBloc
     extends Bloc<EmailVerificationEvent, EmailVerificationState> {
-
-  EmailVerificationBloc(
-  ) : super(EmailVerificationInitialState());
+  EmailVerificationBloc() : super(EmailVerificationInitialState());
 
   @override
   Stream<EmailVerificationState> mapEventToState(
@@ -23,6 +21,14 @@ class EmailVerificationBloc
     if (event is EmailVerificationRequestEvent) {
       event.user.sendVerificationEmail();
       yield EmailVerificationSentState();
+    } else if (event is EmailVerificationClosedEvent) {
+      event.user.signOut();
+      yield EmailVerificationClosedState();
+    } else if (event is EmailVerificationContinueEvent) {
+      if (await event.user.isVerified())
+        yield EmailVerifiedState();
+      else
+        yield EmailNotVerifiedState();
     }
   }
 }

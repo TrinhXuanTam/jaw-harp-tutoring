@@ -43,9 +43,9 @@ class AuthScreenBloc extends Bloc<AuthScreenEvent, AuthScreenState> {
           final user = optionalUser.value;
 
           if (await user.isVerified())
-            yield AuthNotVerifiedState(user);
-          else
             yield AuthSuccessState(user);
+          else
+            yield AuthNotVerifiedState(user);
         }
       }
     }

@@ -8,3 +8,15 @@ class EmailVerificationRequestEvent extends EmailVerificationEvent {
 
   EmailVerificationRequestEvent(this.user);
 }
+
+class EmailVerificationClosedEvent extends EmailVerificationEvent {
+  final User user;
+
+  EmailVerificationClosedEvent(this.user);
+}
+
+class EmailVerificationContinueEvent extends EmailVerificationEvent {
+  final User user;
+
+  EmailVerificationContinueEvent(this.user);
+}

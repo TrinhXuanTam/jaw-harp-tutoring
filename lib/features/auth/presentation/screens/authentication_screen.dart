@@ -20,7 +20,7 @@ class AuthenticationScreen extends StatelessWidget {
 
   void _authScreenBlocListener(BuildContext ctx, AuthScreenState state) {
     if (state is AuthSuccessState)
-      BlocProvider.of<AuthBloc>(ctx).add(UserAuthenticatedEvent());
+      BlocProvider.of<AuthBloc>(ctx).add(UserAuthenticatedEvent(state.user));
     else if (state is AuthFailedState) {
       showDialog(
         context: ctx,
