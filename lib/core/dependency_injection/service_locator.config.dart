@@ -25,6 +25,9 @@ import 'package:jews_harp/features/auth/data/repositories/user_repository.dart';
 const _prod = 'prod';
 const _dev = 'dev';
 const _user_repository_test_env = 'user_repository_test_env';
+const _offline_authentication_test_env = 'offline_authentication_test_env';
+const _sign_up_test_env = 'sign_up_test_env';
+const _email_authentication_test_env = 'email_authentication_test_env';
 
 /// adds generated dependencies
 /// to the provided [GetIt] instance
@@ -35,31 +38,16 @@ GetIt initGetIt(
   EnvironmentFilter environmentFilter,
 }) {
   final gh = GetItHelper(get, environment, environmentFilter);
-  gh.factory<EmailVerificationBloc>(() => EmailVerificationBloc(),
-      registerFor: {_prod, _dev});
-  gh.factory<HideFieldInputBloc>(() => HideFieldInputBloc(),
-      registerFor: {_prod, _dev});
-  gh.lazySingleton<IAuthenticationLocalDataSource>(() => FirebaseAuthLocal(),
-      registerFor: {_prod});
-  gh.lazySingleton<IAuthenticationRemoteDataSource>(() => FirebaseAuthRemote(),
-      registerFor: {_prod});
-  gh.lazySingleton<IUserRepository>(
-      () => UserRepository(get<IAuthenticationRemoteDataSource>(),
-          get<IAuthenticationLocalDataSource>()),
-      registerFor: {_prod, _user_repository_test_env});
-  gh.lazySingleton<OfflineAuthentication>(
-      () => OfflineAuthentication(get<IUserRepository>()),
-      registerFor: {_prod, _dev});
-  gh.lazySingleton<SignUp>(() => SignUp(get<IUserRepository>()),
-      registerFor: {_prod, _dev});
-  gh.factory<SignUpBloc>(() => SignUpBloc(get<SignUp>()),
-      registerFor: {_prod, _dev});
-  gh.factory<AuthBloc>(() => AuthBloc(get<OfflineAuthentication>()),
-      registerFor: {_prod, _dev});
-  gh.lazySingleton<EmailAuthentication>(
-      () => EmailAuthentication(get<IUserRepository>()),
-      registerFor: {_prod, _dev});
-  gh.factory<AuthScreenBloc>(() => AuthScreenBloc(get<EmailAuthentication>()),
-      registerFor: {_prod, _dev});
+  gh.factory<EmailVerificationBloc>(() => EmailVerificationBloc(), registerFor: {_prod, _dev});
+  gh.factory<HideFieldInputBloc>(() => HideFieldInputBloc(), registerFor: {_prod, _dev});
+  gh.lazySingleton<IAuthenticationLocalDataSource>(() => FirebaseAuthLocal(), registerFor: {_prod});
+  gh.lazySingleton<IAuthenticationRemoteDataSource>(() => FirebaseAuthRemote(), registerFor: {_prod});
+  gh.lazySingleton<IUserRepository>(() => UserRepository(get<IAuthenticationRemoteDataSource>(), get<IAuthenticationLocalDataSource>()), registerFor: {_prod, _user_repository_test_env});
+  gh.lazySingleton<OfflineAuthentication>(() => OfflineAuthentication(get<IUserRepository>()), registerFor: {_prod, _dev, _offline_authentication_test_env});
+  gh.lazySingleton<SignUp>(() => SignUp(get<IUserRepository>()), registerFor: {_prod, _dev, _sign_up_test_env});
+  gh.factory<SignUpBloc>(() => SignUpBloc(get<SignUp>()), registerFor: {_prod, _dev});
+  gh.factory<AuthBloc>(() => AuthBloc(get<OfflineAuthentication>()), registerFor: {_prod, _dev});
+  gh.lazySingleton<EmailAuthentication>(() => EmailAuthentication(get<IUserRepository>()), registerFor: {_prod, _dev, _email_authentication_test_env});
+  gh.factory<AuthScreenBloc>(() => AuthScreenBloc(get<EmailAuthentication>()), registerFor: {_prod, _dev});
   return get;
 }
