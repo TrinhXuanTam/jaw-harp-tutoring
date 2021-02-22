@@ -11,7 +11,7 @@ part 'auth_screen_event.dart';
 
 part 'auth_screen_state.dart';
 
-@injectable
+@Injectable(env: [Environment.prod, Environment.dev])
 class AuthScreenBloc extends Bloc<AuthScreenEvent, AuthScreenState> {
   final EmailAuthentication _emailAuthentication;
 

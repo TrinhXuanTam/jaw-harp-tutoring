@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/constants.dart';
 import 'package:jews_harp/core/errors/email_already_used_error.dart';
 import 'package:jews_harp/core/errors/user_not_verified_error.dart';
 import 'package:jews_harp/core/errors/wrong_email_or_password_error.dart';
@@ -9,7 +10,7 @@ import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
 import 'package:jews_harp/features/auth/data/data_source_interfaces/local/authentication_local.dart';
 
-@LazySingleton(as: IUserRepository)
+@LazySingleton(as: IUserRepository, env: [Environment.prod, USER_REPOSITORY_TEST_ENV])
 class UserRepository extends IUserRepository {
   final IAuthenticationRemoteDataSource _remoteAuth;
   final IAuthenticationLocalDataSource _localAuth;
@@ -18,7 +19,8 @@ class UserRepository extends IUserRepository {
 
   @override
   Future<bool> userIsAdmin(User user) async {
-    return Future.value(false);
+    // TODO
+    return false;
   }
 
   @override

@@ -6,7 +6,7 @@ abstract class User extends Equatable {
   final String name;
   final String email;
 
-  User({
+  const User({
     @required this.uid,
     @required this.name,
     @required this.email,

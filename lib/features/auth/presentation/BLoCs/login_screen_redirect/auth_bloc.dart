@@ -10,7 +10,7 @@ part 'auth_event.dart';
 
 part 'auth_state.dart';
 
-@injectable
+@Injectable(env: [Environment.prod, Environment.dev])
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final OfflineAuthentication _offlineAuth;
 

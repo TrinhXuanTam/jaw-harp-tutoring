@@ -21,6 +21,8 @@ import 'package:jews_harp/features/auth/domain/use_cases/sign_up.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/sign_up_screen/sign_up_bloc.dart';
 import 'package:jews_harp/features/auth/data/repositories/user_repository.dart';
 
+import '../unit/auth/user_repository_test.dart';
+
 /// Environment names
 const _prod = 'prod';
 const _dev = 'dev';
@@ -29,7 +31,7 @@ const _user_repository_test_env = 'user_repository_test_env';
 /// adds generated dependencies
 /// to the provided [GetIt] instance
 
-GetIt initGetIt(
+GetIt testInitGetIt(
   GetIt get, {
   String environment,
   EnvironmentFilter environmentFilter,
@@ -41,8 +43,14 @@ GetIt initGetIt(
       registerFor: {_prod, _dev});
   gh.lazySingleton<IAuthenticationLocalDataSource>(() => FirebaseAuthLocal(),
       registerFor: {_prod});
+  gh.lazySingleton<IAuthenticationLocalDataSource>(
+      () => IAuthenticationLocalDataSourceMock(),
+      registerFor: {_user_repository_test_env});
   gh.lazySingleton<IAuthenticationRemoteDataSource>(() => FirebaseAuthRemote(),
       registerFor: {_prod});
+  gh.lazySingleton<IAuthenticationRemoteDataSource>(
+      () => IAuthenticationRemoteDataSourceMock(),
+      registerFor: {_user_repository_test_env});
   gh.lazySingleton<IUserRepository>(
       () => UserRepository(get<IAuthenticationRemoteDataSource>(),
           get<IAuthenticationLocalDataSource>()),

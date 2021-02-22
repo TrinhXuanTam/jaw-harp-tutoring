@@ -6,7 +6,7 @@ import 'package:jews_harp/features/auth/data/data_source_interfaces/local/authen
 import 'package:jews_harp/features/auth/data/models/user_model.dart';
 
 /// Firebase [IAuthenticationLocalDataSource] implementation
-@LazySingleton(as: IAuthenticationLocalDataSource)
+@LazySingleton(as: IAuthenticationLocalDataSource, env: [Environment.prod])
 class FirebaseAuthLocal extends IAuthenticationLocalDataSource {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 

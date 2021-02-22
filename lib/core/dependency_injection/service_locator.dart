@@ -6,7 +6,8 @@ final serviceLocator = GetIt.instance;
 
 @InjectableInit(
   initializerName: r'initGetIt',
-  preferRelativeImports: true,
+  preferRelativeImports: false,
   asExtension: false,
+  generateForDir: ["lib"],
 )
-void configureDependencies() => initGetIt(serviceLocator);
+void configureDependencies() => initGetIt(serviceLocator, environment: Environment.prod);

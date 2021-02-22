@@ -39,7 +39,6 @@ class UserModel extends User {
     return _auth.currentUser.sendEmailVerification();
   }
 
-
   /// Sign out the user
   @override
   Future<void> signOut() {

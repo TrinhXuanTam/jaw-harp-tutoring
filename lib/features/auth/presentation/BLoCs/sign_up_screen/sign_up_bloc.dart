@@ -11,7 +11,7 @@ part 'sign_up_event.dart';
 
 part 'sign_up_state.dart';
 
-@injectable
+@Injectable(env: [Environment.prod, Environment.dev])
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   final SignUp _signUp;
 

@@ -6,7 +6,7 @@ import 'package:jews_harp/features/auth/data/data_source_interfaces/remote/authe
 import 'package:jews_harp/features/auth/data/models/user_model.dart';
 
 /// Firebase [IAuthenticationRemoteDataSource] implementation
-@LazySingleton(as: IAuthenticationRemoteDataSource)
+@LazySingleton(as: IAuthenticationRemoteDataSource, env: [Environment.prod])
 class FirebaseAuthRemote extends IAuthenticationRemoteDataSource {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
