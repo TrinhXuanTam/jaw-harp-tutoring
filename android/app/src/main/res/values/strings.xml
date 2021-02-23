@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Jew\'s harp tutoring app</string>
+    <string name="facebook_app_id">745303249523049</string>
+    <string name="fb_login_protocol_scheme">fb745303249523049</string>
+</resources>

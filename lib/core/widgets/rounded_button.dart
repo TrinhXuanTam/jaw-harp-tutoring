@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jews_harp/core/constants.dart';
+import 'package:jews_harp/core/constants/theme.dart';
 
 class RoundedButton extends StatelessWidget {
   final String text;

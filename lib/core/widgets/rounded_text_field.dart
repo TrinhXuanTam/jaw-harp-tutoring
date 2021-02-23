@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jews_harp/core/constants.dart';
+import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/widgets/rounded_input_field_container.dart';
 
 class RoundedTextField extends StatelessWidget {

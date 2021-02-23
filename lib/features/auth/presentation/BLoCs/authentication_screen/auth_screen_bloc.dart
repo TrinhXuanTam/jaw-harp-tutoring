@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:jews_harp/core/regex.dart';
+import 'package:jews_harp/core/errors/base_error.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/use_cases/email_authentication.dart';
 import 'package:meta/meta.dart';
@@ -24,29 +24,15 @@ class AuthScreenBloc extends Bloc<AuthScreenEvent, AuthScreenState> {
     AuthScreenEvent event,
   ) async* {
     if (event is EmailAuthenticationEvent) {
-      final email = event.email;
-      final password = event.password;
+      try {
+        final user = await _emailAuthentication(event.email, event.password);
 
-      // validation
-      if (email.isEmpty || password.isEmpty)
-        yield AuthFailedState("Please fill out all fields!");
-      else if (!RegExMatchers.email.hasMatch(email))
-        yield AuthFailedState("Invalid email format!");
-      else if (!RegExMatchers.password.hasMatch(password))
-        yield AuthFailedState("Invalid password format!");
-      else {
-        final optionalUser = await _emailAuthentication(email, password);
-
-        if (optionalUser.isEmpty)
-          yield AuthFailedState("Email or password is incorrect!");
-        else {
-          final user = optionalUser.value;
-
-          if (await user.isVerified())
-            yield AuthSuccessState(user);
-          else
-            yield AuthNotVerifiedState(user);
-        }
+        if (!await user.isVerified())
+          yield AuthNotVerifiedState(user);
+        else
+          yield AuthSuccessState(user);
+      } on BaseError catch (e) {
+        yield AuthFailedState(e.message);
       }
     }
   }
