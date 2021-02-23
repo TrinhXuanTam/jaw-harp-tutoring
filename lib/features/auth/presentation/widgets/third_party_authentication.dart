@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jews_harp/core/constants.dart';
+import 'package:jews_harp/core/constants/icons.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/features/auth/domain/use_cases/facebook_authentication.dart';
 import 'package:jews_harp/features/auth/presentation/widgets/third_party_auth_button.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jews_harp/core/constants.dart';
+import 'package:jews_harp/core/constants/routes.dart';
+import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/l10n.dart';
 
 /// Sign up link
@@ -9,7 +10,7 @@ class SignUpText extends StatelessWidget {
     final AppLocalizations localizations = AppLocalizations.of(context);
 
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, EMAIL_VERIFICATION_UP_SCREEN_ROUTE),
+      onTap: () => Navigator.pushNamed(context, SIGN_UP_SCREEN_ROUTE),
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         child: RichText(

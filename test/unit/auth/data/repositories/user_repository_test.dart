@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:jews_harp/core/constants.dart';
+import 'package:jews_harp/core/constants/test_environments.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/features/auth/data/data_source_interfaces/local/authentication_local.dart';
 import 'package:jews_harp/features/auth/data/data_source_interfaces/remote/authentication_remote.dart';

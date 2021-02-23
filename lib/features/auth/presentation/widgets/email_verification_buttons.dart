@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jews_harp/core/constants.dart';
+import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';

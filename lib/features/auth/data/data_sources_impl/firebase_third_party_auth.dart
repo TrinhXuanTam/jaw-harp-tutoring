@@ -16,12 +16,12 @@ class FirebaseThirdPartyAuth extends IThirdPartyAuthenticationDataSource {
 
     final res = await facebookLogin.logIn(["public_profile", "email"]);
 
-    switch (res.status) {
-      case FacebookLoginStatus.loggedIn:
-        break;
-      case FacebookLoginStatus.cancelledByUser:
-      case FacebookLoginStatus.error:
-        break;
-    }
+    if (res.status == FacebookLoginStatus.loggedIn) {
+      final FacebookAccessToken accessToken = res.accessToken;
+      final AuthCredential facebookCredential = FacebookAuthProvider.credential(accessToken.token);
+      final UserCredential firebaseCredential = await _auth.signInWithCredential(facebookCredential);
+      return Optional.of(UserModel.fromFirebaseCredentials(firebaseCredential));
+    } else
+      return Optional.empty();
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jews_harp/core/constants.dart';
+import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/one_button_alert_dialog.dart';
@@ -24,12 +24,9 @@ class EmailVerificationScreen extends StatelessWidget {
 
     if (state is EmailVerificationClosedState)
       Navigator.pop(ctx);
-    else if (state is EmailVerifiedState) {
-      BlocProvider.of<AuthBloc>(ctx).add(
-        UserAuthenticatedEvent(this.user),
-      );
-      Navigator.pop(ctx);
-    } else if (state is EmailNotVerifiedState)
+    else if (state is EmailVerifiedState)
+      BlocProvider.of<AuthBloc>(ctx).add(UserAuthenticatedEvent(this.user));
+    else if (state is EmailNotVerifiedState)
       showDialog(
         context: ctx,
         child: OneButtonAlertDialog(
