@@ -4,15 +4,15 @@ before_script:
   - flutter pub get
 
 stages:
-  - analyze
   - test
-
-analyze:
-  stage: analyze
-  script:
-    - flutter analyze
+  - analyze
 
 test:
   stage: test
   script:
     - flutter test --coverage
+
+analyze:
+  stage: analyze
+  script:
+    - flutter analyze
