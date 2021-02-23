@@ -52,9 +52,9 @@ class EntryPoint extends StatelessWidget {
           return supportedLocales.first;
         },
         routes: {
-          AuthenticationScreen.route: (_) => AuthenticationScreen(),
-          SignUpScreen.route: (_) => SignUpScreen(),
-          EmailVerificationScreen.route: (ctx) => EmailVerificationScreen(user: ModalRoute.of(ctx).settings.arguments),
+          AUTH_SCREEN_ROUTE: (_) => AuthenticationScreen(),
+          SIGN_UP_SCREEN_ROUTE: (_) => SignUpScreen(),
+          EMAIL_VERIFICATION_UP_SCREEN_ROUTE: (ctx) => EmailVerificationScreen(user: ModalRoute.of(ctx).settings.arguments),
         },
         home: BlocBuilder<AuthBloc, AuthState>(
           builder: (ctx, state) {

@@ -4,23 +4,17 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
-import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/one_button_alert_dialog.dart';
-import 'package:jews_harp/core/widgets/rounded_button.dart';
-import 'package:jews_harp/core/widgets/rounded_password_field.dart';
-import 'package:jews_harp/core/widgets/rounded_text_field.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/sign_up_screen/sign_up_bloc.dart';
-import 'package:jews_harp/features/auth/presentation/screens/email_verification_screen.dart';
+import 'package:jews_harp/features/auth/presentation/widgets/sign_up_form.dart';
 import 'package:jews_harp/features/auth/presentation/widgets/title_with_subtitle.dart';
 
 class SignUpScreen extends StatelessWidget {
-  static const String route = "/signUp";
-
   void _signUpBlocListener(BuildContext ctx, SignUpState state) {
     if (state is SignUpSuccessState)
       Navigator.pushReplacementNamed(
         ctx,
-        EmailVerificationScreen.route,
+        EMAIL_VERIFICATION_UP_SCREEN_ROUTE,
         arguments: state.user,
       );
     else if (state is SignUpFailedState)
@@ -72,7 +66,7 @@ class SignUpScreen extends StatelessWidget {
                       subtitleText: "create a new account",
                     ),
                     SizedBox(height: 20),
-                    _SignUpForm(),
+                    SignUpForm(),
                   ],
                 ),
               ],
@@ -80,61 +74,6 @@ class SignUpScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _SignUpForm extends StatefulWidget {
-  @override
-  _SignUpFormState createState() => _SignUpFormState();
-}
-
-class _SignUpFormState extends State<_SignUpForm> {
-  final nameController = TextEditingController();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final passwordRepeatController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    final AppLocalizations localizations = AppLocalizations.of(context);
-
-    return Column(
-      children: [
-        RoundedTextField(
-          icon: Icons.person,
-          placeholderText: localizations.translate("Full Name"),
-          controller: nameController,
-        ),
-        SizedBox(height: 10),
-        RoundedTextField(
-          icon: Icons.mail,
-          placeholderText: localizations.translate("Email"),
-          controller: emailController,
-        ),
-        SizedBox(height: 10),
-        RoundedPasswordField(
-          placeholderText: localizations.translate("Password"),
-          controller: passwordController,
-        ),
-        SizedBox(height: 10),
-        RoundedPasswordField(
-          placeholderText: localizations.translate("Repeat Password"),
-          controller: passwordRepeatController,
-        ),
-        SizedBox(height: 10),
-        RoundedButton(
-          text: localizations.translate("Sign Up"),
-          onPressed: () => BlocProvider.of<SignUpBloc>(context).add(
-            SignUpButtonPressedEvent(
-              nameController.text,
-              emailController.text,
-              passwordController.text,
-              passwordRepeatController.text,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

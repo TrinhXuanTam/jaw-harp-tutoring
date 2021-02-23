@@ -19,3 +19,8 @@ const String USER_REPOSITORY_TEST_ENV = "user_repository_test_env";
 const String EMAIL_AUTHENTICATION_TEST_ENV = "email_authentication_test_env";
 const String OFFLINE_AUTHENTICATION_TEST_ENV = "offline_authentication_test_env";
 const String SIGN_UP_TEST_ENV = "sign_up_test_env";
+
+// Routes
+const String AUTH_SCREEN_ROUTE = "/authentication";
+const String SIGN_UP_SCREEN_ROUTE = "/signUp";
+const String EMAIL_VERIFICATION_UP_SCREEN_ROUTE = "/emailVerification";
