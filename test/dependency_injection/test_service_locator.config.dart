@@ -58,6 +58,9 @@ GetIt testInitGetIt(
   gh.lazySingleton<IAuthenticationRemoteDataSource>(() => FirebaseAuthRemote(),
       registerFor: {_prod});
   gh.lazySingleton<IThirdPartyAuthenticationDataSource>(
+      () => IThirdPartyAuthenticationDataSourceMock(),
+      registerFor: {_user_repository_test_env});
+  gh.lazySingleton<IThirdPartyAuthenticationDataSource>(
       () => FirebaseThirdPartyAuth(),
       registerFor: {_prod});
   gh.lazySingleton<IUserRepository>(() => IUserRepositoryMock(), registerFor: {

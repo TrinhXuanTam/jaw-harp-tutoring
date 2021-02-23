@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/errors/user_not_signed_in_error.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/use_cases/offline_authentication.dart';
 import 'package:meta/meta.dart';
@@ -21,13 +22,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthEvent event,
   ) async* {
     if (event is SplashScreenDisplayedEvent) {
-      // Check if user is authenticated
-      var user = await _offlineAuth();
-
-      if (user.isEmpty)
+      try {
+        var user = await _offlineAuth();
+        yield AuthenticatedState(user);
+      } on UserNotSignedInError {
         yield UnauthenticatedState();
-      else
-        yield AuthenticatedState(user.value);
+      }
     } else if (event is UserAuthenticatedEvent) {
       yield AuthenticatedState(event.user);
     }

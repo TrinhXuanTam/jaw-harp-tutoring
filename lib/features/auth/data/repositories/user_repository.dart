@@ -1,12 +1,8 @@
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/core/constants.dart';
-import 'package:jews_harp/core/errors/email_already_used_error.dart';
-import 'package:jews_harp/core/errors/user_not_verified_error.dart';
-import 'package:jews_harp/core/errors/wrong_email_or_password_error.dart';
 import 'package:jews_harp/features/auth/data/data_source_interfaces/remote/authentication_remote.dart';
 import 'package:jews_harp/features/auth/data/data_source_interfaces/remote/third_party_authentication.dart';
 import 'package:optional/optional_internal.dart';
-import 'package:jews_harp/core/errors/user_not_signed_in_error.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
 import 'package:jews_harp/features/auth/data/data_source_interfaces/local/authentication_local.dart';
@@ -26,39 +22,22 @@ class UserRepository extends IUserRepository {
   }
 
   @override
-  Future<Optional<User>> getCurrentUser() async {
-    try {
-      final currentUser = await _localAuth.getCurrentUser();
-      return Optional.of(currentUser);
-    } on UserNotSignedInError {
-      return Optional.empty();
-    } on UserNotVerifiedError {
-      return Optional.empty();
-    }
+  Future<Optional<User>> getCurrentUser() {
+    return _localAuth.getCurrentUser();
   }
 
   @override
-  Future<Optional<User>> getUserWithEmailAndPassword(String email, String password) async {
-    try {
-      final user = await _remoteAuth.getUser(email, password);
-      return Optional.of(user);
-    } on WrongEmailOrPasswordError {
-      return Optional.empty();
-    }
+  Future<Optional<User>> getUserWithEmailAndPassword(String email, String password) {
+    return _remoteAuth.getUser(email, password);
   }
 
   @override
-  Future<Optional<User>> createUser(String name, String email, String password) async {
-    try {
-      final user = await _remoteAuth.createNewUser(name, email, password);
-      return Optional.of(user);
-    } on EmailAlreadyUsedError {
-      return Optional.empty();
-    }
+  Future<Optional<User>> createUser(String name, String email, String password) {
+    return _remoteAuth.createNewUser(name, email, password);
   }
 
   @override
-  Future<Optional<User>> getUserWithFacebook() async {
-    return Optional.of(await _thirdPartyAuth.getUserWithFacebook());
+  Future<Optional<User>> getUserWithFacebook() {
+    return _thirdPartyAuth.getUserWithFacebook();
   }
 }
