@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants.dart';
+import 'package:jews_harp/core/dependency_injection/service_locator.dart';
+import 'package:jews_harp/features/auth/domain/use_cases/facebook_authentication.dart';
 import 'package:jews_harp/features/auth/presentation/widgets/third_party_auth_button.dart';
 
 class ThirdPartyAuthOptions extends StatelessWidget {
@@ -19,7 +21,10 @@ class ThirdPartyAuthOptions extends StatelessWidget {
             Colors.blueAccent,
             Colors.lightBlueAccent,
           ],
-          onPressed: () {},
+          onPressed: () {
+            print("pressed");
+            serviceLocator<FacebookAuthentication>()();
+          },
         ),
         // Google auth
         ThirdPartyAuthButton(

@@ -4,6 +4,7 @@ import 'package:jews_harp/core/errors/email_already_used_error.dart';
 import 'package:jews_harp/core/errors/user_not_verified_error.dart';
 import 'package:jews_harp/core/errors/wrong_email_or_password_error.dart';
 import 'package:jews_harp/features/auth/data/data_source_interfaces/remote/authentication_remote.dart';
+import 'package:jews_harp/features/auth/data/data_source_interfaces/remote/third_party_authentication.dart';
 import 'package:optional/optional_internal.dart';
 import 'package:jews_harp/core/errors/user_not_signed_in_error.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
@@ -14,8 +15,9 @@ import 'package:jews_harp/features/auth/data/data_source_interfaces/local/authen
 class UserRepository extends IUserRepository {
   final IAuthenticationRemoteDataSource _remoteAuth;
   final IAuthenticationLocalDataSource _localAuth;
+  final IThirdPartyAuthenticationDataSource _thirdPartyAuth;
 
-  UserRepository(this._remoteAuth, this._localAuth);
+  UserRepository(this._remoteAuth, this._localAuth, this._thirdPartyAuth);
 
   @override
   Future<bool> userIsAdmin(User user) async {
@@ -53,5 +55,10 @@ class UserRepository extends IUserRepository {
     } on EmailAlreadyUsedError {
       return Optional.empty();
     }
+  }
+
+  @override
+  Future<Optional<User>> getUserWithFacebook() async {
+    return Optional.of(await _thirdPartyAuth.getUserWithFacebook());
   }
 }

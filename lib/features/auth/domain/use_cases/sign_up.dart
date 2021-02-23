@@ -16,6 +16,8 @@ class SignUp {
     String email,
     String password,
   ) async {
+
+
     return _userRepository.createUser(name, email, password);
   }
 }
