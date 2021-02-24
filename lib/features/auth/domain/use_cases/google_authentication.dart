@@ -4,13 +4,13 @@ import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
 
 @LazySingleton(env: [Environment.prod, Environment.dev])
-class FacebookAuthentication {
+class GoogleAuthentication {
   final IUserRepository _userRepository;
 
-  FacebookAuthentication(this._userRepository);
+  GoogleAuthentication(this._userRepository);
 
   Future<User> call() async {
-    final user = await _userRepository.getUserWithFacebook();
+    final user = await _userRepository.getUserWithGoogle();
 
     if (user.isEmpty) throw ThirdPartyAuthenticationError("Facebook authentication failed");
 

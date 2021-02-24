@@ -13,6 +13,9 @@ abstract class IUserRepository {
   /// Sign user in with Facebook account
   Future<Optional<User>> getUserWithFacebook();
 
+  /// Sign user in with Google account
+  Future<Optional<User>> getUserWithGoogle();
+
   /// Sign up user
   Future<Optional<User>> createUser(String name, String email, String password);
 }

@@ -12,12 +12,12 @@ abstract class User extends Equatable {
     @required this.email,
   });
 
-  @override
-  List<Object> get props => [this.uid, this.name, this.email];
-
   Future<bool> isVerified();
 
   Future<void> sendVerificationEmail();
 
   Future<void> signOut();
+
+  @override
+  List<Object> get props => [this.uid, this.name, this.email];
 }

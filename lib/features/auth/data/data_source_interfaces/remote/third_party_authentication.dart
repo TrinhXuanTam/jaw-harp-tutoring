@@ -3,4 +3,6 @@ import 'package:optional/optional.dart';
 
 abstract class IThirdPartyAuthenticationDataSource {
   Future<Optional<UserModel>> getUserWithFacebook();
+
+  Future<Optional<UserModel>> getUserWithGoogle();
 }

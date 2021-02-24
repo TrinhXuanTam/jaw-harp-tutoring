@@ -18,11 +18,6 @@ class FirebaseAuthLocal extends IAuthenticationLocalDataSource {
     // User not cached in the current device
     if (user == null) return Optional.empty();
 
-    // User found but is not verified
-    if (!user.emailVerified) {
-      _auth.signOut();
-      return Optional.empty();
-    }
     return Optional.of(UserModel.fromFirebaseUser(user));
   }
 }

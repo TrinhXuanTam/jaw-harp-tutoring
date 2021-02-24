@@ -40,4 +40,9 @@ class UserRepository extends IUserRepository {
   Future<Optional<User>> getUserWithFacebook() {
     return _thirdPartyAuth.getUserWithFacebook();
   }
+
+  @override
+  Future<Optional<User>> getUserWithGoogle() {
+    return _thirdPartyAuth.getUserWithGoogle();
+  }
 }

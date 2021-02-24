@@ -14,6 +14,7 @@ import 'package:jews_harp/features/auth/data/data_sources_impl/firebase_auth_rem
 import 'package:jews_harp/features/auth/data/data_sources_impl/firebase_third_party_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/features/auth/domain/use_cases/google_authentication.dart';
 import 'package:jews_harp/core/BLoCs/hide_field_input/hide_field_input_bloc.dart';
 import 'package:jews_harp/features/auth/data/data_source_interfaces/local/authentication_local.dart';
 import 'package:jews_harp/features/auth/data/data_source_interfaces/remote/authentication_remote.dart';
@@ -22,6 +23,7 @@ import 'package:jews_harp/features/auth/domain/repository_interfaces/user_reposi
 import 'package:jews_harp/features/auth/domain/use_cases/offline_authentication.dart';
 import 'package:jews_harp/features/auth/domain/use_cases/sign_up.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/sign_up_screen/sign_up_bloc.dart';
+import 'package:jews_harp/features/auth/presentation/BLoCs/third_party_authentication/third_party_auth_bloc.dart';
 import 'package:jews_harp/features/auth/data/repositories/user_repository.dart';
 
 /// Environment names
@@ -73,6 +75,13 @@ GetIt initGetIt(
       registerFor: {_prod, _dev, _email_authentication_test_env});
   gh.lazySingleton<FacebookAuthentication>(
       () => FacebookAuthentication(get<IUserRepository>()),
+      registerFor: {_prod, _dev});
+  gh.lazySingleton<GoogleAuthentication>(
+      () => GoogleAuthentication(get<IUserRepository>()),
+      registerFor: {_prod, _dev});
+  gh.factory<ThirdPartyAuthBloc>(
+      () => ThirdPartyAuthBloc(
+          get<FacebookAuthentication>(), get<GoogleAuthentication>()),
       registerFor: {_prod, _dev});
   gh.factory<AuthScreenBloc>(() => AuthScreenBloc(get<EmailAuthentication>()),
       registerFor: {_prod, _dev});

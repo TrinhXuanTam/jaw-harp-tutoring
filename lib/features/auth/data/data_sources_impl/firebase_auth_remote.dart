@@ -31,7 +31,8 @@ class FirebaseAuthRemote extends IAuthenticationRemoteDataSource {
       // Save full name
       user.updateProfile(displayName: name);
       return Optional.of(UserModel.fromFirebaseUser(user));
-    } on FirebaseAuthException {
+    } on FirebaseAuthException catch(e) {
+      print(e.message);
       return Optional.empty();
     }
   }

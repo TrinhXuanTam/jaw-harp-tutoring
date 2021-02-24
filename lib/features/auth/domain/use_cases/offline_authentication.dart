@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/core/constants/test_environments.dart';
 import 'package:jews_harp/core/errors/user_not_signed_in_error.dart';
+import 'package:jews_harp/core/errors/user_not_verified_error.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
 
@@ -15,6 +16,8 @@ class OfflineAuthentication {
     final user = await _userRepository.getCurrentUser();
 
     if (user.isEmpty) throw UserNotSignedInError();
+
+    if (!await user.value.isVerified()) throw UserNotVerifiedError();
 
     return user.value;
   }

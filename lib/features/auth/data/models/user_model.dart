@@ -30,6 +30,13 @@ class UserModel extends User {
   Future<bool> isVerified() async {
     await _auth.currentUser.reload();
     final user = _auth.currentUser;
+
+    // trust Facebook auth provider
+    if (user.providerData[0].providerId == "facebook.com") return true;
+
+    // trust Google auth provider
+    if (user.providerData[0].providerId == "google.com") return true;
+
     return user.emailVerified;
   }
 
