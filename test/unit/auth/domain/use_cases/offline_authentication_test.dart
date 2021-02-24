@@ -19,8 +19,12 @@ void main() {
   final offlineAuthentication = testServiceLocator<OfflineAuthentication>();
 
   test("[OfflineAuthentication] should return user data when user is returned from local data source", () async {
+    final mock = UserMock(uid, name, email, password);
+
+    when(mock.isVerified()).thenAnswer((_) async => true);
+
     when(testServiceLocator<IUserRepository>().getCurrentUser()).thenAnswer(
-      (_) async => Optional.of(UserMock(uid, name, email, password)),
+      (_) async => Optional.of(mock),
     );
 
     final user = await offlineAuthentication();

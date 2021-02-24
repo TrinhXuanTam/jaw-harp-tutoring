@@ -10,7 +10,7 @@ stages:
 test:
   stage: test
   script:
-    - flutter test --coverage
+    - flutter test
 
 analyze:
   stage: analyze

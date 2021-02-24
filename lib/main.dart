@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:jews_harp/features/auth/presentation/screens/password_reset_screen.dart';
+import 'package:jews_harp/features/auth/presentation/screens/password_reset_sent_screen.dart';
 import 'core/constants/routes.dart';
 import 'core/constants/settings.dart';
 import 'core/dependency_injection/service_locator.dart';
@@ -88,6 +90,8 @@ class _EntryPoint extends StatelessWidget {
             HOME_SCREEN_ROUTE: (_) => DummyScreen(),
             AUTH_SCREEN_ROUTE: (_) => AuthenticationScreen(),
             SIGN_UP_SCREEN_ROUTE: (_) => SignUpScreen(),
+            PASSWORD_RESET_SCREEN_ROUTE: (_) => PasswordResetScreen(),
+            PASSWORD_RESET_SENT_SCREEN_ROUTE: (_) => PasswordResetSentScreen(),
             EMAIL_VERIFICATION_UP_SCREEN_ROUTE: (ctx) => EmailVerificationScreen(user: ModalRoute.of(ctx).settings.arguments),
           },
           initialRoute: SPLASH_SCREEN_ROUTE,
