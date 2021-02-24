@@ -16,9 +16,8 @@ class UserRepository extends IUserRepository {
   UserRepository(this._remoteAuth, this._localAuth, this._thirdPartyAuth);
 
   @override
-  Future<bool> userIsAdmin(User user) async {
-    // TODO
-    return false;
+  Future<Optional<User>> createUser(String name, String email, String password) {
+    return _remoteAuth.createNewUser(name, email, password);
   }
 
   @override
@@ -32,11 +31,6 @@ class UserRepository extends IUserRepository {
   }
 
   @override
-  Future<Optional<User>> createUser(String name, String email, String password) {
-    return _remoteAuth.createNewUser(name, email, password);
-  }
-
-  @override
   Future<Optional<User>> getUserWithFacebook() {
     return _thirdPartyAuth.getUserWithFacebook();
   }
@@ -44,5 +38,10 @@ class UserRepository extends IUserRepository {
   @override
   Future<Optional<User>> getUserWithGoogle() {
     return _thirdPartyAuth.getUserWithGoogle();
+  }
+
+  @override
+  Future<bool> resetPassword(String email) {
+    return _remoteAuth.resetPassword(email);
   }
 }

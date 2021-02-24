@@ -21,6 +21,8 @@ import 'package:jews_harp/features/auth/data/data_source_interfaces/remote/authe
 import 'package:jews_harp/features/auth/data/data_source_interfaces/remote/third_party_authentication.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
 import 'package:jews_harp/features/auth/domain/use_cases/offline_authentication.dart';
+import 'package:jews_harp/features/auth/domain/use_cases/password_reset.dart';
+import 'package:jews_harp/features/auth/presentation/BLoCs/password_reset/password_reset_bloc.dart';
 import 'package:jews_harp/features/auth/domain/use_cases/sign_up.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/sign_up_screen/sign_up_bloc.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/third_party_authentication/third_party_auth_bloc.dart';
@@ -80,6 +82,10 @@ GetIt testInitGetIt(
   gh.lazySingleton<OfflineAuthentication>(
       () => OfflineAuthentication(get<IUserRepository>()),
       registerFor: {_prod, _dev, _offline_authentication_test_env});
+  gh.lazySingleton<PasswordReset>(() => PasswordReset(get<IUserRepository>()),
+      registerFor: {_prod, _dev});
+  gh.factory<PasswordResetBloc>(() => PasswordResetBloc(get<PasswordReset>()),
+      registerFor: {_prod, _dev});
   gh.lazySingleton<SignUp>(() => SignUp(get<IUserRepository>()),
       registerFor: {_prod, _dev, _sign_up_test_env});
   gh.factory<SignUpBloc>(() => SignUpBloc(get<SignUp>()),

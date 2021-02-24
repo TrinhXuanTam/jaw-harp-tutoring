@@ -2,7 +2,8 @@ import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:optional/optional_internal.dart';
 
 abstract class IUserRepository {
-  Future<bool> userIsAdmin(User user);
+  /// Sign up user
+  Future<Optional<User>> createUser(String name, String email, String password);
 
   /// Get signed in user
   Future<Optional<User>> getCurrentUser();
@@ -16,6 +17,6 @@ abstract class IUserRepository {
   /// Sign user in with Google account
   Future<Optional<User>> getUserWithGoogle();
 
-  /// Sign up user
-  Future<Optional<User>> createUser(String name, String email, String password);
+  /// Reset user password
+  Future<bool> resetPassword(String email);
 }

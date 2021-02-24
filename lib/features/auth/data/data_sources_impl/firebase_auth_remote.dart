@@ -31,9 +31,18 @@ class FirebaseAuthRemote extends IAuthenticationRemoteDataSource {
       // Save full name
       user.updateProfile(displayName: name);
       return Optional.of(UserModel.fromFirebaseUser(user));
-    } on FirebaseAuthException catch(e) {
-      print(e.message);
+    } on FirebaseAuthException {
       return Optional.empty();
+    }
+  }
+
+  @override
+  Future<bool> resetPassword(String email, {String newPassword}) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      return true;
+    } on FirebaseAuthException {
+      return false;
     }
   }
 }

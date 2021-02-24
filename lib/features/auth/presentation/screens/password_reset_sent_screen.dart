@@ -31,7 +31,7 @@ class PasswordResetSentScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      localizations.translate("We have sent a password recover instructions to your email."),
+                      localizations.translate("We have sent password recover instructions to your email."),
                       textAlign: TextAlign.justify,
                       style: TextStyle(fontSize: 15),
                     ),
