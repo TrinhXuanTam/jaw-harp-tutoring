@@ -12,3 +12,9 @@ class UserAuthenticatedEvent extends AuthEvent {
 
   UserAuthenticatedEvent(this.user);
 }
+
+class UserSignOutEvent extends AuthEvent {
+  final User user;
+
+  UserSignOutEvent(this.user);
+}

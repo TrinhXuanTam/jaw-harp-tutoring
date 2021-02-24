@@ -30,6 +30,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     } else if (event is UserAuthenticatedEvent) {
       yield AuthenticatedState(event.user);
+    } else if (event is UserSignOutEvent) {
+      event.user.signOut();
+      yield UnauthenticatedState();
     }
   }
 }
