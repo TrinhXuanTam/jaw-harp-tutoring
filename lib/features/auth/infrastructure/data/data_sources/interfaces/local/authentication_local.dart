@@ -1,4 +1,4 @@
-import 'package:jews_harp/features/auth/data/models/user_model.dart';
+import 'package:jews_harp/features/auth/infrastructure/data/models/user_model.dart';
 import 'package:optional/optional.dart';
 
 /// Authentication local data source interface

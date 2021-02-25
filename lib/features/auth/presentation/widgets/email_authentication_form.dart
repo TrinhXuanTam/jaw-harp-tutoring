@@ -4,7 +4,7 @@ import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/core/widgets/rounded_password_field.dart';
 import 'package:jews_harp/core/widgets/rounded_text_field.dart';
-import 'package:jews_harp/features/auth/presentation/BLoCs/authentication_screen/auth_screen_bloc.dart';
+import 'package:jews_harp/features/auth/application/BLoCs/authentication_screen/auth_screen_bloc.dart';
 
 /// Email authentication form
 class EmailAuthenticationForm extends StatefulWidget {

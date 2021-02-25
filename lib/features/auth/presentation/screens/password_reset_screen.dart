@@ -8,7 +8,7 @@ import 'package:jews_harp/core/widgets/one_button_alert_dialog.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/core/widgets/rounded_text_field.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
-import 'package:jews_harp/features/auth/presentation/BLoCs/password_reset/password_reset_bloc.dart';
+import 'package:jews_harp/features/auth/application/BLoCs/password_reset/password_reset_bloc.dart';
 import 'package:jews_harp/features/auth/presentation/widgets/title_with_icon.dart';
 
 class PasswordResetScreen extends StatefulWidget {
@@ -66,14 +66,10 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
                 ),
                 Container(
                   width: size.width * 0.7,
-                  child: Column(
-                    children: [
-                      Text(
-                        localizations.translate("Enter the email associated with your account and we'll send an email with instructions to reset your password."),
-                        textAlign: TextAlign.justify,
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    ],
+                  child: Text(
+                    localizations.translate("Enter the email associated with your account and we'll send an email with instructions to reset your password."),
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(fontSize: 15),
                   ),
                 ),
                 SizedBox(height: 20),

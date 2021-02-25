@@ -2,8 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:jews_harp/core/constants/test_environments.dart';
 import 'package:jews_harp/core/errors/email_already_used_error.dart';
 import 'package:jews_harp/core/errors/validation_error.dart';
+import 'package:jews_harp/features/auth/application/use_cases/sign_up.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
-import 'package:jews_harp/features/auth/domain/use_cases/sign_up.dart';
 import 'package:mockito/mockito.dart';
 import 'package:optional/optional_internal.dart';
 

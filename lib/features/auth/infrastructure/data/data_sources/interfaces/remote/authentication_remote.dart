@@ -1,4 +1,4 @@
-import 'package:jews_harp/features/auth/data/models/user_model.dart';
+import 'package:jews_harp/features/auth/infrastructure/data/models/user_model.dart';
 import 'package:optional/optional.dart';
 
 /// Authentication remote data source interface
@@ -9,4 +9,6 @@ abstract class IAuthenticationRemoteDataSource {
 
   /// Reset user password in case of current password is lost
   Future<bool> resetPassword(String email);
+
+  Future<Set<String>> getAuthProviders(String email);
 }

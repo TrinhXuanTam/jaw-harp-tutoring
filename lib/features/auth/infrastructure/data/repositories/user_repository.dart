@@ -1,8 +1,8 @@
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/core/constants/test_environments.dart';
-import 'package:jews_harp/features/auth/data/data_sources/interfaces/local/authentication_local.dart';
-import 'package:jews_harp/features/auth/data/data_sources/interfaces/remote/authentication_remote.dart';
-import 'package:jews_harp/features/auth/data/data_sources/interfaces/remote/third_party_authentication.dart';
+import 'package:jews_harp/features/auth/infrastructure/data/data_sources/interfaces/local/authentication_local.dart';
+import 'package:jews_harp/features/auth/infrastructure/data/data_sources/interfaces/remote/authentication_remote.dart';
+import 'package:jews_harp/features/auth/infrastructure/data/data_sources/interfaces/remote/third_party_authentication.dart';
 import 'package:optional/optional_internal.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
@@ -43,5 +43,10 @@ class UserRepository extends IUserRepository {
   @override
   Future<bool> resetPassword(String email) {
     return _remoteAuth.resetPassword(email);
+  }
+
+  @override
+  Future<Set<String>> getAuthProviders(String email) {
+    return _remoteAuth.getAuthProviders(email);
   }
 }

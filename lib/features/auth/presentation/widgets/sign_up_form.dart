@@ -4,7 +4,7 @@ import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/core/widgets/rounded_password_field.dart';
 import 'package:jews_harp/core/widgets/rounded_text_field.dart';
-import 'package:jews_harp/features/auth/presentation/BLoCs/sign_up_screen/sign_up_bloc.dart';
+import 'package:jews_harp/features/auth/application/BLoCs/sign_up_screen/sign_up_bloc.dart';
 
 class SignUpForm extends StatefulWidget {
   @override

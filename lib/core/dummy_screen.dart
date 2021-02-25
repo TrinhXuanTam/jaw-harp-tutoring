@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
+import 'package:jews_harp/features/auth/application/BLoCs/login_screen_redirect/auth_bloc.dart';
 
 class DummyScreen extends StatelessWidget {
   @override

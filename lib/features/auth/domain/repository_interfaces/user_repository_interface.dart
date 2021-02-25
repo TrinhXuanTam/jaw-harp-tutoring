@@ -19,4 +19,7 @@ abstract class IUserRepository {
 
   /// Reset user password
   Future<bool> resetPassword(String email);
+
+  /// Get authentication providers for email
+  Future<Set<String>> getAuthProviders(String email);
 }

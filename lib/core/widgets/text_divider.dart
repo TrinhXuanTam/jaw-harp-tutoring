@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 
+import '../l10n.dart';
+
 class TextDivider extends StatelessWidget {
   final String text;
 
@@ -22,6 +24,7 @@ class TextDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final localizations = AppLocalizations.of(context);
 
     return Container(
       width: size.width * 0.8,
@@ -33,7 +36,7 @@ class TextDivider extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Text(
-                this.text,
+                localizations.translate(this.text),
                 style: TextStyle(
                   color: BASE_COLOR,
                   fontWeight: FontWeight.w600,

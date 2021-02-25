@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jews_harp/core/constants/test_environments.dart';
 import 'package:jews_harp/core/errors/user_not_signed_in_error.dart';
+import 'package:jews_harp/features/auth/application/use_cases/offline_authentication.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
-import 'package:jews_harp/features/auth/domain/use_cases/offline_authentication.dart';
 import 'package:mockito/mockito.dart';
 import 'package:optional/optional.dart';
 

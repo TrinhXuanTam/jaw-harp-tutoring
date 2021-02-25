@@ -1,10 +1,10 @@
 import 'package:jews_harp/core/constants/test_environments.dart';
-import 'package:jews_harp/features/auth/data/data_sources/interfaces/local/authentication_local.dart';
-import 'package:jews_harp/features/auth/data/data_sources/interfaces/remote/authentication_remote.dart';
-import 'package:jews_harp/features/auth/data/data_sources/interfaces/remote/third_party_authentication.dart';
-import 'package:jews_harp/features/auth/data/models/user_model.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
+import 'package:jews_harp/features/auth/infrastructure/data/data_sources/interfaces/local/authentication_local.dart';
+import 'package:jews_harp/features/auth/infrastructure/data/data_sources/interfaces/remote/authentication_remote.dart';
+import 'package:jews_harp/features/auth/infrastructure/data/data_sources/interfaces/remote/third_party_authentication.dart';
+import 'package:jews_harp/features/auth/infrastructure/data/models/user_model.dart';
 import 'package:mockito/mockito.dart';
 import 'package:injectable/injectable.dart' as Injectable;
 

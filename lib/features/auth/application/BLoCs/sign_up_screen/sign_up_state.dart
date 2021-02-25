@@ -18,3 +18,10 @@ class SignUpFailedState extends SignUpState {
 
   SignUpFailedState(this.message);
 }
+
+/// Multiple providers are found
+class MultipleProvidersState extends SignUpState {
+  final Set<String> providers;
+
+  MultipleProvidersState(this.providers);
+}

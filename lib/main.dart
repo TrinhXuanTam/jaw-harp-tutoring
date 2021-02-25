@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:jews_harp/features/auth/presentation/screens/link_auth_providers_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_sent_screen.dart';
 import 'core/constants/routes.dart';
@@ -10,7 +11,7 @@ import 'core/constants/settings.dart';
 import 'core/dependency_injection/service_locator.dart';
 import 'core/dummy_screen.dart';
 import 'core/l10n.dart';
-import 'features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
+import 'features/auth/application/BLoCs/login_screen_redirect/auth_bloc.dart';
 import 'features/auth/presentation/screens/authentication_screen.dart';
 import 'features/auth/presentation/screens/email_verification_screen.dart';
 import 'features/auth/presentation/screens/sign_up_screen.dart';
@@ -93,6 +94,14 @@ class _EntryPoint extends StatelessWidget {
             PASSWORD_RESET_SCREEN_ROUTE: (_) => PasswordResetScreen(),
             PASSWORD_RESET_SENT_SCREEN_ROUTE: (_) => PasswordResetSentScreen(),
             EMAIL_VERIFICATION_UP_SCREEN_ROUTE: (ctx) => EmailVerificationScreen(user: ModalRoute.of(ctx).settings.arguments),
+            LINK_AUTH_PROVIDERS_SCREEN_ROUTE: (ctx) {
+              final Map<String, Object> map = ModalRoute.of(ctx).settings.arguments;
+              return LinkAuthProvidersScreen(
+                providers: map["providers"],
+                onSuccess: map["onSuccess"],
+                onFailure: map["onFailure"],
+              );
+            },
           },
           initialRoute: SPLASH_SCREEN_ROUTE,
         ),

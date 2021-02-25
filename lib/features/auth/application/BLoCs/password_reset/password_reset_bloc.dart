@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/core/errors/base_error.dart';
-import 'package:jews_harp/features/auth/domain/use_cases/password_reset.dart';
+import 'package:jews_harp/features/auth/application/use_cases/password_reset.dart';
 import 'package:meta/meta.dart';
 
 part 'password_reset_event.dart';
