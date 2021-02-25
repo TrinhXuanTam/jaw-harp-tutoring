@@ -3,6 +3,7 @@ import 'package:jews_harp/core/constants/test_environments.dart';
 import 'package:jews_harp/core/errors/email_already_used_error.dart';
 import 'package:jews_harp/core/errors/validation_error.dart';
 import 'package:jews_harp/features/auth/application/use_cases/sign_up.dart';
+import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
 import 'package:mockito/mockito.dart';
 import 'package:optional/optional_internal.dart';
@@ -20,7 +21,7 @@ void main() {
   final signUp = testServiceLocator<SignUp>();
 
   when(testServiceLocator<IUserRepository>().createUser(name, email, password)).thenAnswer(
-    (_) async => Optional.of(UserMock(uid, name, email, password)),
+    (_) async => Optional.of(User(uid: uid, name: name, email: email)),
   );
 
   test("[SignUp] should return user data when credentials are correct", () async {

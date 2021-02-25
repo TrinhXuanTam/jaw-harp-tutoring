@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/icons.dart';
-import 'package:jews_harp/features/auth/application/BLoCs/login_screen_redirect/auth_bloc.dart';
-import 'package:jews_harp/features/auth/application/BLoCs/third_party_authentication/third_party_auth_bloc.dart';
+import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
+import 'package:jews_harp/features/auth/presentation/BLoCs/third_party_authentication/third_party_auth_bloc.dart';
 
 class ThirdPartyAuthOptions extends StatelessWidget {
   final double _iconWidth = 45;

@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
-import 'package:jews_harp/features/auth/application/BLoCs/email_verification/email_verification_bloc.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
+import 'package:jews_harp/features/auth/presentation/BLoCs/email_verification/email_verification_bloc.dart';
 
 /// Continue and "send verification email" buttons
 class EmailVerificationButtons extends StatelessWidget {

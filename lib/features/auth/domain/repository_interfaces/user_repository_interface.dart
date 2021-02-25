@@ -17,9 +17,6 @@ abstract class IUserRepository {
   /// Sign user in with Google account
   Future<Optional<User>> getUserWithGoogle();
 
-  /// Reset user password
-  Future<bool> resetPassword(String email);
-
   /// Get authentication providers for email
   Future<Set<String>> getAuthProviders(String email);
 }

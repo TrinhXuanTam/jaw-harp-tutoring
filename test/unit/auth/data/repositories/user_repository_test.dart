@@ -2,12 +2,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:jews_harp/core/constants/test_environments.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
-import 'package:jews_harp/features/auth/infrastructure/data/data_sources/interfaces/local/authentication_local.dart';
-import 'package:jews_harp/features/auth/infrastructure/data/data_sources/interfaces/remote/authentication_remote.dart';
+import 'package:jews_harp/features/auth/infrastructure/DTO/user_DTO.dart';
+import 'package:jews_harp/features/auth/infrastructure/data_sources/firebase_auth_data_source.dart';
 import 'package:mockito/mockito.dart';
 import 'package:optional/optional.dart';
 
-import '../../../../dependency_injection/mock.dart';
 import '../../../../dependency_injection/test_service_locator.dart';
 
 void main() {
@@ -22,7 +21,7 @@ void main() {
     final nonExistentEmail = "NON-EXISTENT";
     final nonExistentPassword = "NON-EXISTENT";
 
-    when(testServiceLocator<IAuthenticationRemoteDataSource>().getUser(nonExistentEmail, nonExistentPassword)).thenAnswer((_) async => Optional.empty());
+    when(testServiceLocator<FirebaseAuthDataSource>().signInWithEmail(nonExistentEmail, nonExistentPassword)).thenAnswer((_) async => Optional.empty());
 
     final userRepository = serviceLocator<IUserRepository>();
     final user = await userRepository.getUserWithEmailAndPassword(nonExistentPassword, nonExistentPassword);
@@ -31,8 +30,8 @@ void main() {
   });
 
   test("[IAuthenticationRemoteDataSource.getUserWithEmailAndPassword] should return user data when correct credentials are given", () async {
-    when(testServiceLocator<IAuthenticationRemoteDataSource>().getUser(email, password)).thenAnswer(
-      (_) async => Optional.of(UserModelMock(uid, name, email, password)),
+    when(testServiceLocator<FirebaseAuthDataSource>().signInWithEmail(email, password)).thenAnswer(
+      (_) async => Optional.of(UserDTO(uid: uid, name: name, email: email)),
     );
 
     final userRepository = serviceLocator<IUserRepository>();
@@ -47,7 +46,7 @@ void main() {
   });
 
   test("[IAuthenticationRemoteDataSource.createUser] should return 'Optional.empty()' when user already exists", () async {
-    when(testServiceLocator<IAuthenticationRemoteDataSource>().createNewUser(name, email, password)).thenAnswer((_) async => Optional.empty());
+    when(testServiceLocator<FirebaseAuthDataSource>().signUpWithEmail(name, email, password)).thenAnswer((_) async => Optional.empty());
 
     final userRepository = serviceLocator<IUserRepository>();
     final user = await userRepository.createUser(name, email, password);
@@ -56,8 +55,8 @@ void main() {
   });
 
   test("[IAuthenticationRemoteDataSource.createUser] should return user data when user account successfully created", () async {
-    when(testServiceLocator<IAuthenticationRemoteDataSource>().createNewUser(name, email, password)).thenAnswer(
-      (_) async => Optional.of(UserModelMock(uid, name, email, password)),
+    when(testServiceLocator<FirebaseAuthDataSource>().signUpWithEmail(name, email, password)).thenAnswer(
+      (_) async => Optional.of(UserDTO(uid: uid, name: name, email: email)),
     );
 
     final userRepository = serviceLocator<IUserRepository>();
@@ -72,13 +71,8 @@ void main() {
   });
 
   test("[IAuthenticationRemoteDataSource.getCurrentUser] should return user when data is cached", () async {
-    final uid = "0";
-    final name = "John Doe";
-    final email = "john.doe@gmail.com";
-    final password = "John123456";
-
-    when(testServiceLocator<IAuthenticationLocalDataSource>().getCurrentUser()).thenAnswer(
-      (_) async => Optional.of(UserModelMock(uid, name, email, password)),
+    when(testServiceLocator<FirebaseAuthDataSource>().getCurrentUser()).thenAnswer(
+      (_) async => Optional.of(UserDTO(uid: uid, name: name, email: email)),
     );
 
     final userRepository = serviceLocator<IUserRepository>();
@@ -93,7 +87,7 @@ void main() {
   });
 
   test("[IAuthenticationRemoteDataSource.getCurrentUser] should return 'Optional.empty()' when data is not cached", () async {
-    when(testServiceLocator<IAuthenticationLocalDataSource>().getCurrentUser()).thenAnswer((_) async => Optional.empty());
+    when(testServiceLocator<FirebaseAuthDataSource>().getCurrentUser()).thenAnswer((_) async => Optional.empty());
 
     final userRepository = serviceLocator<IUserRepository>();
     final user = await userRepository.getCurrentUser();
@@ -102,7 +96,7 @@ void main() {
   });
 
   test("[IAuthenticationRemoteDataSource.getCurrentUser] should return 'Optional.empty()' when account is not verified", () async {
-    when(testServiceLocator<IAuthenticationLocalDataSource>().getCurrentUser()).thenAnswer((_) async => Optional.empty());
+    when(testServiceLocator<FirebaseAuthDataSource>().getCurrentUser()).thenAnswer((_) async => Optional.empty());
 
     final userRepository = serviceLocator<IUserRepository>();
     final user = await userRepository.getCurrentUser();

@@ -8,7 +8,7 @@ import 'package:jews_harp/core/widgets/one_button_alert_dialog.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/core/widgets/rounded_text_field.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
-import 'package:jews_harp/features/auth/application/BLoCs/password_reset/password_reset_bloc.dart';
+import 'package:jews_harp/features/auth/presentation/BLoCs/password_reset/password_reset_bloc.dart';
 import 'package:jews_harp/features/auth/presentation/widgets/title_with_icon.dart';
 
 class PasswordResetScreen extends StatefulWidget {

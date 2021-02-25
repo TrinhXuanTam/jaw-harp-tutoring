@@ -11,7 +11,7 @@ import 'core/constants/settings.dart';
 import 'core/dependency_injection/service_locator.dart';
 import 'core/dummy_screen.dart';
 import 'core/l10n.dart';
-import 'features/auth/application/BLoCs/login_screen_redirect/auth_bloc.dart';
+import 'features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
 import 'features/auth/presentation/screens/authentication_screen.dart';
 import 'features/auth/presentation/screens/email_verification_screen.dart';
 import 'features/auth/presentation/screens/sign_up_screen.dart';
