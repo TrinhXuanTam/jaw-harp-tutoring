@@ -7,5 +7,6 @@ abstract class IAuthenticationRemoteDataSource {
 
   Future<Optional<UserModel>> createNewUser(String name, String email, String password);
 
+  /// Reset user password in case of current password is lost
   Future<bool> resetPassword(String email);
 }

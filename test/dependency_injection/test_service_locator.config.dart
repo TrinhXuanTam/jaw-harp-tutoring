@@ -9,16 +9,16 @@ import 'package:jews_harp/features/auth/presentation/BLoCs/authentication_screen
 import 'package:jews_harp/features/auth/domain/use_cases/email_authentication.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/email_verification/email_verification_bloc.dart';
 import 'package:jews_harp/features/auth/domain/use_cases/facebook_authentication.dart';
-import 'package:jews_harp/features/auth/data/data_sources_impl/firebase_auth_local.dart';
-import 'package:jews_harp/features/auth/data/data_sources_impl/firebase_auth_remote.dart';
-import 'package:jews_harp/features/auth/data/data_sources_impl/firebase_third_party_auth.dart';
+import 'package:jews_harp/features/auth/data/data_sources/implementations/firebase_auth_local.dart';
+import 'package:jews_harp/features/auth/data/data_sources/implementations/firebase_auth_remote.dart';
+import 'package:jews_harp/features/auth/data/data_sources/implementations/firebase_third_party_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/features/auth/domain/use_cases/google_authentication.dart';
 import 'package:jews_harp/core/BLoCs/hide_field_input/hide_field_input_bloc.dart';
-import 'package:jews_harp/features/auth/data/data_source_interfaces/local/authentication_local.dart';
-import 'package:jews_harp/features/auth/data/data_source_interfaces/remote/authentication_remote.dart';
-import 'package:jews_harp/features/auth/data/data_source_interfaces/remote/third_party_authentication.dart';
+import 'package:jews_harp/features/auth/data/data_sources/interfaces/local/authentication_local.dart';
+import 'package:jews_harp/features/auth/data/data_sources/interfaces/remote/authentication_remote.dart';
+import 'package:jews_harp/features/auth/data/data_sources/interfaces/remote/third_party_authentication.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
 import 'package:jews_harp/features/auth/domain/use_cases/offline_authentication.dart';
 import 'package:jews_harp/features/auth/domain/use_cases/password_reset.dart';
@@ -51,22 +51,22 @@ GetIt testInitGetIt(
       registerFor: {_prod, _dev});
   gh.factory<HideFieldInputBloc>(() => HideFieldInputBloc(),
       registerFor: {_prod, _dev});
-  gh.lazySingleton<IAuthenticationLocalDataSource>(() => FirebaseAuthLocal(),
-      registerFor: {_prod});
   gh.lazySingleton<IAuthenticationLocalDataSource>(
       () => IAuthenticationLocalDataSourceMock(),
       registerFor: {_user_repository_test_env});
-  gh.lazySingleton<IAuthenticationRemoteDataSource>(() => FirebaseAuthRemote(),
+  gh.lazySingleton<IAuthenticationLocalDataSource>(() => FirebaseAuthLocal(),
       registerFor: {_prod});
   gh.lazySingleton<IAuthenticationRemoteDataSource>(
       () => IAuthenticationRemoteDataSourceMock(),
       registerFor: {_user_repository_test_env});
-  gh.lazySingleton<IThirdPartyAuthenticationDataSource>(
-      () => FirebaseThirdPartyAuth(),
+  gh.lazySingleton<IAuthenticationRemoteDataSource>(() => FirebaseAuthRemote(),
       registerFor: {_prod});
   gh.lazySingleton<IThirdPartyAuthenticationDataSource>(
       () => IThirdPartyAuthenticationDataSourceMock(),
       registerFor: {_user_repository_test_env});
+  gh.lazySingleton<IThirdPartyAuthenticationDataSource>(
+      () => FirebaseThirdPartyAuth(),
+      registerFor: {_prod});
   gh.lazySingleton<IUserRepository>(
       () => UserRepository(
             get<IAuthenticationRemoteDataSource>(),

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
-import 'package:jews_harp/features/auth/data/data_source_interfaces/remote/authentication_remote.dart';
+import 'package:jews_harp/features/auth/data/data_sources/interfaces/remote/authentication_remote.dart';
 import 'package:jews_harp/features/auth/data/models/user_model.dart';
 import 'package:optional/optional.dart';
 
@@ -37,7 +37,7 @@ class FirebaseAuthRemote extends IAuthenticationRemoteDataSource {
   }
 
   @override
-  Future<bool> resetPassword(String email, {String newPassword}) async {
+  Future<bool> resetPassword(String email) async {
     try {
       await _auth.sendPasswordResetEmail(email: email);
       return true;

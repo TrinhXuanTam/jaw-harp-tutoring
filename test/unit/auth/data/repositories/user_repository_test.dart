@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jews_harp/core/constants/test_environments.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
-import 'package:jews_harp/features/auth/data/data_source_interfaces/local/authentication_local.dart';
-import 'package:jews_harp/features/auth/data/data_source_interfaces/remote/authentication_remote.dart';
+import 'package:jews_harp/features/auth/data/data%20_sources/interfaces/local/authentication_local.dart';
+import 'package:jews_harp/features/auth/data/data%20_sources/interfaces/remote/authentication_remote.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
 import 'package:mockito/mockito.dart';
 import 'package:optional/optional.dart';

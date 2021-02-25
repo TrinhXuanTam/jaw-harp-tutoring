@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/core/errors/user_not_signed_in_error.dart';
-import 'package:jews_harp/features/auth/data/data_source_interfaces/local/authentication_local.dart';
+import 'package:jews_harp/features/auth/data/data_sources/interfaces/local/authentication_local.dart';
 import 'package:jews_harp/features/auth/data/models/user_model.dart';
 import 'package:optional/optional.dart';
 

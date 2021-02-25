@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
-import 'package:jews_harp/features/auth/data/data_source_interfaces/remote/third_party_authentication.dart';
+import 'package:jews_harp/features/auth/data/data_sources/interfaces/remote/third_party_authentication.dart';
 import 'package:jews_harp/features/auth/data/models/user_model.dart';
 import 'package:optional/optional.dart';
 
