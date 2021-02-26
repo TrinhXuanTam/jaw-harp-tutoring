@@ -5,7 +5,7 @@
 // **************************************************************************
 
 import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
-import 'package:jews_harp/features/auth/presentation/BLoCs/authentication_screen/auth_screen_bloc.dart';
+import 'package:jews_harp/features/auth/presentation/BLoCs/email_authentication/email_auth_bloc.dart';
 import 'package:jews_harp/features/auth/application/use_cases/email_authentication.dart';
 import 'package:jews_harp/features/auth/application/use_cases/email_verification_check.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/email_verification/email_verification_bloc.dart';
@@ -19,6 +19,7 @@ import 'package:jews_harp/features/auth/application/use_cases/google_authenticat
 import 'package:jews_harp/core/BLoCs/hide_field_input/hide_field_input_bloc.dart';
 import 'package:jews_harp/features/auth/domain/facade_interfaces/user_facade_interface.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
+import 'package:jews_harp/features/auth/application/use_cases/link_email_provider.dart';
 import 'package:jews_harp/features/auth/application/use_cases/offline_authentication.dart';
 import 'package:jews_harp/features/auth/application/use_cases/password_reset.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/password_reset/password_reset_bloc.dart';
@@ -69,6 +70,9 @@ GetIt testInitGetIt(
   gh.lazySingleton<IUserRepository>(
       () => UserRepository(get<FirebaseAuthDataSource>()),
       registerFor: {_prod, _user_repository_test_env});
+  gh.lazySingleton<LinkEmailProvider>(
+      () => LinkEmailProvider(get<IUserFacade>()),
+      registerFor: {_prod, _dev});
   gh.lazySingleton<OfflineAuthentication>(
       () => OfflineAuthentication(get<IUserRepository>(), get<IUserFacade>()),
       registerFor: {_prod, _dev, _offline_authentication_test_env});
@@ -84,9 +88,6 @@ GetIt testInitGetIt(
       registerFor: {_prod, _dev});
   gh.lazySingleton<SignUp>(() => SignUp(get<IUserRepository>()),
       registerFor: {_prod, _dev, _sign_up_test_env});
-  gh.factory<AuthBloc>(
-      () => AuthBloc(get<OfflineAuthentication>(), get<SignOut>()),
-      registerFor: {_prod, _dev});
   gh.lazySingleton<EmailAuthentication>(
       () => EmailAuthentication(get<IUserRepository>()),
       registerFor: {_prod, _dev, _email_authentication_test_env});
@@ -112,15 +113,24 @@ GetIt testInitGetIt(
       () => SignUpBloc(
             get<SignUp>(),
             get<GetAuthProviders>(),
-            get<SendEmailVerification>(),
+            get<LinkEmailProvider>(),
           ),
       registerFor: {_prod, _dev});
   gh.factory<ThirdPartyAuthBloc>(
       () => ThirdPartyAuthBloc(
-          get<FacebookAuthentication>(), get<GoogleAuthentication>()),
+            get<FacebookAuthentication>(),
+            get<GoogleAuthentication>(),
+            get<GetAuthProviders>(),
+          ),
       registerFor: {_prod, _dev});
-  gh.factory<AuthScreenBloc>(
-      () => AuthScreenBloc(get<EmailAuthentication>(), get<EmailIsVerified>()),
+  gh.factory<AuthBloc>(
+      () => AuthBloc(
+            get<OfflineAuthentication>(),
+            get<EmailIsVerified>(),
+            get<SignOut>(),
+          ),
+      registerFor: {_prod, _dev});
+  gh.factory<EmailAuthBloc>(() => EmailAuthBloc(get<EmailAuthentication>()),
       registerFor: {_prod, _dev});
   return get;
 }

@@ -8,7 +8,6 @@ import 'package:jews_harp/features/auth/domain/repository_interfaces/user_reposi
 import 'package:mockito/mockito.dart';
 import 'package:optional/optional.dart';
 
-import '../../../../dependency_injection/mock.dart';
 import '../../../../dependency_injection/test_service_locator.dart';
 
 void main() {

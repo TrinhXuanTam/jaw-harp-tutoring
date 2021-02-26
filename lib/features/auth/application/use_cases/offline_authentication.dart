@@ -19,8 +19,6 @@ class OfflineAuthentication {
 
     if (user.isEmpty) throw UserNotSignedInError();
 
-    if (!await _userFacade.isVerified()) throw UserNotVerifiedError();
-
     return user.value;
   }
 }

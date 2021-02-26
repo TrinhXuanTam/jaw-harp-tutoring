@@ -21,7 +21,9 @@ class SignUpFailedState extends SignUpState {
 
 /// Multiple providers are found
 class MultipleProvidersState extends SignUpState {
+  final String email;
+  final String password;
   final Set<String> providers;
 
-  MultipleProvidersState(this.providers);
+  MultipleProvidersState(this.email, this.providers, this.password);
 }

@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
           final authBlocState = BlocProvider.of<AuthBloc>(context).state;
 
           if (authBlocState is AuthenticatedState) {
-            BlocProvider.of<AuthBloc>(context).add(UserSignOutEvent(authBlocState.user));
+            BlocProvider.of<AuthBloc>(context).add(UserSignOutEvent());
           }
         },
         tooltip: 'Increment',

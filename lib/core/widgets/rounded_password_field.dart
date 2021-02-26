@@ -21,7 +21,7 @@ class RoundedPasswordField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<HideFieldInputBloc>(
       create: (_) => serviceLocator<HideFieldInputBloc>(),
       child: RoundedInputField(
         color: this.color,

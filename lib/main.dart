@@ -48,9 +48,16 @@ class _EntryPoint extends StatelessWidget {
   }
 
   void _authBlocListener(BuildContext context, AuthState state) {
-    if (state is AuthenticatedState)
+    if (state is AuthenticatedState) {
       navigatorKey.currentState.pushNamedAndRemoveUntil(HOME_SCREEN_ROUTE, (route) => false);
-    else if (state is UnauthenticatedState) navigatorKey.currentState.pushReplacementNamed(AUTH_SCREEN_ROUTE);
+    } else if (state is UnauthenticatedState)
+      navigatorKey.currentState.pushReplacementNamed(AUTH_SCREEN_ROUTE);
+    else if (state is NotVerifiedState)
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
+        EMAIL_VERIFICATION_UP_SCREEN_ROUTE,
+        (route) => false,
+        arguments: state.user,
+      );
   }
 
   /// Display splash screen for [Constants.SPLASH_SCREEN_DURATION] and then check for check if user is signed in.
@@ -58,7 +65,7 @@ class _EntryPoint extends StatelessWidget {
   /// Otherwise, redirect the user into the main screen.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<AuthBloc>(
       create: (_) {
         final authBloc = serviceLocator<AuthBloc>();
         _splashScreenRedirectWithDelay(authBloc);
@@ -97,9 +104,9 @@ class _EntryPoint extends StatelessWidget {
             LINK_AUTH_PROVIDERS_SCREEN_ROUTE: (ctx) {
               final Map<String, Object> map = ModalRoute.of(ctx).settings.arguments;
               return LinkAuthProvidersScreen(
+                email: map["email"],
                 providers: map["providers"],
                 onSuccess: map["onSuccess"],
-                onFailure: map["onFailure"],
               );
             },
           },

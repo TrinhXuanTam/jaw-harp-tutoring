@@ -24,10 +24,7 @@ class AuthMethods extends StatelessWidget {
         SizedBox(height: 5),
         ForgotPasswordText(),
         TextDivider(text: "OR"),
-        BlocProvider(
-          create: (_) => serviceLocator<ThirdPartyAuthBloc>(),
-          child: ThirdPartyAuthOptions(),
-        ),
+        ThirdPartyAuthOptions(),
       ],
     );
   }

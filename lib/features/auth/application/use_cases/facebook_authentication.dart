@@ -9,11 +9,5 @@ class FacebookAuthentication {
 
   FacebookAuthentication(this._userRepository);
 
-  Future<User> call() async {
-    final user = await _userRepository.getUserWithFacebook();
-
-    if (user.isEmpty) throw ThirdPartyAuthenticationError("Facebook authentication failed");
-
-    return user.value;
-  }
+  Future<User> call() async => _userRepository.getUserWithFacebook();
 }

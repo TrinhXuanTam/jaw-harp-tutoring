@@ -8,7 +8,5 @@ class GetAuthProviders {
 
   GetAuthProviders(this._userRepository);
 
-  Future<Set<String>> call(String email) {
-    return _userRepository.getAuthProviders(email);
-  }
+  Future<Set<String>> call(String email) => _userRepository.getAuthProviders(email);
 }

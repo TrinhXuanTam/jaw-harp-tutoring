@@ -20,10 +20,6 @@ class EmailAuthentication {
 
     if (!RegExMatchers.password.hasMatch(password)) throw ValidationError("Invalid password format!");
 
-    final user = await _userRepository.getUserWithEmailAndPassword(email, password);
-
-    if (user.isEmpty) throw WrongEmailOrPasswordError();
-
-    return user.value;
+    return _userRepository.getUserWithEmailAndPassword(email, password);
   }
 }

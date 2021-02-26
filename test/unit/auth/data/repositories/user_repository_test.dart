@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jews_harp/core/constants/test_environments.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
+import 'package:jews_harp/core/errors/email_already_used_error.dart';
+import 'package:jews_harp/core/errors/wrong_email_or_password_error.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
 import 'package:jews_harp/features/auth/infrastructure/DTO/user_DTO.dart';
 import 'package:jews_harp/features/auth/infrastructure/data_sources/firebase_auth_data_source.dart';
@@ -21,53 +23,45 @@ void main() {
     final nonExistentEmail = "NON-EXISTENT";
     final nonExistentPassword = "NON-EXISTENT";
 
-    when(testServiceLocator<FirebaseAuthDataSource>().signInWithEmail(nonExistentEmail, nonExistentPassword)).thenAnswer((_) async => Optional.empty());
+    when(testServiceLocator<FirebaseAuthDataSource>().signInWithEmail(nonExistentEmail, nonExistentPassword)).thenThrow(WrongEmailOrPasswordError());
 
     final userRepository = serviceLocator<IUserRepository>();
-    final user = await userRepository.getUserWithEmailAndPassword(nonExistentPassword, nonExistentPassword);
 
-    assert(user.isEmpty);
+    expect(() => userRepository.getUserWithEmailAndPassword(nonExistentPassword, nonExistentPassword), throwsA(isInstanceOf<WrongEmailOrPasswordError>()));
   });
 
   test("[IAuthenticationRemoteDataSource.getUserWithEmailAndPassword] should return user data when correct credentials are given", () async {
     when(testServiceLocator<FirebaseAuthDataSource>().signInWithEmail(email, password)).thenAnswer(
-      (_) async => Optional.of(UserDTO(uid: uid, name: name, email: email)),
+      (_) async => UserDTO(uid: uid, name: name, email: email),
     );
 
     final userRepository = serviceLocator<IUserRepository>();
     final user = await userRepository.getUserWithEmailAndPassword(email, password);
 
-    assert(user.isPresent);
-    final userData = user.value;
-
-    assert(userData.email == email);
-    assert(userData.name == name);
-    assert(userData.uid == uid);
+    assert(user.email == email);
+    assert(user.name == name);
+    assert(user.uid == uid);
   });
 
   test("[IAuthenticationRemoteDataSource.createUser] should return 'Optional.empty()' when user already exists", () async {
-    when(testServiceLocator<FirebaseAuthDataSource>().signUpWithEmail(name, email, password)).thenAnswer((_) async => Optional.empty());
+    when(testServiceLocator<FirebaseAuthDataSource>().signUpWithEmail(name, email, password)).thenThrow(EmailAlreadyUsedError(email));
 
     final userRepository = serviceLocator<IUserRepository>();
-    final user = await userRepository.createUser(name, email, password);
 
-    assert(user.isEmpty);
+    expect(() => userRepository.createUser(name, email, password), throwsA(isInstanceOf<EmailAlreadyUsedError>()));
   });
 
   test("[IAuthenticationRemoteDataSource.createUser] should return user data when user account successfully created", () async {
     when(testServiceLocator<FirebaseAuthDataSource>().signUpWithEmail(name, email, password)).thenAnswer(
-      (_) async => Optional.of(UserDTO(uid: uid, name: name, email: email)),
+      (_) async => UserDTO(uid: uid, name: name, email: email),
     );
 
     final userRepository = serviceLocator<IUserRepository>();
     final user = await userRepository.createUser(name, email, password);
 
-    assert(user.isPresent);
-    final userData = user.value;
-
-    assert(userData.email == email);
-    assert(userData.name == name);
-    assert(userData.uid == uid);
+    assert(user.email == email);
+    assert(user.name == name);
+    assert(user.uid == uid);
   });
 
   test("[IAuthenticationRemoteDataSource.getCurrentUser] should return user when data is cached", () async {

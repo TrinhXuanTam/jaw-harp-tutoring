@@ -27,10 +27,6 @@ class SignUp {
 
     if (password != passwordRepeat) throw ValidationError("Passwords don't match!");
 
-    final user = await _userRepository.createUser(name, email, password);
-
-    if (user.isEmpty) throw EmailAlreadyUsedError();
-
-    return user.value;
+    return _userRepository.createUser(name, email, password);
   }
 }

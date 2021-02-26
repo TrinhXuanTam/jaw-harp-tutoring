@@ -15,3 +15,10 @@ class AuthenticatedState extends AuthState {
 
   AuthenticatedState(this.user);
 }
+
+/// User is unverified state.
+class NotVerifiedState extends AuthState {
+  final User user;
+
+  NotVerifiedState(this.user);
+}

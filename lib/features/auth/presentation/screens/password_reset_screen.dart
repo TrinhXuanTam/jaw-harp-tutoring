@@ -17,8 +17,8 @@ class PasswordResetScreen extends StatefulWidget {
 }
 
 class _PasswordResetScreenState extends State<PasswordResetScreen> {
-  final emailController = TextEditingController();
-  final passwordResetBloc = serviceLocator<PasswordResetBloc>();
+  final _emailController = TextEditingController();
+  final _passwordResetBloc = serviceLocator<PasswordResetBloc>();
 
   void _passwordResetBlocListener(BuildContext ctx, PasswordResetState state) {
     if (state is PasswordResetSuccess)
@@ -37,7 +37,7 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
 
   @override
   void dispose() {
-    passwordResetBloc.close();
+    _passwordResetBloc.close();
     super.dispose();
   }
 
@@ -53,8 +53,8 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
         icon: Icons.arrow_back_rounded,
         onPressed: () => Navigator.pop(context),
       ),
-      body: BlocProvider(
-        create: (_) => passwordResetBloc,
+      body: BlocProvider<PasswordResetBloc>(
+        create: (_) => _passwordResetBloc,
         child: CenteredStack(
           children: [
             Column(
@@ -76,14 +76,14 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
                 RoundedTextField(
                   icon: Icons.mail,
                   placeholderText: localizations.translate("Email"),
-                  controller: emailController,
+                  controller: _emailController,
                 ),
                 SizedBox(height: 10),
                 BlocListener<PasswordResetBloc, PasswordResetState>(
                   listener: _passwordResetBlocListener,
                   child: RoundedButton(
                     text: localizations.translate("Send Instructions"),
-                    onPressed: () => passwordResetBloc.add(PasswordResetRequestEvent(emailController.text)),
+                    onPressed: () => _passwordResetBloc.add(PasswordResetRequestEvent(_emailController.text)),
                   ),
                 ),
               ],

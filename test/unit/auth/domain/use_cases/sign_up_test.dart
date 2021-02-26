@@ -6,9 +6,7 @@ import 'package:jews_harp/features/auth/application/use_cases/sign_up.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
 import 'package:mockito/mockito.dart';
-import 'package:optional/optional_internal.dart';
 
-import '../../../../dependency_injection/mock.dart';
 import '../../../../dependency_injection/test_service_locator.dart';
 
 void main() {
@@ -21,7 +19,7 @@ void main() {
   final signUp = testServiceLocator<SignUp>();
 
   when(testServiceLocator<IUserRepository>().createUser(name, email, password)).thenAnswer(
-    (_) async => Optional.of(User(uid: uid, name: name, email: email)),
+    (_) async => User(uid: uid, name: name, email: email),
   );
 
   test("[SignUp] should return user data when credentials are correct", () async {
@@ -78,9 +76,7 @@ void main() {
   test("[SignUp] should throw [EmailAlreadyUsedError] when email is already used", () async {
     final takenEmail = "taken@gmail.com";
 
-    when(testServiceLocator<IUserRepository>().createUser(name, takenEmail, password)).thenAnswer(
-      (_) async => Optional.empty(),
-    );
+    when(testServiceLocator<IUserRepository>().createUser(name, takenEmail, password)).thenThrow(EmailAlreadyUsedError(email));
 
     expect(() => signUp(name, takenEmail, password, password), throwsA(isInstanceOf<EmailAlreadyUsedError>()));
   });

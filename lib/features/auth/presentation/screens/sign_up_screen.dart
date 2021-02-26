@@ -7,6 +7,7 @@ import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/one_button_alert_dialog.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
+import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/sign_up_screen/sign_up_bloc.dart';
 import 'package:jews_harp/features/auth/presentation/widgets/sign_up_form.dart';
 import 'package:jews_harp/features/auth/presentation/widgets/title_with_subtitle.dart';
@@ -14,11 +15,7 @@ import 'package:jews_harp/features/auth/presentation/widgets/title_with_subtitle
 class SignUpScreen extends StatelessWidget {
   void _signUpBlocListener(BuildContext ctx, SignUpState state) {
     if (state is SignUpSuccessState)
-      Navigator.pushReplacementNamed(
-        ctx,
-        EMAIL_VERIFICATION_UP_SCREEN_ROUTE,
-        arguments: state.user,
-      );
+      BlocProvider.of<AuthBloc>(ctx).add(UserAuthenticatedEvent(state.user));
     else if (state is SignUpFailedState)
       showDialog(
         context: ctx,
@@ -34,16 +31,16 @@ class SignUpScreen extends StatelessWidget {
         ctx,
         LINK_AUTH_PROVIDERS_SCREEN_ROUTE,
         arguments: {
+          "email": state.email,
           "providers": state.providers,
-          "onSuccess": () {},
-          "onFailure": () {},
+          "onSuccess": () => BlocProvider.of<SignUpBloc>(ctx).add(LinkEmailEvent(state.email, state.password)),
         },
       );
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<SignUpBloc>(
       create: (_) => serviceLocator<SignUpBloc>(),
       child: BlocListener<SignUpBloc, SignUpState>(
         listener: _signUpBlocListener,

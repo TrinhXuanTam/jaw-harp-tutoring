@@ -12,7 +12,7 @@ class UserRepository extends IUserRepository {
   UserRepository(this._firebaseAuthDataSource);
 
   @override
-  Future<Optional<User>> createUser(String name, String email, String password) {
+  Future<User> createUser(String name, String email, String password) {
     return _firebaseAuthDataSource.signUpWithEmail(name, email, password);
   }
 
@@ -22,18 +22,18 @@ class UserRepository extends IUserRepository {
   }
 
   @override
-  Future<Optional<User>> getUserWithEmailAndPassword(String email, String password) {
+  Future<User> getUserWithEmailAndPassword(String email, String password) {
     return _firebaseAuthDataSource.signInWithEmail(email, password);
   }
 
   @override
-  Future<Optional<User>> getUserWithFacebook() {
-    return _firebaseAuthDataSource.signUpWithFacebook();
+  Future<User> getUserWithFacebook() {
+    return _firebaseAuthDataSource.authenticateWithFacebook();
   }
 
   @override
-  Future<Optional<User>> getUserWithGoogle() {
-    return _firebaseAuthDataSource.signUpWithGoogle();
+  Future<User> getUserWithGoogle() {
+    return _firebaseAuthDataSource.authenticateWithGoogle();
   }
 
   @override

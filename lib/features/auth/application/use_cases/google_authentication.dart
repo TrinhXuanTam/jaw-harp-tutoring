@@ -9,11 +9,5 @@ class GoogleAuthentication {
 
   GoogleAuthentication(this._userRepository);
 
-  Future<User> call() async {
-    final user = await _userRepository.getUserWithGoogle();
-
-    if (user.isEmpty) throw ThirdPartyAuthenticationError("Facebook authentication failed");
-
-    return user.value;
-  }
+  Future<User> call() async => _userRepository.getUserWithGoogle();
 }

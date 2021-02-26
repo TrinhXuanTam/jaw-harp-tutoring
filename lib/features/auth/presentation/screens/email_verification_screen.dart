@@ -24,7 +24,7 @@ class EmailVerificationScreen extends StatelessWidget {
     final AppLocalizations localizations = AppLocalizations.of(ctx);
 
     if (state is EmailVerificationClosedState)
-      Navigator.pop(ctx);
+      BlocProvider.of<AuthBloc>(ctx).add(UserSignOutEvent());
     else if (state is EmailVerifiedState)
       BlocProvider.of<AuthBloc>(ctx).add(UserAuthenticatedEvent(this.user));
     else if (state is EmailNotVerifiedState)
@@ -39,7 +39,7 @@ class EmailVerificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<EmailVerificationBloc>(
       create: (_) => serviceLocator<EmailVerificationBloc>(),
       child: BlocConsumer<EmailVerificationBloc, EmailVerificationState>(
         listener: _emailVerificationScreenListener,
