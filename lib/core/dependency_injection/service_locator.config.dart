@@ -64,10 +64,9 @@ GetIt initGetIt(
       () => LinkFacebookProvider(get<IUserFacade>()),
       registerFor: {_prod, _dev});
   gh.lazySingleton<OfflineAuthentication>(
-      () => OfflineAuthentication(get<IUserRepository>(), get<IUserFacade>()),
+      () => OfflineAuthentication(get<IUserRepository>()),
       registerFor: {_prod, _dev, _offline_authentication_test_env});
-  gh.lazySingleton<PasswordReset>(
-      () => PasswordReset(get<IUserRepository>(), get<IUserFacade>()),
+  gh.lazySingleton<PasswordReset>(() => PasswordReset(get<IUserFacade>()),
       registerFor: {_prod, _dev});
   gh.factory<PasswordResetBloc>(() => PasswordResetBloc(get<PasswordReset>()),
       registerFor: {_prod, _dev});

@@ -1,6 +1,5 @@
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/core/constants/test_environments.dart';
-import 'package:jews_harp/core/errors/email_already_used_error.dart';
 import 'package:jews_harp/core/errors/validation_error.dart';
 import 'package:jews_harp/core/regex.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';

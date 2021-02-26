@@ -1,5 +1,4 @@
 import 'package:jews_harp/features/auth/infrastructure/DTO/user_DTO.dart';
-import 'package:optional/optional.dart';
 
 abstract class IUserFacade {
   Future<void> signOut();

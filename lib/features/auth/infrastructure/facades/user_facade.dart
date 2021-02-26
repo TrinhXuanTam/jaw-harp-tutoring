@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/features/auth/domain/facade_interfaces/user_facade_interface.dart';
 import 'package:jews_harp/features/auth/infrastructure/DTO/user_DTO.dart';
-import 'package:optional/optional.dart';
 
 @LazySingleton(as: IUserFacade, env: [Environment.prod])
 class FirebaseAuthFacade extends IUserFacade {
@@ -21,6 +21,8 @@ class FirebaseAuthFacade extends IUserFacade {
 
   @override
   Future<void> signOut() async {
+    FacebookLogin().logOut();
+    GoogleSignIn().signOut();
     _auth.signOut();
   }
 

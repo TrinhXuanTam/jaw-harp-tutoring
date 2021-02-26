@@ -16,7 +16,6 @@ void main() {
   final uid = "0";
   final name = "John Doe";
   final email = "john.doe@gmail.com";
-  final password = "John123456";
   final offlineAuthentication = testServiceLocator<OfflineAuthentication>();
 
   test("[OfflineAuthentication] should return user data when user is returned from local data source", () async {

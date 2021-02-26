@@ -5,7 +5,6 @@ import 'package:injectable/injectable.dart';
 import 'package:jews_harp/core/constants/auth_providers_id.dart';
 import 'package:jews_harp/core/errors/base_error.dart';
 import 'package:jews_harp/core/errors/email_already_used_error.dart';
-import 'package:jews_harp/features/auth/application/use_cases/email_authentication.dart';
 import 'package:jews_harp/features/auth/application/use_cases/get_authentication_providers.dart';
 import 'package:jews_harp/features/auth/application/use_cases/link_email_provider.dart';
 import 'package:jews_harp/features/auth/application/use_cases/sign_up.dart';
