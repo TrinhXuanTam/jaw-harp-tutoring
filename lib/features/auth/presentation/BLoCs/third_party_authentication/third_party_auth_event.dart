@@ -6,3 +6,5 @@ abstract class ThirdPartyAuthEvent {}
 class FacebookAuthEvent extends ThirdPartyAuthEvent {}
 
 class GoogleAuthEvent extends ThirdPartyAuthEvent {}
+
+class LinkFacebookEvent extends ThirdPartyAuthEvent {}

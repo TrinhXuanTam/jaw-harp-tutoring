@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/constants/auth_providers_id.dart';
 import 'package:jews_harp/core/errors/base_error.dart';
 import 'package:jews_harp/core/errors/email_already_used_error.dart';
 import 'package:jews_harp/features/auth/application/use_cases/email_authentication.dart';
@@ -38,10 +39,10 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       } on EmailAlreadyUsedError catch (e) {
         final providers = await _getAuthProviders(event.email);
 
-        if (providers.contains("password"))
+        if (providers.contains(EMAIL_PROVIDER))
           yield SignUpFailedState(e.message);
         else {
-          providers.remove("password");
+          providers.remove(EMAIL_PROVIDER);
           yield MultipleProvidersState(event.email, providers, event.password);
         }
       } on BaseError catch (e) {

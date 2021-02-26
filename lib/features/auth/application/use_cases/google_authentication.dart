@@ -1,5 +1,4 @@
 import 'package:injectable/injectable.dart';
-import 'package:jews_harp/core/errors/third_party_auth_error.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
 

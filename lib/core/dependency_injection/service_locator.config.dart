@@ -20,6 +20,7 @@ import 'package:jews_harp/core/BLoCs/hide_field_input/hide_field_input_bloc.dart
 import 'package:jews_harp/features/auth/domain/facade_interfaces/user_facade_interface.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
 import 'package:jews_harp/features/auth/application/use_cases/link_email_provider.dart';
+import 'package:jews_harp/features/auth/application/use_cases/link_facebook_provider.dart';
 import 'package:jews_harp/features/auth/application/use_cases/offline_authentication.dart';
 import 'package:jews_harp/features/auth/application/use_cases/password_reset.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/password_reset/password_reset_bloc.dart';
@@ -58,6 +59,9 @@ GetIt initGetIt(
       registerFor: {_prod, _user_repository_test_env});
   gh.lazySingleton<LinkEmailProvider>(
       () => LinkEmailProvider(get<IUserFacade>()),
+      registerFor: {_prod, _dev});
+  gh.lazySingleton<LinkFacebookProvider>(
+      () => LinkFacebookProvider(get<IUserFacade>()),
       registerFor: {_prod, _dev});
   gh.lazySingleton<OfflineAuthentication>(
       () => OfflineAuthentication(get<IUserRepository>(), get<IUserFacade>()),
@@ -107,6 +111,7 @@ GetIt initGetIt(
             get<FacebookAuthentication>(),
             get<GoogleAuthentication>(),
             get<GetAuthProviders>(),
+            get<LinkFacebookProvider>(),
           ),
       registerFor: {_prod, _dev});
   gh.factory<AuthBloc>(

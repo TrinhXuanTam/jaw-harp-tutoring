@@ -51,7 +51,7 @@ class _EntryPoint extends StatelessWidget {
     if (state is AuthenticatedState) {
       navigatorKey.currentState.pushNamedAndRemoveUntil(HOME_SCREEN_ROUTE, (route) => false);
     } else if (state is UnauthenticatedState)
-      navigatorKey.currentState.pushReplacementNamed(AUTH_SCREEN_ROUTE);
+      navigatorKey.currentState.pushNamedAndRemoveUntil(AUTH_SCREEN_ROUTE, (route) => false);
     else if (state is NotVerifiedState)
       navigatorKey.currentState.pushNamedAndRemoveUntil(
         EMAIL_VERIFICATION_UP_SCREEN_ROUTE,

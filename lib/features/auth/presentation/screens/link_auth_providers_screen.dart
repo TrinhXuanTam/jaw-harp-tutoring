@@ -41,6 +41,7 @@ class _LinkAuthProvidersScreenState extends State<LinkAuthProvidersScreen> {
   }
 
   void _emailAuthBlocListener(BuildContext ctx, EmailAuthState state) {
+    print("Test");
     if (state is EmailAuthSuccessState) {
       if (state.user.email == widget.email) {
         widget.onSuccess();
@@ -110,7 +111,7 @@ class _LinkAuthProvidersScreenState extends State<LinkAuthProvidersScreen> {
                         SizedBox(height: 10),
                         RoundedButton(
                           text: localizations.translate("Sign In"),
-                          onPressed: () => EmailAuthenticationRequestEvent(widget.email, _passwordController.text),
+                          onPressed: () => _emailAuthBloc.add(EmailAuthenticationRequestEvent(widget.email, _passwordController.text)),
                         ),
                         TextDivider(text: "OR"),
                       ],

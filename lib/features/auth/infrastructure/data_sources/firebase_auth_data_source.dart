@@ -3,7 +3,6 @@ import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/core/errors/email_already_used_error.dart';
-import 'package:jews_harp/core/errors/third_party_auth_error.dart';
 import 'package:jews_harp/core/errors/wrong_email_or_password_error.dart';
 import 'package:jews_harp/features/auth/infrastructure/DTO/user_DTO.dart';
 import 'package:optional/optional.dart';
@@ -79,7 +78,7 @@ class FirebaseAuthDataSource {
         if (firebaseCredential.additionalUserInfo.isNewUser) firebaseCredential.user.sendEmailVerification();
         return UserDTO.fromFirebaseCredentials(firebaseCredential);
       } else
-        throw ThirdPartyAuthenticationError("Facebook auth error");
+        throw WrongEmailOrPasswordError();
     } on FirebaseAuthException catch (e) {
       throw EmailAlreadyUsedError(e.email);
     }

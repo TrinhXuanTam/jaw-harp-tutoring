@@ -40,7 +40,7 @@ class FirebaseAuthFacade extends IUserFacade {
   Future<UserDTO> linkAccountToEmail(String email, String password) async {
     final credentials = EmailAuthProvider.credential(email: email, password: password);
     await _auth.currentUser.linkWithCredential(credentials);
-    _auth.signOut();
+    await _auth.signOut();
     _auth.signInWithEmailAndPassword(email: email, password: password);
     return UserDTO.fromFirebaseUser(_auth.currentUser);
   }
@@ -50,7 +50,7 @@ class FirebaseAuthFacade extends IUserFacade {
     final accessToken = await FacebookLogin().currentAccessToken;
     final credentials = FacebookAuthProvider.credential(accessToken.token);
     await _auth.currentUser.linkWithCredential(credentials);
-    _auth.signOut();
+    await _auth.signOut();
     _auth.signInWithCredential(credentials);
     return UserDTO.fromFirebaseUser(_auth.currentUser);
   }
