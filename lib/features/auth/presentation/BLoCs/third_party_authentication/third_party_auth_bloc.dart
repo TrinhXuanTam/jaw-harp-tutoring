@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/core/constants/auth_providers_id.dart';
+import 'package:jews_harp/core/errors/base_error.dart';
 import 'package:jews_harp/core/errors/email_already_used_error.dart';
 import 'package:jews_harp/features/auth/application/use_cases/facebook_authentication.dart';
 import 'package:jews_harp/features/auth/application/use_cases/get_authentication_providers.dart';
@@ -44,17 +45,17 @@ class ThirdPartyAuthBloc extends Bloc<ThirdPartyAuthEvent, ThirdPartyAuthState> 
           providers.remove(FACEBOOK_PROVIDER);
           yield MultipleProvidersState(e.email, providers);
         }
-      }
+      } on BaseError {}
     } else if (event is GoogleAuthEvent) {
       try {
         final user = await _googleAuthentication();
         yield ThirdPartyAuthSuccessState(user);
-      } on EmailAlreadyUsedError catch (e) {}
+      } on BaseError {}
     } else if (event is LinkFacebookEvent) {
       try {
         final user = await _linkFacebookProvider();
         yield ThirdPartyAuthSuccessState(user);
-      } catch (_) {}
+      } on BaseError {}
     }
   }
 }

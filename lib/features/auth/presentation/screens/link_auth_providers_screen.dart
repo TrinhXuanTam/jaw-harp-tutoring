@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jews_harp/core/constants/icons.dart';
+import 'package:jews_harp/core/constants/auth_providers_id.dart';
+import 'package:jews_harp/core/constants/locations.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
@@ -10,7 +11,6 @@ import 'package:jews_harp/core/widgets/text_divider.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/email_authentication/email_auth_bloc.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/third_party_authentication/third_party_auth_bloc.dart';
-import 'package:jews_harp/features/auth/presentation/widgets/title_with_icon.dart';
 
 class LinkAuthProvidersScreen extends StatefulWidget {
   final String email;
@@ -41,7 +41,6 @@ class _LinkAuthProvidersScreenState extends State<LinkAuthProvidersScreen> {
   }
 
   void _emailAuthBlocListener(BuildContext ctx, EmailAuthState state) {
-    print("Test");
     if (state is EmailAuthSuccessState) {
       if (state.user.email == widget.email) {
         widget.onSuccess();
@@ -88,9 +87,9 @@ class _LinkAuthProvidersScreenState extends State<LinkAuthProvidersScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TitleWithIcon(
-                    icon: Icons.add_circle_outline_rounded,
-                    title: "Link Accounts",
+                  Text(
+                    localizations.translate("Link Accounts"),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
                   ),
                   Container(
                     width: size.width * 0.7,
@@ -101,7 +100,7 @@ class _LinkAuthProvidersScreenState extends State<LinkAuthProvidersScreen> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  if (widget.providers.contains("password"))
+                  if (widget.providers.contains(EMAIL_PROVIDER))
                     Column(
                       children: [
                         RoundedPasswordField(
@@ -110,33 +109,38 @@ class _LinkAuthProvidersScreenState extends State<LinkAuthProvidersScreen> {
                         ),
                         SizedBox(height: 10),
                         RoundedButton(
-                          text: localizations.translate("Sign In"),
+                          text: localizations.translate("Continue"),
                           onPressed: () => _emailAuthBloc.add(EmailAuthenticationRequestEvent(widget.email, _passwordController.text)),
                         ),
-                        TextDivider(text: "OR"),
+                        if (widget.providers.length > 1) TextDivider(text: "OR"),
                       ],
                     ),
-                  if (widget.providers.contains("facebook.com"))
+                  if (widget.providers.contains(FACEBOOK_PROVIDER))
                     Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            InkWell(
-                              borderRadius: BorderRadius.circular(29),
-                              child: Image.asset(FACEBOOK_ICON_LOCATION, width: 45),
+                        Container(
+                          width: size.width * 0.7,
+                          child: Material(
+                            elevation: 3,
+                            child: InkWell(
+                              child: Image.asset(FACEBOOK_BUTTON_LOCATION),
                               onTap: () => _thirdPartyAuthBloc.add(FacebookAuthEvent()),
                             ),
-                            SizedBox(width: 30),
-                          ],
+                          ),
                         ),
+                        SizedBox(height: 10),
                       ],
                     ),
-                  if (widget.providers.contains("google.com"))
-                    InkWell(
-                      borderRadius: BorderRadius.circular(29),
-                      child: Image.asset(GOOGLE_ICON_LOCATION, width: 45),
-                      onTap: () => _thirdPartyAuthBloc.add(GoogleAuthEvent()),
+                  if (widget.providers.contains(GOOGLE_PROVIDER))
+                    Container(
+                      width: size.width * 0.7,
+                      child: Material(
+                        elevation: 3,
+                        child: InkWell(
+                          child: Image.asset(GOOGLE_BUTTON_LOCATION),
+                          onTap: () => _thirdPartyAuthBloc.add(GoogleAuthEvent()),
+                        ),
+                      ),
                     ),
                 ],
               ),
