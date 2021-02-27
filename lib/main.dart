@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:jews_harp/features/auth/presentation/screens/link_auth_providers_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_sent_screen.dart';
+import 'package:jews_harp/features/techniques/presentation/screens/technique_list_screen.dart';
 import 'core/constants/routes.dart';
 import 'core/constants/settings.dart';
 import 'core/dependency_injection/service_locator.dart';
@@ -99,9 +100,8 @@ class _EntryPoint extends StatelessWidget {
           ),
           navigatorKey: navigatorKey,
           routes: {
-            // TODO: Home screen
             SPLASH_SCREEN_ROUTE: (_) => SplashScreen(),
-            HOME_SCREEN_ROUTE: (_) => DummyScreen(),
+            HOME_SCREEN_ROUTE: (_) => TechniqueListScreen(),
             AUTH_SCREEN_ROUTE: (_) => AuthenticationScreen(),
             SIGN_UP_SCREEN_ROUTE: (_) => SignUpScreen(),
             PASSWORD_RESET_SCREEN_ROUTE: (_) => PasswordResetScreen(),
