@@ -39,7 +39,7 @@ class PasswordResetSentScreen extends StatelessWidget {
                     RichText(
                       textAlign: TextAlign.justify,
                       text: TextSpan(
-                        text: localizations.translate("If you do not receive a confirmation email, please check your spam folder or "),
+                        text: localizations.translate("If you do not receive the email, please check your spam folder or "),
                         style: const TextStyle(
                           color: Colors.black,
                           fontSize: 15,

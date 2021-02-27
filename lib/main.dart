@@ -91,6 +91,12 @@ class _EntryPoint extends StatelessWidget {
             }
             return supportedLocales.first;
           },
+          theme: new ThemeData(
+            textTheme: Theme.of(context).textTheme.apply(
+                  bodyColor: Colors.black,
+                  displayColor: Colors.black,
+                ),
+          ),
           navigatorKey: navigatorKey,
           routes: {
             // TODO: Home screen

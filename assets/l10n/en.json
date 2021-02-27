@@ -25,5 +25,20 @@
   "Passwords don't match!": "Passwords don't match!",
   "This email is already in use!": "This email is already in use!",
   "Failed to sign up": "Failed to sign up",
-  "Password must contain 6 to 20 characters with at least one digit and character!": "Password must contain 6 to 20 characters with at least one digit and character!"
+  "Password must contain 6 to 20 characters with at least one digit and character!": "Password must contain 6 to 20 characters with at least one digit and character!",
+  "Reset Password": "Reset Password",
+  "Enter the email associated with your account and we'll send an email with instructions to reset your password.": "Enter the email associated with your account and we'll send an email with instructions to reset your password.",
+  "Send Instructions": "Send Instructions",
+  "Check your mail": "Check your mail",
+  "We have sent password recover instructions to your email.": "We have sent password recover instructions to your email.",
+  "If you do not receive the email, please check your spam folder or ": "If you do not receive the email, please check your spam folder or ",
+  "try another email address.": "try another email address.",
+  "Link Accounts": "Link Accounts",
+  "Continue": "Continue",
+  "You've already used": "You've already used",
+  "in the past. Please sign in with that account to continue:": "in the past. Please sign in with that account to continue:",
+  "Failed to link accounts": "Failed to link accounts",
+  "Account emails don't match!\nPlease sign in to: ": "Account emails don't match!\nPlease sign in to: ",
+  "Continue with Facebook": "Continue with Facebook",
+  "Continue with Google": "Continue with Google"
 }

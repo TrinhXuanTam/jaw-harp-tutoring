@@ -32,7 +32,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (event is SplashScreenDisplayedEvent) {
       try {
         var user = await _offlineAuth();
-        yield AuthenticatedState(user);
+
+        if (!await _emailIsVerified())
+          yield NotVerifiedState(user);
+        else
+          yield AuthenticatedState(user);
       } on BaseError {
         yield UnauthenticatedState();
       }

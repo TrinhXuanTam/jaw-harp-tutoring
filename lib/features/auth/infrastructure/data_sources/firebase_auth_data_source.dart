@@ -29,7 +29,7 @@ class FirebaseAuthDataSource {
 
       return UserDTO.fromFirebaseCredentials(userCredential);
     } on FirebaseAuthException {
-      throw EmailAlreadyUsedError(email);
+      throw WrongEmailOrPasswordError();
     }
   }
 
@@ -92,6 +92,9 @@ class FirebaseAuthDataSource {
 
     try {
       final GoogleSignInAccount googleSignInAccount = await googleLogin.signIn();
+
+      if (googleSignInAccount == null) throw WrongEmailOrPasswordError();
+
       final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
 
       final AuthCredential googleCredential = GoogleAuthProvider.credential(

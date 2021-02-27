@@ -24,10 +24,18 @@ class VerificationText extends StatelessWidget {
             style: TextStyle(fontSize: 15),
           ),
           SizedBox(height: 10),
-          Text(
-            localizations.translate("If you do not receive a confirmation email, please check your spam folder. Also, please verify that you entered a valid email address:") + ' "${this.email}."',
+          RichText(
             textAlign: TextAlign.justify,
-            style: TextStyle(fontSize: 15),
+            text: TextSpan(
+              style: TextStyle(fontSize: 15, color: Colors.black),
+              text: localizations.translate("If you do not receive a confirmation email, please check your spam folder. Also, please verify that you entered a valid email address:"),
+              children: [
+                TextSpan(
+                  text: ' "${this.email}."',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
           ),
         ],
       ),

@@ -5,6 +5,9 @@ import 'package:jews_harp/core/constants/locations.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
+import 'package:jews_harp/core/widgets/facebook_button.dart';
+import 'package:jews_harp/core/widgets/google_button.dart';
+import 'package:jews_harp/core/widgets/one_button_alert_dialog.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/core/widgets/rounded_password_field.dart';
 import 'package:jews_harp/core/widgets/text_divider.dart';
@@ -40,13 +43,26 @@ class _LinkAuthProvidersScreenState extends State<LinkAuthProvidersScreen> {
     super.dispose();
   }
 
+  void _wrongAccountHandler(BuildContext ctx) {
+    final localizations = AppLocalizations.of(ctx);
+
+    showDialog(
+      context: ctx,
+      builder: (_) {
+        return OneButtonAlertDialog(
+          title: localizations.translate("Failed to link accounts"),
+          message: localizations.translate("Account emails don't match!\nPlease sign in to: ") + widget.email + ".",
+        );
+      },
+    );
+  }
+
   void _emailAuthBlocListener(BuildContext ctx, EmailAuthState state) {
     if (state is EmailAuthSuccessState) {
       if (state.user.email == widget.email) {
         widget.onSuccess();
-      } else {
-        // TODO
-      }
+      } else
+        _wrongAccountHandler(ctx);
     }
   }
 
@@ -54,9 +70,8 @@ class _LinkAuthProvidersScreenState extends State<LinkAuthProvidersScreen> {
     if (state is ThirdPartyAuthSuccessState) {
       if (state.user.email == widget.email) {
         widget.onSuccess();
-      } else {
-        // TODO
-      }
+      } else
+        _wrongAccountHandler(ctx);
     }
   }
 
@@ -93,10 +108,16 @@ class _LinkAuthProvidersScreenState extends State<LinkAuthProvidersScreen> {
                   ),
                   Container(
                     width: size.width * 0.7,
-                    child: Text(
-                      "You've already used this account. To continue please sign in to that account:",
+                    child: RichText(
                       textAlign: TextAlign.justify,
-                      style: TextStyle(fontSize: 15),
+                      text: TextSpan(
+                        text: localizations.translate("You've already used"),
+                        style: TextStyle(fontSize: 15, color: Colors.black),
+                        children: [
+                          TextSpan(text: " ${widget.email} ", style: TextStyle(fontWeight: FontWeight.bold)),
+                          TextSpan(text: localizations.translate("in the past. Please sign in with that account to continue:")),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 20),
@@ -118,29 +139,17 @@ class _LinkAuthProvidersScreenState extends State<LinkAuthProvidersScreen> {
                   if (widget.providers.contains(FACEBOOK_PROVIDER))
                     Column(
                       children: [
-                        Container(
-                          width: size.width * 0.7,
-                          child: Material(
-                            elevation: 3,
-                            child: InkWell(
-                              child: Image.asset(FACEBOOK_BUTTON_LOCATION),
-                              onTap: () => _thirdPartyAuthBloc.add(FacebookAuthEvent()),
-                            ),
-                          ),
+                        FacebookButton(
+                          text: "Continue with Facebook",
+                          onPress: () => _thirdPartyAuthBloc.add(FacebookAuthEvent()),
                         ),
                         SizedBox(height: 10),
                       ],
                     ),
                   if (widget.providers.contains(GOOGLE_PROVIDER))
-                    Container(
-                      width: size.width * 0.7,
-                      child: Material(
-                        elevation: 3,
-                        child: InkWell(
-                          child: Image.asset(GOOGLE_BUTTON_LOCATION),
-                          onTap: () => _thirdPartyAuthBloc.add(GoogleAuthEvent()),
-                        ),
-                      ),
+                    GoogleButton(
+                      text: "Continue with Google",
+                      onPress: () => _thirdPartyAuthBloc.add(GoogleAuthEvent()),
                     ),
                 ],
               ),

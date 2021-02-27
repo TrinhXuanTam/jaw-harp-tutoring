@@ -45,7 +45,9 @@ class ThirdPartyAuthBloc extends Bloc<ThirdPartyAuthEvent, ThirdPartyAuthState> 
           providers.remove(FACEBOOK_PROVIDER);
           yield MultipleProvidersState(e.email, providers);
         }
-      } on BaseError {}
+      } on BaseError {
+        // User closed the facebook login screen
+      }
     } else if (event is GoogleAuthEvent) {
       try {
         final user = await _googleAuthentication();
@@ -55,7 +57,9 @@ class ThirdPartyAuthBloc extends Bloc<ThirdPartyAuthEvent, ThirdPartyAuthState> 
       try {
         final user = await _linkFacebookProvider();
         yield ThirdPartyAuthSuccessState(user);
-      } on BaseError {}
+      } on BaseError {
+        // User closed the google login screen
+      }
     }
   }
 }
