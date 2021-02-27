@@ -30,6 +30,5 @@ class TransparentIconAppBar extends StatelessWidget implements PreferredSizeWidg
   }
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }

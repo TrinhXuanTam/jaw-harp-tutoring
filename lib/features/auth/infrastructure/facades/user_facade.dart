@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/errors/user_not_signed_in_error.dart';
 import 'package:jews_harp/features/auth/domain/facade_interfaces/user_facade_interface.dart';
 import 'package:jews_harp/features/auth/infrastructure/DTO/user_DTO.dart';
 
@@ -28,6 +29,7 @@ class FirebaseAuthFacade extends IUserFacade {
 
   @override
   Future<bool> isVerified() async {
+    if (_auth.currentUser == null) throw UserNotSignedInError();
     await _auth.currentUser.reload();
     final user = _auth.currentUser;
     return user.emailVerified;
@@ -35,11 +37,14 @@ class FirebaseAuthFacade extends IUserFacade {
 
   @override
   Future<void> sendVerificationEmail() {
+    if (_auth.currentUser == null) throw UserNotSignedInError();
     return _auth.currentUser.sendEmailVerification();
   }
 
   @override
   Future<UserDTO> linkAccountToEmail(String email, String password) async {
+    if (_auth.currentUser == null) throw UserNotSignedInError();
+
     final credentials = EmailAuthProvider.credential(email: email, password: password);
     await _auth.currentUser.linkWithCredential(credentials);
     await _auth.signOut();
@@ -49,6 +54,8 @@ class FirebaseAuthFacade extends IUserFacade {
 
   @override
   Future<UserDTO> linkAccountToFacebook() async {
+    if (_auth.currentUser == null) throw UserNotSignedInError();
+
     final accessToken = await FacebookLogin().currentAccessToken;
     final credentials = FacebookAuthProvider.credential(accessToken.token);
     await _auth.currentUser.linkWithCredential(credentials);

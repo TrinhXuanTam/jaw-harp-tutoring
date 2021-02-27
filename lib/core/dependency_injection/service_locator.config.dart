@@ -35,9 +35,18 @@ import 'package:jews_harp/features/auth/infrastructure/repositories/user_reposit
 const _prod = 'prod';
 const _dev = 'dev';
 const _user_repository_test_env = 'user_repository_test_env';
+const _link_email_provider_test_env = 'link_email_provider_test_env';
+const _link_facebook_provider_test_env = 'link_facebook_provider_test_env';
 const _offline_authentication_test_env = 'offline_authentication_test_env';
+const _password_reset_test_env = 'password_reset_test_env';
+const _send_email_verification_test_env = 'send_email_verification_test_env';
 const _sign_up_test_env = 'sign_up_test_env';
 const _email_authentication_test_env = 'email_authentication_test_env';
+const _email_verification_check_test_env = 'email_verification_check_test_env';
+const _facebook_authentication_test_env = 'facebook_authentication_test_env';
+const _get_authentication_providers_test_env =
+    'get_authentication_providers_test_env';
+const _google_authentication_test_env = 'google_authentication_test_env';
 
 /// adds generated dependencies
 /// to the provided [GetIt] instance
@@ -59,20 +68,20 @@ GetIt initGetIt(
       registerFor: {_prod, _user_repository_test_env});
   gh.lazySingleton<LinkEmailProvider>(
       () => LinkEmailProvider(get<IUserFacade>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _link_email_provider_test_env});
   gh.lazySingleton<LinkFacebookProvider>(
       () => LinkFacebookProvider(get<IUserFacade>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _link_facebook_provider_test_env});
   gh.lazySingleton<OfflineAuthentication>(
       () => OfflineAuthentication(get<IUserRepository>()),
       registerFor: {_prod, _dev, _offline_authentication_test_env});
   gh.lazySingleton<PasswordReset>(() => PasswordReset(get<IUserFacade>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _password_reset_test_env});
   gh.factory<PasswordResetBloc>(() => PasswordResetBloc(get<PasswordReset>()),
       registerFor: {_prod, _dev});
   gh.lazySingleton<SendEmailVerification>(
       () => SendEmailVerification(get<IUserFacade>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _send_email_verification_test_env});
   gh.lazySingleton<SignOut>(() => SignOut(get<IUserFacade>()),
       registerFor: {_prod, _dev});
   gh.lazySingleton<SignUp>(() => SignUp(get<IUserRepository>()),
@@ -81,7 +90,7 @@ GetIt initGetIt(
       () => EmailAuthentication(get<IUserRepository>()),
       registerFor: {_prod, _dev, _email_authentication_test_env});
   gh.lazySingleton<EmailIsVerified>(() => EmailIsVerified(get<IUserFacade>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _email_verification_check_test_env});
   gh.factory<EmailVerificationBloc>(
       () => EmailVerificationBloc(
             get<SignOut>(),
@@ -91,13 +100,13 @@ GetIt initGetIt(
       registerFor: {_prod, _dev});
   gh.lazySingleton<FacebookAuthentication>(
       () => FacebookAuthentication(get<IUserRepository>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _facebook_authentication_test_env});
   gh.lazySingleton<GetAuthProviders>(
       () => GetAuthProviders(get<IUserRepository>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _get_authentication_providers_test_env});
   gh.lazySingleton<GoogleAuthentication>(
       () => GoogleAuthentication(get<IUserRepository>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _google_authentication_test_env});
   gh.factory<SignUpBloc>(
       () => SignUpBloc(
             get<SignUp>(),

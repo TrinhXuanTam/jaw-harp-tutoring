@@ -5,10 +5,26 @@ import 'package:jews_harp/features/auth/infrastructure/data_sources/firebase_aut
 import 'package:mockito/mockito.dart';
 import 'package:injectable/injectable.dart' as Injectable;
 
-@Injectable.LazySingleton(as: IUserFacade, env: [EMAIL_AUTHENTICATION_TEST_ENV, OFFLINE_AUTHENTICATION_TEST_ENV, SIGN_UP_TEST_ENV])
+@Injectable.LazySingleton(as: IUserFacade, env: [
+  EMAIL_AUTHENTICATION_TEST_ENV,
+  OFFLINE_AUTHENTICATION_TEST_ENV,
+  SIGN_UP_TEST_ENV,
+  EMAIL_VERIFICATION_CHECK_TEST_ENV,
+  LINK_EMAIL_PROVIDER_TEST_ENV,
+  LINK_FACEBOOK_PROVIDER_TEST_ENV,
+  PASSWORD_RESET_TEST_ENV,
+  SEND_EMAIL_VERIFICATION_TEST_ENV,
+])
 class IUserFacadeMock extends Mock implements IUserFacade {}
 
-@Injectable.LazySingleton(as: IUserRepository, env: [EMAIL_AUTHENTICATION_TEST_ENV, OFFLINE_AUTHENTICATION_TEST_ENV, SIGN_UP_TEST_ENV])
+@Injectable.LazySingleton(as: IUserRepository, env: [
+  EMAIL_AUTHENTICATION_TEST_ENV,
+  OFFLINE_AUTHENTICATION_TEST_ENV,
+  SIGN_UP_TEST_ENV,
+  FACEBOOK_AUTHENTICATION_TEST_ENV,
+  GOOGLE_AUTHENTICATION_TEST_ENV,
+  GET_AUTHENTICATION_PROVIDERS_TEST_ENV,
+])
 class IUserRepositoryMock extends Mock implements IUserRepository {}
 
 @Injectable.LazySingleton(as: FirebaseAuthDataSource, env: [USER_REPOSITORY_TEST_ENV])

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jews_harp/core/constants/locations.dart';
 import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
+import 'package:jews_harp/core/widgets/facebook_button_mini.dart';
+import 'package:jews_harp/core/widgets/google_button_mini.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/third_party_authentication/third_party_auth_bloc.dart';
 
@@ -12,8 +13,6 @@ class ThirdPartyAuthOptions extends StatefulWidget {
 }
 
 class _ThirdPartyAuthOptionsState extends State<ThirdPartyAuthOptions> {
-  final double _iconWidth = 45;
-
   final _thirdPartyAuthBloc = serviceLocator<ThirdPartyAuthBloc>();
 
   void _thirdPartyAuthBlocListener(BuildContext ctx, ThirdPartyAuthState state) {
@@ -40,17 +39,9 @@ class _ThirdPartyAuthOptionsState extends State<ThirdPartyAuthOptions> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            InkWell(
-              borderRadius: BorderRadius.circular(29),
-              child: Image.asset(FACEBOOK_ICON_LOCATION, width: _iconWidth),
-              onTap: () => _thirdPartyAuthBloc.add(FacebookAuthEvent()),
-            ),
+            FacebookButtonMini(onPress: () => _thirdPartyAuthBloc.add(FacebookAuthEvent())),
             SizedBox(width: 30),
-            InkWell(
-              borderRadius: BorderRadius.circular(29),
-              child: Image.asset(GOOGLE_ICON_LOCATION, width: _iconWidth),
-              onTap: () => _thirdPartyAuthBloc.add(GoogleAuthEvent()),
-            ),
+            GoogleButtonMini(onPress: () => _thirdPartyAuthBloc.add(GoogleAuthEvent())),
           ],
         ),
       ),
