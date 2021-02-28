@@ -29,7 +29,7 @@ class EmailVerificationBloc extends Bloc<EmailVerificationEvent, EmailVerificati
     EmailVerificationEvent event,
   ) async* {
     if (event is EmailVerificationRequestEvent) {
-      _sendEmailVerification();
+      _sendEmailVerification(languageCode: event.languageCode);
       yield EmailVerificationSentState();
     } else if (event is EmailVerificationClosedEvent) {
       _signOut();

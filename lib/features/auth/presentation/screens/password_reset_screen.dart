@@ -83,7 +83,7 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
                   listener: _passwordResetBlocListener,
                   child: RoundedButton(
                     text: localizations.translate("Send Instructions"),
-                    onPressed: () => _passwordResetBloc.add(PasswordResetRequestEvent(_emailController.text)),
+                    onPressed: () => _passwordResetBloc.add(PasswordResetRequestEvent(_emailController.text, localizations.locale.languageCode)),
                   ),
                 ),
               ],

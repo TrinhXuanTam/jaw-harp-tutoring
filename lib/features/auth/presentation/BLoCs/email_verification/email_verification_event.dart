@@ -6,8 +6,9 @@ abstract class EmailVerificationEvent {}
 /// User requests a new verification email
 class EmailVerificationRequestEvent extends EmailVerificationEvent {
   final User user;
+  final String languageCode;
 
-  EmailVerificationRequestEvent(this.user);
+  EmailVerificationRequestEvent(this.user, this.languageCode);
 }
 
 /// User closed the verification screen

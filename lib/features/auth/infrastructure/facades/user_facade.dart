@@ -11,8 +11,9 @@ class FirebaseAuthFacade extends IUserFacade {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
-  Future<bool> resetPassword(String email) async {
+  Future<bool> resetPassword(String email, {String languageCode = "en"}) async {
     try {
+      await _auth.setLanguageCode(languageCode);
       await _auth.sendPasswordResetEmail(email: email);
       return true;
     } on FirebaseAuthException {
@@ -36,8 +37,9 @@ class FirebaseAuthFacade extends IUserFacade {
   }
 
   @override
-  Future<void> sendVerificationEmail() {
+  Future<void> sendVerificationEmail({String languageCode = "en"}) async {
     if (_auth.currentUser == null) throw UserNotSignedInError();
+    await _auth.setLanguageCode(languageCode);
     return _auth.currentUser.sendEmailVerification();
   }
 

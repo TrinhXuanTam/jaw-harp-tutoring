@@ -35,7 +35,7 @@ class EmailVerificationButtons extends StatelessWidget {
           color: Colors.white,
           borderColor: sendButtonActive ? Colors.grey : BASE_COLOR,
           textColor: sendButtonActive ? Colors.grey : BASE_COLOR,
-          onPressed: sendButtonActive ? null : () => BlocProvider.of<EmailVerificationBloc>(context).add(EmailVerificationRequestEvent(this.user)),
+          onPressed: sendButtonActive ? null : () => BlocProvider.of<EmailVerificationBloc>(context).add(EmailVerificationRequestEvent(this.user, localizations.locale.languageCode)),
         ),
       ],
     );

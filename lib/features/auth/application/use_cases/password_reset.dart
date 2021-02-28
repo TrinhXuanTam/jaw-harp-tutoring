@@ -12,11 +12,11 @@ class PasswordReset {
 
   PasswordReset(this._userFacade);
 
-  Future<void> call(String email) async {
+  Future<void> call(String email, {String languageCode = "en"}) async {
     if (email.isEmpty) throw ValidationError("Please fill out all fields!");
 
     if (!RegExMatchers.email.hasMatch(email)) throw ValidationError("Invalid email format!");
 
-    if (!await _userFacade.resetPassword(email)) throw EmailNotFoundError();
+    if (!await _userFacade.resetPassword(email, languageCode: languageCode)) throw EmailNotFoundError();
   }
 }
