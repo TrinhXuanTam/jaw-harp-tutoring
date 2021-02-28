@@ -38,7 +38,7 @@ void main() {
   });
 
   test("[PasswordReset] should throw [EmailNotFoundError] when user account doesn't exist", () async {
-    when(testServiceLocator<IUserFacade>().resetPassword(email)).thenAnswer((_) async => false);
+    when(testServiceLocator<IUserFacade>().resetPassword(email, languageCode: "en")).thenAnswer((_) async => false);
     expect(() => passwordReset(email), throwsA(isInstanceOf<EmailNotFoundError>()));
   });
 }
