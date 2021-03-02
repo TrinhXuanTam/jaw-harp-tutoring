@@ -3,6 +3,23 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+class Language {
+  final String code;
+  final String name;
+  final String nativeName;
+
+  Language(this.code, this.name, this.nativeName);
+}
+
+class SupportedLanguages {
+  static final languages = [
+    Language("cs", "Czech", "Čeština"),
+    Language("en", "English", "English"),
+  ];
+
+  static Iterable<String> getCodes() => languages.map((e) => e.code);
+}
+
 class AppLocalizations {
   final Locale locale;
   Map<String, String> _localizedStrings;
@@ -37,7 +54,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   /// Check if locale is supported
   @override
   bool isSupported(Locale locale) {
-    return ['en', 'cs'].contains(locale.languageCode);
+    return SupportedLanguages.getCodes().contains(locale.languageCode);
   }
 
   @override

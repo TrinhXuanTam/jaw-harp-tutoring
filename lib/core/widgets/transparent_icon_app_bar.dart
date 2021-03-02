@@ -8,7 +8,7 @@ class TransparentIconAppBar extends StatelessWidget implements PreferredSizeWidg
 
   const TransparentIconAppBar({
     Key key,
-    @required this.icon,
+    this.icon = Icons.arrow_back_rounded,
     this.iconColor = BASE_COLOR,
     @required this.onPressed,
   }) : super(key: key);

@@ -40,4 +40,9 @@ class UserRepository extends IUserRepository {
   Future<Set<String>> getAuthProviders(String email) {
     return _firebaseAuthDataSource.getAuthProviders(email);
   }
+
+  @override
+  Future<List<String>> getUserRoles(User user) {
+    return _firebaseAuthDataSource.getUserRoles(user.uid);
+  }
 }

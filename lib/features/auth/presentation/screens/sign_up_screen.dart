@@ -48,7 +48,6 @@ class SignUpScreen extends StatelessWidget {
           extendBodyBehindAppBar: true,
           resizeToAvoidBottomInset: false,
           appBar: TransparentIconAppBar(
-            icon: Icons.arrow_back_rounded,
             onPressed: () => Navigator.pop(context),
           ),
           body: CenteredStack(

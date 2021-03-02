@@ -50,7 +50,6 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
       extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
       appBar: TransparentIconAppBar(
-        icon: Icons.arrow_back_rounded,
         onPressed: () => Navigator.pop(context),
       ),
       body: BlocProvider<PasswordResetBloc>(

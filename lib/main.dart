@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:jews_harp/features/admin/presentation/screens/admin_menu_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/link_auth_providers_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_sent_screen.dart';
@@ -81,11 +82,10 @@ class _EntryPoint extends StatelessWidget {
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
           ],
-          supportedLocales: [
-            Locale('en', ''),
-            Locale('cs', 'CZ'),
-          ],
+          supportedLocales: SupportedLanguages.getCodes().map((e) => Locale(e)),
           localeResolutionCallback: (locale, supportedLocales) {
+            if (locale == null) return supportedLocales.first;
+
             for (var supportedLocale in supportedLocales) {
               if (supportedLocale.languageCode == locale.languageCode && supportedLocale.countryCode == locale.countryCode) return supportedLocale;
             }
@@ -114,6 +114,7 @@ class _EntryPoint extends StatelessWidget {
                 onSuccess: map["onSuccess"],
               );
             },
+            ADMIN_MENU_SCREEN_ROUTE: (_) => AdminMenuScreen(),
           },
           initialRoute: SPLASH_SCREEN_ROUTE,
         ),
