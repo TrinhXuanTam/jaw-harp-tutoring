@@ -27,7 +27,7 @@ class BorderedList extends StatelessWidget {
             child: child,
           ),
         );
-      if (items.indexOf(item) == 0)
+      if (index == 0)
         return Material(
           color: Colors.transparent,
           child: InkWell(
@@ -41,7 +41,7 @@ class BorderedList extends StatelessWidget {
             child: child,
           ),
         );
-      else if (items.indexOf(item) != length - 1)
+      else if (index == length - 1)
         return Material(
           color: Colors.transparent,
           child: InkWell(
@@ -73,7 +73,7 @@ class BorderedList extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
-              border: Border.all(color: BASE_COLOR, width: 2),
+              border: Border.all(color: Colors.grey[300]),
               borderRadius: BorderRadius.circular(15),
             ),
             child: Column(
@@ -82,7 +82,7 @@ class BorderedList extends StatelessWidget {
                   padding: EdgeInsets.all(10),
                   child: Row(
                     children: [
-                      Icon(item.icon),
+                      Icon(item.icon, color: BASE_COLOR),
                       SizedBox(width: 10),
                       Expanded(
                         child: Column(
@@ -95,6 +95,7 @@ class BorderedList extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
+                            SizedBox(height: 1),
                             Text(
                               localizations.translate(item.description),
                               style: TextStyle(color: Colors.grey),
@@ -112,7 +113,7 @@ class BorderedList extends StatelessWidget {
                     if (items.indexOf(item) != items.length - 1)
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Divider(height: 2, color: BASE_COLOR),
+                        child: Divider(height: 1.5, color: Colors.grey),
                       ),
                   ],
                 );

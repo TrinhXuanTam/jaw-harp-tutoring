@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/widgets/big_app_bar_background.dart';
+import 'package:jews_harp/core/widgets/bordered_list.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
-import 'package:jews_harp/core/widgets/full_screen_container.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
-import 'package:jews_harp/features/admin/presentation/widgets/bordered_list.dart';
 
 class AdminMenuScreen extends StatelessWidget {
   @override
@@ -18,9 +16,13 @@ class AdminMenuScreen extends StatelessWidget {
         iconColor: Colors.white,
         onPressed: () => Navigator.pop(context),
       ),
+      backgroundColor: Colors.grey[200],
       body: CenteredStack(
         children: [
-          BigAppBarBackground(),
+          Positioned(
+            top: 0,
+            child: BigAppBarBackground(height: size.height * 0.2),
+          ),
           Container(
             width: size.width * 0.9,
             child: Column(
@@ -46,15 +48,44 @@ class AdminMenuScreen extends StatelessWidget {
                   items: [
                     BorderedListItem(
                       onTap: () {},
-                      icon: Icons.article_outlined,
-                      title: "Manage Techniques",
-                      description: "Update, delete or create new techniques.",
+                      icon: Icons.add,
+                      title: "Create Technique",
+                      description: "Create a new technique.",
                     ),
                     BorderedListItem(
                       onTap: () {},
-                      icon: Icons.folder_open,
-                      title: "Manage Categories",
-                      description: "Update, delete or create new categories to group techniques.",
+                      icon: Icons.done,
+                      title: "Released Techniques",
+                      description: "Browse released techniques.",
+                    ),
+                    BorderedListItem(
+                      onTap: () {},
+                      icon: Icons.close_rounded,
+                      title: "Unreleased Techniques",
+                      description: "Techniques that ready to be released.",
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5),
+                BorderedList(
+                  items: [
+                    BorderedListItem(
+                      onTap: () {},
+                      icon: Icons.create_new_folder_outlined,
+                      title: "Create Category",
+                      description: "Create a new category to group techniques.",
+                    ),
+                    BorderedListItem(
+                      onTap: () {},
+                      icon: Icons.public,
+                      title: "Visible Categories",
+                      description: "Categories that are visible to the public.",
+                    ),
+                    BorderedListItem(
+                      onTap: () {},
+                      icon: Icons.public_off_rounded,
+                      title: "Hidden Categories",
+                      description: "Categories that are not visible to the public.",
                     ),
                   ],
                 ),

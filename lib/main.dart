@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:jews_harp/features/admin/presentation/screens/admin_menu_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/create_category_screen.dart';
-import 'package:jews_harp/features/admin/presentation/screens/manage_categories_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/link_auth_providers_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_sent_screen.dart';
@@ -117,7 +116,6 @@ class _EntryPoint extends StatelessWidget {
               );
             },
             ADMIN_MENU_SCREEN_ROUTE: (_) => AdminMenuScreen(),
-            MANAGE_CATEGORIES_SCREEN_ROUTE: (_) => ManageCategoriesScreen(),
             CREATE_CATEGORY_SCREEN_ROUTE: (_) => CreateCategoryScreen(),
           },
           initialRoute: SPLASH_SCREEN_ROUTE,

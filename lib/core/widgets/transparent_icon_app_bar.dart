@@ -6,6 +6,7 @@ class IconAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color iconColor;
   final Color backgroundColor;
   final Function onPressed;
+  final Text text;
 
   const IconAppBar({
     Key key,
@@ -13,11 +14,13 @@ class IconAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.iconColor = BASE_COLOR,
     @required this.onPressed,
     this.backgroundColor = Colors.transparent,
+    this.text,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      centerTitle: true,
       elevation: 0,
       backgroundColor: this.backgroundColor,
       leading: IconButton(
