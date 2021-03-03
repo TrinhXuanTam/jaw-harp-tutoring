@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:jews_harp/core/errors/language_not_supported_error.dart';
 
 class Language {
   final String code;
@@ -16,6 +17,15 @@ class SupportedLanguages {
     Language("cs", "Czech", "Čeština"),
     Language("en", "English", "English"),
   ];
+
+  static String getNativeName(String languageCode) {
+    final language = languages.firstWhere(
+      (element) => element.code == languageCode,
+      orElse: () => throw LanguageNotSupportedError(),
+    );
+
+    return language.nativeName;
+  }
 
   static Iterable<String> getCodes() => languages.map((e) => e.code);
 }

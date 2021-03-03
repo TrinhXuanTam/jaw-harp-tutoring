@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/widgets/big_app_bar_background.dart';
 import 'package:jews_harp/core/widgets/bordered_list.dart';
@@ -70,7 +71,7 @@ class AdminMenuScreen extends StatelessWidget {
                 BorderedList(
                   items: [
                     BorderedListItem(
-                      onTap: () {},
+                      onTap: () => Navigator.pushNamed(context, CREATE_CATEGORY_SCREEN_ROUTE),
                       icon: Icons.create_new_folder_outlined,
                       title: "Create Category",
                       description: "Create a new category to group techniques.",

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/features/admin/presentation/screens/admin_menu_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/create_category_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/link_auth_providers_screen.dart';
@@ -93,6 +94,7 @@ class _EntryPoint extends StatelessWidget {
             return supportedLocales.first;
           },
           theme: new ThemeData(
+            accentColor: BASE_COLOR,
             textTheme: Theme.of(context).textTheme.apply(
                   bodyColor: Colors.black,
                   displayColor: Colors.black,
