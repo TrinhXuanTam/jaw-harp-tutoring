@@ -13,7 +13,7 @@ class PasswordResetSentScreen extends StatelessWidget {
     final localizations = AppLocalizations.of(context);
 
     return Scaffold(
-      appBar: TransparentIconAppBar(
+      appBar: IconAppBar(
         icon: Icons.close_rounded,
         onPressed: () => Navigator.pop(context),
       ),

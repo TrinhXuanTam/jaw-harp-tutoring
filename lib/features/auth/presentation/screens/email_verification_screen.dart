@@ -46,7 +46,7 @@ class EmailVerificationScreen extends StatelessWidget {
         builder: (ctx, state) {
           return Scaffold(
             extendBodyBehindAppBar: true,
-            appBar: TransparentIconAppBar(
+            appBar: IconAppBar(
               icon: Icons.close_rounded,
               onPressed: () => BlocProvider.of<EmailVerificationBloc>(ctx).add(
                 EmailVerificationClosedEvent(user),
