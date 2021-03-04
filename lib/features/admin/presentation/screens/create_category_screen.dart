@@ -5,13 +5,13 @@ import 'package:jews_harp/core/BLoCs/toggle_switch/toggle_switch_bloc.dart';
 import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
+import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/create_category/create_category_bloc.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/language_side_scroll_grid.dart';
-import 'package:jews_harp/features/techniques/domain/entitites/category_localized_data.dart';
 
 class CreateCategoryScreen extends StatefulWidget {
   @override
@@ -117,8 +117,19 @@ class _CreateCategoryScreenState extends State<CreateCategoryScreen> {
                       SizedBox(height: 5),
                       BlocBuilder<CreateCategoryBloc, CreateCategoryState>(
                         builder: (ctx, _) => LanguageSideScrollGrid(
+                          displayAddButton: SupportedLanguages.languages.length != _createCategoryBloc.localizedData.length,
                           data: _createCategoryBloc.localizedData.entries.map((e) => e.value).toList(),
-                          onTap: (localizedData) => Navigator.pushNamed(context, CATEGORY_LOCALIZATION_EDIT_SCREEN_ROUTE, arguments: {"data": localizedData}),
+                          onTap: (localizedData) => Navigator.pushNamed(context, CATEGORY_LOCALIZATION_EDIT_SCREEN_ROUTE, arguments: {
+                            "data": localizedData,
+                            "onRemove": () {
+                              _createCategoryBloc.add(RemoveCategoryLocalizationEvent(localizedData.languageCode));
+                              Navigator.pop(context);
+                            },
+                            "onSave": (localizedData) {
+                              _createCategoryBloc.add(EditCategoryLocalizationEvent(localizedData));
+                              Navigator.pop(context);
+                            }
+                          }),
                           onAddButtonTap: () => Navigator.pushNamed(context, CATEGORY_LOCALIZATION_ADD_SCREEN_ROUTE, arguments: {"createCategoryBloc": _createCategoryBloc}),
                         ),
                       ),
@@ -126,7 +137,12 @@ class _CreateCategoryScreenState extends State<CreateCategoryScreen> {
                   ),
                 ),
                 SizedBox(height: 10),
-                RoundedButton(text: "Create", onPressed: () {}),
+                RoundedButton(
+                    text: "Create",
+                    onPressed: () {
+                      _createCategoryBloc.add(CreateCategoryFormSubmittedEvent(_toggleSwitchBloc.state is ToggleSwitchOnState));
+                      Navigator.pop(context);
+                    }),
               ],
             ),
           ),

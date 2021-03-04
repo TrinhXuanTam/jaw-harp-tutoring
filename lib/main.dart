@@ -11,7 +11,6 @@ import 'package:jews_harp/features/admin/presentation/screens/create_category_sc
 import 'package:jews_harp/features/auth/presentation/screens/link_auth_providers_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_sent_screen.dart';
-import 'package:jews_harp/features/techniques/domain/entitites/category_localized_data.dart';
 import 'package:jews_harp/features/techniques/presentation/screens/technique_list_screen.dart';
 import 'core/constants/routes.dart';
 import 'core/constants/settings.dart';
@@ -132,6 +131,8 @@ class _EntryPoint extends StatelessWidget {
               final Map<String, Object> map = ModalRoute.of(ctx).settings.arguments;
               return CategoryLocalizationEditScreen(
                 data: map["data"],
+                onRemove: map["onRemove"],
+                onSave: map["onSave"],
               );
             }
           },

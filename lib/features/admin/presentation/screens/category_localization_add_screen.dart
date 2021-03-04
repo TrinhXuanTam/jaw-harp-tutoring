@@ -7,6 +7,7 @@ import 'package:jews_harp/core/widgets/rounded_text_field.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/create_category/create_category_bloc.dart';
+import 'package:jews_harp/features/techniques/domain/entities/category_localized_data.dart';
 
 class CategoryLocalizationAddScreen extends StatefulWidget {
   final CreateCategoryBloc createCategoryBloc;
@@ -42,6 +43,8 @@ class _CategoryLocalizationAddScreenState extends State<CategoryLocalizationAddS
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
+    final dropdownItems = _createDropdownMenuItems(localizations);
+    if (dropdownItems.isNotEmpty) _languageController.value = dropdownItems.first.value;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -62,7 +65,7 @@ class _CategoryLocalizationAddScreenState extends State<CategoryLocalizationAddS
               SizedBox(height: 20),
               RoundedDropdown<String>(
                 controller: _languageController,
-                items: _createDropdownMenuItems(localizations),
+                items: dropdownItems,
                 placeholderText: "Choose Language",
                 icon: Icons.language_rounded,
               ),
@@ -82,7 +85,15 @@ class _CategoryLocalizationAddScreenState extends State<CategoryLocalizationAddS
               RoundedButton(
                 text: "Add",
                 onPressed: () {
-                  print(_languageController.value);
+                  widget.createCategoryBloc.add(
+                    AddCategoryLocalizationEvent(
+                      CategoryLocalizedData(
+                        _languageController.value,
+                        _titleController.text,
+                        _descriptionController.text,
+                      ),
+                    ),
+                  );
                   Navigator.pop(context);
                 },
               ),

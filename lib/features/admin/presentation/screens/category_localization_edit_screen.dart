@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/core/widgets/rounded_text_field.dart';
-import 'package:jews_harp/core/widgets/text_divider.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
-import 'package:jews_harp/features/techniques/domain/entitites/category_localized_data.dart';
+import 'package:jews_harp/features/techniques/domain/entities/category_localized_data.dart';
 
 class CategoryLocalizationEditScreen extends StatefulWidget {
   final CategoryLocalizedData data;
+  final Function(CategoryLocalizedData) onSave;
+  final Function onRemove;
 
   const CategoryLocalizationEditScreen({
     Key key,
     this.data,
+    this.onRemove,
+    this.onSave,
   }) : super(key: key);
 
   @override
@@ -61,12 +63,9 @@ class _CategoryLocalizationEditScreenState extends State<CategoryLocalizationEdi
               ),
               SizedBox(height: 10),
               RoundedButton(
-                  text: "Save",
-                  onPressed: () {
-                    widget.data.description = _descriptionController.text;
-                    widget.data.title = _titleController.text;
-                    Navigator.pop(context);
-                  }),
+                text: "Save",
+                onPressed: () => widget.onSave(CategoryLocalizedData(widget.data.languageCode, _titleController.text, _descriptionController.text)),
+              ),
               if (widget.data.languageCode != "en")
                 Column(
                   children: [
@@ -76,7 +75,7 @@ class _CategoryLocalizationEditScreenState extends State<CategoryLocalizationEdi
                       color: Colors.redAccent[200],
                       textColor: Colors.white,
                       borderColor: Colors.redAccent[200],
-                      onPressed: () {},
+                      onPressed: widget.onRemove,
                     ),
                   ],
                 ),

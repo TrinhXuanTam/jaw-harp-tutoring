@@ -2,8 +2,8 @@ import 'package:equatable/equatable.dart';
 
 class CategoryLocalizedData extends Equatable {
   final String languageCode;
-  String title;
-  String description;
+  final String title;
+  final String description;
 
   CategoryLocalizedData(
     this.languageCode,

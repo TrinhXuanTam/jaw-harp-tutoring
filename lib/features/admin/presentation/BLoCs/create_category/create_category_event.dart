@@ -3,14 +3,26 @@ part of 'create_category_bloc.dart';
 @immutable
 abstract class CreateCategoryEvent {}
 
-class AddLocalizationEvent extends CreateCategoryEvent {
-  final String languageCode;
+class AddCategoryLocalizationEvent extends CreateCategoryEvent {
+  final CategoryLocalizedData categoryLocalizedData;
 
-  AddLocalizationEvent(this.languageCode);
+  AddCategoryLocalizationEvent(this.categoryLocalizedData);
 }
 
-class RemoveLocalizationEvent extends CreateCategoryEvent {
+class EditCategoryLocalizationEvent extends CreateCategoryEvent {
+  final CategoryLocalizedData categoryLocalizedData;
+
+  EditCategoryLocalizationEvent(this.categoryLocalizedData);
+}
+
+class RemoveCategoryLocalizationEvent extends CreateCategoryEvent {
   final String languageCode;
 
-  RemoveLocalizationEvent(this.languageCode);
+  RemoveCategoryLocalizationEvent(this.languageCode);
+}
+
+class CreateCategoryFormSubmittedEvent extends CreateCategoryEvent {
+  final bool isVisible;
+
+  CreateCategoryFormSubmittedEvent(this.isVisible);
 }

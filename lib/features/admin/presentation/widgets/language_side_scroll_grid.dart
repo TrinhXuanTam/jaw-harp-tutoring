@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/l10n.dart';
-import 'package:jews_harp/features/techniques/domain/entitites/category_localized_data.dart';
+import 'package:jews_harp/features/techniques/domain/entities/category_localized_data.dart';
 
 class LanguageSideScrollGrid extends StatelessWidget {
   final List<CategoryLocalizedData> data;
   final Function(CategoryLocalizedData) onTap;
   final Function onAddButtonTap;
+  final bool displayAddButton;
 
   Widget _buildLanguageCard(CategoryLocalizedData categoryLocalizedData, String label) {
     return Card(
@@ -83,6 +84,7 @@ class LanguageSideScrollGrid extends StatelessWidget {
     @required this.data,
     @required this.onTap,
     @required this.onAddButtonTap,
+    this.displayAddButton = false,
   }) : super(key: key);
 
   @override
@@ -93,13 +95,13 @@ class LanguageSideScrollGrid extends StatelessWidget {
       height: 100,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: data.length + 1,
+        itemCount: displayAddButton ? data.length + 1 : data.length,
         itemBuilder: (ctx, index) {
           if (index == data.length)
             return _buildAddButton();
           else {
             final categoryLocalizedData = data[index];
-            final languageName = SupportedLanguages.getNativeName(categoryLocalizedData.languageCode);
+            final languageName = SupportedLanguages.getName(categoryLocalizedData.languageCode);
             final label = localizations.translate(languageName);
             return _buildLanguageCard(categoryLocalizedData, label);
           }

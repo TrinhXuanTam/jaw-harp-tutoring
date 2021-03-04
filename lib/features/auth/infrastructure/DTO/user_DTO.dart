@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' as Firebase;
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 
 class UserDTO extends User {
