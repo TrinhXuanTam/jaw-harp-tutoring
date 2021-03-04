@@ -19,7 +19,7 @@ class LanguageSideScrollGrid extends StatelessWidget {
         onTap: () => this.onTap(categoryLocalizedData),
         borderRadius: BorderRadius.circular(20),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -27,13 +27,12 @@ class LanguageSideScrollGrid extends StatelessWidget {
                 Icons.language,
                 color: Colors.white,
               ),
-              SizedBox(height: 5),
+              SizedBox(height: 10),
               Text(
                 label,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                 ),
               )
             ],
@@ -55,7 +54,7 @@ class LanguageSideScrollGrid extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         child: Container(
           width: 80,
-          padding: const EdgeInsets.symmetric(horizontal: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -69,7 +68,7 @@ class LanguageSideScrollGrid extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 17,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                 ),
               )
             ],

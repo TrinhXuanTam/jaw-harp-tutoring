@@ -50,7 +50,6 @@ dependencies:
   cupertino_icons: ^1.0.0
   flutter_auth_buttons: ^0.10.0
   convex_bottom_bar: ^2.7.1+1
-  font_awesome_flutter: ^8.11.0
 
 dev_dependencies:
   mockito: ^4.1.4
@@ -71,8 +70,8 @@ flutter:
   uses-material-design: true
 
   assets:
-     - assets/images/
-     - assets/l10n/
+    - assets/images/
+    - assets/l10n/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

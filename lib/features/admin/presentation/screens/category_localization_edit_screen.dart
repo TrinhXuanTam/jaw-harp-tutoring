@@ -1,0 +1,89 @@
+import 'package:flutter/material.dart';
+import 'package:jews_harp/core/constants/theme.dart';
+import 'package:jews_harp/core/l10n.dart';
+import 'package:jews_harp/core/widgets/centered_stack.dart';
+import 'package:jews_harp/core/widgets/rounded_button.dart';
+import 'package:jews_harp/core/widgets/rounded_text_field.dart';
+import 'package:jews_harp/core/widgets/text_divider.dart';
+import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
+import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
+import 'package:jews_harp/features/techniques/domain/entitites/category_localized_data.dart';
+
+class CategoryLocalizationEditScreen extends StatefulWidget {
+  final CategoryLocalizedData data;
+
+  const CategoryLocalizationEditScreen({
+    Key key,
+    this.data,
+  }) : super(key: key);
+
+  @override
+  _CategoryLocalizationEditScreenState createState() => _CategoryLocalizationEditScreenState();
+}
+
+class _CategoryLocalizationEditScreenState extends State<CategoryLocalizationEditScreen> {
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+    _titleController.text = widget.data.title;
+    _descriptionController.text = widget.data.description;
+
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      extendBodyBehindAppBar: true,
+      appBar: IconAppBar(
+        onPressed: () => Navigator.pop(context),
+      ),
+      body: CenteredStack(
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TitleWithSubtitle(
+                titleText: "Edit Localization",
+                titleSize: 30,
+                subtitleText: "Edit localized data for " + SupportedLanguages.getName(this.widget.data.languageCode).toLowerCase(),
+              ),
+              SizedBox(height: 20),
+              RoundedTextField(
+                icon: Icons.title_rounded,
+                placeholderText: localizations.translate("Title"),
+                controller: _titleController,
+              ),
+              SizedBox(height: 10),
+              RoundedTextField(
+                icon: Icons.description_outlined,
+                placeholderText: localizations.translate("Description"),
+                controller: _descriptionController,
+              ),
+              SizedBox(height: 10),
+              RoundedButton(
+                  text: "Save",
+                  onPressed: () {
+                    widget.data.description = _descriptionController.text;
+                    widget.data.title = _titleController.text;
+                    Navigator.pop(context);
+                  }),
+              if (widget.data.languageCode != "en")
+                Column(
+                  children: [
+                    SizedBox(height: 5),
+                    RoundedButton(
+                      text: "Remove",
+                      color: Colors.redAccent[200],
+                      textColor: Colors.white,
+                      borderColor: Colors.redAccent[200],
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}

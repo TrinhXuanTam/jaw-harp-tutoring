@@ -79,7 +79,7 @@ class BorderedList extends StatelessWidget {
             child: Column(
               children: items.map((item) {
                 final child = Container(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(14),
                   child: Row(
                     children: [
                       Icon(item.icon, color: BASE_COLOR),

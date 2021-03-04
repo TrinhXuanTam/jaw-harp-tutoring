@@ -27,6 +27,15 @@ class SupportedLanguages {
     return language.nativeName;
   }
 
+  static String getName(String languageCode) {
+    final language = languages.firstWhere(
+      (element) => element.code == languageCode,
+      orElse: () => throw LanguageNotSupportedError(),
+    );
+
+    return language.name;
+  }
+
   static Iterable<String> getCodes() => languages.map((e) => e.code);
 }
 

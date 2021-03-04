@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/BLoCs/toggle_switch/toggle_switch_bloc.dart';
+import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
@@ -114,13 +115,12 @@ class _CreateCategoryScreenState extends State<CreateCategoryScreen> {
                         ],
                       ),
                       SizedBox(height: 5),
-                      LanguageSideScrollGrid(
-                        data: [
-                          CategoryLocalizedData("cs"),
-                          CategoryLocalizedData("en"),
-                        ],
-                        onTap: (localizedData) => print(localizedData.languageCode),
-                        onAddButtonTap: () => print("tapped"),
+                      BlocBuilder<CreateCategoryBloc, CreateCategoryState>(
+                        builder: (ctx, _) => LanguageSideScrollGrid(
+                          data: _createCategoryBloc.localizedData.entries.map((e) => e.value).toList(),
+                          onTap: (localizedData) => Navigator.pushNamed(context, CATEGORY_LOCALIZATION_EDIT_SCREEN_ROUTE, arguments: {"data": localizedData}),
+                          onAddButtonTap: () => Navigator.pushNamed(context, CATEGORY_LOCALIZATION_ADD_SCREEN_ROUTE, arguments: {"createCategoryBloc": _createCategoryBloc}),
+                        ),
                       ),
                     ],
                   ),
