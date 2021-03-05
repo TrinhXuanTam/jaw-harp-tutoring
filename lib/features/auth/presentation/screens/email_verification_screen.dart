@@ -49,7 +49,7 @@ class EmailVerificationScreen extends StatelessWidget {
             appBar: IconAppBar(
               icon: Icons.close_rounded,
               onPressed: () => BlocProvider.of<EmailVerificationBloc>(ctx).add(
-                EmailVerificationClosedEvent(user),
+                EmailVerificationClosedEvent(),
               ),
             ),
             body: CenteredStack(

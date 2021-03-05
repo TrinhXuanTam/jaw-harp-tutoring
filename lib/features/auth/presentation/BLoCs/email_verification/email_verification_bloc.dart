@@ -5,7 +5,6 @@ import 'package:injectable/injectable.dart';
 import 'package:jews_harp/features/auth/application/use_cases/email_verification_check.dart';
 import 'package:jews_harp/features/auth/application/use_cases/send_email_verification.dart';
 import 'package:jews_harp/features/auth/application/use_cases/sign_out.dart';
-import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:meta/meta.dart';
 
 part 'email_verification_event.dart';

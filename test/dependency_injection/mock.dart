@@ -7,7 +7,7 @@ import 'package:injectable/injectable.dart' as Injectable;
 
 @Injectable.LazySingleton(as: IUserFacade, env: [
   EMAIL_AUTHENTICATION_TEST_ENV,
-  OFFLINE_AUTHENTICATION_TEST_ENV,
+  GET_CURRENT_USER_TEST_ENV,
   SIGN_UP_TEST_ENV,
   EMAIL_VERIFICATION_CHECK_TEST_ENV,
   LINK_EMAIL_PROVIDER_TEST_ENV,
@@ -19,7 +19,7 @@ class IUserFacadeMock extends Mock implements IUserFacade {}
 
 @Injectable.LazySingleton(as: IUserRepository, env: [
   EMAIL_AUTHENTICATION_TEST_ENV,
-  OFFLINE_AUTHENTICATION_TEST_ENV,
+  GET_CURRENT_USER_TEST_ENV,
   SIGN_UP_TEST_ENV,
   FACEBOOK_AUTHENTICATION_TEST_ENV,
   GOOGLE_AUTHENTICATION_TEST_ENV,

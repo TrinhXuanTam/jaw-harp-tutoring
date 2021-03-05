@@ -93,19 +93,21 @@ class LanguageSideScrollGrid extends StatelessWidget {
 
     return Container(
       height: 100,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: displayAddButton ? data.length + 1 : data.length,
-        itemBuilder: (ctx, index) {
-          if (index == data.length)
-            return _buildAddButton();
-          else {
-            final categoryLocalizedData = data[index];
-            final languageName = SupportedLanguages.getName(categoryLocalizedData.languageCode);
-            final label = localizations.translate(languageName);
-            return _buildLanguageCard(categoryLocalizedData, label);
-          }
-        },
+      child: Scrollbar(
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: displayAddButton ? data.length + 1 : data.length,
+          itemBuilder: (ctx, index) {
+            if (index == data.length)
+              return _buildAddButton();
+            else {
+              final categoryLocalizedData = data[index];
+              final languageName = SupportedLanguages.getName(categoryLocalizedData.languageCode);
+              final label = localizations.translate(languageName);
+              return _buildLanguageCard(categoryLocalizedData, label);
+            }
+          },
+        ),
       ),
     );
   }

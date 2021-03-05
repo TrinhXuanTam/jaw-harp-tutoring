@@ -6,6 +6,7 @@ import 'package:jews_harp/core/widgets/big_app_bar_background.dart';
 import 'package:jews_harp/core/widgets/bordered_list.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
+import 'package:jews_harp/features/admin/presentation/screens/category_list_screen.dart';
 
 class AdminMenuScreen extends StatelessWidget {
   @override
@@ -77,7 +78,7 @@ class AdminMenuScreen extends StatelessWidget {
                       description: "Create a new category to group techniques.",
                     ),
                     BorderedListItem(
-                      onTap: () {},
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryListScreen())),
                       icon: Icons.public,
                       title: "Visible Categories",
                       description: "Categories that are visible to the public.",
