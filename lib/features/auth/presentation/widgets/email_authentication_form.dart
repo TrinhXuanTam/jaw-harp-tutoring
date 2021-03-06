@@ -44,7 +44,7 @@ class _EmailAuthenticationFormState extends State<EmailAuthenticationForm> {
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations localizations = AppLocalizations.of(context);
+    final AppLocalizations l10n = AppLocalizations.of(context);
 
     return BlocProvider<EmailAuthBloc>(
       create: (_) => _emailAuthBloc,
@@ -52,19 +52,19 @@ class _EmailAuthenticationFormState extends State<EmailAuthenticationForm> {
         children: [
           RoundedTextField(
             icon: Icons.mail,
-            placeholderText: localizations.translate("Email"),
+            placeholderText: l10n.translate("Email"),
             controller: _emailController,
           ),
           SizedBox(height: 10),
           RoundedPasswordField(
-            placeholderText: localizations.translate("Password"),
+            placeholderText: l10n.translate("Password"),
             controller: _passwordController,
           ),
           SizedBox(height: 10),
           BlocListener<EmailAuthBloc, EmailAuthState>(
             listener: _mailAuthBlocListener,
             child: RoundedButton(
-              text: localizations.translate("Sign In"),
+              text: l10n.translate("Sign In"),
               onPressed: () {
                 _emailAuthBloc.add(
                   EmailAuthenticationRequestEvent(

@@ -7,22 +7,42 @@ import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/scrollable_category_list.dart';
 import 'package:jews_harp/features/techniques/domain/entities/category.dart';
 
+class CategoryListScreenArgs {
+  final String title;
+  final String subtitle;
+  final List<Category> items;
+
+  CategoryListScreenArgs({
+    required this.title,
+    required this.subtitle,
+    required this.items,
+  });
+}
+
 class CategoryListScreen extends StatelessWidget {
   final String title;
   final String subtitle;
   final List<Category> items;
 
+  factory CategoryListScreen.fromArgs(CategoryListScreenArgs args) {
+    return CategoryListScreen(
+      title: args.title,
+      subtitle: args.subtitle,
+      items: args.items,
+    );
+  }
+
   const CategoryListScreen({
-    Key key,
-    @required this.title,
-    @required this.subtitle,
-    @required this.items,
+    Key? key,
+    required this.title,
+    required this.subtitle,
+    required this.items,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final localizations = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -66,8 +86,8 @@ class CategoryListScreen extends StatelessWidget {
                         (e) => ScrollableCategoryListItem(
                           () {},
                           e.techniqueIds.length,
-                          e.getLocalizedTitle(localizations.locale.languageCode),
-                          e.getLocalizedDescription(localizations.locale.languageCode),
+                          e.getLocalizedTitle(l10n.locale.languageCode),
+                          e.getLocalizedDescription(l10n.locale.languageCode),
                         ),
                       )
                       .toList(),

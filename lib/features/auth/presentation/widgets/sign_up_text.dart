@@ -7,7 +7,7 @@ import 'package:jews_harp/core/l10n.dart';
 class SignUpText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations localizations = AppLocalizations.of(context);
+    final AppLocalizations l10n = AppLocalizations.of(context);
 
     return InkWell(
       borderRadius: BorderRadius.circular(29),
@@ -16,7 +16,7 @@ class SignUpText extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         child: RichText(
           text: TextSpan(
-            text: localizations.translate("Don't have an Account?"),
+            text: l10n.translate("Don't have an Account?"),
             style: const TextStyle(
               color: Colors.black,
               fontSize: 17,
@@ -26,7 +26,7 @@ class SignUpText extends StatelessWidget {
                 child: Container(
                   margin: const EdgeInsets.only(left: 5),
                   child: Text(
-                    localizations.translate("Sign Up"),
+                    l10n.translate("Sign Up"),
                     style: const TextStyle(
                       fontSize: 18,
                       color: BASE_COLOR,

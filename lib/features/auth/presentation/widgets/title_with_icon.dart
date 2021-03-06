@@ -9,16 +9,16 @@ class TitleWithIcon extends StatelessWidget {
   final String title;
 
   const TitleWithIcon({
-    Key key,
-    @required this.icon,
+    Key? key,
+    required this.icon,
     this.iconColor = BASE_COLOR,
     this.iconSize = 150,
-    @required this.title,
+    required this.title,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations localizations = AppLocalizations.of(context);
+    final AppLocalizations l10n = AppLocalizations.of(context);
 
     return Column(
       children: [
@@ -28,7 +28,7 @@ class TitleWithIcon extends StatelessWidget {
           color: this.iconColor,
         ),
         Text(
-          localizations.translate(this.title),
+          l10n.translate(this.title),
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
         ),
       ],

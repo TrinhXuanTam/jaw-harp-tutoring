@@ -7,16 +7,36 @@ import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/techniques/domain/entities/category_localized_data.dart';
 
+class CategoryLocalizationEditScreenArgs {
+  final CategoryLocalizedData data;
+  final void Function(CategoryLocalizedData) onSave;
+  final VoidCallback onRemove;
+
+  CategoryLocalizationEditScreenArgs({
+    required this.data,
+    required this.onSave,
+    required this.onRemove,
+  });
+}
+
 class CategoryLocalizationEditScreen extends StatefulWidget {
   final CategoryLocalizedData data;
-  final Function(CategoryLocalizedData) onSave;
-  final Function onRemove;
+  final void Function(CategoryLocalizedData) onSave;
+  final VoidCallback onRemove;
+
+  factory CategoryLocalizationEditScreen.fromArgs(CategoryLocalizationEditScreenArgs args) {
+    return CategoryLocalizationEditScreen(
+      data: args.data,
+      onSave: args.onSave,
+      onRemove: args.onRemove,
+    );
+  }
 
   const CategoryLocalizationEditScreen({
-    Key key,
-    this.data,
-    this.onRemove,
-    this.onSave,
+    Key? key,
+    required this.data,
+    required this.onRemove,
+    required this.onSave,
   }) : super(key: key);
 
   @override
@@ -29,7 +49,7 @@ class _CategoryLocalizationEditScreenState extends State<CategoryLocalizationEdi
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context);
     _titleController.text = widget.data.title;
     _descriptionController.text = widget.data.description;
 
@@ -52,13 +72,13 @@ class _CategoryLocalizationEditScreenState extends State<CategoryLocalizationEdi
               SizedBox(height: 20),
               RoundedTextField(
                 icon: Icons.title_rounded,
-                placeholderText: localizations.translate("Title"),
+                placeholderText: l10n.translate("Title"),
                 controller: _titleController,
               ),
               SizedBox(height: 10),
               RoundedTextField(
                 icon: Icons.description_outlined,
-                placeholderText: localizations.translate("Description"),
+                placeholderText: l10n.translate("Description"),
                 controller: _descriptionController,
               ),
               SizedBox(height: 10),
@@ -72,9 +92,9 @@ class _CategoryLocalizationEditScreenState extends State<CategoryLocalizationEdi
                     SizedBox(height: 5),
                     RoundedButton(
                       text: "Remove",
-                      color: Colors.redAccent[200],
+                      color: Colors.redAccent[200]!,
                       textColor: Colors.white,
-                      borderColor: Colors.redAccent[200],
+                      borderColor: Colors.redAccent[200]!,
                       onPressed: widget.onRemove,
                     ),
                   ],

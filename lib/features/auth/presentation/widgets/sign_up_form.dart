@@ -19,34 +19,34 @@ class _SignUpFormState extends State<SignUpForm> {
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations localizations = AppLocalizations.of(context);
+    final AppLocalizations l10n = AppLocalizations.of(context);
 
     return Column(
       children: [
         RoundedTextField(
           icon: Icons.person,
-          placeholderText: localizations.translate("Full Name"),
+          placeholderText: l10n.translate("Full Name"),
           controller: nameController,
         ),
         SizedBox(height: 10),
         RoundedTextField(
           icon: Icons.mail,
-          placeholderText: localizations.translate("Email"),
+          placeholderText: l10n.translate("Email"),
           controller: emailController,
         ),
         SizedBox(height: 10),
         RoundedPasswordField(
-          placeholderText: localizations.translate("Password"),
+          placeholderText: l10n.translate("Password"),
           controller: passwordController,
         ),
         SizedBox(height: 10),
         RoundedPasswordField(
-          placeholderText: localizations.translate("Repeat Password"),
+          placeholderText: l10n.translate("Repeat Password"),
           controller: passwordRepeatController,
         ),
         SizedBox(height: 10),
         RoundedButton(
-          text: localizations.translate("Sign Up"),
+          text: l10n.translate("Sign Up"),
           onPressed: () => BlocProvider.of<SignUpBloc>(context).add(
             SignUpButtonPressedEvent(
               nameController.text,

@@ -17,14 +17,14 @@ class TextDivider extends StatelessWidget {
   }
 
   const TextDivider({
-    Key key,
-    @required this.text,
+    Key? key,
+    required this.text,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final localizations = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return Container(
       width: size.width * 0.8,
@@ -36,7 +36,7 @@ class TextDivider extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Text(
-                localizations.translate(this.text),
+                l10n.translate(this.text),
                 style: TextStyle(
                   color: BASE_COLOR,
                   fontWeight: FontWeight.w600,

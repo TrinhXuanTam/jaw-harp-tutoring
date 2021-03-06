@@ -9,12 +9,22 @@ import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/create_category/create_category_bloc.dart';
 import 'package:jews_harp/features/techniques/domain/entities/category_localized_data.dart';
 
+class CategoryLocalizationAddScreenArgs {
+  final CreateCategoryBloc createCategoryBloc;
+
+  CategoryLocalizationAddScreenArgs({required this.createCategoryBloc});
+}
+
 class CategoryLocalizationAddScreen extends StatefulWidget {
   final CreateCategoryBloc createCategoryBloc;
 
+  factory CategoryLocalizationAddScreen.fromArgs(CategoryLocalizationAddScreenArgs args) {
+    return CategoryLocalizationAddScreen(createCategoryBloc: args.createCategoryBloc);
+  }
+
   const CategoryLocalizationAddScreen({
-    Key key,
-    @required this.createCategoryBloc,
+    Key? key,
+    required this.createCategoryBloc,
   }) : super(key: key);
 
   @override
@@ -26,14 +36,14 @@ class _CategoryLocalizationAddScreenState extends State<CategoryLocalizationAddS
   final TextEditingController _descriptionController = TextEditingController();
   final DropdownButtonFormFieldController<String> _languageController = DropdownButtonFormFieldController<String>();
 
-  List<DropdownMenuItem> _createDropdownMenuItems(AppLocalizations localizations) {
+  List<DropdownMenuItem<String>> _createDropdownMenuItems(AppLocalizations l10n) {
     return SupportedLanguages.languages
         .where(
           (element) => !widget.createCategoryBloc.localizedData.containsKey(element.code),
         )
         .map(
           (e) => DropdownMenuItem(
-            child: Text(localizations.translate(e.name)),
+            child: Text(l10n.translate(e.name)),
             value: e.code,
           ),
         )
@@ -42,8 +52,8 @@ class _CategoryLocalizationAddScreenState extends State<CategoryLocalizationAddS
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context);
-    final dropdownItems = _createDropdownMenuItems(localizations);
+    final l10n = AppLocalizations.of(context);
+    final dropdownItems = _createDropdownMenuItems(l10n);
     if (dropdownItems.isNotEmpty) _languageController.value = dropdownItems.first.value;
 
     return Scaffold(
@@ -72,13 +82,13 @@ class _CategoryLocalizationAddScreenState extends State<CategoryLocalizationAddS
               SizedBox(height: 10),
               RoundedTextField(
                 icon: Icons.title_rounded,
-                placeholderText: localizations.translate("Title"),
+                placeholderText: l10n.translate("Title"),
                 controller: _titleController,
               ),
               SizedBox(height: 10),
               RoundedTextField(
                 icon: Icons.description_outlined,
-                placeholderText: localizations.translate("Description"),
+                placeholderText: l10n.translate("Description"),
                 controller: _descriptionController,
               ),
               SizedBox(height: 10),
@@ -88,7 +98,7 @@ class _CategoryLocalizationAddScreenState extends State<CategoryLocalizationAddS
                   widget.createCategoryBloc.add(
                     AddCategoryLocalizationEvent(
                       CategoryLocalizedData(
-                        _languageController.value,
+                        _languageController.value!,
                         _titleController.text,
                         _descriptionController.text,
                       ),

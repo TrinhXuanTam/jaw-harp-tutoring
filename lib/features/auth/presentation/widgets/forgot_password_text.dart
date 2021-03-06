@@ -7,7 +7,7 @@ import 'package:jews_harp/core/l10n.dart';
 class ForgotPasswordText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations localizations = AppLocalizations.of(context);
+    final AppLocalizations l10n = AppLocalizations.of(context);
 
     return InkWell(
       borderRadius: BorderRadius.circular(29),
@@ -15,7 +15,7 @@ class ForgotPasswordText extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
         child: Text(
-          localizations.translate("Forgot Password?"),
+          l10n.translate("Forgot Password?"),
           style: TextStyle(
             color: BASE_COLOR,
             fontWeight: FontWeight.bold,

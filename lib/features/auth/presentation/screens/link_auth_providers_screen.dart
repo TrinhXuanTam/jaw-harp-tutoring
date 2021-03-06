@@ -14,16 +14,36 @@ import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/email_authentication/email_auth_bloc.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/third_party_authentication/third_party_auth_bloc.dart';
 
+class LinkAuthProvidersScreenArgs {
+  final String email;
+  final Set<String> providers;
+  final VoidCallback onSuccess;
+
+  LinkAuthProvidersScreenArgs({
+    required this.email,
+    required this.providers,
+    required this.onSuccess,
+  });
+}
+
 class LinkAuthProvidersScreen extends StatefulWidget {
   final String email;
   final Set<String> providers;
-  final Function onSuccess;
+  final VoidCallback onSuccess;
+
+  factory LinkAuthProvidersScreen.fromArgs(LinkAuthProvidersScreenArgs args) {
+    return LinkAuthProvidersScreen(
+      email: args.email,
+      providers: args.providers,
+      onSuccess: args.onSuccess,
+    );
+  }
 
   const LinkAuthProvidersScreen({
-    Key key,
-    @required this.email,
-    @required this.providers,
-    @required this.onSuccess,
+    Key? key,
+    required this.email,
+    required this.providers,
+    required this.onSuccess,
   }) : super(key: key);
 
   @override
@@ -43,14 +63,14 @@ class _LinkAuthProvidersScreenState extends State<LinkAuthProvidersScreen> {
   }
 
   void _wrongAccountHandler(BuildContext ctx) {
-    final localizations = AppLocalizations.of(ctx);
+    final l10n = AppLocalizations.of(ctx);
 
     showDialog(
       context: ctx,
       builder: (_) {
         return OneButtonAlertDialog(
-          title: localizations.translate("Failed to link accounts"),
-          message: localizations.translate("Account emails don't match!\nPlease sign in to: ") + widget.email + ".",
+          title: l10n.translate("Failed to link accounts"),
+          message: l10n.translate("Account emails don't match!\nPlease sign in to: ") + widget.email + ".",
         );
       },
     );
@@ -77,7 +97,7 @@ class _LinkAuthProvidersScreenState extends State<LinkAuthProvidersScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final localizations = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -101,7 +121,7 @@ class _LinkAuthProvidersScreenState extends State<LinkAuthProvidersScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    localizations.translate("Link Accounts"),
+                    l10n.translate("Link Accounts"),
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
                   ),
                   Container(
@@ -109,11 +129,11 @@ class _LinkAuthProvidersScreenState extends State<LinkAuthProvidersScreen> {
                     child: RichText(
                       textAlign: TextAlign.justify,
                       text: TextSpan(
-                        text: localizations.translate("You've already used"),
+                        text: l10n.translate("You've already used"),
                         style: TextStyle(fontSize: 15, color: Colors.black),
                         children: [
                           TextSpan(text: " ${widget.email} ", style: TextStyle(fontWeight: FontWeight.bold)),
-                          TextSpan(text: localizations.translate("in the past. Please sign in with that account to continue:")),
+                          TextSpan(text: l10n.translate("in the past. Please sign in with that account to continue:")),
                         ],
                       ),
                     ),
@@ -123,12 +143,12 @@ class _LinkAuthProvidersScreenState extends State<LinkAuthProvidersScreen> {
                     Column(
                       children: [
                         RoundedPasswordField(
-                          placeholderText: localizations.translate("Password"),
+                          placeholderText: l10n.translate("Password"),
                           controller: _passwordController,
                         ),
                         SizedBox(height: 10),
                         RoundedButton(
-                          text: localizations.translate("Continue"),
+                          text: l10n.translate("Continue"),
                           onPressed: () => _emailAuthBloc.add(EmailAuthenticationRequestEvent(widget.email, _passwordController.text)),
                         ),
                         if (widget.providers.length > 1) TextDivider(text: "OR"),

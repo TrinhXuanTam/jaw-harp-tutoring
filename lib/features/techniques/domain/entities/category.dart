@@ -9,17 +9,19 @@ class Category extends Equatable {
   final Map<String, CategoryLocalizedData> localizedData;
 
   String getLocalizedTitle(String languageCode) {
-    if (!localizedData.containsKey(languageCode))
-      return localizedData["en"].title;
-    else
-      return localizedData[languageCode].title;
+    final data = localizedData[languageCode];
+
+    if (data == null) return localizedData["en"]!.title;
+
+    return data.title;
   }
 
   String getLocalizedDescription(String languageCode) {
-    if (!localizedData.containsKey(languageCode))
-      return localizedData["en"].description;
-    else
-      return localizedData[languageCode].description;
+    final data = localizedData[languageCode];
+
+    if (data == null) return localizedData["en"]!.description;
+
+    return data.description;
   }
 
   Category(this.id, this.isVisible, this.techniqueIds, this.localizedData);

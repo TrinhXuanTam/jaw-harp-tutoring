@@ -8,28 +8,28 @@ class TitleWithSubtitle extends StatelessWidget {
   final double subtitleSize;
 
   const TitleWithSubtitle({
-    Key key,
-    @required this.titleText,
-    @required this.subtitleText,
+    Key? key,
+    required this.titleText,
+    required this.subtitleText,
     this.titleSize = 45,
     this.subtitleSize = 16,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations localizations = AppLocalizations.of(context);
+    final AppLocalizations l10n = AppLocalizations.of(context);
 
     return Column(
       children: [
         Text(
-          localizations.translate(this.titleText),
+          l10n.translate(this.titleText),
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: this.titleSize,
           ),
         ),
         Text(
-          localizations.translate(this.subtitleText),
+          l10n.translate(this.subtitleText),
           style: TextStyle(
             color: Colors.grey,
             fontSize: this.subtitleSize,

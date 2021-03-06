@@ -12,30 +12,30 @@ class EmailVerificationButtons extends StatelessWidget {
   final User user;
 
   const EmailVerificationButtons({
-    Key key,
-    @required this.sendButtonActive,
-    @required this.user,
+    Key? key,
+    required this.sendButtonActive,
+    required this.user,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations localizations = AppLocalizations.of(context);
+    final AppLocalizations l10n = AppLocalizations.of(context);
 
     return Column(
       children: [
         RoundedButton(
-          text: localizations.translate("Continue"),
+          text: l10n.translate("Continue"),
           onPressed: () => BlocProvider.of<EmailVerificationBloc>(context).add(
             EmailVerificationContinueEvent(),
           ),
         ),
         SizedBox(height: 5),
         RoundedButton(
-          text: sendButtonActive ? localizations.translate("Verification Email Sent") : localizations.translate("Resend Verification Email"),
+          text: sendButtonActive ? l10n.translate("Verification Email Sent") : l10n.translate("Resend Verification Email"),
           color: Colors.white,
           borderColor: sendButtonActive ? Colors.grey : BASE_COLOR,
           textColor: sendButtonActive ? Colors.grey : BASE_COLOR,
-          onPressed: sendButtonActive ? null : () => BlocProvider.of<EmailVerificationBloc>(context).add(EmailVerificationRequestEvent(localizations.locale.languageCode)),
+          onPressed: sendButtonActive ? () {} : () => BlocProvider.of<EmailVerificationBloc>(context).add(EmailVerificationRequestEvent(l10n.locale.languageCode)),
         ),
       ],
     );

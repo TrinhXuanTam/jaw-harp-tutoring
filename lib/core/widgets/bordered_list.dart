@@ -5,12 +5,12 @@ import 'package:jews_harp/core/l10n.dart';
 class BorderedList extends StatelessWidget {
   final List<BorderedListItem> items;
 
-  const BorderedList({Key key, this.items}) : super(key: key);
+  const BorderedList({Key? key, required this.items}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final localizations = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
@@ -18,7 +18,7 @@ class BorderedList extends StatelessWidget {
         width: size.width * 0.9,
         decoration: BoxDecoration(
           color: Colors.white,
-          border: Border.all(color: Colors.grey[300]),
+          border: Border.all(color: Colors.grey[300]!),
           borderRadius: BorderRadius.circular(15),
         ),
         child: Column(
@@ -41,7 +41,7 @@ class BorderedList extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  localizations.translate(item.title),
+                                  l10n.translate(item.title),
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -49,7 +49,7 @@ class BorderedList extends StatelessWidget {
                                 ),
                                 SizedBox(height: 1),
                                 Text(
-                                  localizations.translate(item.description),
+                                  l10n.translate(item.description),
                                   style: TextStyle(color: Colors.grey),
                                 ),
                               ],
@@ -75,15 +75,15 @@ class BorderedList extends StatelessWidget {
 }
 
 class BorderedListItem {
-  final Function onTap;
+  final VoidCallback onTap;
   final IconData icon;
   final String title;
   final String description;
 
   BorderedListItem({
-    @required this.onTap,
-    @required this.icon,
-    @required this.title,
-    @required this.description,
+    required this.onTap,
+    required this.icon,
+    required this.title,
+    required this.description,
   });
 }

@@ -41,7 +41,7 @@ class SupportedLanguages {
 
 class AppLocalizations {
   final Locale locale;
-  Map<String, String> _localizedStrings;
+  late Map<String, String> _localizedStrings;
 
   AppLocalizations(this.locale);
 
@@ -49,7 +49,7 @@ class AppLocalizations {
 
   /// InheritedWidget "of" style syntax helper function
   static AppLocalizations of(BuildContext context) {
-    return Localizations.of<AppLocalizations>(context, AppLocalizations);
+    return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
   }
 
   /// Load map of localized strings
@@ -60,10 +60,11 @@ class AppLocalizations {
 
   /// return translated string
   String translate(String key) {
-    if (!_localizedStrings.containsKey(key))
-      return key;
-    else
-      return _localizedStrings[key];
+    final translation = _localizedStrings[key];
+
+    if (translation == null) return key;
+
+    return translation;
   }
 }
 
@@ -78,9 +79,9 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
 
   @override
   Future<AppLocalizations> load(Locale locale) async {
-    AppLocalizations localizations = AppLocalizations(locale);
-    await localizations.load();
-    return localizations;
+    AppLocalizations l10n = AppLocalizations(locale);
+    await l10n.load();
+    return l10n;
   }
 
   @override

@@ -6,6 +6,7 @@ import 'package:jews_harp/core/widgets/facebook_button_mini.dart';
 import 'package:jews_harp/core/widgets/google_button_mini.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/third_party_authentication/third_party_auth_bloc.dart';
+import 'package:jews_harp/features/auth/presentation/screens/link_auth_providers_screen.dart';
 
 class ThirdPartyAuthOptions extends StatelessWidget {
   @override
@@ -24,11 +25,11 @@ class _Child extends StatelessWidget {
       Navigator.pushNamed(
         ctx,
         LINK_AUTH_PROVIDERS_SCREEN_ROUTE,
-        arguments: {
-          "email": state.email,
-          "providers": state.providers,
-          "onSuccess": () => BlocProvider.of<ThirdPartyAuthBloc>(ctx).add(LinkFacebookEvent()),
-        },
+        arguments: LinkAuthProvidersScreenArgs(
+          email: state.email,
+          providers: state.providers,
+          onSuccess: () => BlocProvider.of<ThirdPartyAuthBloc>(ctx).add(LinkFacebookEvent()),
+        ),
       );
     }
   }

@@ -8,32 +8,32 @@ class OneButtonAlertDialog extends StatelessWidget {
   final String buttonText;
 
   const OneButtonAlertDialog({
-    Key key,
-    @required this.title,
-    @required this.message,
+    Key? key,
+    required this.title,
+    required this.message,
     this.buttonText = "OK",
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations localizations = AppLocalizations.of(context);
+    final AppLocalizations l10n = AppLocalizations.of(context);
 
     return AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(29)),
       ),
       title: Text(
-        localizations.translate(this.title),
+        l10n.translate(this.title),
         style: TextStyle(color: BASE_COLOR),
       ),
-      content: Text(localizations.translate(this.message)),
+      content: Text(l10n.translate(this.message)),
       actions: [
-        FlatButton(
+        TextButton(
           onPressed: () {
             Navigator.pop(context);
           },
           child: Text(
-            localizations.translate(this.buttonText),
+            l10n.translate(this.buttonText),
             style: TextStyle(
               color: BASE_COLOR,
               fontSize: 20,

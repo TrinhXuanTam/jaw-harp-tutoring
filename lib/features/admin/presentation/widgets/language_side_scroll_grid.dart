@@ -5,8 +5,8 @@ import 'package:jews_harp/features/techniques/domain/entities/category_localized
 
 class LanguageSideScrollGrid extends StatelessWidget {
   final List<CategoryLocalizedData> data;
-  final Function(CategoryLocalizedData) onTap;
-  final Function onAddButtonTap;
+  final void Function(CategoryLocalizedData) onTap;
+  final VoidCallback onAddButtonTap;
   final bool displayAddButton;
 
   Widget _buildLanguageCard(CategoryLocalizedData categoryLocalizedData, String label) {
@@ -80,16 +80,16 @@ class LanguageSideScrollGrid extends StatelessWidget {
   }
 
   const LanguageSideScrollGrid({
-    Key key,
-    @required this.data,
-    @required this.onTap,
-    @required this.onAddButtonTap,
+    Key? key,
+    required this.data,
+    required this.onTap,
+    required this.onAddButtonTap,
     this.displayAddButton = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return Container(
       height: 100,
@@ -103,7 +103,7 @@ class LanguageSideScrollGrid extends StatelessWidget {
             else {
               final categoryLocalizedData = data[index];
               final languageName = SupportedLanguages.getName(categoryLocalizedData.languageCode);
-              final label = localizations.translate(languageName);
+              final label = l10n.translate(languageName);
               return _buildLanguageCard(categoryLocalizedData, label);
             }
           },

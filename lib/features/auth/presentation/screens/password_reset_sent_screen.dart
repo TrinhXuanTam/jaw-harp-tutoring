@@ -10,7 +10,7 @@ class PasswordResetSentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final localizations = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return Scaffold(
       appBar: IconAppBar(
@@ -31,7 +31,7 @@ class PasswordResetSentScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      localizations.translate("We have sent password recover instructions to your email."),
+                      l10n.translate("We have sent password recover instructions to your email."),
                       textAlign: TextAlign.justify,
                       style: TextStyle(fontSize: 15),
                     ),
@@ -39,7 +39,7 @@ class PasswordResetSentScreen extends StatelessWidget {
                     RichText(
                       textAlign: TextAlign.justify,
                       text: TextSpan(
-                        text: localizations.translate("If you do not receive the email, please check your spam folder or "),
+                        text: l10n.translate("If you do not receive the email, please check your spam folder or "),
                         style: const TextStyle(
                           color: Colors.black,
                           fontSize: 15,
@@ -49,7 +49,7 @@ class PasswordResetSentScreen extends StatelessWidget {
                             child: InkWell(
                               onTap: () => Navigator.pushReplacementNamed(context, PASSWORD_RESET_SCREEN_ROUTE),
                               child: Text(
-                                localizations.translate("try another email address."),
+                                l10n.translate("try another email address."),
                                 style: const TextStyle(
                                   fontSize: 17,
                                   color: BASE_COLOR,

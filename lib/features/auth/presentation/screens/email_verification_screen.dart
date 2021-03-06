@@ -12,16 +12,26 @@ import 'package:jews_harp/features/auth/presentation/widgets/email_verification_
 import 'package:jews_harp/features/auth/presentation/widgets/title_with_icon.dart';
 import 'package:jews_harp/features/auth/presentation/widgets/verification_text.dart';
 
+class EmailVerificationScreenArgs {
+  final User user;
+
+  const EmailVerificationScreenArgs({required this.user});
+}
+
 class EmailVerificationScreen extends StatelessWidget {
   final User user;
 
+  factory EmailVerificationScreen.fromArgs(EmailVerificationScreenArgs args) {
+    return EmailVerificationScreen(user: args.user);
+  }
+
   const EmailVerificationScreen({
-    Key key,
-    @required this.user,
+    Key? key,
+    required this.user,
   }) : super(key: key);
 
   void _emailVerificationScreenListener(BuildContext ctx, EmailVerificationState state) {
-    final AppLocalizations localizations = AppLocalizations.of(ctx);
+    final AppLocalizations l10n = AppLocalizations.of(ctx);
 
     if (state is EmailVerificationClosedState)
       BlocProvider.of<AuthBloc>(ctx).add(UserSignOutEvent());
@@ -30,9 +40,9 @@ class EmailVerificationScreen extends StatelessWidget {
     else if (state is EmailNotVerifiedState)
       showDialog(
         context: ctx,
-        child: OneButtonAlertDialog(
-          title: localizations.translate("Email not verified"),
-          message: localizations.translate("Please verify your email before you continue!"),
+        builder: (_) => OneButtonAlertDialog(
+          title: l10n.translate("Email not verified"),
+          message: l10n.translate("Please verify your email before you continue!"),
         ),
       );
   }

@@ -3,12 +3,12 @@ import 'package:jews_harp/core/constants/locations.dart';
 
 class GoogleButtonMini extends StatelessWidget {
   final double iconWidth;
-  final Function onPress;
+  final VoidCallback onPress;
 
   const GoogleButtonMini({
-    Key key,
+    Key? key,
     this.iconWidth = 45,
-    @required this.onPress,
+    required this.onPress,
   }) : super(key: key);
 
   @override

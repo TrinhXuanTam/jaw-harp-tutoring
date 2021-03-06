@@ -12,18 +12,18 @@ class RoundedDropdown<T> extends StatelessWidget {
   final DropdownButtonFormFieldController<T> controller;
 
   const RoundedDropdown({
-    Key key,
-    this.items,
-    @required this.placeholderText,
-    this.icon,
+    Key? key,
+    required this.items,
+    required this.placeholderText,
+    required this.icon,
     this.color = BASE_COLOR_VERY_LIGHT,
     this.iconColor = BASE_COLOR,
-    this.controller,
+    required this.controller,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return RoundedInputField(
       color: this.color,
@@ -40,7 +40,7 @@ class RoundedDropdown<T> extends StatelessWidget {
             color: this.iconColor,
           ),
         ),
-        hint: Text(localizations.translate(this.placeholderText)),
+        hint: Text(l10n.translate(this.placeholderText)),
         onChanged: (value) => controller.value = value,
         items: items,
       ),
@@ -49,7 +49,7 @@ class RoundedDropdown<T> extends StatelessWidget {
 }
 
 class DropdownButtonFormFieldController<T> {
-  T value;
+  T? value;
 
   DropdownButtonFormFieldController({this.value});
 }

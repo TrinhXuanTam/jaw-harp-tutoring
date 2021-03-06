@@ -11,6 +11,7 @@ import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/create_category/create_category_bloc.dart';
+import 'package:jews_harp/features/admin/presentation/screens/category_localization_edit_screen.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/language_side_scroll_grid.dart';
 
 class CreateCategoryScreen extends StatefulWidget {
@@ -119,17 +120,21 @@ class _CreateCategoryScreenState extends State<CreateCategoryScreen> {
                         builder: (ctx, _) => LanguageSideScrollGrid(
                           displayAddButton: SupportedLanguages.languages.length != _createCategoryBloc.localizedData.length,
                           data: _createCategoryBloc.localizedData.entries.map((e) => e.value).toList(),
-                          onTap: (localizedData) => Navigator.pushNamed(context, CATEGORY_LOCALIZATION_EDIT_SCREEN_ROUTE, arguments: {
-                            "data": localizedData,
-                            "onRemove": () {
-                              _createCategoryBloc.add(RemoveCategoryLocalizationEvent(localizedData.languageCode));
-                              Navigator.pop(context);
-                            },
-                            "onSave": (localizedData) {
-                              _createCategoryBloc.add(EditCategoryLocalizationEvent(localizedData));
-                              Navigator.pop(context);
-                            }
-                          }),
+                          onTap: (localizedData) => Navigator.pushNamed(
+                            context,
+                            CATEGORY_LOCALIZATION_EDIT_SCREEN_ROUTE,
+                            arguments: CategoryLocalizationEditScreenArgs(
+                              data: localizedData,
+                              onSave: (localizedData) {
+                                _createCategoryBloc.add(EditCategoryLocalizationEvent(localizedData));
+                                Navigator.pop(context);
+                              },
+                              onRemove: () {
+                                _createCategoryBloc.add(RemoveCategoryLocalizationEvent(localizedData.languageCode));
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ),
                           onAddButtonTap: () => Navigator.pushNamed(context, CATEGORY_LOCALIZATION_ADD_SCREEN_ROUTE, arguments: {"createCategoryBloc": _createCategoryBloc}),
                         ),
                       ),

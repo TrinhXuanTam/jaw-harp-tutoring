@@ -9,6 +9,7 @@ import 'package:jews_harp/core/widgets/bordered_list.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/admin_menu/admin_menu_bloc.dart';
+import 'package:jews_harp/features/admin/presentation/screens/category_list_screen.dart';
 
 class AdminMenuScreen extends StatelessWidget {
   @override
@@ -64,8 +65,23 @@ class AdminMenuScreen extends StatelessWidget {
 class _AdminOptions extends StatelessWidget {
   void _adminMenuBlocListener(BuildContext ctx, AdminMenuState state) {
     if (state is VisibleCategoriesLoadedState)
-      Navigator.of(ctx).pushNamed(VISIBLE_CATEGORIES_LIST_SCREEN_ROUTE, arguments: state.visibleCategories);
-    else if (state is HiddenCategoriesLoadedState) Navigator.of(ctx).pushNamed(HIDDEN_CATEGORIES_LIST_SCREEN_ROUTE, arguments: state.hiddenCategories);
+      Navigator.of(ctx).pushNamed(
+        VISIBLE_CATEGORIES_LIST_SCREEN_ROUTE,
+        arguments: CategoryListScreenArgs(
+          title: "Visible Categories",
+          subtitle: "Here you can browse through visible categories. Users can see these categories and their content in their app.",
+          items: state.visibleCategories,
+        ),
+      );
+    else if (state is HiddenCategoriesLoadedState)
+      Navigator.of(ctx).pushNamed(
+        HIDDEN_CATEGORIES_LIST_SCREEN_ROUTE,
+        arguments: CategoryListScreenArgs(
+          title: "Hidden Categories",
+          subtitle: "Here you can browse through hidden categories and prepare new techniques for future release. Users are not able see these categories and their content.",
+          items: state.hiddenCategories,
+        ),
+      );
   }
 
   @override

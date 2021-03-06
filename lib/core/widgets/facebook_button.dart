@@ -5,17 +5,17 @@ import '../l10n.dart';
 
 class FacebookButton extends StatelessWidget {
   final String text;
-  final Function onPress;
+  final VoidCallback onPress;
 
   const FacebookButton({
-    Key key,
-    this.text,
-    this.onPress,
+    Key? key,
+    required this.text,
+    required this.onPress,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context);
     final size = MediaQuery.of(context).size;
 
     return Material(
@@ -34,7 +34,7 @@ class FacebookButton extends StatelessWidget {
                 child: FittedBox(
                   fit: BoxFit.fitWidth,
                   child: Text(
-                    localizations.translate(this.text),
+                    l10n.translate(this.text),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,

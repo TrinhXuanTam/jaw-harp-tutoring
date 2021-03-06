@@ -44,7 +44,7 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final localizations = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -66,7 +66,7 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
                 Container(
                   width: size.width * 0.7,
                   child: Text(
-                    localizations.translate("Enter the email associated with your account and we'll send an email with instructions to reset your password."),
+                    l10n.translate("Enter the email associated with your account and we'll send an email with instructions to reset your password."),
                     textAlign: TextAlign.justify,
                     style: TextStyle(fontSize: 15),
                   ),
@@ -74,15 +74,15 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
                 SizedBox(height: 20),
                 RoundedTextField(
                   icon: Icons.mail,
-                  placeholderText: localizations.translate("Email"),
+                  placeholderText: l10n.translate("Email"),
                   controller: _emailController,
                 ),
                 SizedBox(height: 10),
                 BlocListener<PasswordResetBloc, PasswordResetState>(
                   listener: _passwordResetBlocListener,
                   child: RoundedButton(
-                    text: localizations.translate("Send Instructions"),
-                    onPressed: () => _passwordResetBloc.add(PasswordResetRequestEvent(_emailController.text, localizations.locale.languageCode)),
+                    text: l10n.translate("Send Instructions"),
+                    onPressed: () => _passwordResetBloc.add(PasswordResetRequestEvent(_emailController.text, l10n.locale.languageCode)),
                   ),
                 ),
               ],
