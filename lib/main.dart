@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/features/admin/presentation/screens/admin_menu_screen.dart';
+import 'package:jews_harp/features/admin/presentation/screens/category_list_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/category_localization_add_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/category_localization_edit_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/create_category_screen.dart';
@@ -134,7 +135,17 @@ class _EntryPoint extends StatelessWidget {
                 onRemove: map["onRemove"],
                 onSave: map["onSave"],
               );
-            }
+            },
+            VISIBLE_CATEGORIES_LIST_SCREEN_ROUTE: (ctx) => CategoryListScreen(
+                  items: ModalRoute.of(ctx).settings.arguments,
+                  title: "Visible Categories",
+                  subtitle: "Here you can browse through visible categories. Users can see these categories and their content in their app.",
+                ),
+            HIDDEN_CATEGORIES_LIST_SCREEN_ROUTE: (ctx) => CategoryListScreen(
+                  items: ModalRoute.of(ctx).settings.arguments,
+                  title: "Hidden Categories",
+                  subtitle: "Here you can browse through hidden categories and prepare new techniques for future release. Users are not able see these categories and their content.",
+                ),
           },
           initialRoute: SPLASH_SCREEN_ROUTE,
         ),

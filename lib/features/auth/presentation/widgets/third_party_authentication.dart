@@ -7,14 +7,17 @@ import 'package:jews_harp/core/widgets/google_button_mini.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/third_party_authentication/third_party_auth_bloc.dart';
 
-class ThirdPartyAuthOptions extends StatefulWidget {
+class ThirdPartyAuthOptions extends StatelessWidget {
   @override
-  _ThirdPartyAuthOptionsState createState() => _ThirdPartyAuthOptionsState();
+  Widget build(BuildContext context) {
+    return BlocProvider<ThirdPartyAuthBloc>(
+      create: (_) => serviceLocator<ThirdPartyAuthBloc>(),
+      child: _Child(),
+    );
+  }
 }
 
-class _ThirdPartyAuthOptionsState extends State<ThirdPartyAuthOptions> {
-  final _thirdPartyAuthBloc = serviceLocator<ThirdPartyAuthBloc>();
-
+class _Child extends StatelessWidget {
   void _thirdPartyAuthBlocListener(BuildContext ctx, ThirdPartyAuthState state) {
     if (state is ThirdPartyAuthSuccessState) BlocProvider.of<AuthBloc>(ctx).add(UserAuthenticatedEvent(state.user));
     if (state is MultipleProvidersState) {
@@ -24,7 +27,7 @@ class _ThirdPartyAuthOptionsState extends State<ThirdPartyAuthOptions> {
         arguments: {
           "email": state.email,
           "providers": state.providers,
-          "onSuccess": () => _thirdPartyAuthBloc.add(LinkFacebookEvent()),
+          "onSuccess": () => BlocProvider.of<ThirdPartyAuthBloc>(ctx).add(LinkFacebookEvent()),
         },
       );
     }
@@ -32,18 +35,15 @@ class _ThirdPartyAuthOptionsState extends State<ThirdPartyAuthOptions> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ThirdPartyAuthBloc>(
-      create: (_) => _thirdPartyAuthBloc,
-      child: BlocListener<ThirdPartyAuthBloc, ThirdPartyAuthState>(
-        listener: _thirdPartyAuthBlocListener,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FacebookButtonMini(onPress: () => _thirdPartyAuthBloc.add(FacebookAuthEvent())),
-            SizedBox(width: 30),
-            GoogleButtonMini(onPress: () => _thirdPartyAuthBloc.add(GoogleAuthEvent())),
-          ],
-        ),
+    return BlocListener<ThirdPartyAuthBloc, ThirdPartyAuthState>(
+      listener: _thirdPartyAuthBlocListener,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FacebookButtonMini(onPress: () => BlocProvider.of<ThirdPartyAuthBloc>(context).add(FacebookAuthEvent())),
+          SizedBox(width: 30),
+          GoogleButtonMini(onPress: () => BlocProvider.of<ThirdPartyAuthBloc>(context).add(GoogleAuthEvent())),
+        ],
       ),
     );
   }

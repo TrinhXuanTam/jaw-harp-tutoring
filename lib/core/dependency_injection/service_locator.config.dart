@@ -12,12 +12,18 @@ import 'package:jews_harp/core/BLoCs/toggle_switch/toggle_switch_bloc.dart'
     as _i19;
 import 'package:jews_harp/features/admin/application/use_cases/create_category.dart'
     as _i20;
+import 'package:jews_harp/features/admin/application/use_cases/get_hidden_categories.dart'
+    as _i28;
+import 'package:jews_harp/features/admin/application/use_cases/get_visible_categories.dart'
+    as _i29;
 import 'package:jews_harp/features/admin/domain/repository_interfaces/category_admin_repository.dart'
     as _i6;
 import 'package:jews_harp/features/admin/infrastructure/data_sources/firebase_admin_data_source.dart'
     as _i3;
 import 'package:jews_harp/features/admin/infrastructure/repositories/category_admin_repository.dart'
     as _i7;
+import 'package:jews_harp/features/admin/presentation/BLoCs/admin_menu/admin_menu_bloc.dart'
+    as _i33;
 import 'package:jews_harp/features/admin/presentation/BLoCs/create_category/create_category_bloc.dart'
     as _i21;
 import 'package:jews_harp/features/auth/application/use_cases/email_authentication.dart'
@@ -31,7 +37,7 @@ import 'package:jews_harp/features/auth/application/use_cases/get_authentication
 import 'package:jews_harp/features/auth/application/use_cases/get_current_user.dart'
     as _i27;
 import 'package:jews_harp/features/auth/application/use_cases/google_authentication.dart'
-    as _i28;
+    as _i30;
 import 'package:jews_harp/features/auth/application/use_cases/link_email_provider.dart'
     as _i12;
 import 'package:jews_harp/features/auth/application/use_cases/link_facebook_provider.dart'
@@ -55,17 +61,17 @@ import 'package:jews_harp/features/auth/infrastructure/facades/user_facade.dart'
 import 'package:jews_harp/features/auth/infrastructure/repositories/user_repository.dart'
     as _i11;
 import 'package:jews_harp/features/auth/presentation/BLoCs/email_authentication/email_auth_bloc.dart'
-    as _i32;
+    as _i35;
 import 'package:jews_harp/features/auth/presentation/BLoCs/email_verification/email_verification_bloc.dart'
     as _i24;
 import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart'
-    as _i31;
+    as _i34;
 import 'package:jews_harp/features/auth/presentation/BLoCs/password_reset/password_reset_bloc.dart'
     as _i15;
 import 'package:jews_harp/features/auth/presentation/BLoCs/sign_up_screen/sign_up_bloc.dart'
-    as _i29;
+    as _i31;
 import 'package:jews_harp/features/auth/presentation/BLoCs/third_party_authentication/third_party_auth_bloc.dart'
-    as _i30;
+    as _i32;
 
 const String _prod = 'prod';
 const String _dev = 'dev';
@@ -154,26 +160,36 @@ _i1.GetIt initGetIt(_i1.GetIt get,
   gh.lazySingleton<_i27.GetCurrentUser>(
       () => _i27.GetCurrentUser(get<_i10.IUserRepository>()),
       registerFor: {_prod, _dev, _get_current_user_test_env});
-  gh.lazySingleton<_i28.GoogleAuthentication>(
-      () => _i28.GoogleAuthentication(get<_i10.IUserRepository>()),
+  gh.lazySingleton<_i28.GetHiddenCategories>(
+      () => _i28.GetHiddenCategories(get<_i6.ICategoryAdminRepository>()),
+      registerFor: {_prod, _dev});
+  gh.lazySingleton<_i29.GetVisibleCategories>(
+      () => _i29.GetVisibleCategories(get<_i6.ICategoryAdminRepository>()),
+      registerFor: {_prod, _dev});
+  gh.lazySingleton<_i30.GoogleAuthentication>(
+      () => _i30.GoogleAuthentication(get<_i10.IUserRepository>()),
       registerFor: {_prod, _dev, _google_authentication_test_env});
-  gh.factory<_i29.SignUpBloc>(
-      () => _i29.SignUpBloc(get<_i18.SignUp>(), get<_i26.GetAuthProviders>(),
+  gh.factory<_i31.SignUpBloc>(
+      () => _i31.SignUpBloc(get<_i18.SignUp>(), get<_i26.GetAuthProviders>(),
           get<_i12.LinkEmailProvider>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i30.ThirdPartyAuthBloc>(
-      () => _i30.ThirdPartyAuthBloc(
+  gh.factory<_i32.ThirdPartyAuthBloc>(
+      () => _i32.ThirdPartyAuthBloc(
           get<_i25.FacebookAuthentication>(),
-          get<_i28.GoogleAuthentication>(),
+          get<_i30.GoogleAuthentication>(),
           get<_i26.GetAuthProviders>(),
           get<_i13.LinkFacebookProvider>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i31.AuthBloc>(
-      () => _i31.AuthBloc(get<_i27.GetCurrentUser>(),
+  gh.factory<_i33.AdminMenuBloc>(
+      () => _i33.AdminMenuBloc(
+          get<_i29.GetVisibleCategories>(), get<_i28.GetHiddenCategories>()),
+      registerFor: {_prod, _dev});
+  gh.factory<_i34.AuthBloc>(
+      () => _i34.AuthBloc(get<_i27.GetCurrentUser>(),
           get<_i23.EmailIsVerified>(), get<_i17.SignOut>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i32.EmailAuthBloc>(
-      () => _i32.EmailAuthBloc(get<_i22.EmailAuthentication>()),
+  gh.factory<_i35.EmailAuthBloc>(
+      () => _i35.EmailAuthBloc(get<_i22.EmailAuthentication>()),
       registerFor: {_prod, _dev});
   return get;
 }

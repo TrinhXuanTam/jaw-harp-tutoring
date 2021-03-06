@@ -1,14 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
+import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/big_app_bar_background.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/scrollable_category_list.dart';
+import 'package:jews_harp/features/techniques/domain/entities/category.dart';
 
 class CategoryListScreen extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final List<Category> items;
+
+  const CategoryListScreen({
+    Key key,
+    @required this.title,
+    @required this.subtitle,
+    @required this.items,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final localizations = AppLocalizations.of(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -30,7 +44,7 @@ class CategoryListScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Visible Categories",
+                  this.title,
                   style: TextStyle(
                     fontSize: 25,
                     color: Colors.white,
@@ -38,7 +52,7 @@ class CategoryListScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Here you can browse through visible categories. Users can see these categories and their content in their app.",
+                  this.subtitle,
                   style: TextStyle(
                     fontSize: 13,
                     color: Colors.white,
@@ -46,12 +60,17 @@ class CategoryListScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 15),
                 ScrollableCategoryList(
-                  items: [
-                    ScrollableCategoryListItem(() {}, 3, "Beginner's", "Learn new stuff"),
-                    ScrollableCategoryListItem(() {}, 10, "Advanced", "Train your skills"),
-                    ScrollableCategoryListItem(() {}, 36, "Free", "Try out free content"),
-                    ScrollableCategoryListItem(() {}, 99, "Free", "Very long teeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeext"),
-                  ],
+                  height: size.height * 0.7,
+                  items: items
+                      .map(
+                        (e) => ScrollableCategoryListItem(
+                          () {},
+                          e.techniqueIds.length,
+                          e.getLocalizedTitle(localizations.locale.languageCode),
+                          e.getLocalizedDescription(localizations.locale.languageCode),
+                        ),
+                      )
+                      .toList(),
                 ),
               ],
             ),

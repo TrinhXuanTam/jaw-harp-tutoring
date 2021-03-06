@@ -18,4 +18,10 @@ class CategoryAdminRepository extends ICategoryAdminRepository {
       localizedData.map((e) => CategoryLocalizedDataDTO.fromCategoryLocalizedData(e)),
     );
   }
+
+  @override
+  Future<Iterable<Category>> getHiddenCategories() => _adminDataSource.getHiddenCategories();
+
+  @override
+  Future<Iterable<Category>> getVisibleCategories() => _adminDataSource.getVisibleCategories();
 }

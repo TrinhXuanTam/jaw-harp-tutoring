@@ -4,8 +4,13 @@ import 'package:jews_harp/core/l10n.dart';
 
 class ScrollableCategoryList extends StatelessWidget {
   final List<ScrollableCategoryListItem> items;
+  final double height;
 
-  const ScrollableCategoryList({Key key, @required this.items}) : super(key: key);
+  const ScrollableCategoryList({
+    Key key,
+    @required this.items,
+    this.height,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +22,7 @@ class ScrollableCategoryList extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         width: size.width * 0.9,
-        height: size.height * 0.7,
+        height: this.height,
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: Colors.grey[300]),

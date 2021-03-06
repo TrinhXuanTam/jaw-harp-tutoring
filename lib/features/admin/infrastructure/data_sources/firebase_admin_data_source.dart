@@ -16,12 +16,22 @@ class FirebaseAdminDataSource {
       },
     );
 
-    final category = await _categories.add({
+    final snapshot = await _categories.add({
       "isVisible": isVisible,
       "techniques": FieldValue.arrayUnion([]),
       "localization": localization,
     }).then((value) => value.get());
 
-    return CategoryDTO.fromFirestore(category);
+    return CategoryDTO.fromFirestore(snapshot);
+  }
+
+  Future<Iterable<CategoryDTO>> getVisibleCategories() async {
+    final snapshot = await _categories.where("isVisible", isEqualTo: true).get();
+    return snapshot.docs.map((e) => CategoryDTO.fromFirestore(e));
+  }
+
+  Future<Iterable<CategoryDTO>> getHiddenCategories() async {
+    final snapshot = await _categories.where("isVisible", isEqualTo: false).get();
+    return snapshot.docs.map((e) => CategoryDTO.fromFirestore(e));
   }
 }
