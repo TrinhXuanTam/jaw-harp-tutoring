@@ -15,7 +15,6 @@ class ScrollableCategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final localizations = AppLocalizations.of(context);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
@@ -73,7 +72,7 @@ class ScrollableCategoryList extends StatelessWidget {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          localizations.translate(items[index].title),
+                                          items[index].title,
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -81,7 +80,7 @@ class ScrollableCategoryList extends StatelessWidget {
                                         ),
                                         SizedBox(height: 1),
                                         Text(
-                                          localizations.translate(items[index].description),
+                                          items[index].description,
                                           style: TextStyle(color: Colors.grey),
                                         ),
                                       ],

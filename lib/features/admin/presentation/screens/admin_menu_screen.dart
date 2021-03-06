@@ -77,7 +77,7 @@ class _AdminOptions extends StatelessWidget {
           BorderedList(
             items: [
               BorderedListItem(
-                onTap: () {},
+                onTap: () => Navigator.pushNamed(context, CREATE_TECHNIQUE_SCREEN_ROUTE),
                 icon: Icons.add,
                 title: "Create Technique",
                 description: "Create a new technique.",

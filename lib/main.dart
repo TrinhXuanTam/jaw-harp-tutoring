@@ -9,6 +9,7 @@ import 'package:jews_harp/features/admin/presentation/screens/category_list_scre
 import 'package:jews_harp/features/admin/presentation/screens/category_localization_add_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/category_localization_edit_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/create_category_screen.dart';
+import 'package:jews_harp/features/admin/presentation/screens/create_technique_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/link_auth_providers_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_sent_screen.dart';
@@ -122,6 +123,7 @@ class _EntryPoint extends StatelessWidget {
             },
             ADMIN_MENU_SCREEN_ROUTE: (_) => AdminMenuScreen(),
             CREATE_CATEGORY_SCREEN_ROUTE: (_) => CreateCategoryScreen(),
+            CREATE_TECHNIQUE_SCREEN_ROUTE: (_) => CreateTechniqueScreen(),
             CATEGORY_LOCALIZATION_ADD_SCREEN_ROUTE: (ctx) {
               final Map<String, Object> map = ModalRoute.of(ctx).settings.arguments;
               return CategoryLocalizationAddScreen(
