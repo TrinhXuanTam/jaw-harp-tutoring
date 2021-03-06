@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 class CenteredStack extends StatelessWidget {
   final List<Widget> children;
 
-  const CenteredStack({Key? key, required this.children}) : super(key: key);
+  const CenteredStack({Key key, this.children}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

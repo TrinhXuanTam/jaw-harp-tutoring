@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/core/constants/test_environments.dart';
 import 'package:jews_harp/features/auth/infrastructure/data_sources/firebase_auth_data_source.dart';
+import 'package:optional/optional_internal.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
 
@@ -16,7 +17,7 @@ class UserRepository extends IUserRepository {
   }
 
   @override
-  Future<User?> getCurrentUser() {
+  Future<Optional<User>> getCurrentUser() {
     return _firebaseAuthDataSource.getCurrentUser();
   }
 

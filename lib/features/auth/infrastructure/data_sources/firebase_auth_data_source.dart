@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/core/errors/email_already_used_error.dart';
 import 'package:jews_harp/core/errors/user_does_not_exist_error.dart';
 import 'package:jews_harp/core/errors/wrong_email_or_password_error.dart';
 import 'package:jews_harp/features/auth/infrastructure/DTO/user_DTO.dart';
+import 'package:optional/optional.dart';
 
 @LazySingleton(env: [Environment.prod])
 class FirebaseAuthDataSource {
@@ -17,9 +18,6 @@ class FirebaseAuthDataSource {
 
   void _addUserToFirestore(UserCredential credential) {
     final user = credential.user;
-
-    if (user == null) throw UserDoesNotExistError();
-
     final roles = ["user"];
     final purchasedTechniques = [];
 
@@ -30,13 +28,13 @@ class FirebaseAuthDataSource {
   }
 
   /// Check if user is signed in and return [UserModel], otherwise throw [UserNotSignedInError] exception.
-  Future<UserDTO?> getCurrentUser() async {
+  Future<Optional<UserDTO>> getCurrentUser() async {
     final user = _auth.currentUser;
 
     // User not cached in the current device
-    if (user == null) return null;
+    if (user == null) return Optional.empty();
 
-    return UserDTO.fromFirebaseUser(user);
+    return Optional.of(UserDTO.fromFirebaseUser(user));
   }
 
   /// Sign in with email and password
@@ -55,8 +53,6 @@ class FirebaseAuthDataSource {
     try {
       final credentials = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       final user = credentials.user;
-
-      if (user == null) throw UserDoesNotExistError();
 
       // Add user to firestore
       _addUserToFirestore(credentials);
@@ -89,20 +85,24 @@ class FirebaseAuthDataSource {
 
   Future<UserDTO> authenticateWithFacebook() async {
     try {
-      final accessToken = await FacebookAuth.instance.login();
-      final AuthCredential facebookCredential = FacebookAuthProvider.credential(accessToken!.token!);
-      final UserCredential firebaseCredential = await _auth.signInWithCredential(facebookCredential);
+      final FacebookLogin facebookLogin = FacebookLogin();
 
-      if (firebaseCredential.additionalUserInfo!.isNewUser) {
-        firebaseCredential.user!.sendEmailVerification();
-        _addUserToFirestore(firebaseCredential);
-      }
+      final res = await facebookLogin.logIn(["public_profile", "email"]);
+      if (res.status == FacebookLoginStatus.loggedIn) {
+        final FacebookAccessToken accessToken = res.accessToken;
+        final AuthCredential facebookCredential = FacebookAuthProvider.credential(accessToken.token);
+        final UserCredential firebaseCredential = await _auth.signInWithCredential(facebookCredential);
 
-      return UserDTO.fromFirebaseCredentials(firebaseCredential);
+        if (firebaseCredential.additionalUserInfo.isNewUser) {
+          firebaseCredential.user.sendEmailVerification();
+          _addUserToFirestore(firebaseCredential);
+        }
+
+        return UserDTO.fromFirebaseCredentials(firebaseCredential);
+      } else
+        throw WrongEmailOrPasswordError();
     } on FirebaseAuthException catch (e) {
-      throw EmailAlreadyUsedError(e.email!);
-    } on FacebookAuthException {
-      throw WrongEmailOrPasswordError();
+      throw EmailAlreadyUsedError(e.email);
     }
   }
 
@@ -113,7 +113,7 @@ class FirebaseAuthDataSource {
     ]);
 
     try {
-      final GoogleSignInAccount? googleSignInAccount = await googleLogin.signIn();
+      final GoogleSignInAccount googleSignInAccount = await googleLogin.signIn();
 
       if (googleSignInAccount == null) throw WrongEmailOrPasswordError();
 
@@ -126,13 +126,13 @@ class FirebaseAuthDataSource {
 
       final UserCredential firebaseCredential = await _auth.signInWithCredential(googleCredential);
 
-      if (firebaseCredential.additionalUserInfo!.isNewUser) {
+      if (firebaseCredential.additionalUserInfo.isNewUser) {
         _addUserToFirestore(firebaseCredential);
       }
 
       return UserDTO.fromFirebaseCredentials(firebaseCredential);
     } on FirebaseAuthException catch (e) {
-      throw EmailAlreadyUsedError(e.email!);
+      throw EmailAlreadyUsedError(e.email);
     }
   }
 

@@ -1,11 +1,12 @@
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
+import 'package:optional/optional_internal.dart';
 
 abstract class IUserRepository {
   /// Sign up user
   Future<User> createUser(String name, String email, String password);
 
   /// Get signed in user
-  Future<User?> getCurrentUser();
+  Future<Optional<User>> getCurrentUser();
 
   /// Sign user in with email and password
   Future<User> getUserWithEmailAndPassword(String email, String password);

@@ -8,9 +8,9 @@ class OneButtonAlertDialog extends StatelessWidget {
   final String buttonText;
 
   const OneButtonAlertDialog({
-    Key? key,
-    required this.title,
-    required this.message,
+    Key key,
+    @required this.title,
+    @required this.message,
     this.buttonText = "OK",
   }) : super(key: key);
 

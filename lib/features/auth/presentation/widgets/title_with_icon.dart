@@ -9,11 +9,11 @@ class TitleWithIcon extends StatelessWidget {
   final String title;
 
   const TitleWithIcon({
-    Key? key,
-    required this.icon,
+    Key key,
+    @required this.icon,
     this.iconColor = BASE_COLOR,
     this.iconSize = 150,
-    required this.title,
+    @required this.title,
   }) : super(key: key);
 
   @override

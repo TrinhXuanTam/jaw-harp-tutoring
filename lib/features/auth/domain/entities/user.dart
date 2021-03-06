@@ -7,9 +7,9 @@ class User extends Equatable {
   final String email;
 
   const User({
-    required this.uid,
-    required this.name,
-    required this.email,
+    @required this.uid,
+    @required this.name,
+    @required this.email,
   });
 
   @override

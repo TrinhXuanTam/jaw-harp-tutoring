@@ -1,9 +1,7 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
-import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
 
 class TechniqueListScreen extends StatelessWidget {
   @override
@@ -19,13 +17,13 @@ class TechniqueListScreen extends StatelessWidget {
         ],
         initialActiveIndex: 0,
         onTap: (_) {
-          final authBlocState = BlocProvider.of<AuthBloc>(context).state;
+          // final authBlocState = BlocProvider.of<AuthBloc>(context).state;
+          //
+          // if (authBlocState is AuthenticatedState) {
+          //   BlocProvider.of<AuthBloc>(context).add(UserSignOutEvent());
+          // }
 
-          if (authBlocState is AuthenticatedState) {
-            BlocProvider.of<AuthBloc>(context).add(UserSignOutEvent());
-          }
-
-          // Navigator.pushNamed(context, ADMIN_MENU_SCREEN_ROUTE);
+          Navigator.pushNamed(context, ADMIN_MENU_SCREEN_ROUTE);
         },
       ),
     );

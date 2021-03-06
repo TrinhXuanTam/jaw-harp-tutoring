@@ -10,13 +10,13 @@ import 'package:jews_harp/features/techniques/domain/entities/category_localized
 class CategoryLocalizationEditScreen extends StatefulWidget {
   final CategoryLocalizedData data;
   final Function(CategoryLocalizedData) onSave;
-  final VoidCallback onRemove;
+  final Function onRemove;
 
   const CategoryLocalizationEditScreen({
-    Key? key,
-    required this.data,
-    required this.onRemove,
-    required this.onSave,
+    Key key,
+    this.data,
+    this.onRemove,
+    this.onSave,
   }) : super(key: key);
 
   @override
@@ -72,9 +72,9 @@ class _CategoryLocalizationEditScreenState extends State<CategoryLocalizationEdi
                     SizedBox(height: 5),
                     RoundedButton(
                       text: "Remove",
-                      color: Colors.redAccent[200]!,
+                      color: Colors.redAccent[200],
                       textColor: Colors.white,
-                      borderColor: Colors.redAccent[200]!,
+                      borderColor: Colors.redAccent[200],
                       onPressed: widget.onRemove,
                     ),
                   ],

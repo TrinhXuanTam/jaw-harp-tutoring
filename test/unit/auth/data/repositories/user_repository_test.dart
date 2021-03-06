@@ -8,6 +8,7 @@ import 'package:jews_harp/features/auth/domain/repository_interfaces/user_reposi
 import 'package:jews_harp/features/auth/infrastructure/DTO/user_DTO.dart';
 import 'package:jews_harp/features/auth/infrastructure/data_sources/firebase_auth_data_source.dart';
 import 'package:mockito/mockito.dart';
+import 'package:optional/optional.dart';
 
 import '../../../../dependency_injection/test_service_locator.dart';
 
@@ -66,41 +67,42 @@ void main() {
 
   test("[UserRepository.getCurrentUser] should return user when data is cached", () async {
     when(testServiceLocator<FirebaseAuthDataSource>().getCurrentUser()).thenAnswer(
-      (_) async => UserDTO(uid: uid, name: name, email: email),
+      (_) async => Optional.of(UserDTO(uid: uid, name: name, email: email)),
     );
 
     final userRepository = serviceLocator<IUserRepository>();
     final user = await userRepository.getCurrentUser();
 
-    assert(user != null);
+    assert(user.isPresent);
+    final userData = user.value;
 
-    assert(user!.email == email);
-    assert(user!.name == name);
-    assert(user!.uid == uid);
+    assert(userData.email == email);
+    assert(userData.name == name);
+    assert(userData.uid == uid);
   });
 
   test("[UserRepository.getCurrentUser] should return 'Optional.empty()' when data is not cached", () async {
-    when(testServiceLocator<FirebaseAuthDataSource>().getCurrentUser()).thenAnswer((_) async => null);
+    when(testServiceLocator<FirebaseAuthDataSource>().getCurrentUser()).thenAnswer((_) async => Optional.empty());
 
     final userRepository = serviceLocator<IUserRepository>();
     final user = await userRepository.getCurrentUser();
 
-    assert(user == null);
+    assert(user.isEmpty);
   });
 
   test("[UserRepository.getCurrentUser] should return 'Optional.empty()' when account is not verified", () async {
-    when(testServiceLocator<FirebaseAuthDataSource>().getCurrentUser()).thenAnswer((_) async => null);
+    when(testServiceLocator<FirebaseAuthDataSource>().getCurrentUser()).thenAnswer((_) async => Optional.empty());
 
     final userRepository = serviceLocator<IUserRepository>();
     final user = await userRepository.getCurrentUser();
 
-    assert(user == null);
+    assert(user.isEmpty);
   });
 
   test("[UserRepository.getCurrentUser] should return user roles when user is found", () async {
     final user = User(uid: uid, name: name, email: email);
     final roles = ["user", "admin"];
-
+    
     when(testServiceLocator<FirebaseAuthDataSource>().getUserRoles(uid)).thenAnswer((_) async => roles);
 
     final userRepository = serviceLocator<IUserRepository>();

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
+import 'package:jews_harp/core/l10n.dart';
 
 class ScrollableCategoryList extends StatelessWidget {
   final List<ScrollableCategoryListItem> items;
-  final double? height;
+  final double height;
 
   const ScrollableCategoryList({
-    Key? key,
-    required this.items,
+    Key key,
+    @required this.items,
     this.height,
   }) : super(key: key);
 
@@ -23,7 +24,7 @@ class ScrollableCategoryList extends StatelessWidget {
         height: this.height,
         decoration: BoxDecoration(
           color: Colors.white,
-          border: Border.all(color: Colors.grey[300]!),
+          border: Border.all(color: Colors.grey[300]),
           borderRadius: BorderRadius.circular(15),
         ),
         child: items.isNotEmpty
@@ -112,7 +113,7 @@ class ScrollableCategoryList extends StatelessWidget {
 }
 
 class ScrollableCategoryListItem {
-  final VoidCallback onTap;
+  final Function onTap;
   final int techniqueCnt;
   final String title;
   final String description;

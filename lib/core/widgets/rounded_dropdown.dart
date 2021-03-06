@@ -12,13 +12,13 @@ class RoundedDropdown<T> extends StatelessWidget {
   final DropdownButtonFormFieldController<T> controller;
 
   const RoundedDropdown({
-    Key? key,
-    required this.items,
-    required this.placeholderText,
-    required this.icon,
+    Key key,
+    this.items,
+    @required this.placeholderText,
+    this.icon,
     this.color = BASE_COLOR_VERY_LIGHT,
     this.iconColor = BASE_COLOR,
-    required this.controller,
+    this.controller,
   }) : super(key: key);
 
   @override
@@ -49,7 +49,7 @@ class RoundedDropdown<T> extends StatelessWidget {
 }
 
 class DropdownButtonFormFieldController<T> {
-  T? value;
+  T value;
 
   DropdownButtonFormFieldController({this.value});
 }

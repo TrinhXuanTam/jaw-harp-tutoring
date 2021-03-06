@@ -8,8 +8,8 @@ class RoundedInputField extends StatelessWidget {
   final Color color;
 
   const RoundedInputField({
-    Key? key,
-    required this.child,
+    Key key,
+    @required this.child,
     this.color = BASE_COLOR_VERY_LIGHT,
   }) : super(key: key);
 

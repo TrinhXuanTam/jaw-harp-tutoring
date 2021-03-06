@@ -10,12 +10,12 @@ class RoundedTextField extends StatelessWidget {
   final TextEditingController controller;
 
   const RoundedTextField({
-    Key? key,
+    Key key,
     this.placeholderText = "",
-    required this.icon,
+    @required this.icon,
     this.color = BASE_COLOR_VERY_LIGHT,
     this.iconColor = BASE_COLOR,
-    required this.controller,
+    this.controller,
   }) : super(key: key);
 
   @override

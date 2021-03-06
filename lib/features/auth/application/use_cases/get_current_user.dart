@@ -13,8 +13,8 @@ class GetCurrentUser {
   Future<User> call() async {
     final user = await _userRepository.getCurrentUser();
 
-    if (user == null) throw UserNotSignedInError();
+    if (user.isEmpty) throw UserNotSignedInError();
 
-    return user;
+    return user.value;
   }
 }

@@ -20,10 +20,10 @@ class LinkAuthProvidersScreen extends StatefulWidget {
   final Function onSuccess;
 
   const LinkAuthProvidersScreen({
-    Key? key,
-    required this.email,
-    required this.providers,
-    required this.onSuccess,
+    Key key,
+    @required this.email,
+    @required this.providers,
+    @required this.onSuccess,
   }) : super(key: key);
 
   @override

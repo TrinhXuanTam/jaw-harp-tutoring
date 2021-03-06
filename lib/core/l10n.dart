@@ -41,7 +41,7 @@ class SupportedLanguages {
 
 class AppLocalizations {
   final Locale locale;
-  Map<String, String> _localizedStrings = Map();
+  Map<String, String> _localizedStrings;
 
   AppLocalizations(this.locale);
 
@@ -49,7 +49,7 @@ class AppLocalizations {
 
   /// InheritedWidget "of" style syntax helper function
   static AppLocalizations of(BuildContext context) {
-    return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+    return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
   /// Load map of localized strings
@@ -63,7 +63,7 @@ class AppLocalizations {
     if (!_localizedStrings.containsKey(key))
       return key;
     else
-      return _localizedStrings[key]!;
+      return _localizedStrings[key];
   }
 }
 

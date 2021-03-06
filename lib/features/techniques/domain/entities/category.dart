@@ -10,16 +10,16 @@ class Category extends Equatable {
 
   String getLocalizedTitle(String languageCode) {
     if (!localizedData.containsKey(languageCode))
-      return localizedData["en"]!.title;
+      return localizedData["en"].title;
     else
-      return localizedData[languageCode]!.title;
+      return localizedData[languageCode].title;
   }
 
   String getLocalizedDescription(String languageCode) {
     if (!localizedData.containsKey(languageCode))
-      return localizedData["en"]!.description;
+      return localizedData["en"].description;
     else
-      return localizedData[languageCode]!.description;
+      return localizedData[languageCode].description;
   }
 
   Category(this.id, this.isVisible, this.techniqueIds, this.localizedData);

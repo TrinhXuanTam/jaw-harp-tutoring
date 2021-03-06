@@ -6,6 +6,7 @@ import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/facade_interfaces/user_facade_interface.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
 import 'package:mockito/mockito.dart';
+import 'package:optional/optional.dart';
 
 import '../../../../dependency_injection/test_service_locator.dart';
 
@@ -21,19 +22,19 @@ void main() {
     when(testServiceLocator<IUserFacade>().isVerified()).thenAnswer((_) async => true);
 
     when(testServiceLocator<IUserRepository>().getCurrentUser()).thenAnswer(
-      (_) async => User(uid: uid, name: name, email: email),
+      (_) async => Optional.of(User(uid: uid, name: name, email: email)),
     );
 
     final user = await getCurrentUser();
 
-    expect(user.email, email);
-    expect(user.name, name);
-    expect(user.uid, uid);
+    assert(user.email == email);
+    assert(user.name == name);
+    assert(user.uid == uid);
   });
 
   test("[GetCurrentUser] should throw [UserNotSignedInError] when user data is not found in local data source", () async {
     when(testServiceLocator<IUserRepository>().getCurrentUser()).thenAnswer(
-      (_) async => null,
+      (_) async => Optional.empty(),
     );
 
     expect(() => getCurrentUser(), throwsA(isInstanceOf<UserNotSignedInError>()));

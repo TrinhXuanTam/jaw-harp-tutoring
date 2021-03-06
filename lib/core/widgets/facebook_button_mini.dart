@@ -3,12 +3,12 @@ import 'package:jews_harp/core/constants/locations.dart';
 
 class FacebookButtonMini extends StatelessWidget {
   final double iconWidth;
-  final VoidCallback onPress;
+  final Function onPress;
 
   const FacebookButtonMini({
-    Key? key,
+    Key key,
     this.iconWidth = 45,
-    required this.onPress,
+    @required this.onPress,
   }) : super(key: key);
 
   @override

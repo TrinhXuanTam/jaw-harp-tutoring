@@ -4,8 +4,8 @@ class FullScreenContainer extends StatelessWidget {
   final Widget child;
 
   const FullScreenContainer({
-    Key? key,
-    required this.child,
+    Key key,
+    this.child,
   }) : super(key: key);
 
   @override

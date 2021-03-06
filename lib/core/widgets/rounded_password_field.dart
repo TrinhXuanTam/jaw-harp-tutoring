@@ -12,11 +12,11 @@ class RoundedPasswordField extends StatelessWidget {
   final TextEditingController controller;
 
   const RoundedPasswordField({
-    Key? key,
+    Key key,
     this.placeholderText = "",
     this.color = BASE_COLOR_VERY_LIGHT,
     this.iconColor = BASE_COLOR,
-    required this.controller,
+    this.controller,
   }) : super(key: key);
 
   @override
