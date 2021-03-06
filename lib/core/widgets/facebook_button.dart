@@ -5,12 +5,12 @@ import '../l10n.dart';
 
 class FacebookButton extends StatelessWidget {
   final String text;
-  final Function onPress;
+  final VoidCallback onPress;
 
   const FacebookButton({
-    Key key,
-    this.text,
-    this.onPress,
+    Key? key,
+    required this.text,
+    required this.onPress,
   }) : super(key: key);
 
   @override

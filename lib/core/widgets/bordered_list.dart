@@ -5,7 +5,7 @@ import 'package:jews_harp/core/l10n.dart';
 class BorderedList extends StatelessWidget {
   final List<BorderedListItem> items;
 
-  const BorderedList({Key key, this.items}) : super(key: key);
+  const BorderedList({Key? key, required this.items}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class BorderedList extends StatelessWidget {
         width: size.width * 0.9,
         decoration: BoxDecoration(
           color: Colors.white,
-          border: Border.all(color: Colors.grey[300]),
+          border: Border.all(color: Colors.grey[300]!),
           borderRadius: BorderRadius.circular(15),
         ),
         child: Column(
@@ -75,15 +75,15 @@ class BorderedList extends StatelessWidget {
 }
 
 class BorderedListItem {
-  final Function onTap;
+  final VoidCallback onTap;
   final IconData icon;
   final String title;
   final String description;
 
   BorderedListItem({
-    @required this.onTap,
-    @required this.icon,
-    @required this.title,
-    @required this.description,
+    required this.onTap,
+    required this.icon,
+    required this.title,
+    required this.description,
   });
 }

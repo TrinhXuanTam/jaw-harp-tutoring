@@ -13,8 +13,8 @@ class CategoryLocalizationAddScreen extends StatefulWidget {
   final CreateCategoryBloc createCategoryBloc;
 
   const CategoryLocalizationAddScreen({
-    Key key,
-    @required this.createCategoryBloc,
+    Key? key,
+    required this.createCategoryBloc,
   }) : super(key: key);
 
   @override
@@ -26,7 +26,7 @@ class _CategoryLocalizationAddScreenState extends State<CategoryLocalizationAddS
   final TextEditingController _descriptionController = TextEditingController();
   final DropdownButtonFormFieldController<String> _languageController = DropdownButtonFormFieldController<String>();
 
-  List<DropdownMenuItem> _createDropdownMenuItems(AppLocalizations localizations) {
+  List<DropdownMenuItem<String>> _createDropdownMenuItems(AppLocalizations localizations) {
     return SupportedLanguages.languages
         .where(
           (element) => !widget.createCategoryBloc.localizedData.containsKey(element.code),
@@ -88,7 +88,7 @@ class _CategoryLocalizationAddScreenState extends State<CategoryLocalizationAddS
                   widget.createCategoryBloc.add(
                     AddCategoryLocalizationEvent(
                       CategoryLocalizedData(
-                        _languageController.value,
+                        _languageController.value!,
                         _titleController.text,
                         _descriptionController.text,
                       ),

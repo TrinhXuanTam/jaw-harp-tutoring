@@ -8,9 +8,9 @@ class TitleWithSubtitle extends StatelessWidget {
   final double subtitleSize;
 
   const TitleWithSubtitle({
-    Key key,
-    @required this.titleText,
-    @required this.subtitleText,
+    Key? key,
+    required this.titleText,
+    required this.subtitleText,
     this.titleSize = 45,
     this.subtitleSize = 16,
   }) : super(key: key);

@@ -16,8 +16,8 @@ class EmailVerificationScreen extends StatelessWidget {
   final User user;
 
   const EmailVerificationScreen({
-    Key key,
-    @required this.user,
+    Key? key,
+    required this.user,
   }) : super(key: key);
 
   void _emailVerificationScreenListener(BuildContext ctx, EmailVerificationState state) {
@@ -30,7 +30,7 @@ class EmailVerificationScreen extends StatelessWidget {
     else if (state is EmailNotVerifiedState)
       showDialog(
         context: ctx,
-        child: OneButtonAlertDialog(
+        builder: (_) => OneButtonAlertDialog(
           title: localizations.translate("Email not verified"),
           message: localizations.translate("Please verify your email before you continue!"),
         ),

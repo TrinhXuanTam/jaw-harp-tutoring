@@ -5,12 +5,12 @@ import '../l10n.dart';
 
 class GoogleButton extends StatelessWidget {
   final String text;
-  final Function onPress;
+  final VoidCallback onPress;
 
   const GoogleButton({
-    Key key,
-    this.text,
-    this.onPress,
+    Key? key,
+    required this.text,
+    required this.onPress,
   }) : super(key: key);
 
   @override

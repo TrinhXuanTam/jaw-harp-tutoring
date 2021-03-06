@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:jews_harp/core/constants/theme.dart';
+import 'package:jews_harp/features/admin/presentation/BLoCs/create_category/create_category_bloc.dart';
 import 'package:jews_harp/features/admin/presentation/screens/admin_menu_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/category_list_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/category_localization_add_screen.dart';
@@ -13,11 +14,14 @@ import 'package:jews_harp/features/admin/presentation/screens/create_technique_s
 import 'package:jews_harp/features/auth/presentation/screens/link_auth_providers_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_sent_screen.dart';
+import 'package:jews_harp/features/techniques/domain/entities/category.dart';
+import 'package:jews_harp/features/techniques/domain/entities/category_localized_data.dart';
 import 'package:jews_harp/features/techniques/presentation/screens/technique_list_screen.dart';
 import 'core/constants/routes.dart';
 import 'core/constants/settings.dart';
 import 'core/dependency_injection/service_locator.dart';
 import 'core/l10n.dart';
+import 'features/auth/domain/entities/user.dart';
 import 'features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
 import 'features/auth/presentation/screens/authentication_screen.dart';
 import 'features/auth/presentation/screens/email_verification_screen.dart';
@@ -55,12 +59,14 @@ class _EntryPoint extends StatelessWidget {
   }
 
   void _authBlocListener(BuildContext context, AuthState state) {
+    final NavigatorState currentState = navigatorKey.currentState!;
+
     if (state is AuthenticatedState) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(HOME_SCREEN_ROUTE, (route) => false);
+      currentState.pushNamedAndRemoveUntil(HOME_SCREEN_ROUTE, (route) => false);
     } else if (state is UnauthenticatedState)
-      navigatorKey.currentState.pushNamedAndRemoveUntil(AUTH_SCREEN_ROUTE, (route) => false);
+      currentState.pushNamedAndRemoveUntil(AUTH_SCREEN_ROUTE, (route) => false);
     else if (state is NotVerifiedState)
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      currentState.pushNamedAndRemoveUntil(
         EMAIL_VERIFICATION_UP_SCREEN_ROUTE,
         (route) => false,
         arguments: state.user,
@@ -112,39 +118,39 @@ class _EntryPoint extends StatelessWidget {
             SIGN_UP_SCREEN_ROUTE: (_) => SignUpScreen(),
             PASSWORD_RESET_SCREEN_ROUTE: (_) => PasswordResetScreen(),
             PASSWORD_RESET_SENT_SCREEN_ROUTE: (_) => PasswordResetSentScreen(),
-            EMAIL_VERIFICATION_UP_SCREEN_ROUTE: (ctx) => EmailVerificationScreen(user: ModalRoute.of(ctx).settings.arguments),
+            EMAIL_VERIFICATION_UP_SCREEN_ROUTE: (ctx) => EmailVerificationScreen(user: ModalRoute.of(ctx)!.settings.arguments as User),
             LINK_AUTH_PROVIDERS_SCREEN_ROUTE: (ctx) {
-              final Map<String, Object> map = ModalRoute.of(ctx).settings.arguments;
+              final Map<String, Object> map = ModalRoute.of(ctx)!.settings.arguments as Map<String, Object>;
               return LinkAuthProvidersScreen(
-                email: map["email"],
-                providers: map["providers"],
-                onSuccess: map["onSuccess"],
+                email: map["email"] as String,
+                providers: map["providers"] as Set<String>,
+                onSuccess: map["onSuccess"] as VoidCallback,
               );
             },
             ADMIN_MENU_SCREEN_ROUTE: (_) => AdminMenuScreen(),
             CREATE_CATEGORY_SCREEN_ROUTE: (_) => CreateCategoryScreen(),
             CREATE_TECHNIQUE_SCREEN_ROUTE: (_) => CreateTechniqueScreen(),
             CATEGORY_LOCALIZATION_ADD_SCREEN_ROUTE: (ctx) {
-              final Map<String, Object> map = ModalRoute.of(ctx).settings.arguments;
+              final Map<String, Object> map = ModalRoute.of(ctx)!.settings.arguments as Map<String, Object>;
               return CategoryLocalizationAddScreen(
-                createCategoryBloc: map["createCategoryBloc"],
+                createCategoryBloc: map["createCategoryBloc"] as CreateCategoryBloc,
               );
             },
             CATEGORY_LOCALIZATION_EDIT_SCREEN_ROUTE: (ctx) {
-              final Map<String, Object> map = ModalRoute.of(ctx).settings.arguments;
+              final Map<String, Object> map = ModalRoute.of(ctx)!.settings.arguments as Map<String, Object>;
               return CategoryLocalizationEditScreen(
-                data: map["data"],
-                onRemove: map["onRemove"],
-                onSave: map["onSave"],
+                data: map["data"] as CategoryLocalizedData,
+                onRemove: map["onRemove"] as VoidCallback,
+                onSave: map["onSave"] as Function(CategoryLocalizedData),
               );
             },
             VISIBLE_CATEGORIES_LIST_SCREEN_ROUTE: (ctx) => CategoryListScreen(
-                  items: ModalRoute.of(ctx).settings.arguments,
+                  items: ModalRoute.of(ctx)!.settings.arguments as List<Category>,
                   title: "Visible Categories",
                   subtitle: "Here you can browse through visible categories. Users can see these categories and their content in their app.",
                 ),
             HIDDEN_CATEGORIES_LIST_SCREEN_ROUTE: (ctx) => CategoryListScreen(
-                  items: ModalRoute.of(ctx).settings.arguments,
+                  items: ModalRoute.of(ctx)!.settings.arguments as List<Category>,
                   title: "Hidden Categories",
                   subtitle: "Here you can browse through hidden categories and prepare new techniques for future release. Users are not able see these categories and their content.",
                 ),

@@ -13,10 +13,10 @@ class CategoryListScreen extends StatelessWidget {
   final List<Category> items;
 
   const CategoryListScreen({
-    Key key,
-    @required this.title,
-    @required this.subtitle,
-    @required this.items,
+    Key? key,
+    required this.title,
+    required this.subtitle,
+    required this.items,
   }) : super(key: key);
 
   @override

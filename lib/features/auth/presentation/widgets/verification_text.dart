@@ -5,8 +5,8 @@ class VerificationText extends StatelessWidget {
   final String email;
 
   const VerificationText({
-    Key key,
-    @required this.email,
+    Key? key,
+    required this.email,
   }) : super(key: key);
 
   @override
