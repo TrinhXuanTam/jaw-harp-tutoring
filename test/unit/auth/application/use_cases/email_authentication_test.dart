@@ -5,7 +5,7 @@ import 'package:jews_harp/core/errors/wrong_email_or_password_error.dart';
 import 'package:jews_harp/features/auth/application/use_cases/email_authentication.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../../dependency_injection/test_service_locator.dart';
 
@@ -18,22 +18,22 @@ void main() {
   final password = "John123456";
   final emailAuthentication = testServiceLocator<EmailAuthentication>();
 
-  when(testServiceLocator<IUserRepository>().getUserWithEmailAndPassword(email, password)).thenAnswer(
+  when(() => testServiceLocator<IUserRepository>().getUserWithEmailAndPassword(email, password)).thenAnswer(
     (_) async => User(uid: uid, name: name, email: email),
   );
 
   test("[EmailAuthentication] should return user data when correct credentials are given", () async {
     final user = await emailAuthentication(email, password);
 
-    assert(user.email == email);
-    assert(user.name == name);
-    assert(user.uid == uid);
+    expect(user.email, email);
+    expect(user.name, name);
+    expect(user.uid, uid);
   });
 
   test("[EmailAuthentication] should throw [WrongEmailOrPasswordError] when incorrect credentials are given", () async {
     final nonExistentEmail = "nonexistent@gmail.com";
 
-    when(testServiceLocator<IUserRepository>().getUserWithEmailAndPassword(nonExistentEmail, password)).thenThrow(WrongEmailOrPasswordError());
+    when(() => testServiceLocator<IUserRepository>().getUserWithEmailAndPassword(nonExistentEmail, password)).thenThrow(WrongEmailOrPasswordError());
 
     expect(() => emailAuthentication(nonExistentEmail, password), throwsA(isInstanceOf<WrongEmailOrPasswordError>()));
   });

@@ -4,7 +4,7 @@ import 'package:jews_harp/core/errors/email_not_found_error.dart';
 import 'package:jews_harp/core/errors/validation_error.dart';
 import 'package:jews_harp/features/auth/application/use_cases/password_reset.dart';
 import 'package:jews_harp/features/auth/domain/facade_interfaces/user_facade_interface.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../../dependency_injection/test_service_locator.dart';
 
@@ -38,7 +38,7 @@ void main() {
   });
 
   test("[PasswordReset] should throw [EmailNotFoundError] when user account doesn't exist", () async {
-    when(testServiceLocator<IUserFacade>().resetPassword(email, languageCode: "en")).thenAnswer((_) async => false);
+    when(() => testServiceLocator<IUserFacade>().resetPassword(email)).thenAnswer((_) async => false);
     expect(() => passwordReset(email), throwsA(isInstanceOf<EmailNotFoundError>()));
   });
 }

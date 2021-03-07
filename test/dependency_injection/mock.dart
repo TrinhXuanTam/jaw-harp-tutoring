@@ -1,9 +1,9 @@
+import 'package:injectable/injectable.dart' as Injectable;
 import 'package:jews_harp/core/constants/test_environments.dart';
 import 'package:jews_harp/features/auth/domain/facade_interfaces/user_facade_interface.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
 import 'package:jews_harp/features/auth/infrastructure/data_sources/firebase_auth_data_source.dart';
-import 'package:mockito/mockito.dart';
-import 'package:injectable/injectable.dart' as Injectable;
+import 'package:mocktail/mocktail.dart';
 
 @Injectable.LazySingleton(as: IUserFacade, env: [
   EMAIL_AUTHENTICATION_TEST_ENV,

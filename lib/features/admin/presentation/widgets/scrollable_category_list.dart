@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
-import 'package:jews_harp/core/l10n.dart';
 
 class ScrollableCategoryList extends StatelessWidget {
   final List<ScrollableCategoryListItem> items;

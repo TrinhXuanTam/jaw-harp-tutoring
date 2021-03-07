@@ -50,7 +50,7 @@ dependencies:
   image_picker: ^0.7.2
 
 dev_dependencies:
-  mockito: ^5.0.0
+  mocktail: ^0.0.2-dev.2
   injectable_generator:
   build_runner: ^1.11.5
   flutter_test:

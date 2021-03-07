@@ -4,7 +4,7 @@ import 'package:jews_harp/core/errors/wrong_email_or_password_error.dart';
 import 'package:jews_harp/features/auth/application/use_cases/google_authentication.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../../dependency_injection/test_service_locator.dart';
 
@@ -17,19 +17,19 @@ void main() {
   final googleAuthentication = testServiceLocator<GoogleAuthentication>();
 
   test("[GoogleAuthentication] should return user data when user signs into google", () async {
-    when(testServiceLocator<IUserRepository>().getUserWithGoogle()).thenAnswer(
+    when(() => testServiceLocator<IUserRepository>().getUserWithGoogle()).thenAnswer(
       (_) async => User(uid: uid, name: name, email: email),
     );
 
     final user = await googleAuthentication();
 
-    assert(user.uid == uid);
-    assert(user.name == name);
-    assert(user.email == email);
+    expect(user.uid, uid);
+    expect(user.name, name);
+    expect(user.email, email);
   });
 
   test("[GoogleAuthentication] should throw [WrongEmailOrPasswordError] when user fails to log into google", () async {
-    when(testServiceLocator<IUserRepository>().getUserWithGoogle()).thenThrow(WrongEmailOrPasswordError());
+    when(() => testServiceLocator<IUserRepository>().getUserWithGoogle()).thenThrow(WrongEmailOrPasswordError());
     expect(() => googleAuthentication(), throwsA(isInstanceOf<WrongEmailOrPasswordError>()));
   });
 }

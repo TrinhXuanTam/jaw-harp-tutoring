@@ -5,7 +5,7 @@ import 'package:jews_harp/core/errors/validation_error.dart';
 import 'package:jews_harp/features/auth/application/use_cases/link_email_provider.dart';
 import 'package:jews_harp/features/auth/domain/facade_interfaces/user_facade_interface.dart';
 import 'package:jews_harp/features/auth/infrastructure/DTO/user_DTO.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../../dependency_injection/test_service_locator.dart';
 
@@ -20,19 +20,19 @@ void main() {
   final linkEmailProvider = testServiceLocator<LinkEmailProvider>();
 
   test("[LinkEmailProvider] should user data when account was linked to email", () async {
-    when(testServiceLocator<IUserFacade>().linkAccountToEmail(email, password)).thenAnswer(
+    when(() => testServiceLocator<IUserFacade>().linkAccountToEmail(email, password)).thenAnswer(
       (_) async => UserDTO(uid: uid, name: name, email: email),
     );
 
     final user = await linkEmailProvider(email, password);
 
-    assert(user.uid == uid);
-    assert(user.name == name);
-    assert(user.email == email);
+    expect(user.uid, uid);
+    expect(user.name, name);
+    expect(user.email, email);
   });
 
   test("[LinkEmailProvider] should throw [UserNotSignedInError] when user is not signed in", () async {
-    when(testServiceLocator<IUserFacade>().linkAccountToEmail(email, password)).thenThrow(UserNotSignedInError());
+    when(() => testServiceLocator<IUserFacade>().linkAccountToEmail(email, password)).thenThrow(UserNotSignedInError());
     expect(() => linkEmailProvider(email, password), throwsA(isInstanceOf<UserNotSignedInError>()));
   });
 
