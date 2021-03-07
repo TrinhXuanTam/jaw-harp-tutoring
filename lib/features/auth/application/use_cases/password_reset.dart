@@ -17,6 +17,6 @@ class PasswordReset {
 
     if (!RegExMatchers.email.hasMatch(email)) throw ValidationError("Invalid email format!");
 
-    if (!await _userFacade.resetPassword(email, languageCode: languageCode)) throw EmailNotFoundError();
+    if (!await _userFacade.resetPassword(email)) throw EmailNotFoundError();
   }
 }

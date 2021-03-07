@@ -94,7 +94,6 @@ class FirebaseAuthDataSource {
 
       if (firebaseCredential.additionalUserInfo!.isNewUser) {
         final user = firebaseCredential.user!;
-        // TODO set locale
         user.sendEmailVerification();
         _addUserToFirestore(user);
       }
@@ -143,5 +142,9 @@ class FirebaseAuthDataSource {
     if (!doc.exists) throw UserDoesNotExistError();
 
     return List.from(doc["roles"]);
+  }
+
+  Future<void> setLocale(String languageCode) async {
+    _auth.setLanguageCode(languageCode);
   }
 }

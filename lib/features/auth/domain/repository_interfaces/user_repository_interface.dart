@@ -21,4 +21,6 @@ abstract class IUserRepository {
 
   /// User roles
   Future<List<String>> getUserRoles(User user);
+
+  Future<void> setLocale(String languageCode);
 }

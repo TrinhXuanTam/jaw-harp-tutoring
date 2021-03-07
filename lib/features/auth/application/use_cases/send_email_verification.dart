@@ -8,5 +8,5 @@ class SendEmailVerification {
 
   SendEmailVerification(this._userFacade);
 
-  Future<void> call({String languageCode = "en"}) async => _userFacade.sendVerificationEmail(languageCode: languageCode);
+  Future<void> call() async => _userFacade.sendVerificationEmail();
 }

@@ -11,37 +11,26 @@ class UserRepository extends IUserRepository {
   UserRepository(this._firebaseAuthDataSource);
 
   @override
-  Future<User> createUser(String name, String email, String password) {
-    return _firebaseAuthDataSource.signUpWithEmail(name, email, password);
-  }
+  Future<User> createUser(String name, String email, String password) => _firebaseAuthDataSource.signUpWithEmail(name, email, password);
 
   @override
-  Future<User?> getCurrentUser() {
-    return _firebaseAuthDataSource.getCurrentUser();
-  }
+  Future<User?> getCurrentUser() => _firebaseAuthDataSource.getCurrentUser();
 
   @override
-  Future<User> getUserWithEmailAndPassword(String email, String password) {
-    return _firebaseAuthDataSource.signInWithEmail(email, password);
-  }
+  Future<User> getUserWithEmailAndPassword(String email, String password) => _firebaseAuthDataSource.signInWithEmail(email, password);
 
   @override
-  Future<User> getUserWithFacebook() {
-    return _firebaseAuthDataSource.authenticateWithFacebook();
-  }
+  Future<User> getUserWithFacebook() => _firebaseAuthDataSource.authenticateWithFacebook();
 
   @override
-  Future<User> getUserWithGoogle() {
-    return _firebaseAuthDataSource.authenticateWithGoogle();
-  }
+  Future<User> getUserWithGoogle() => _firebaseAuthDataSource.authenticateWithGoogle();
 
   @override
-  Future<Set<String>> getAuthProviders(String email) {
-    return _firebaseAuthDataSource.getAuthProviders(email);
-  }
+  Future<Set<String>> getAuthProviders(String email) => _firebaseAuthDataSource.getAuthProviders(email);
 
   @override
-  Future<List<String>> getUserRoles(User user) {
-    return _firebaseAuthDataSource.getUserRoles(user.uid);
-  }
+  Future<List<String>> getUserRoles(User user) => _firebaseAuthDataSource.getUserRoles(user.uid);
+
+  @override
+  Future<void> setLocale(String languageCode) => _firebaseAuthDataSource.setLocale(languageCode);
 }

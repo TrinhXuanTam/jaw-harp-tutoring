@@ -49,15 +49,6 @@ Future<void> main() async {
 class _EntryPoint extends StatelessWidget {
   final GlobalKey<NavigatorState> navigatorKey = new GlobalKey();
 
-  /// After a period of [Constants.SPLASH_SCREEN_DURATION] send a [SplashScreenDisplayedEvent] to [AuthBloc].
-  Future<void> _splashScreenRedirectWithDelay(AuthBloc authBloc) async {
-    // Future that is called after a period of [Duration]
-    return Future.delayed(
-      const Duration(seconds: SPLASH_SCREEN_DURATION),
-      () => authBloc.add(SplashScreenDisplayedEvent()),
-    );
-  }
-
   void _authBlocListener(BuildContext context, AuthState state) {
     final currentState = navigatorKey.currentState!;
 
@@ -79,11 +70,7 @@ class _EntryPoint extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AuthBloc>(
-      create: (_) {
-        final authBloc = serviceLocator<AuthBloc>();
-        _splashScreenRedirectWithDelay(authBloc);
-        return authBloc;
-      },
+      create: (_) => serviceLocator<AuthBloc>(),
       child: BlocListener<AuthBloc, AuthState>(
         listener: _authBlocListener,
         child: MaterialApp(
@@ -112,7 +99,7 @@ class _EntryPoint extends StatelessWidget {
           ),
           navigatorKey: navigatorKey,
           routes: {
-            SPLASH_SCREEN_ROUTE: (_) => SplashScreen(),
+            SPLASH_SCREEN_ROUTE: (ctx) => SplashScreen(onLoad: () => BlocProvider.of<AuthBloc>(ctx).add(SplashScreenDisplayedEvent(AppLocalizations.of(ctx).locale.languageCode))),
             HOME_SCREEN_ROUTE: (_) => TechniqueListScreen(),
             AUTH_SCREEN_ROUTE: (_) => AuthenticationScreen(),
             SIGN_UP_SCREEN_ROUTE: (_) => SignUpScreen(),
