@@ -110,7 +110,11 @@ class VideoPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<VideoPickerBloc>(
-      create: (_) => serviceLocator<VideoPickerBloc>(),
+      create: (_) {
+        final bloc = serviceLocator<VideoPickerBloc>();
+        bloc.add(UploadScreenLoadedEvent(video: controller.video));
+        return bloc;
+      },
       child: RoundedInputField(
         padding: EdgeInsets.zero,
         child: BlocConsumer<VideoPickerBloc, VideoPickerState>(

@@ -20,7 +20,13 @@ class ThumbnailPickerBloc extends Bloc<ThumbnailPickerEvent, ThumbnailPickerStat
   Stream<ThumbnailPickerState> mapEventToState(
     ThumbnailPickerEvent event,
   ) async* {
-    if (event is PickImageEvent) {
+    if (event is UploadScreenLoadedEvent) {
+      final image = event.image;
+      if (image == null)
+        yield NoImagePickedState();
+      else
+        yield ImagePickedState(image);
+    } else if (event is PickImageEvent) {
       final image = await _pickImage();
       if (image == null)
         yield NoImagePickedState();

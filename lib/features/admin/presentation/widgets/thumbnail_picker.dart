@@ -91,7 +91,11 @@ class ThumbnailPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ThumbnailPickerBloc>(
-      create: (_) => serviceLocator<ThumbnailPickerBloc>(),
+      create: (_) {
+        final bloc = serviceLocator<ThumbnailPickerBloc>();
+        bloc.add(UploadScreenLoadedEvent(image: controller.image));
+        return bloc;
+      },
       child: RoundedInputField(
         padding: EdgeInsets.zero,
         child: BlocConsumer<ThumbnailPickerBloc, ThumbnailPickerState>(

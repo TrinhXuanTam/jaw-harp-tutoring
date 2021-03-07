@@ -71,7 +71,10 @@ class VideoControls extends StatelessWidget {
             ),
             SizedBox(width: 10),
             GestureDetector(
-              onTap: () => Navigator.pop(context),
+              onTap: () {
+                controller.pause();
+                Navigator.pop(context);
+              },
               child: Icon(
                 Icons.fullscreen_exit,
                 color: Colors.white,

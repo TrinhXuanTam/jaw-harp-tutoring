@@ -19,7 +19,16 @@ class VideoPickerBloc extends Bloc<VideoPickerEvent, VideoPickerState> {
 
   @override
   Stream<VideoPickerState> mapEventToState(VideoPickerEvent event) async* {
-    if (event is PickVideoEvent) {
+    if (event is UploadScreenLoadedEvent) {
+      final video = event.video;
+      if (video == null)
+        yield NoVideoPickedState();
+      else {
+        final playableVideo = VideoPlayerController.file(video);
+        await playableVideo.initialize();
+        yield VideoPickedState(video, playableVideo);
+      }
+    } else if (event is PickVideoEvent) {
       final video = await _pickVideo();
       if (video == null)
         yield NoVideoPickedState();

@@ -14,9 +14,7 @@ part 'create_category_state.dart';
 class CreateCategoryBloc extends Bloc<CreateCategoryEvent, CreateCategoryState> {
   final CreateCategory _createCategory;
 
-  final Map<String, CategoryLocalizedData> localizedData = {
-    "en": CategoryLocalizedData("en", "", ""),
-  };
+  final Map<String, CategoryLocalizedData> localizedData = {"en": CategoryLocalizedData("en", "", "")};
 
   CreateCategoryBloc(this._createCategory) : super(CreateCategoryNotFinishedState());
 

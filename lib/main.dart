@@ -10,6 +10,7 @@ import 'package:jews_harp/features/admin/presentation/screens/category_localizat
 import 'package:jews_harp/features/admin/presentation/screens/category_localization_edit_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/create_category_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/create_technique_screen.dart';
+import 'package:jews_harp/features/admin/presentation/screens/upload_files_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/link_auth_providers_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_sent_screen.dart';
@@ -115,6 +116,7 @@ class _EntryPoint extends StatelessWidget {
             VISIBLE_CATEGORIES_LIST_SCREEN_ROUTE: (ctx) => CategoryListScreen.fromArgs(_getArgs<CategoryListScreenArgs>(ctx)),
             HIDDEN_CATEGORIES_LIST_SCREEN_ROUTE: (ctx) => CategoryListScreen.fromArgs(_getArgs<CategoryListScreenArgs>(ctx)),
             VIDEO_FULL_SCREEN_SCREEN_ROUTE: (ctx) => VideoFullScreenModeScreen.fromArgs(_getArgs<VideoFullScreenModeScreenArgs>(ctx)),
+            UPLOAD_FILES_SCREEN_ROUTE: (ctx) => UploadFilesScreen.fromArgs(_getArgs<UploadFilesScreenArgs>(ctx)),
           },
           initialRoute: SPLASH_SCREEN_ROUTE,
         ),
