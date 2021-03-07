@@ -6,25 +6,27 @@ import 'package:jews_harp/core/constants/theme.dart';
 class RoundedInputField extends StatelessWidget {
   final Widget child;
   final Color color;
+  final EdgeInsetsGeometry padding;
 
   const RoundedInputField({
     Key? key,
     required this.child,
     this.color = BASE_COLOR_VERY_LIGHT,
+    this.padding = const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      width: size.width * 0.8,
-      decoration: BoxDecoration(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(29),
+      child: Container(
+        padding: padding,
+        width: size.width * 0.8,
         color: this.color,
-        borderRadius: BorderRadius.circular(29),
+        child: this.child,
       ),
-      child: this.child,
     );
   }
 }

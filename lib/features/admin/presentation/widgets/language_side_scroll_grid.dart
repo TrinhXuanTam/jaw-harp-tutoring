@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/l10n.dart';
-import 'package:jews_harp/features/techniques/domain/entities/category_localized_data.dart';
 
-class LanguageSideScrollGrid extends StatelessWidget {
-  final List<CategoryLocalizedData> data;
-  final void Function(CategoryLocalizedData) onTap;
+class LanguageSideScrollGrid<T> extends StatelessWidget {
+  final List<LanguageSideScrollGridItem> data;
   final VoidCallback onAddButtonTap;
   final bool displayAddButton;
 
-  Widget _buildLanguageCard(CategoryLocalizedData categoryLocalizedData, String label) {
+  Widget _buildLanguageCard(LanguageSideScrollGridItem item, String label) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
@@ -17,7 +15,7 @@ class LanguageSideScrollGrid extends StatelessWidget {
       elevation: 0,
       color: BASE_COLOR_LIGHTER,
       child: InkWell(
-        onTap: () => this.onTap(categoryLocalizedData),
+        onTap: item.onTap,
         borderRadius: BorderRadius.circular(20),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -25,7 +23,7 @@ class LanguageSideScrollGrid extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Icons.language,
+                Icons.translate_rounded,
                 color: Colors.white,
               ),
               SizedBox(height: 10),
@@ -82,7 +80,6 @@ class LanguageSideScrollGrid extends StatelessWidget {
   const LanguageSideScrollGrid({
     Key? key,
     required this.data,
-    required this.onTap,
     required this.onAddButtonTap,
     this.displayAddButton = false,
   }) : super(key: key);
@@ -101,14 +98,24 @@ class LanguageSideScrollGrid extends StatelessWidget {
             if (index == data.length)
               return _buildAddButton();
             else {
-              final categoryLocalizedData = data[index];
-              final languageName = SupportedLanguages.getName(categoryLocalizedData.languageCode);
+              final item = data[index];
+              final languageName = SupportedLanguages.getName(item.languageCode);
               final label = l10n.translate(languageName);
-              return _buildLanguageCard(categoryLocalizedData, label);
+              return _buildLanguageCard(item, label);
             }
           },
         ),
       ),
     );
   }
+}
+
+class LanguageSideScrollGridItem {
+  final String languageCode;
+  final VoidCallback onTap;
+
+  LanguageSideScrollGridItem({
+    required this.languageCode,
+    required this.onTap,
+  });
 }

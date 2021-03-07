@@ -14,8 +14,8 @@ class Language {
 
 class SupportedLanguages {
   static final languages = [
-    Language("cs", "Czech", "Čeština"),
     Language("en", "English", "English"),
+    Language("cs", "Czech", "Čeština"),
   ];
 
   static String getNativeName(String languageCode) {

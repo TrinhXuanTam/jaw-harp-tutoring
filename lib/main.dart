@@ -85,7 +85,7 @@ class _EntryPoint extends StatelessWidget {
             if (locale == null) return supportedLocales.first;
 
             for (var supportedLocale in supportedLocales) {
-              if (supportedLocale.languageCode == locale.languageCode && supportedLocale.countryCode == locale.countryCode) return supportedLocale;
+              if (supportedLocale.languageCode == locale.languageCode || supportedLocale.countryCode == locale.countryCode) return supportedLocale;
             }
             return supportedLocales.first;
           },
