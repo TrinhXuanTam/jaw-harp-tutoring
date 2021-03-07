@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/core/constants/settings.dart';
-import 'package:jews_harp/core/errors/base_error.dart';
 import 'package:jews_harp/features/auth/application/use_cases/email_verification_check.dart';
 import 'package:jews_harp/features/auth/application/use_cases/get_current_user.dart';
 import 'package:jews_harp/features/auth/application/use_cases/set_locale.dart';

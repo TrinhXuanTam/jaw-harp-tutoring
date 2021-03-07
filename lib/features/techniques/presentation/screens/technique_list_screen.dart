@@ -1,7 +1,6 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
 
