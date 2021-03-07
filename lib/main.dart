@@ -14,6 +14,7 @@ import 'package:jews_harp/features/auth/presentation/screens/link_auth_providers
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_sent_screen.dart';
 import 'package:jews_harp/features/techniques/presentation/screens/technique_list_screen.dart';
+import 'package:jews_harp/features/techniques/presentation/screens/video_full_screen_mode_screen.dart';
 
 import 'core/constants/routes.dart';
 import 'core/constants/settings.dart';
@@ -113,6 +114,7 @@ class _EntryPoint extends StatelessWidget {
             CATEGORY_LOCALIZATION_EDIT_SCREEN_ROUTE: (ctx) => CategoryLocalizationEditScreen.fromArgs(_getArgs<CategoryLocalizationEditScreenArgs>(ctx)),
             VISIBLE_CATEGORIES_LIST_SCREEN_ROUTE: (ctx) => CategoryListScreen.fromArgs(_getArgs<CategoryListScreenArgs>(ctx)),
             HIDDEN_CATEGORIES_LIST_SCREEN_ROUTE: (ctx) => CategoryListScreen.fromArgs(_getArgs<CategoryListScreenArgs>(ctx)),
+            VIDEO_FULL_SCREEN_SCREEN_ROUTE: (ctx) => VideoFullScreenModeScreen.fromArgs(_getArgs<VideoFullScreenModeScreenArgs>(ctx)),
           },
           initialRoute: SPLASH_SCREEN_ROUTE,
         ),

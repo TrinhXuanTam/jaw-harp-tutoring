@@ -5,6 +5,7 @@ import 'package:jews_harp/core/widgets/rounded_text_field.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/thumbnail_picker.dart';
+import 'package:jews_harp/features/admin/presentation/widgets/video_picker.dart';
 
 class CreateTechniqueScreen extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class CreateTechniqueScreen extends StatefulWidget {
 class _CreateTechniqueScreenState extends State<CreateTechniqueScreen> {
   final _idController = TextEditingController();
   final _thumbnailController = ThumbnailPickerController();
+  final _videoController = VideoPickerController();
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +43,8 @@ class _CreateTechniqueScreenState extends State<CreateTechniqueScreen> {
               ),
               SizedBox(height: 10),
               ThumbnailPicker(controller: _thumbnailController),
+              SizedBox(height: 10),
+              VideoPicker(controller: _videoController),
               SizedBox(height: 10),
               RoundedButton(
                 text: "Create",

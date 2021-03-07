@@ -47,7 +47,10 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   convex_bottom_bar: ^3.0.0-nullsafety.0
+  # Pick images and videos
   image_picker: ^0.7.2
+  # Play videos
+  video_player: ^2.0.0
 
 dev_dependencies:
   mocktail: ^0.0.2-dev.2
