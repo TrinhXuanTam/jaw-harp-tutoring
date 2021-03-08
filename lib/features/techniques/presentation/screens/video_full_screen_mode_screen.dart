@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jews_harp/core/constants/theme.dart';
+import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/techniques/presentation/widgets/video_controls.dart';
 import 'package:video_player/video_player.dart';
 
@@ -26,6 +26,12 @@ class VideoFullScreenModeScreen extends StatelessWidget {
     final videoSize = controller.value.size;
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: IconAppBar(
+        icon: Icons.close_rounded,
+        iconColor: Colors.white,
+        onPressed: () => Navigator.pop(context),
+      ),
       body: Container(
         color: Colors.black,
         height: double.infinity,

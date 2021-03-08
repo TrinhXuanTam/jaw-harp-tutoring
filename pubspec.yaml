@@ -51,6 +51,8 @@ dependencies:
   image_picker: ^0.7.2
   # Play videos
   video_player: ^2.0.0
+  # Keep the screen awake
+  wakelock: ^0.5.0+2
 
 dev_dependencies:
   mocktail: ^0.0.2-dev.2

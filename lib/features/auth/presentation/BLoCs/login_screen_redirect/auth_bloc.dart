@@ -9,6 +9,7 @@ import 'package:jews_harp/features/auth/application/use_cases/set_locale.dart';
 import 'package:jews_harp/features/auth/application/use_cases/sign_out.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:meta/meta.dart';
+import 'package:wakelock/wakelock.dart';
 
 part 'auth_event.dart';
 
@@ -35,6 +36,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (event is SplashScreenDisplayedEvent) {
       final user = await _getCurrentUser();
       _setLocale(event.languageCode);
+      Wakelock.enabled;
       Future.delayed(
         const Duration(seconds: SPLASH_SCREEN_DURATION),
         () => this.add(SplashScreenTransitionEvent(user)),

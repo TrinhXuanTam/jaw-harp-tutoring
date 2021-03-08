@@ -6,6 +6,7 @@ import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
+import 'package:jews_harp/core/widgets/rounded_dropdown.dart';
 import 'package:jews_harp/core/widgets/rounded_text_field.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
@@ -14,6 +15,8 @@ import 'package:jews_harp/features/admin/presentation/screens/upload_files_scree
 import 'package:jews_harp/features/admin/presentation/widgets/language_side_scroll_grid.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/thumbnail_picker.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/video_picker.dart';
+import 'package:jews_harp/features/techniques/domain/entities/category.dart';
+import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
 
 class CreateTechniqueScreen extends StatefulWidget {
   @override
@@ -25,6 +28,8 @@ class _CreateTechniqueScreenState extends State<CreateTechniqueScreen> {
   final _thumbnailController = ThumbnailPickerController();
   final _videoController = VideoPickerController();
   final _createTechniqueBloc = serviceLocator<CreateTechniqueBloc>();
+  final _categoryController = DropdownButtonFormFieldController<String>();
+  final _difficultyController = DropdownButtonFormFieldController<TechniqueDifficulty>();
 
   @override
   void dispose() {
@@ -35,6 +40,7 @@ class _CreateTechniqueScreenState extends State<CreateTechniqueScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final l10n = AppLocalizations.of(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -59,6 +65,52 @@ class _CreateTechniqueScreenState extends State<CreateTechniqueScreen> {
                   icon: Icons.attach_money_rounded,
                   controller: _idController,
                   placeholderText: "Product ID",
+                ),
+                SizedBox(height: 10),
+                FutureBuilder<List<Category>>(
+                  future: _createTechniqueBloc.categories,
+                  builder: (ctx, snapshot) {
+                    late final items;
+
+                    if (snapshot.hasData) {
+                      items = snapshot.data!
+                          .map(
+                            (e) => DropdownMenuItem<String>(
+                              child: Row(
+                                children: [
+                                  Text(e.getLocalizedTitle(l10n.locale.languageCode)),
+                                  SizedBox(width: 5),
+                                  e.isVisible ? Icon(Icons.public, color: BASE_COLOR.withAlpha(100), size: 18) : Icon(Icons.public_off_rounded, color: Colors.grey, size: 18),
+                                ],
+                              ),
+                              value: e.id,
+                            ),
+                          )
+                          .toList();
+                    } else {
+                      items = [
+                        DropdownMenuItem<String>(
+                          child: Text("Loading categories..."),
+                        )
+                      ];
+                    }
+
+                    return RoundedDropdown<String>(items: items, placeholderText: "Category", icon: Icons.folder_open_rounded, controller: _categoryController);
+                  },
+                ),
+                SizedBox(height: 10),
+                RoundedDropdown<TechniqueDifficulty>(
+                  items: TechniqueDifficulty.values
+                      .map(
+                        (e) => DropdownMenuItem<TechniqueDifficulty>(
+                          value: e,
+                          child: Text(e.string),
+                        ),
+                      )
+                      .toList(),
+                  placeholderText: "Difficulty",
+                  icon: Icons.timelapse_rounded,
+                  controller: _difficultyController,
                 ),
                 SizedBox(height: 15),
                 Container(
