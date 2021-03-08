@@ -25,6 +25,15 @@ class CreateTechniqueBloc extends Bloc<CreateTechniqueEvent, CreateTechniqueStat
   Stream<CreateTechniqueState> mapEventToState(
     CreateTechniqueEvent event,
   ) async* {
-    // TODO: implement mapEventToState
+    if (event is AddTechniqueLocalizationEvent) {
+      localizedData[event.techniqueLocalizedData.languageCode] = event.techniqueLocalizedData;
+      yield CreateTechniqueInitial();
+    } else if (event is RemoveTechniqueLocalizationEvent) {
+      localizedData.remove(event.languageCode);
+      yield CreateTechniqueInitial();
+    } else if (event is EditTechniqueLocalizationEvent) {
+      localizedData[event.techniqueLocalizedData.languageCode] = event.techniqueLocalizedData;
+      yield CreateTechniqueInitial();
+    }
   }
 }

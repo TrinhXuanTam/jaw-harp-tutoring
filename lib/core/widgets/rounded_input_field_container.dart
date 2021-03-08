@@ -7,12 +7,14 @@ class RoundedInputField extends StatelessWidget {
   final Widget child;
   final Color color;
   final EdgeInsetsGeometry padding;
+  final double? height;
 
   const RoundedInputField({
     Key? key,
     required this.child,
     this.color = BASE_COLOR_VERY_LIGHT,
     this.padding = const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+    this.height,
   }) : super(key: key);
 
   @override
@@ -24,6 +26,7 @@ class RoundedInputField extends StatelessWidget {
       child: Container(
         padding: padding,
         width: size.width * 0.8,
+        height: this.height,
         color: this.color,
         child: this.child,
       ),

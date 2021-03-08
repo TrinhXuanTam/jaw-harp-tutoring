@@ -16,6 +16,8 @@ const String VISIBLE_CATEGORIES_LIST_SCREEN_ROUTE = "/visibleCategoriesList";
 const String HIDDEN_CATEGORIES_LIST_SCREEN_ROUTE = "/hiddenCategoriesList";
 const String CATEGORY_LOCALIZATION_EDIT_SCREEN_ROUTE = "/categoryLocalizationEdit";
 const String CATEGORY_LOCALIZATION_ADD_SCREEN_ROUTE = "/categoryLocalizationAdd";
+const String TECHNIQUE_LOCALIZATION_EDIT_SCREEN_ROUTE = "/techniqueLocalizationEdit";
+const String TECHNIQUE_LOCALIZATION_ADD_SCREEN_ROUTE = "/techniqueLocalizationAdd";
 const String UPLOAD_FILES_SCREEN_ROUTE = "/uploadFiles";
 
 // Techniques

@@ -11,6 +11,8 @@ import 'package:jews_harp/core/widgets/rounded_text_field.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/create_technique/create_technique_bloc.dart';
+import 'package:jews_harp/features/admin/presentation/screens/technique_localization_add_screen.dart';
+import 'package:jews_harp/features/admin/presentation/screens/technique_localization_edit_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/upload_files_screen.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/language_side_scroll_grid.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/thumbnail_picker.dart';
@@ -185,8 +187,28 @@ class _CreateTechniqueScreenState extends State<CreateTechniqueScreen> {
                       BlocBuilder<CreateTechniqueBloc, CreateTechniqueState>(
                         builder: (ctx, state) => LanguageSideScrollGrid(
                           displayAddButton: SupportedLanguages.languages.length != _createTechniqueBloc.localizedData.length,
-                          data: _createTechniqueBloc.localizedData.entries.map((entry) => LanguageSideScrollGridItem(languageCode: entry.key, onTap: () {})).toList(),
-                          onAddButtonTap: () {},
+                          data: _createTechniqueBloc.localizedData.entries
+                              .map(
+                                (entry) => LanguageSideScrollGridItem(
+                                  languageCode: entry.key,
+                                  onTap: () => Navigator.pushNamed(
+                                    context,
+                                    TECHNIQUE_LOCALIZATION_EDIT_SCREEN_ROUTE,
+                                    arguments: TechniqueLocalizationEditScreenArgs(
+                                        data: entry.value,
+                                        onSave: (localizedData) {
+                                          _createTechniqueBloc.add(EditTechniqueLocalizationEvent(localizedData));
+                                          Navigator.pop(ctx);
+                                        },
+                                        onRemove: () {
+                                          _createTechniqueBloc.add(RemoveTechniqueLocalizationEvent(entry.key));
+                                          Navigator.pop(ctx);
+                                        }),
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                          onAddButtonTap: () => Navigator.pushNamed(context, TECHNIQUE_LOCALIZATION_ADD_SCREEN_ROUTE, arguments: TechniqueLocalizationAddScreenArgs(_createTechniqueBloc)),
                         ),
                       ),
                     ],

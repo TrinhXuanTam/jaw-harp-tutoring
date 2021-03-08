@@ -2,61 +2,64 @@ import 'package:flutter/material.dart';
 import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
-import 'package:jews_harp/core/widgets/rounded_dropdown.dart';
 import 'package:jews_harp/core/widgets/rounded_multiline_text_field.dart';
 import 'package:jews_harp/core/widgets/rounded_text_field.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
-import 'package:jews_harp/features/admin/presentation/BLoCs/create_technique/create_technique_bloc.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique_localized_data.dart';
 
-class TechniqueLocalizationAddScreenArgs {
-  final CreateTechniqueBloc createTechniqueBloc;
+class TechniqueLocalizationEditScreenArgs {
+  final TechniqueLocalizedData data;
+  final void Function(TechniqueLocalizedData) onSave;
+  final VoidCallback onRemove;
 
-  TechniqueLocalizationAddScreenArgs(this.createTechniqueBloc);
+  TechniqueLocalizationEditScreenArgs({
+    required this.data,
+    required this.onSave,
+    required this.onRemove,
+  });
 }
 
-class TechniqueLocalizationAddScreen extends StatefulWidget {
-  final CreateTechniqueBloc createTechniqueBloc;
+class TechniqueLocalizationEditScreen extends StatefulWidget {
+  final TechniqueLocalizedData data;
+  final void Function(TechniqueLocalizedData) onSave;
+  final VoidCallback onRemove;
 
-  factory TechniqueLocalizationAddScreen.fromArgs(TechniqueLocalizationAddScreenArgs args) {
-    return TechniqueLocalizationAddScreen(createTechniqueBloc: args.createTechniqueBloc);
+  factory TechniqueLocalizationEditScreen.fromArgs(TechniqueLocalizationEditScreenArgs args) {
+    return TechniqueLocalizationEditScreen(
+      data: args.data,
+      onSave: args.onSave,
+      onRemove: args.onRemove,
+    );
   }
 
-  const TechniqueLocalizationAddScreen({
+  const TechniqueLocalizationEditScreen({
     Key? key,
-    required this.createTechniqueBloc,
+    required this.data,
+    required this.onRemove,
+    required this.onSave,
   }) : super(key: key);
 
   @override
-  _TechniqueLocalizationAddScreenState createState() => _TechniqueLocalizationAddScreenState();
+  _TechniqueLocalizationEditScreenState createState() => _TechniqueLocalizationEditScreenState();
 }
 
-class _TechniqueLocalizationAddScreenState extends State<TechniqueLocalizationAddScreen> {
+class _TechniqueLocalizationEditScreenState extends State<TechniqueLocalizationEditScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _accompanyingTextController = TextEditingController();
-  final DropdownButtonFormFieldController<String> _languageController = DropdownButtonFormFieldController<String>();
 
-  List<DropdownMenuItem<String>> _createDropdownMenuItems(AppLocalizations l10n) {
-    return SupportedLanguages.languages
-        .where(
-          (element) => !widget.createTechniqueBloc.localizedData.containsKey(element.code),
-        )
-        .map(
-          (e) => DropdownMenuItem(
-            child: Text(l10n.translate(e.name)),
-            value: e.code,
-          ),
-        )
-        .toList();
+  @override
+  void initState() {
+    _titleController.text = widget.data.title;
+    _descriptionController.text = widget.data.description;
+    _accompanyingTextController.text = widget.data.accompanyingText;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final dropdownItems = _createDropdownMenuItems(l10n);
-    if (dropdownItems.isNotEmpty) _languageController.value = dropdownItems.first.value;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -74,18 +77,11 @@ class _TechniqueLocalizationAddScreenState extends State<TechniqueLocalizationAd
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TitleWithSubtitle(
-                    titleText: "Add Localization",
+                    titleText: "Edit Localization",
                     titleSize: 30,
-                    subtitleText: "Add localized data to your technique",
+                    subtitleText: "Edit localized data for " + SupportedLanguages.getName(this.widget.data.languageCode).toLowerCase(),
                   ),
                   SizedBox(height: 20),
-                  RoundedDropdown<String>(
-                    controller: _languageController,
-                    items: dropdownItems,
-                    placeholderText: "Choose Language",
-                    icon: Icons.language_rounded,
-                  ),
-                  SizedBox(height: 10),
                   RoundedTextField(
                     icon: Icons.title_rounded,
                     placeholderText: l10n.translate("Title"),
@@ -107,23 +103,31 @@ class _TechniqueLocalizationAddScreenState extends State<TechniqueLocalizationAd
                   ),
                   SizedBox(height: 10),
                   RoundedButton(
-                    text: "Add",
-                    onPressed: () {
-                      widget.createTechniqueBloc.add(
-                        AddTechniqueLocalizationEvent(
-                          TechniqueLocalizedData(
-                            _languageController.value!,
-                            _titleController.text,
-                            _descriptionController.text,
-                            _accompanyingTextController.text,
-                          ),
-                        ),
-                      );
-                      Navigator.of(context).pop();
-                    },
+                    text: "Save",
+                    onPressed: () => widget.onSave(
+                      TechniqueLocalizedData(
+                        widget.data.languageCode,
+                        _titleController.text,
+                        _descriptionController.text,
+                        _accompanyingTextController.text,
+                      ),
+                    ),
                   ),
+                  if (widget.data.languageCode != "en")
+                    Column(
+                      children: [
+                        SizedBox(height: 5),
+                        RoundedButton(
+                          text: "Remove",
+                          color: Colors.redAccent[200]!,
+                          textColor: Colors.white,
+                          borderColor: Colors.redAccent[200]!,
+                          onPressed: widget.onRemove,
+                        ),
+                      ],
+                    ),
                 ],
-              )
+              ),
             ],
           ),
         ),

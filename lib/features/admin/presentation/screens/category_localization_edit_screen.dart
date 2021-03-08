@@ -48,10 +48,15 @@ class _CategoryLocalizationEditScreenState extends State<CategoryLocalizationEdi
   final TextEditingController _descriptionController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+  void initState() {
     _titleController.text = widget.data.title;
     _descriptionController.text = widget.data.description;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
