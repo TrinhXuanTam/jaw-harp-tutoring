@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique_localized_data.dart';
 
@@ -6,16 +5,16 @@ class Technique extends Equatable {
   final String id;
   final String categoryId;
   final TechniqueDifficulty difficulty;
-  final File? thumbnail;
-  final File? video;
+  final String? thumbnailUrl;
+  final String? videoUrl;
   final Map<String, TechniqueLocalizedData> localizedData;
 
   Technique({
     required this.id,
     required this.categoryId,
     required this.difficulty,
-    this.thumbnail,
-    this.video,
+    this.thumbnailUrl,
+    this.videoUrl,
     required this.localizedData,
   });
 

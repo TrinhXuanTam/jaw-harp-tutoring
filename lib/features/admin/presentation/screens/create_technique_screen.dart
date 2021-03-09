@@ -217,7 +217,18 @@ class _CreateTechniqueScreenState extends State<CreateTechniqueScreen> {
                 SizedBox(height: 10),
                 RoundedButton(
                   text: "Create",
-                  onPressed: () {},
+                  onPressed: () {
+                    _createTechniqueBloc.add(
+                      CreateTechniqueFormSubmittedEvent(
+                        id: _idController.text,
+                        categoryId: _categoryController.value!,
+                        difficulty: _difficultyController.value!,
+                        thumbnail: _thumbnailController.image,
+                        video: _videoController.video,
+                      ),
+                    );
+                    Navigator.pop(context);
+                  },
                 ),
               ],
             ),

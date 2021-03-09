@@ -20,3 +20,19 @@ class RemoveTechniqueLocalizationEvent extends CreateTechniqueEvent {
 
   RemoveTechniqueLocalizationEvent(this.languageCode);
 }
+
+class CreateTechniqueFormSubmittedEvent extends CreateTechniqueEvent {
+  final String id;
+  final String categoryId;
+  final TechniqueDifficulty difficulty;
+  final File? thumbnail;
+  final File? video;
+
+  CreateTechniqueFormSubmittedEvent({
+    required this.id,
+    required this.categoryId,
+    required this.difficulty,
+    this.thumbnail,
+    this.video,
+  });
+}

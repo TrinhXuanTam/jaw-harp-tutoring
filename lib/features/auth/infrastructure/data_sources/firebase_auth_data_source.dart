@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/constants/settings.dart';
 import 'package:jews_harp/core/errors/email_already_used_error.dart';
 import 'package:jews_harp/core/errors/third_party_auth_error.dart';
 import 'package:jews_harp/core/errors/user_does_not_exist_error.dart';
@@ -16,7 +17,7 @@ class FirebaseAuthDataSource {
   CollectionReference _users = FirebaseFirestore.instance.collection('users');
 
   void _addUserToFirestore(User user) {
-    final roles = ["user"];
+    final roles = [USER_ROLE];
     final purchasedTechniques = [];
 
     _users.doc(user.uid).set({
