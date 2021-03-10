@@ -98,9 +98,9 @@ class _CategoryLocalizationAddScreenState extends State<CategoryLocalizationAddS
                   widget.createCategoryBloc.add(
                     AddCategoryLocalizationEvent(
                       CategoryLocalizedData(
-                        _languageController.value!,
-                        _titleController.text,
-                        _descriptionController.text,
+                        languageCode: _languageController.value!,
+                        title: _titleController.text,
+                        description: _descriptionController.text,
                       ),
                     ),
                   );

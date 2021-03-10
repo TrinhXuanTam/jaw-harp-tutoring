@@ -23,7 +23,9 @@ class CreateTechniqueBloc extends Bloc<CreateTechniqueEvent, CreateTechniqueStat
 
   CreateTechniqueBloc(this._getAllCategories, this._createTechnique) : super(CreateTechniqueInitial());
 
-  final Map<String, TechniqueLocalizedData> localizedData = {"en": TechniqueLocalizedData("en", "", "", "")};
+  final Map<String, TechniqueLocalizedData> localizedData = {
+    "en": TechniqueLocalizedData(languageCode: "en", title: "", description: "", accompanyingText: ""),
+  };
 
   @override
   Stream<CreateTechniqueState> mapEventToState(
@@ -40,7 +42,14 @@ class CreateTechniqueBloc extends Bloc<CreateTechniqueEvent, CreateTechniqueStat
       yield CreateTechniqueInitial();
     }
     if (event is CreateTechniqueFormSubmittedEvent) {
-      _createTechnique(event.id, event.categoryId, event.difficulty, localizedData.entries.map((e) => e.value), event.thumbnail, event.video);
+      _createTechnique(
+        id: event.id,
+        categoryId: event.categoryId,
+        difficulty: event.difficulty,
+        localizedData: localizedData.entries.map((e) => e.value),
+        thumbnail: event.thumbnail,
+        video: event.video,
+      );
       yield CreateTechniqueInitial();
     }
   }

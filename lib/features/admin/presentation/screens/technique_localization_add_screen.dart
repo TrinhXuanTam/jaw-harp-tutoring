@@ -112,10 +112,10 @@ class _TechniqueLocalizationAddScreenState extends State<TechniqueLocalizationAd
                       widget.createTechniqueBloc.add(
                         AddTechniqueLocalizationEvent(
                           TechniqueLocalizedData(
-                            _languageController.value!,
-                            _titleController.text,
-                            _descriptionController.text,
-                            _accompanyingTextController.text,
+                            languageCode: _languageController.value!,
+                            title: _titleController.text,
+                            description: _descriptionController.text,
+                            accompanyingText: _accompanyingTextController.text,
                           ),
                         ),
                       );

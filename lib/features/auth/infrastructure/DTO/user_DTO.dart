@@ -3,14 +3,10 @@ import 'package:jews_harp/core/errors/user_does_not_exist_error.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 
 class UserDTO extends User {
-  final String uid;
-  final String name;
-  final String email;
-
   const UserDTO({
-    required this.uid,
-    required this.name,
-    required this.email,
+    required String uid,
+    required String name,
+    required String email,
   }) : super(uid: uid, name: name, email: email);
 
   /// Create [FirebaseUserModel] from [FirebaseAuth.UserCredential]

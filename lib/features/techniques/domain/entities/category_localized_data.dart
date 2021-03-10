@@ -5,11 +5,11 @@ class CategoryLocalizedData extends Equatable {
   final String title;
   final String description;
 
-  CategoryLocalizedData(
-    this.languageCode,
-    this.title,
-    this.description,
-  );
+  const CategoryLocalizedData({
+    required this.languageCode,
+    required this.title,
+    required this.description,
+  });
 
   @override
   List<Object> get props => [languageCode, title, description];

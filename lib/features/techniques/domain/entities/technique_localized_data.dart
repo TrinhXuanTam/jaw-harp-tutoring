@@ -6,12 +6,12 @@ class TechniqueLocalizedData extends Equatable {
   final String description;
   final String accompanyingText;
 
-  TechniqueLocalizedData(
-    this.languageCode,
-    this.title,
-    this.description,
-    this.accompanyingText,
-  );
+  const TechniqueLocalizedData({
+    required this.languageCode,
+    required this.title,
+    required this.description,
+    required this.accompanyingText,
+  });
 
   @override
   List<Object> get props => [languageCode, title, description, accompanyingText];

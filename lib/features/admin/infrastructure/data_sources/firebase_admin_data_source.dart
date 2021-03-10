@@ -22,51 +22,34 @@ class FirebaseAdminDataSource {
     return url;
   }
 
-  Future<TechniqueDTO> createTechnique(
-    String id,
-    String categoryId,
-    TechniqueDifficulty difficulty,
-    Iterable<TechniqueLocalizedDataDTO> localizedData,
+  Future<TechniqueDTO> createTechnique({
+    required String id,
+    required String categoryId,
+    required TechniqueDifficulty difficulty,
+    required Iterable<TechniqueLocalizedDataDTO> localizedData,
     File? thumbnail,
     File? video,
-  ) async {
+  }) async {
     final document = await _techniques.doc(id).get();
 
     if (document.exists) throw TechniqueAlreadyExistsError();
-
-    final localization = {};
-    localizedData.forEach(
-      (element) => localization[element.languageCode] = {
-        "title": element.title,
-        "description": element.description,
-        "accompanyingText": element.accompanyingText,
-      },
-    );
 
     await _techniques.doc(id).set({
       "categoryId": categoryId,
       "difficulty": difficulty.index,
       "videoUrl": video == null ? null : await _uploadFile(id, "video", video),
       "thumbnailUrl": thumbnail == null ? null : await _uploadFile(id, "thumbnail", thumbnail),
-      "localization": localization,
+      "localization": localizedData.toJson(),
     });
 
     return TechniqueDTO.fromFirestore(await _techniques.doc(id).get());
   }
 
   Future<CategoryDTO> createCategory(bool isVisible, Iterable<CategoryLocalizedDataDTO> localizedData) async {
-    final localization = {};
-    localizedData.forEach(
-      (element) => localization[element.languageCode] = {
-        "title": element.title,
-        "description": element.description,
-      },
-    );
-
     final snapshot = await _categories.add({
       "isVisible": isVisible,
       "techniques": FieldValue.arrayUnion([]),
-      "localization": localization,
+      "localization": localizedData.toJson(),
     }).then((value) => value.get());
 
     return CategoryDTO.fromFirestore(snapshot);

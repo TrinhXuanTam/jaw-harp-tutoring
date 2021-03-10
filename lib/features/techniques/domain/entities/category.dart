@@ -24,7 +24,12 @@ class Category extends Equatable {
     return data.description;
   }
 
-  Category(this.id, this.isVisible, this.techniqueIds, this.localizedData);
+  const Category({
+    required this.id,
+    required this.isVisible,
+    required this.techniqueIds,
+    required this.localizedData,
+  });
 
   @override
   List<Object> get props => [id, isVisible, techniqueIds, localizedData];

@@ -17,30 +17,27 @@ class CategoryAdminRepository extends ICategoryAdminRepository {
   CategoryAdminRepository(this._adminDataSource);
 
   @override
-  Future<Technique> createTechnique(
-    String id,
-    String categoryId,
-    TechniqueDifficulty difficulty,
-    Iterable<TechniqueLocalizedData> localizedData,
+  Future<Technique> createTechnique({
+    required String id,
+    required String categoryId,
+    required TechniqueDifficulty difficulty,
+    required Iterable<TechniqueLocalizedData> localizedData,
     File? thumbnail,
     File? video,
-  ) {
+  }) {
     return _adminDataSource.createTechnique(
-      id,
-      categoryId,
-      difficulty,
-      localizedData.map((e) => TechniqueLocalizedDataDTO.fromCategoryLocalizedData(e)),
-      thumbnail,
-      video,
+      id: id,
+      categoryId: categoryId,
+      difficulty: difficulty,
+      localizedData: localizedData.toDTO(),
+      thumbnail: thumbnail,
+      video: video,
     );
   }
 
   @override
   Future<Category> createCategory(bool isVisible, Iterable<CategoryLocalizedData> localizedData) {
-    return _adminDataSource.createCategory(
-      isVisible,
-      localizedData.map((e) => CategoryLocalizedDataDTO.fromCategoryLocalizedData(e)),
-    );
+    return _adminDataSource.createCategory(isVisible, localizedData.toDTO());
   }
 
   @override

@@ -1,9 +1,35 @@
 import 'package:jews_harp/features/techniques/domain/entities/category_localized_data.dart';
 
 class CategoryLocalizedDataDTO extends CategoryLocalizedData {
-  CategoryLocalizedDataDTO(String languageCode, String title, String description) : super(languageCode, title, description);
+  const CategoryLocalizedDataDTO({
+    required String languageCode,
+    required String title,
+    required String description,
+  }) : super(languageCode: languageCode, title: title, description: description);
 
   factory CategoryLocalizedDataDTO.fromCategoryLocalizedData(CategoryLocalizedData localizedData) {
-    return CategoryLocalizedDataDTO(localizedData.languageCode, localizedData.title, localizedData.description);
+    return CategoryLocalizedDataDTO(
+      languageCode: localizedData.languageCode,
+      title: localizedData.title,
+      description: localizedData.description,
+    );
   }
+}
+
+extension Serializable on Iterable<CategoryLocalizedDataDTO> {
+  Map<String, Map<String, String>> toJson() {
+    final Map<String, Map<String, String>> localization = {};
+    this.forEach(
+      (element) => localization[element.languageCode] = {
+        "title": element.title,
+        "description": element.description,
+      },
+    );
+
+    return localization;
+  }
+}
+
+extension Conversion on Iterable<CategoryLocalizedData> {
+  Iterable<CategoryLocalizedDataDTO> toDTO() => this.map((e) => CategoryLocalizedDataDTO.fromCategoryLocalizedData(e));
 }

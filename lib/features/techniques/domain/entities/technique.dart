@@ -9,7 +9,7 @@ class Technique extends Equatable {
   final String? videoUrl;
   final Map<String, TechniqueLocalizedData> localizedData;
 
-  Technique({
+  const Technique({
     required this.id,
     required this.categoryId,
     required this.difficulty,

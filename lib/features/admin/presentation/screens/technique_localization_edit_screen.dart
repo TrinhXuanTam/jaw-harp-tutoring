@@ -106,10 +106,10 @@ class _TechniqueLocalizationEditScreenState extends State<TechniqueLocalizationE
                     text: "Save",
                     onPressed: () => widget.onSave(
                       TechniqueLocalizedData(
-                        widget.data.languageCode,
-                        _titleController.text,
-                        _descriptionController.text,
-                        _accompanyingTextController.text,
+                        languageCode: widget.data.languageCode,
+                        title: _titleController.text,
+                        description: _descriptionController.text,
+                        accompanyingText: _accompanyingTextController.text,
                       ),
                     ),
                   ),

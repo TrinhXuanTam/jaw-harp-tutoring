@@ -4,13 +4,28 @@ import 'package:jews_harp/features/techniques/domain/entities/category.dart';
 import 'category_localized_data_DTO.dart';
 
 class CategoryDTO extends Category {
-  final Map<String, CategoryLocalizedDataDTO> localizedData;
-
-  CategoryDTO(String id, bool isVisible, List<String> techniqueIds, this.localizedData) : super(id, isVisible, techniqueIds, localizedData);
+  const CategoryDTO({
+    required String id,
+    required bool isVisible,
+    required List<String> techniqueIds,
+    required Map<String, CategoryLocalizedDataDTO> localizedData,
+  }) : super(id: id, isVisible: isVisible, techniqueIds: techniqueIds, localizedData: localizedData);
 
   factory CategoryDTO.fromFirestore(DocumentSnapshot documentSnapshot) {
     final Map<String, CategoryLocalizedDataDTO> localizedData = {};
-    documentSnapshot.data()?["localization"].forEach((key, value) => localizedData[key] = CategoryLocalizedDataDTO(key, value["title"], value["description"]));
-    return CategoryDTO(documentSnapshot.id, documentSnapshot["isVisible"], List<String>.from(documentSnapshot["techniques"]), localizedData);
+    documentSnapshot.data()?["localization"].forEach(
+          (key, value) => localizedData[key] = CategoryLocalizedDataDTO(
+            languageCode: key,
+            title: value["title"],
+            description: value["description"],
+          ),
+        );
+
+    return CategoryDTO(
+      id: documentSnapshot.id,
+      isVisible: documentSnapshot["isVisible"],
+      techniqueIds: List<String>.from(documentSnapshot["techniques"]),
+      localizedData: localizedData,
+    );
   }
 }

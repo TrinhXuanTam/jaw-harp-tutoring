@@ -89,7 +89,13 @@ class _CategoryLocalizationEditScreenState extends State<CategoryLocalizationEdi
               SizedBox(height: 10),
               RoundedButton(
                 text: "Save",
-                onPressed: () => widget.onSave(CategoryLocalizedData(widget.data.languageCode, _titleController.text, _descriptionController.text)),
+                onPressed: () => widget.onSave(
+                  CategoryLocalizedData(
+                    languageCode: widget.data.languageCode,
+                    title: _titleController.text,
+                    description: _descriptionController.text,
+                  ),
+                ),
               ),
               if (widget.data.languageCode != "en")
                 Column(
