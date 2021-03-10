@@ -1,8 +1,12 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/features/admin/application/use_cases/create_category.dart';
+import 'package:jews_harp/features/admin/presentation/screens/category_localization_edit_screen.dart';
+import 'package:jews_harp/features/admin/presentation/widgets/language_side_scroll_grid.dart';
 import 'package:jews_harp/features/techniques/domain/entities/category_localized_data.dart';
 import 'package:meta/meta.dart';
 
@@ -15,6 +19,25 @@ class CreateCategoryBloc extends Bloc<CreateCategoryEvent, CreateCategoryState> 
   final CreateCategory _createCategory;
 
   final Map<String, CategoryLocalizedData> localizedData = {"en": CategoryLocalizedData(languageCode: "en", title: "", description: "")};
+
+  List<LanguageSideScrollGridItem> languageSideScrollGridItems(BuildContext ctx) {
+    return localizedData.entries
+        .map(
+          (e) => LanguageSideScrollGridItem(
+            languageCode: e.key,
+            onTap: () => Navigator.pushNamed(
+              ctx,
+              CATEGORY_LOCALIZATION_EDIT_SCREEN_ROUTE,
+              arguments: CategoryLocalizationEditScreenArgs(
+                data: e.value,
+                onSave: (localizedData) => this.add(EditCategoryLocalizationEvent(localizedData)),
+                onRemove: () => this.add(RemoveCategoryLocalizationEvent(e.key)),
+              ),
+            ),
+          ),
+        )
+        .toList();
+  }
 
   CreateCategoryBloc(this._createCategory) : super(CreateCategoryNotFinishedState());
 

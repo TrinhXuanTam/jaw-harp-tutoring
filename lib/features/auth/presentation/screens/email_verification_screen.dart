@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
-import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
-import 'package:jews_harp/core/widgets/one_button_alert_dialog.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/email_verification/email_verification_bloc.dart';
@@ -31,11 +29,7 @@ class EmailVerificationScreen extends StatelessWidget {
   }) : super(key: key);
 
   void _emailVerificationScreenListener(BuildContext ctx, EmailVerificationState state) {
-    final AppLocalizations l10n = AppLocalizations.of(ctx);
-
-    if (state is EmailVerificationClosedState)
-      BlocProvider.of<AuthBloc>(ctx).add(UserSignOutEvent());
-    else if (state is EmailVerifiedState) BlocProvider.of<AuthBloc>(ctx).add(UserAuthenticatedEvent(this.user));
+    if (state is EmailVerificationClosedState) BlocProvider.of<AuthBloc>(ctx).add(UserSignOutEvent());
   }
 
   @override

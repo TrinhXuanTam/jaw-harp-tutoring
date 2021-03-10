@@ -5,19 +5,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
-import 'package:jews_harp/core/widgets/one_button_alert_dialog.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
-import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/sign_up_screen/sign_up_bloc.dart';
 import 'package:jews_harp/features/auth/presentation/screens/link_auth_providers_screen.dart';
 import 'package:jews_harp/features/auth/presentation/widgets/sign_up_form.dart';
 
 class SignUpScreen extends StatelessWidget {
   void _signUpBlocListener(BuildContext ctx, SignUpState state) {
-    if (state is SignUpSuccessState)
-      BlocProvider.of<AuthBloc>(ctx).add(UserAuthenticatedEvent(state.user));
-    else if (state is MultipleProvidersState)
+    if (state is MultipleProvidersState)
       Navigator.pushNamed(
         ctx,
         LINK_AUTH_PROVIDERS_SCREEN_ROUTE,

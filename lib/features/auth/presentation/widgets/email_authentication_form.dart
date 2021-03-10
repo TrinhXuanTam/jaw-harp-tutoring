@@ -21,7 +21,7 @@ class _EmailAuthenticationFormState extends State<EmailAuthenticationForm> {
   final _emailAuthBloc = serviceLocator<EmailAuthBloc>();
 
   void _mailAuthBlocListener(BuildContext ctx, EmailAuthState state) {
-    if (state is EmailAuthSuccessState) BlocProvider.of<AuthBloc>(ctx).add(UserAuthenticatedEvent(state.user));
+    if (state is EmailAuthSuccessState) BlocProvider.of<AuthBloc>(ctx).add(UserAuthenticatedEvent());
   }
 
   @override

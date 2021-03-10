@@ -17,10 +17,6 @@ class SplashScreenTransitionEvent extends AuthEvent {
 }
 
 /// Indicates that user has successfully been authenticated.
-class UserAuthenticatedEvent extends AuthEvent {
-  final User user;
-
-  UserAuthenticatedEvent(this.user);
-}
+class UserAuthenticatedEvent extends AuthEvent {}
 
 class UserSignOutEvent extends AuthEvent {}

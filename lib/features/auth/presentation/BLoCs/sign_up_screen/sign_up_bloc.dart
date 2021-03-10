@@ -10,6 +10,7 @@ import 'package:jews_harp/features/auth/application/use_cases/get_authentication
 import 'package:jews_harp/features/auth/application/use_cases/link_email_provider.dart';
 import 'package:jews_harp/features/auth/application/use_cases/sign_up.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
+import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
 import 'package:meta/meta.dart';
 
 part 'sign_up_event.dart';
@@ -22,12 +23,14 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   final GetAuthProviders _getAuthProviders;
   final LinkEmailProvider _linkEmailProvider;
   final ErrorBloc _errorBloc;
+  final AuthBloc _authBloc;
 
   SignUpBloc(
     this._signUp,
     this._getAuthProviders,
     this._linkEmailProvider,
     this._errorBloc,
+    this._authBloc,
   ) : super(SignUpInitialState());
 
   @override
@@ -36,8 +39,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   ) async* {
     if (event is SignUpButtonPressedEvent) {
       try {
-        final user = await _signUp(event.name, event.email, event.password, event.passwordRepeat);
-        yield SignUpSuccessState(user);
+        await _signUp(event.name, event.email, event.password, event.passwordRepeat);
+        _authBloc.add(UserAuthenticatedEvent());
       } on EmailAlreadyUsedError catch (e) {
         final providers = await _getAuthProviders(event.email);
 
@@ -53,8 +56,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     }
     if (event is LinkEmailEvent) {
       try {
-        final user = await _linkEmailProvider(event.email, event.password);
-        yield SignUpSuccessState(user);
+        await _linkEmailProvider(event.email, event.password);
+        _authBloc.add(UserAuthenticatedEvent());
       } on BaseError catch (e) {
         _errorBloc.add(UserErrorEvent("Failed to sign up", e.message));
       }

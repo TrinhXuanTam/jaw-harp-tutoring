@@ -2,9 +2,16 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/constants/routes.dart';
+import 'package:jews_harp/core/widgets/rounded_dropdown.dart';
 import 'package:jews_harp/features/admin/application/use_cases/create_technique.dart';
 import 'package:jews_harp/features/admin/application/use_cases/get_all_categories.dart';
+import 'package:jews_harp/features/admin/presentation/screens/technique_localization_edit_screen.dart';
+import 'package:jews_harp/features/admin/presentation/widgets/language_side_scroll_grid.dart';
+import 'package:jews_harp/features/admin/presentation/widgets/thumbnail_picker.dart';
+import 'package:jews_harp/features/admin/presentation/widgets/video_picker.dart';
 import 'package:jews_harp/features/techniques/domain/entities/category.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique_localized_data.dart';
@@ -16,16 +23,44 @@ part 'create_technique_state.dart';
 
 @Injectable(env: [Environment.prod, Environment.dev])
 class CreateTechniqueBloc extends Bloc<CreateTechniqueEvent, CreateTechniqueState> {
+  final localizedData = {"en": TechniqueLocalizedData(languageCode: "en", title: "", description: "", accompanyingText: "")};
+  final difficultyController = DropdownButtonFormFieldController<TechniqueDifficulty>();
+  final categoryController = DropdownButtonFormFieldController<String>();
+  final thumbnailController = ThumbnailPickerController();
+  final idController = TextEditingController();
+  final videoController = VideoPickerController();
+
   final GetAllCategories _getAllCategories;
   final CreateTechnique _createTechnique;
 
   Future<List<Category>> get categories => _getAllCategories().then((iterable) => iterable.toList());
 
-  CreateTechniqueBloc(this._getAllCategories, this._createTechnique) : super(CreateTechniqueInitial());
+  List<LanguageSideScrollGridItem> languageSideScrollGridItems(BuildContext ctx) {
+    return localizedData.entries
+        .map(
+          (entry) => LanguageSideScrollGridItem(
+            languageCode: entry.key,
+            onTap: () => Navigator.pushNamed(
+              ctx,
+              TECHNIQUE_LOCALIZATION_EDIT_SCREEN_ROUTE,
+              arguments: TechniqueLocalizationEditScreenArgs(
+                data: entry.value,
+                onSave: (localizedData) {
+                  this.add(EditTechniqueLocalizationEvent(localizedData));
+                  Navigator.pop(ctx);
+                },
+                onRemove: () {
+                  this.add(RemoveTechniqueLocalizationEvent(entry.key));
+                  Navigator.pop(ctx);
+                },
+              ),
+            ),
+          ),
+        )
+        .toList();
+  }
 
-  final Map<String, TechniqueLocalizedData> localizedData = {
-    "en": TechniqueLocalizedData(languageCode: "en", title: "", description: "", accompanyingText: ""),
-  };
+  CreateTechniqueBloc(this._getAllCategories, this._createTechnique) : super(CreateTechniqueInitial());
 
   @override
   Stream<CreateTechniqueState> mapEventToState(
@@ -43,12 +78,12 @@ class CreateTechniqueBloc extends Bloc<CreateTechniqueEvent, CreateTechniqueStat
     }
     if (event is CreateTechniqueFormSubmittedEvent) {
       _createTechnique(
-        id: event.id,
-        categoryId: event.categoryId,
-        difficulty: event.difficulty,
+        id: idController.text,
+        categoryId: categoryController.value!,
+        difficulty: difficultyController.value!,
         localizedData: localizedData.entries.map((e) => e.value),
-        thumbnail: event.thumbnail,
-        video: event.video,
+        thumbnail: thumbnailController.image,
+        video: videoController.video,
       );
       yield CreateTechniqueInitial();
     }

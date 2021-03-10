@@ -5,13 +5,6 @@ abstract class SignUpState {}
 
 class SignUpInitialState extends SignUpState {}
 
-/// Account was created
-class SignUpSuccessState extends SignUpState {
-  final User user;
-
-  SignUpSuccessState(this.user);
-}
-
 /// Multiple providers are found
 class MultipleProvidersState extends SignUpState {
   final String email;

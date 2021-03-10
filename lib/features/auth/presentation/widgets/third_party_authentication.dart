@@ -20,7 +20,7 @@ class ThirdPartyAuthOptions extends StatelessWidget {
 
 class _Child extends StatelessWidget {
   void _thirdPartyAuthBlocListener(BuildContext ctx, ThirdPartyAuthState state) {
-    if (state is ThirdPartyAuthSuccessState) BlocProvider.of<AuthBloc>(ctx).add(UserAuthenticatedEvent(state.user));
+    if (state is ThirdPartyAuthSuccessState) BlocProvider.of<AuthBloc>(ctx).add(UserAuthenticatedEvent());
     if (state is MultipleProvidersState) {
       Navigator.pushNamed(
         ctx,

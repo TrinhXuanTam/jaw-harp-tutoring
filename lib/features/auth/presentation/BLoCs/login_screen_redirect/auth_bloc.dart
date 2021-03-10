@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/core/constants/settings.dart';
+import 'package:jews_harp/core/errors/user_not_signed_in_error.dart';
 import 'package:jews_harp/features/auth/application/use_cases/email_verification_check.dart';
 import 'package:jews_harp/features/auth/application/use_cases/get_current_user.dart';
 import 'package:jews_harp/features/auth/application/use_cases/set_locale.dart';
@@ -15,7 +16,7 @@ part 'auth_event.dart';
 
 part 'auth_state.dart';
 
-@Injectable(env: [Environment.prod, Environment.dev])
+@LazySingleton(env: [Environment.prod, Environment.dev])
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final GetCurrentUser _getCurrentUser;
   final EmailIsVerified _emailIsVerified;
@@ -50,10 +51,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       else
         yield AuthenticatedState(user);
     } else if (event is UserAuthenticatedEvent) {
+      final user = await _getCurrentUser();
+
+      if (user == null) throw UserNotSignedInError();
+
       if (!await _emailIsVerified())
-        yield NotVerifiedState(event.user);
+        yield NotVerifiedState(user);
       else
-        yield AuthenticatedState(event.user);
+        yield AuthenticatedState(user);
     } else if (event is UserSignOutEvent) {
       await _signOut();
       yield UnauthenticatedState();
