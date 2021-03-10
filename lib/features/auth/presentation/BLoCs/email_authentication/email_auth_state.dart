@@ -11,10 +11,3 @@ class EmailAuthSuccessState extends EmailAuthState {
 
   EmailAuthSuccessState(this.user);
 }
-
-/// User is not authenticated
-class EmailAuthFailedState extends EmailAuthState {
-  final String message;
-
-  EmailAuthFailedState(this.message);
-}

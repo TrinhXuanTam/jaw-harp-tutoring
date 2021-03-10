@@ -21,19 +21,7 @@ class _EmailAuthenticationFormState extends State<EmailAuthenticationForm> {
   final _emailAuthBloc = serviceLocator<EmailAuthBloc>();
 
   void _mailAuthBlocListener(BuildContext ctx, EmailAuthState state) {
-    if (state is EmailAuthSuccessState)
-      BlocProvider.of<AuthBloc>(ctx).add(UserAuthenticatedEvent(state.user));
-    else if (state is EmailAuthFailedState) {
-      showDialog(
-        context: ctx,
-        builder: (_) {
-          return OneButtonAlertDialog(
-            title: "Failed to sign in",
-            message: state.message,
-          );
-        },
-      );
-    }
+    if (state is EmailAuthSuccessState) BlocProvider.of<AuthBloc>(ctx).add(UserAuthenticatedEvent(state.user));
   }
 
   @override

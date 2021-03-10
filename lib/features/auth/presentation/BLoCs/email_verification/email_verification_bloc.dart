@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/BLoCs/errors/error_bloc.dart';
 import 'package:jews_harp/features/auth/application/use_cases/email_verification_check.dart';
 import 'package:jews_harp/features/auth/application/use_cases/send_email_verification.dart';
 import 'package:jews_harp/features/auth/application/use_cases/sign_out.dart';
@@ -16,11 +17,13 @@ class EmailVerificationBloc extends Bloc<EmailVerificationEvent, EmailVerificati
   final SignOut _signOut;
   final SendEmailVerification _sendEmailVerification;
   final EmailIsVerified _emailIsVerified;
+  final ErrorBloc _errorBloc;
 
   EmailVerificationBloc(
     this._signOut,
     this._sendEmailVerification,
     this._emailIsVerified,
+    this._errorBloc,
   ) : super(EmailVerificationInitialState());
 
   @override
@@ -37,7 +40,7 @@ class EmailVerificationBloc extends Bloc<EmailVerificationEvent, EmailVerificati
       if (await _emailIsVerified())
         yield EmailVerifiedState();
       else
-        yield EmailNotVerifiedState();
+        _errorBloc.add(UserErrorEvent("Email not verified", "Please verify your email before you continue!"));
     }
   }
 }

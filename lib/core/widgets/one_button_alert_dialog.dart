@@ -6,12 +6,14 @@ class OneButtonAlertDialog extends StatelessWidget {
   final String title;
   final String message;
   final String buttonText;
+  final VoidCallback onPressed;
 
   const OneButtonAlertDialog({
     Key? key,
     required this.title,
     required this.message,
     this.buttonText = "OK",
+    required this.onPressed,
   }) : super(key: key);
 
   @override
@@ -29,9 +31,7 @@ class OneButtonAlertDialog extends StatelessWidget {
       content: Text(l10n.translate(this.message)),
       actions: [
         TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: onPressed,
           child: Text(
             l10n.translate(this.buttonText),
             style: TextStyle(

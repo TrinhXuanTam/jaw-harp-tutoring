@@ -17,16 +17,6 @@ class SignUpScreen extends StatelessWidget {
   void _signUpBlocListener(BuildContext ctx, SignUpState state) {
     if (state is SignUpSuccessState)
       BlocProvider.of<AuthBloc>(ctx).add(UserAuthenticatedEvent(state.user));
-    else if (state is SignUpFailedState)
-      showDialog(
-        context: ctx,
-        builder: (_) {
-          return OneButtonAlertDialog(
-            title: "Failed to sign up",
-            message: state.message,
-          );
-        },
-      );
     else if (state is MultipleProvidersState)
       Navigator.pushNamed(
         ctx,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jews_harp/core/BLoCs/errors/error_bloc.dart';
 import 'package:jews_harp/core/constants/auth_providers_id.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/l10n.dart';
@@ -64,15 +65,11 @@ class _LinkAuthProvidersScreenState extends State<LinkAuthProvidersScreen> {
 
   void _wrongAccountHandler(BuildContext ctx) {
     final l10n = AppLocalizations.of(ctx);
-
-    showDialog(
-      context: ctx,
-      builder: (_) {
-        return OneButtonAlertDialog(
-          title: l10n.translate("Failed to link accounts"),
-          message: l10n.translate("Account emails don't match!\nPlease sign in to: ") + widget.email + ".",
-        );
-      },
+    BlocProvider.of<ErrorBloc>(ctx).add(
+      UserErrorEvent(
+        "Failed to link accounts",
+        l10n.translate("Account emails don't match!\nPlease sign in to: ") + widget.email + ".",
+      ),
     );
   }
 

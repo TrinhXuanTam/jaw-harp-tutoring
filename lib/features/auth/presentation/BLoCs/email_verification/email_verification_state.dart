@@ -13,6 +13,3 @@ class EmailVerificationClosedState extends EmailVerificationState {}
 
 /// Email has been verified
 class EmailVerifiedState extends EmailVerificationState {}
-
-/// Email is not verified
-class EmailNotVerifiedState extends EmailVerificationState {}

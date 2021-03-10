@@ -21,18 +21,7 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
   final _passwordResetBloc = serviceLocator<PasswordResetBloc>();
 
   void _passwordResetBlocListener(BuildContext ctx, PasswordResetState state) {
-    if (state is PasswordResetSuccess)
-      Navigator.pushReplacementNamed(ctx, PASSWORD_RESET_SENT_SCREEN_ROUTE);
-    else if (state is PasswordResetFail)
-      showDialog(
-        context: ctx,
-        builder: (_) {
-          return OneButtonAlertDialog(
-            title: "Password reset failed",
-            message: state.message,
-          );
-        },
-      );
+    if (state is PasswordResetSuccess) Navigator.pushReplacementNamed(ctx, PASSWORD_RESET_SENT_SCREEN_ROUTE);
   }
 
   @override

@@ -17,12 +17,9 @@ class FirebaseAuthDataSource {
   CollectionReference _users = FirebaseFirestore.instance.collection('users');
 
   void _addUserToFirestore(User user) {
-    final roles = [USER_ROLE];
-    final purchasedTechniques = [];
-
     _users.doc(user.uid).set({
-      "roles": FieldValue.arrayUnion(roles),
-      "purchasedTechniques": FieldValue.arrayUnion(purchasedTechniques),
+      "roles": FieldValue.arrayUnion([USER_ROLE]),
+      "purchasedTechniques": FieldValue.arrayUnion([]),
     });
   }
 

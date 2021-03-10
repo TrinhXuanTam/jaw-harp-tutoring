@@ -12,13 +12,6 @@ class SignUpSuccessState extends SignUpState {
   SignUpSuccessState(this.user);
 }
 
-/// Sign up failed
-class SignUpFailedState extends SignUpState {
-  final String message;
-
-  SignUpFailedState(this.message);
-}
-
 /// Multiple providers are found
 class MultipleProvidersState extends SignUpState {
   final String email;

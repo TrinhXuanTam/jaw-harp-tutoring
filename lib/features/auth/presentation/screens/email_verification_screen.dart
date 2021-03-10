@@ -35,16 +35,7 @@ class EmailVerificationScreen extends StatelessWidget {
 
     if (state is EmailVerificationClosedState)
       BlocProvider.of<AuthBloc>(ctx).add(UserSignOutEvent());
-    else if (state is EmailVerifiedState)
-      BlocProvider.of<AuthBloc>(ctx).add(UserAuthenticatedEvent(this.user));
-    else if (state is EmailNotVerifiedState)
-      showDialog(
-        context: ctx,
-        builder: (_) => OneButtonAlertDialog(
-          title: l10n.translate("Email not verified"),
-          message: l10n.translate("Please verify your email before you continue!"),
-        ),
-      );
+    else if (state is EmailVerifiedState) BlocProvider.of<AuthBloc>(ctx).add(UserAuthenticatedEvent(this.user));
   }
 
   @override

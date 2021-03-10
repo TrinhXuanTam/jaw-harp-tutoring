@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:jews_harp/core/BLoCs/errors/error_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
+import 'package:jews_harp/core/widgets/one_button_alert_dialog.dart';
 import 'package:jews_harp/features/admin/presentation/screens/admin_menu_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/category_list_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/category_localization_add_screen.dart';
@@ -48,10 +50,10 @@ Future<void> main() async {
 
 /// Entry point of the application
 class _EntryPoint extends StatelessWidget {
-  final GlobalKey<NavigatorState> navigatorKey = new GlobalKey();
+  final GlobalKey<NavigatorState> globalKey = new GlobalKey();
 
   void _authBlocListener(BuildContext context, AuthState state) {
-    final currentState = navigatorKey.currentState!;
+    final currentState = globalKey.currentState!;
 
     if (state is AuthenticatedState) {
       currentState.pushNamedAndRemoveUntil(HOME_SCREEN_ROUTE, (route) => false);
@@ -65,6 +67,23 @@ class _EntryPoint extends StatelessWidget {
       );
   }
 
+  void _errorBlocListener(BuildContext context, ErrorState state) {
+    if (state is UserErrorOccurredState)
+      showDialog(
+        context: globalKey.currentContext!,
+        builder: (_) {
+          return OneButtonAlertDialog(
+            title: state.title,
+            message: state.message,
+            onPressed: () {
+              BlocProvider.of<ErrorBloc>(context).add(ErrorResolvedEvent());
+              globalKey.currentState!.pop();
+            },
+          );
+        },
+      );
+  }
+
   T _getArgs<T>(ctx) => ModalRoute.of(ctx)!.settings.arguments as T;
 
   /// Display splash screen for [Constants.SPLASH_SCREEN_DURATION] and then check for check if user is signed in.
@@ -72,10 +91,16 @@ class _EntryPoint extends StatelessWidget {
   /// Otherwise, redirect the user into the main screen.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthBloc>(
-      create: (_) => serviceLocator<AuthBloc>(),
-      child: BlocListener<AuthBloc, AuthState>(
-        listener: _authBlocListener,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>(create: (_) => serviceLocator<AuthBloc>()),
+        BlocProvider<ErrorBloc>(create: (_) => serviceLocator<ErrorBloc>()),
+      ],
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<AuthBloc, AuthState>(listener: _authBlocListener),
+          BlocListener<ErrorBloc, ErrorState>(listener: _errorBlocListener),
+        ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: APP_TITLE,
@@ -100,7 +125,7 @@ class _EntryPoint extends StatelessWidget {
                   displayColor: Colors.black,
                 ),
           ),
-          navigatorKey: navigatorKey,
+          navigatorKey: globalKey,
           routes: {
             SPLASH_SCREEN_ROUTE: (ctx) => SplashScreen(onLoad: () => BlocProvider.of<AuthBloc>(ctx).add(SplashScreenDisplayedEvent(AppLocalizations.of(ctx).locale.languageCode))),
             HOME_SCREEN_ROUTE: (_) => TechniqueListScreen(),

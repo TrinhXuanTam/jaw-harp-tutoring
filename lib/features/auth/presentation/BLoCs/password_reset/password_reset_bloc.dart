@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/BLoCs/errors/error_bloc.dart';
 import 'package:jews_harp/core/errors/base_error.dart';
 import 'package:jews_harp/features/auth/application/use_cases/password_reset.dart';
 import 'package:meta/meta.dart';
@@ -13,8 +14,9 @@ part 'password_reset_state.dart';
 @Injectable(env: [Environment.prod, Environment.dev])
 class PasswordResetBloc extends Bloc<PasswordResetEvent, PasswordResetState> {
   final PasswordReset _resetPassword;
+  final ErrorBloc _errorBloc;
 
-  PasswordResetBloc(this._resetPassword) : super(PasswordResetInitial());
+  PasswordResetBloc(this._resetPassword, this._errorBloc) : super(PasswordResetInitial());
 
   @override
   Stream<PasswordResetState> mapEventToState(
@@ -25,7 +27,7 @@ class PasswordResetBloc extends Bloc<PasswordResetEvent, PasswordResetState> {
         await _resetPassword(event.email, languageCode: event.languageCode);
         yield PasswordResetSuccess();
       } on BaseError catch (e) {
-        yield PasswordResetFail(e.message);
+        _errorBloc.add(UserErrorEvent("Password reset failed", e.message));
       }
     }
   }

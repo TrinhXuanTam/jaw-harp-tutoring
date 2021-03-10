@@ -19,13 +19,13 @@ class TechniqueListScreen extends StatelessWidget {
         ],
         initialActiveIndex: 0,
         onTap: (_) {
-          // final authBlocState = BlocProvider.of<AuthBloc>(context).state;
-          //
-          // if (authBlocState is AuthenticatedState) {
-          //   BlocProvider.of<AuthBloc>(context).add(UserSignOutEvent());
-          // }
+          final authBlocState = BlocProvider.of<AuthBloc>(context).state;
 
-          Navigator.pushNamed(context, ADMIN_MENU_SCREEN_ROUTE);
+          if (authBlocState is AuthenticatedState) {
+            BlocProvider.of<AuthBloc>(context).add(UserSignOutEvent());
+          }
+
+          // Navigator.pushNamed(context, ADMIN_MENU_SCREEN_ROUTE);
         },
       ),
     );
