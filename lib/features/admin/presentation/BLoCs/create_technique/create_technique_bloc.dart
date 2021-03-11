@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/BLoCs/errors/error_bloc.dart';
 import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/widgets/rounded_dropdown.dart';
 import 'package:jews_harp/features/admin/application/use_cases/create_technique.dart';
@@ -32,6 +33,7 @@ class CreateTechniqueBloc extends Bloc<CreateTechniqueEvent, CreateTechniqueStat
 
   final GetAllCategories _getAllCategories;
   final CreateTechnique _createTechnique;
+  final ErrorBloc _errorBloc;
 
   Future<List<Category>> get categories => _getAllCategories().then((iterable) => iterable.toList());
 
@@ -60,7 +62,7 @@ class CreateTechniqueBloc extends Bloc<CreateTechniqueEvent, CreateTechniqueStat
         .toList();
   }
 
-  CreateTechniqueBloc(this._getAllCategories, this._createTechnique) : super(CreateTechniqueInitial());
+  CreateTechniqueBloc(this._getAllCategories, this._createTechnique, this._errorBloc) : super(CreateTechniqueNotFinishedState());
 
   @override
   Stream<CreateTechniqueState> mapEventToState(
@@ -68,24 +70,28 @@ class CreateTechniqueBloc extends Bloc<CreateTechniqueEvent, CreateTechniqueStat
   ) async* {
     if (event is AddTechniqueLocalizationEvent) {
       localizedData[event.techniqueLocalizedData.languageCode] = event.techniqueLocalizedData;
-      yield CreateTechniqueInitial();
+      yield CreateTechniqueNotFinishedState();
     } else if (event is RemoveTechniqueLocalizationEvent) {
       localizedData.remove(event.languageCode);
-      yield CreateTechniqueInitial();
+      yield CreateTechniqueNotFinishedState();
     } else if (event is EditTechniqueLocalizationEvent) {
       localizedData[event.techniqueLocalizedData.languageCode] = event.techniqueLocalizedData;
-      yield CreateTechniqueInitial();
+      yield CreateTechniqueNotFinishedState();
     }
     if (event is CreateTechniqueFormSubmittedEvent) {
-      _createTechnique(
-        id: idController.text,
-        categoryId: categoryController.value!,
-        difficulty: difficultyController.value!,
-        localizedData: localizedData.entries.map((e) => e.value),
-        thumbnail: thumbnailController.image,
-        video: videoController.video,
-      );
-      yield CreateTechniqueInitial();
+      if (idController.text.isEmpty || categoryController.value == null || difficultyController.value == null)
+        _errorBloc.add(UserErrorEvent("Failed to create technique", "Please fill out all fields!"));
+      else {
+        _createTechnique(
+          id: idController.text,
+          categoryId: categoryController.value!,
+          difficulty: difficultyController.value!,
+          localizedData: localizedData.entries.map((e) => e.value),
+          thumbnail: thumbnailController.image,
+          video: videoController.video,
+        );
+        yield CreateTechniqueFinishedState();
+      }
     }
   }
 }

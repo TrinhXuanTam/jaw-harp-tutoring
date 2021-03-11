@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
+import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/big_app_bar_background.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
+import 'package:jews_harp/features/admin/presentation/BLoCs/category_detail/category_detail_bloc.dart';
+import 'package:jews_harp/features/admin/presentation/screens/category_detail_screen.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/scrollable_category_list.dart';
 import 'package:jews_harp/features/techniques/domain/entities/category.dart';
 
@@ -84,7 +88,11 @@ class CategoryListScreen extends StatelessWidget {
                   items: items
                       .map(
                         (e) => ScrollableCategoryListItem(
-                          () {},
+                          () => Navigator.pushNamed(
+                            context,
+                            CATEGORY_DETAIL_SCREEN_ROUTE,
+                            arguments: CategoryDetailScreenArgs(serviceLocator<CategoryDetailBloc>(param1: e)),
+                          ),
                           e.techniqueIds.length,
                           e.getLocalizedTitle(l10n.locale.languageCode),
                           e.getLocalizedDescription(l10n.locale.languageCode),

@@ -134,14 +134,6 @@ class FirebaseAuthDataSource {
     }
   }
 
-  Future<List<String>> getUserRoles(String uid) async {
-    final doc = await _users.doc(uid).get();
-
-    if (!doc.exists) throw UserDoesNotExistError();
-
-    return List.from(doc["roles"]);
-  }
-
   Future<void> setLocale(String languageCode) async {
     _auth.setLanguageCode(languageCode);
   }

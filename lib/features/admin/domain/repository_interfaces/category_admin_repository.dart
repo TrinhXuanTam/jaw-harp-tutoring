@@ -22,4 +22,6 @@ abstract class ICategoryAdminRepository {
   Future<Iterable<Category>> getHiddenCategories();
 
   Future<Iterable<Category>> getAllCategories();
+
+  Future<Iterable<Technique>> getTechniquesByCategory(Category category);
 }

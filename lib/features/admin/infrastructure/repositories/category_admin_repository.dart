@@ -48,4 +48,7 @@ class CategoryAdminRepository extends ICategoryAdminRepository {
 
   @override
   Future<Iterable<Category>> getAllCategories() => _adminDataSource.getAllCategories();
+
+  @override
+  Future<Iterable<Technique>> getTechniquesByCategory(Category category) => _adminDataSource.getTechniquesById(category.techniqueIds);
 }

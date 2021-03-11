@@ -34,8 +34,12 @@ class FirebaseAdminDataSource {
 
     if (document.exists) throw TechniqueAlreadyExistsError();
 
+    _categories.doc(categoryId).update({
+      "techniques": FieldValue.arrayUnion([id])
+    });
+
     await _techniques.doc(id).set({
-      "categoryId": categoryId,
+      "category": categoryId,
       "difficulty": difficulty.index,
       "videoUrl": video == null ? null : await _uploadFile(id, "video", video),
       "thumbnailUrl": thumbnail == null ? null : await _uploadFile(id, "thumbnail", thumbnail),
@@ -68,5 +72,14 @@ class FirebaseAdminDataSource {
   Future<Iterable<CategoryDTO>> getAllCategories() async {
     final snapshot = await _categories.get();
     return snapshot.docs.map((e) => CategoryDTO.fromFirestore(e));
+  }
+
+  Future<Iterable<TechniqueDTO>> getTechniquesById(List<String> techniqueIds) async {
+    final List<TechniqueDTO> res = [];
+    final techniqueIdsList = techniqueIds.toList();
+
+    for (var i = 0; i < techniqueIds.length; i++) res.add(TechniqueDTO.fromFirestore(await _techniques.doc(techniqueIdsList[i]).get()));
+
+    return res;
   }
 }

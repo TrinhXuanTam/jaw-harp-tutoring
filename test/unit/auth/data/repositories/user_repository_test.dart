@@ -96,17 +96,4 @@ void main() {
 
     expect(user, null);
   });
-
-  test("[UserRepository.getCurrentUser] should return user roles when user is found", () async {
-    final user = User(uid: uid, name: name, email: email);
-    final roles = ["user", "admin"];
-
-    when(() => testServiceLocator<FirebaseAuthDataSource>().getUserRoles(uid)).thenAnswer((_) async => roles);
-
-    final userRepository = serviceLocator<IUserRepository>();
-    final res = await userRepository.getUserRoles(user);
-
-    expect(res.contains("user"), true);
-    expect(res.contains("admin"), true);
-  });
 }

@@ -29,8 +29,5 @@ class UserRepository extends IUserRepository {
   Future<Set<String>> getAuthProviders(String email) => _firebaseAuthDataSource.getAuthProviders(email);
 
   @override
-  Future<List<String>> getUserRoles(User user) => _firebaseAuthDataSource.getUserRoles(user.uid);
-
-  @override
   Future<void> setLocale(String languageCode) => _firebaseAuthDataSource.setLocale(languageCode);
 }

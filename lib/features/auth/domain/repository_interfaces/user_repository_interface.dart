@@ -19,8 +19,5 @@ abstract class IUserRepository {
   /// Get authentication providers for email
   Future<Set<String>> getAuthProviders(String email);
 
-  /// User roles
-  Future<List<String>> getUserRoles(User user);
-
   Future<void> setLocale(String languageCode);
 }

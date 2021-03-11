@@ -7,6 +7,7 @@ import 'package:jews_harp/core/BLoCs/errors/error_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/widgets/one_button_alert_dialog.dart';
 import 'package:jews_harp/features/admin/presentation/screens/admin_menu_screen.dart';
+import 'package:jews_harp/features/admin/presentation/screens/category_detail_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/category_list_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/category_localization_add_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/category_localization_edit_screen.dart';
@@ -138,6 +139,7 @@ class _EntryPoint extends StatelessWidget {
             ADMIN_MENU_SCREEN_ROUTE: (_) => AdminMenuScreen(),
             CREATE_CATEGORY_SCREEN_ROUTE: (_) => CreateCategoryScreen(),
             CREATE_TECHNIQUE_SCREEN_ROUTE: (_) => CreateTechniqueScreen(),
+            CATEGORY_DETAIL_SCREEN_ROUTE: (ctx) => CategoryDetailScreen.fromArgs(_getArgs<CategoryDetailScreenArgs>(ctx)),
             CATEGORY_LOCALIZATION_ADD_SCREEN_ROUTE: (ctx) => CategoryLocalizationAddScreen.fromArgs(_getArgs<CategoryLocalizationAddScreenArgs>(ctx)),
             CATEGORY_LOCALIZATION_EDIT_SCREEN_ROUTE: (ctx) => CategoryLocalizationEditScreen.fromArgs(_getArgs<CategoryLocalizationEditScreenArgs>(ctx)),
             TECHNIQUE_LOCALIZATION_ADD_SCREEN_ROUTE: (ctx) => TechniqueLocalizationAddScreen.fromArgs(_getArgs<TechniqueLocalizationAddScreenArgs>(ctx)),

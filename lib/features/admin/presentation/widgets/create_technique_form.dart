@@ -153,7 +153,10 @@ class CreateTechniqueForm extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 5),
-              BlocBuilder<CreateTechniqueBloc, CreateTechniqueState>(
+              BlocConsumer<CreateTechniqueBloc, CreateTechniqueState>(
+                listener: (ctx, state) {
+                  if (state is CreateTechniqueFinishedState) Navigator.pop(context);
+                },
                 builder: (ctx, state) => LanguageSideScrollGrid(
                   displayAddButton: SupportedLanguages.languages.length != createTechniqueBloc.localizedData.length,
                   data: createTechniqueBloc.languageSideScrollGridItems(ctx),
@@ -166,12 +169,7 @@ class CreateTechniqueForm extends StatelessWidget {
         SizedBox(height: 10),
         RoundedButton(
           text: "Create",
-          onPressed: () {
-            createTechniqueBloc.add(
-              CreateTechniqueFormSubmittedEvent(),
-            );
-            Navigator.pop(context);
-          },
+          onPressed: () => createTechniqueBloc.add(CreateTechniqueFormSubmittedEvent()),
         ),
       ],
     );

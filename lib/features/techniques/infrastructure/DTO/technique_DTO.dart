@@ -4,13 +4,13 @@ import 'package:jews_harp/features/techniques/infrastructure/DTO/technique_local
 
 class TechniqueDTO extends Technique {
   const TechniqueDTO({
-    required String id,
+    required String productId,
     required String categoryId,
     required TechniqueDifficulty difficulty,
     String? thumbnailUrl,
     String? videoUrl,
     required Map<String, TechniqueLocalizedDataDTO> localizedData,
-  }) : super(id: id, categoryId: categoryId, difficulty: difficulty, thumbnailUrl: thumbnailUrl, videoUrl: videoUrl, localizedData: localizedData);
+  }) : super(productId: productId, categoryId: categoryId, difficulty: difficulty, thumbnailUrl: thumbnailUrl, videoUrl: videoUrl, localizedData: localizedData);
 
   factory TechniqueDTO.fromFirestore(DocumentSnapshot documentSnapshot) {
     final Map<String, TechniqueLocalizedDataDTO> localizedData = {};
@@ -25,8 +25,8 @@ class TechniqueDTO extends Technique {
         );
 
     return TechniqueDTO(
-      id: documentSnapshot.id,
-      categoryId: documentSnapshot["categoryId"],
+      productId: documentSnapshot.id,
+      categoryId: documentSnapshot["category"],
       difficulty: difficulty,
       thumbnailUrl: documentSnapshot["thumbnailUrl"],
       videoUrl: documentSnapshot["videoUrl"],
