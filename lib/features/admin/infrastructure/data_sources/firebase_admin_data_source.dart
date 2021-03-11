@@ -23,30 +23,30 @@ class FirebaseAdminDataSource {
   }
 
   Future<TechniqueDTO> createTechnique({
-    required String id,
+    String? productId,
     required String categoryId,
     required TechniqueDifficulty difficulty,
     required Iterable<TechniqueLocalizedDataDTO> localizedData,
     File? thumbnail,
     File? video,
   }) async {
-    final document = await _techniques.doc(id).get();
-
-    if (document.exists) throw TechniqueAlreadyExistsError();
-
-    _categories.doc(categoryId).update({
-      "techniques": FieldValue.arrayUnion([id])
-    });
-
-    await _techniques.doc(id).set({
+    final snapshot = await _techniques.add({
+      "productId": productId,
       "category": categoryId,
       "difficulty": difficulty.index,
-      "videoUrl": video == null ? null : await _uploadFile(id, "video", video),
-      "thumbnailUrl": thumbnail == null ? null : await _uploadFile(id, "thumbnail", thumbnail),
       "localization": localizedData.toJson(),
     });
 
-    return TechniqueDTO.fromFirestore(await _techniques.doc(id).get());
+    snapshot.update({
+      "videoUrl": video == null ? null : await _uploadFile(snapshot.id, "video", video),
+      "thumbnailUrl": thumbnail == null ? null : await _uploadFile(snapshot.id, "thumbnail", thumbnail),
+    });
+
+    _categories.doc(categoryId).update({
+      "techniques": FieldValue.arrayUnion([snapshot.id])
+    });
+
+    return TechniqueDTO.fromFirestore(await snapshot.get());
   }
 
   Future<CategoryDTO> createCategory(bool isVisible, Iterable<CategoryLocalizedDataDTO> localizedData) async {
@@ -78,7 +78,12 @@ class FirebaseAdminDataSource {
     final List<TechniqueDTO> res = [];
     final techniqueIdsList = techniqueIds.toList();
 
-    for (var i = 0; i < techniqueIds.length; i++) res.add(TechniqueDTO.fromFirestore(await _techniques.doc(techniqueIdsList[i]).get()));
+    print(techniqueIds);
+
+    for (var i = 0; i < techniqueIds.length; i++) {
+      final document = await _techniques.doc(techniqueIdsList[i]).get();
+      if (document.exists) res.add(TechniqueDTO.fromFirestore(document));
+    }
 
     return res;
   }

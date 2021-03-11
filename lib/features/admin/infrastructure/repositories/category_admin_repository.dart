@@ -18,7 +18,7 @@ class CategoryAdminRepository extends ICategoryAdminRepository {
 
   @override
   Future<Technique> createTechnique({
-    required String id,
+    String? productId,
     required String categoryId,
     required TechniqueDifficulty difficulty,
     required Iterable<TechniqueLocalizedData> localizedData,
@@ -26,7 +26,7 @@ class CategoryAdminRepository extends ICategoryAdminRepository {
     File? video,
   }) {
     return _adminDataSource.createTechnique(
-      id: id,
+      productId: productId,
       categoryId: categoryId,
       difficulty: difficulty,
       localizedData: localizedData.toDTO(),

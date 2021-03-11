@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jews_harp/core/BLoCs/toggle_switch/toggle_switch_bloc.dart';
 import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/l10n.dart';
@@ -19,6 +20,8 @@ class CreateTechniqueForm extends StatelessWidget {
   Widget build(BuildContext context) {
     // ignore: close_sinks
     final createTechniqueBloc = BlocProvider.of<CreateTechniqueBloc>(context);
+    // ignore: close_sinks
+    final toggleSwitchBloc = BlocProvider.of<ToggleSwitchBloc>(context);
     final size = MediaQuery.of(context).size;
     final l10n = AppLocalizations.of(context);
     final visibleIcon = Icon(Icons.public, color: BASE_COLOR.withAlpha(100), size: 18);
@@ -33,12 +36,59 @@ class CreateTechniqueForm extends StatelessWidget {
           subtitleText: "Create a new technique",
         ),
         SizedBox(height: 20),
-        RoundedTextField(
-          icon: Icons.attach_money_rounded,
-          controller: createTechniqueBloc.idController,
-          placeholderText: "Product ID",
+        Container(
+          width: size.width * 0.75,
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Paid:",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                    Text(
+                      "User has to pay for access to this technique.",
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: 50),
+              BlocBuilder<ToggleSwitchBloc, ToggleSwitchState>(
+                builder: (ctx, state) => Switch(
+                  value: state is ToggleSwitchOnState,
+                  activeColor: BASE_COLOR,
+                  onChanged: (val) => toggleSwitchBloc.add(ToggleSwitchEvent()),
+                ),
+              )
+            ],
+          ),
         ),
         SizedBox(height: 10),
+        BlocBuilder<ToggleSwitchBloc, ToggleSwitchState>(builder: (ctx, state) {
+          if (state is ToggleSwitchOnState)
+            return Column(
+              children: [
+                RoundedTextField(
+                  icon: Icons.attach_money_rounded,
+                  controller: createTechniqueBloc.idController,
+                  placeholderText: "Product ID",
+                ),
+                SizedBox(height: 10),
+              ],
+            );
+          else
+            return Container();
+        }),
         FutureBuilder<List<Category>>(
           future: createTechniqueBloc.categories,
           builder: (ctx, snapshot) {
@@ -169,7 +219,7 @@ class CreateTechniqueForm extends StatelessWidget {
         SizedBox(height: 10),
         RoundedButton(
           text: "Create",
-          onPressed: () => createTechniqueBloc.add(CreateTechniqueFormSubmittedEvent()),
+          onPressed: () => createTechniqueBloc.add(CreateTechniqueFormSubmittedEvent(toggleSwitchBloc.state is ToggleSwitchOnState)),
         ),
       ],
     );

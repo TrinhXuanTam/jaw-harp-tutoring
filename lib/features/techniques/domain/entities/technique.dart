@@ -2,7 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique_localized_data.dart';
 
 class Technique extends Equatable {
-  final String productId;
+  final String id;
+  final String? productId;
   final String categoryId;
   final TechniqueDifficulty difficulty;
   final String? thumbnailUrl;
@@ -10,7 +11,8 @@ class Technique extends Equatable {
   final Map<String, TechniqueLocalizedData> localizedData;
 
   const Technique({
-    required this.productId,
+    required this.id,
+    this.productId,
     required this.categoryId,
     required this.difficulty,
     this.thumbnailUrl,
@@ -43,7 +45,7 @@ class Technique extends Equatable {
   }
 
   @override
-  List<Object> get props => [productId, categoryId, difficulty, localizedData];
+  List<Object> get props => [id, categoryId, difficulty, localizedData];
 }
 
 enum TechniqueDifficulty {

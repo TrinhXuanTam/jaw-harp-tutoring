@@ -104,7 +104,7 @@ class CategoryDetailScreen extends StatelessWidget {
                           .map((e) => ScrollableTechniqueListItem(
                                 onTap: () {},
                                 title: e.getLocalizedTitle(l10n.locale.languageCode),
-                                productId: e.productId,
+                                productId: e.productId ?? "Free",
                                 thumbnailUrl: e.thumbnailUrl,
                               ))
                           .toList();

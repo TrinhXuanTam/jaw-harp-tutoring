@@ -12,13 +12,13 @@ class CreateTechnique {
   CreateTechnique(this._adminRepository);
 
   Future<Technique> call({
-    required String id,
+    String? productId,
     required String categoryId,
     required TechniqueDifficulty difficulty,
     required Iterable<TechniqueLocalizedData> localizedData,
     File? thumbnail,
     File? video,
   }) {
-    return _adminRepository.createTechnique(id: id, categoryId: categoryId, difficulty: difficulty, localizedData: localizedData, thumbnail: thumbnail, video: video);
+    return _adminRepository.createTechnique(productId: productId, categoryId: categoryId, difficulty: difficulty, localizedData: localizedData, thumbnail: thumbnail, video: video);
   }
 }

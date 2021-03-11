@@ -79,11 +79,11 @@ class CreateTechniqueBloc extends Bloc<CreateTechniqueEvent, CreateTechniqueStat
       yield CreateTechniqueNotFinishedState();
     }
     if (event is CreateTechniqueFormSubmittedEvent) {
-      if (idController.text.isEmpty || categoryController.value == null || difficultyController.value == null)
+      if (categoryController.value == null || difficultyController.value == null)
         _errorBloc.add(UserErrorEvent("Failed to create technique", "Please fill out all fields!"));
       else {
         _createTechnique(
-          id: idController.text,
+          productId: event.isPaid ? idController.text : null,
           categoryId: categoryController.value!,
           difficulty: difficultyController.value!,
           localizedData: localizedData.entries.map((e) => e.value),

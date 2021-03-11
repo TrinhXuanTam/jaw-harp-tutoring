@@ -21,4 +21,8 @@ class RemoveTechniqueLocalizationEvent extends CreateTechniqueEvent {
   RemoveTechniqueLocalizationEvent(this.languageCode);
 }
 
-class CreateTechniqueFormSubmittedEvent extends CreateTechniqueEvent {}
+class CreateTechniqueFormSubmittedEvent extends CreateTechniqueEvent {
+  final bool isPaid;
+
+  CreateTechniqueFormSubmittedEvent(this.isPaid);
+}

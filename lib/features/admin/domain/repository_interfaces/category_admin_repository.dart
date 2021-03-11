@@ -7,7 +7,7 @@ import 'package:jews_harp/features/techniques/domain/entities/technique_localize
 
 abstract class ICategoryAdminRepository {
   Future<Technique> createTechnique({
-    required String id,
+    String? productId,
     required String categoryId,
     required TechniqueDifficulty difficulty,
     required Iterable<TechniqueLocalizedData> localizedData,

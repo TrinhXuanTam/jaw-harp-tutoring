@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jews_harp/core/BLoCs/toggle_switch/toggle_switch_bloc.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
@@ -17,8 +18,11 @@ class CreateTechniqueScreen extends StatelessWidget {
       ),
       body: CenteredStack(
         children: [
-          BlocProvider<CreateTechniqueBloc>(
-            create: (_) => serviceLocator<CreateTechniqueBloc>(),
+          MultiBlocProvider(
+            providers: [
+              BlocProvider<CreateTechniqueBloc>(create: (_) => serviceLocator<CreateTechniqueBloc>()),
+              BlocProvider<ToggleSwitchBloc>(create: (_) => serviceLocator<ToggleSwitchBloc>()),
+            ],
             child: CreateTechniqueForm(),
           ),
         ],
