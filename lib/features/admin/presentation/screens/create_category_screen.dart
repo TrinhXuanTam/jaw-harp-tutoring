@@ -52,9 +52,7 @@ class _CreateCategoryForm extends StatelessWidget {
       onSuccess: (category) => Navigator.pushReplacementNamed(
         context,
         CATEGORY_DETAIL_SCREEN_ROUTE,
-        arguments: CategoryDetailScreenArgs(
-          serviceLocator<CategoryDetailBloc>(param1: category),
-        ),
+        arguments: CategoryDetailScreenArgs(category),
       ),
     );
   }

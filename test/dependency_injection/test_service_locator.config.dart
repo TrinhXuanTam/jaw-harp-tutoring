@@ -38,9 +38,9 @@ import 'package:jews_harp/features/admin/presentation/BLoCs/admin_menu/admin_men
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_detail/category_detail_bloc.dart'
     as _i42;
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_form/category_form_bloc.dart'
-    as _i44;
+    as _i43;
 import 'package:jews_harp/features/admin/presentation/BLoCs/create_technique/create_technique_bloc.dart'
-    as _i45;
+    as _i44;
 import 'package:jews_harp/features/admin/presentation/BLoCs/thumbnail_picker/thumbnail_picker_bloc.dart'
     as _i24;
 import 'package:jews_harp/features/admin/presentation/BLoCs/video_picker/video_picker_bloc.dart'
@@ -82,19 +82,17 @@ import 'package:jews_harp/features/auth/infrastructure/facades/user_facade.dart'
 import 'package:jews_harp/features/auth/infrastructure/repositories/user_repository.dart'
     as _i13;
 import 'package:jews_harp/features/auth/presentation/BLoCs/email_authentication/email_auth_bloc.dart'
-    as _i46;
+    as _i45;
 import 'package:jews_harp/features/auth/presentation/BLoCs/email_verification/email_verification_bloc.dart'
-    as _i47;
+    as _i46;
 import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart'
     as _i41;
 import 'package:jews_harp/features/auth/presentation/BLoCs/password_reset/password_reset_bloc.dart'
     as _i17;
 import 'package:jews_harp/features/auth/presentation/BLoCs/sign_up_screen/sign_up_bloc.dart'
-    as _i48;
+    as _i47;
 import 'package:jews_harp/features/auth/presentation/BLoCs/third_party_authentication/third_party_auth_bloc.dart'
     as _i39;
-import 'package:jews_harp/features/techniques/domain/entities/category.dart'
-    as _i43;
 
 import 'mock.dart' as _i6;
 
@@ -129,17 +127,15 @@ _i1.GetIt testInitGetIt(_i1.GetIt get,
       () => _i4.FirebaseAdminDataSource(),
       registerFor: {_prod});
   gh.lazySingleton<_i5.FirebaseAuthDataSource>(
-      () => _i5.FirebaseAuthDataSource(),
-      registerFor: {_prod});
-  gh.lazySingleton<_i5.FirebaseAuthDataSource>(
       () => _i6.FirebaseAuthDataSourceMock(),
       registerFor: {_user_repository_test_env});
+  gh.lazySingleton<_i5.FirebaseAuthDataSource>(
+      () => _i5.FirebaseAuthDataSource(),
+      registerFor: {_prod});
   gh.factory<_i7.HideFieldInputBloc>(() => _i7.HideFieldInputBloc(),
       registerFor: {_prod, _dev});
   gh.lazySingleton<_i8.ICategoryAdminRepository>(
       () => _i9.CategoryAdminRepository(get<_i4.FirebaseAdminDataSource>()),
-      registerFor: {_prod});
-  gh.lazySingleton<_i10.IUserFacade>(() => _i11.FirebaseAuthFacade(),
       registerFor: {_prod});
   gh.lazySingleton<_i10.IUserFacade>(() => _i6.IUserFacadeMock(), registerFor: {
     _email_authentication_test_env,
@@ -151,6 +147,8 @@ _i1.GetIt testInitGetIt(_i1.GetIt get,
     _password_reset_test_env,
     _send_email_verification_test_env
   });
+  gh.lazySingleton<_i10.IUserFacade>(() => _i11.FirebaseAuthFacade(),
+      registerFor: {_prod});
   gh.lazySingleton<_i12.IUserRepository>(
       () => _i13.UserRepository(get<_i5.FirebaseAuthDataSource>()),
       registerFor: {_prod, _user_repository_test_env});
@@ -253,32 +251,31 @@ _i1.GetIt testInitGetIt(_i1.GetIt get,
           get<_i21.SetLocale>(),
           get<_i22.SignOut>()),
       registerFor: {_prod, _dev});
-  gh.factoryParam<_i42.CategoryDetailBloc, _i43.Category?, dynamic>(
-      (category, _) => _i42.CategoryDetailBloc(
-          category, get<_i36.GetTechniquesByCategory>()),
+  gh.factory<_i42.CategoryDetailBloc>(
+      () => _i42.CategoryDetailBloc(get<_i36.GetTechniquesByCategory>()),
       registerFor: {_prod, _dev});
-  gh.factoryParam<_i44.CategoryFormBloc, _i44.CategoryFormState?, dynamic>(
+  gh.factoryParam<_i43.CategoryFormBloc, _i43.CategoryFormState?, dynamic>(
       (initialState, _) =>
-          _i44.CategoryFormBloc(initialState, get<_i27.CreateCategory>()),
+          _i43.CategoryFormBloc(initialState, get<_i27.CreateCategory>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i45.CreateTechniqueBloc>(
-      () => _i45.CreateTechniqueBloc(get<_i32.GetAllCategories>(),
+  gh.factory<_i44.CreateTechniqueBloc>(
+      () => _i44.CreateTechniqueBloc(get<_i32.GetAllCategories>(),
           get<_i28.CreateTechnique>(), get<_i3.ErrorBloc>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i46.EmailAuthBloc>(
-      () => _i46.EmailAuthBloc(
+  gh.factory<_i45.EmailAuthBloc>(
+      () => _i45.EmailAuthBloc(
           get<_i29.EmailAuthentication>(), get<_i3.ErrorBloc>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i47.EmailVerificationBloc>(
-      () => _i47.EmailVerificationBloc(
+  gh.factory<_i46.EmailVerificationBloc>(
+      () => _i46.EmailVerificationBloc(
           get<_i22.SignOut>(),
           get<_i20.SendEmailVerification>(),
           get<_i30.EmailIsVerified>(),
           get<_i3.ErrorBloc>(),
           get<_i41.AuthBloc>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i48.SignUpBloc>(
-      () => _i48.SignUpBloc(
+  gh.factory<_i47.SignUpBloc>(
+      () => _i47.SignUpBloc(
           get<_i23.SignUp>(),
           get<_i33.GetAuthProviders>(),
           get<_i14.LinkEmailProvider>(),

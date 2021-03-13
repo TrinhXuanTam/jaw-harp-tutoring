@@ -87,15 +87,15 @@ class CategoryListScreen extends StatelessWidget {
                   height: size.height * 0.7,
                   items: items
                       .map(
-                        (e) => ScrollableCategoryListItem(
+                        (category) => ScrollableCategoryListItem(
                           () => Navigator.pushNamed(
                             context,
                             CATEGORY_DETAIL_SCREEN_ROUTE,
-                            arguments: CategoryDetailScreenArgs(serviceLocator<CategoryDetailBloc>(param1: e)),
+                            arguments: CategoryDetailScreenArgs(category),
                           ),
-                          e.techniqueIds.length,
-                          e.getLocalizedTitle(l10n.locale.languageCode),
-                          e.getLocalizedDescription(l10n.locale.languageCode),
+                          category.techniqueIds.length,
+                          category.getLocalizedTitle(l10n.locale.languageCode),
+                          category.getLocalizedDescription(l10n.locale.languageCode),
                         ),
                       )
                       .toList(),

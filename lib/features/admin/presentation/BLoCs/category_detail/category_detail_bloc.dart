@@ -14,17 +14,16 @@ part 'category_detail_state.dart';
 @Injectable(env: [Environment.prod, Environment.dev])
 class CategoryDetailBloc extends Bloc<CategoryDetailEvent, CategoryDetailState> {
   final GetTechniquesByCategory _getTechniquesByCategory;
-  final Category? category;
 
-  @factoryMethod
-  CategoryDetailBloc(@factoryParam this.category, this._getTechniquesByCategory) : super(CategoryDetailInitial());
-
-  Future<List<Technique>> get techniques => _getTechniquesByCategory(category!).then((value) => value.toList());
+  CategoryDetailBloc(this._getTechniquesByCategory) : super(CategoryInitial());
 
   @override
   Stream<CategoryDetailState> mapEventToState(
     CategoryDetailEvent event,
   ) async* {
-    // TODO: implement mapEventToState
+    if (event is LoadData) {
+      final techniques = await _getTechniquesByCategory(event.category);
+      yield CategoryDetailLoaded(event.category, techniques.toList());
+    }
   }
 }
