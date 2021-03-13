@@ -17,6 +17,8 @@ abstract class ICategoryAdminRepository {
 
   Future<Category> createCategory(bool isVisible, Iterable<CategoryLocalizedData> localizedData);
 
+  Future<Category> updateCategory(Category category);
+
   Future<Iterable<Category>> getVisibleCategories();
 
   Future<Iterable<Category>> getHiddenCategories();

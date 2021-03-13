@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/l10n.dart';
@@ -9,6 +10,7 @@ import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/loading_wrapper.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_detail/category_detail_bloc.dart';
+import 'package:jews_harp/features/admin/presentation/screens/edit_category_screen.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/scrollable_technique_list.dart';
 import 'package:jews_harp/features/techniques/domain/entities/category.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
@@ -89,7 +91,7 @@ class CategoryDetailScreen extends StatelessWidget {
                             child: Material(
                               color: Colors.white,
                               child: InkWell(
-                                onTap: () {},
+                                onTap: () => Navigator.pushNamed(context, EDIT_CATEGORY_SCREEN_ROUTE, arguments: EditCategoryScreenArgs(category)),
                                 child: Container(
                                   padding: const EdgeInsets.all(15),
                                   child: Icon(

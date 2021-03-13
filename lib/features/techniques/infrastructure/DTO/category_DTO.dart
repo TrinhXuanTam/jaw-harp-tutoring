@@ -11,6 +11,15 @@ class CategoryDTO extends Category {
     required Map<String, CategoryLocalizedDataDTO> localizedData,
   }) : super(id: id, isVisible: isVisible, techniqueIds: techniqueIds, localizedData: localizedData);
 
+  factory CategoryDTO.fromEntity(Category category) {
+    return CategoryDTO(
+      id: category.id,
+      isVisible: category.isVisible,
+      techniqueIds: category.techniqueIds,
+      localizedData: category.localizedData.map((key, value) => MapEntry(key, CategoryLocalizedDataDTO.fromEntity(value))),
+    );
+  }
+
   factory CategoryDTO.fromFirestore(DocumentSnapshot documentSnapshot) {
     final Map<String, CategoryLocalizedDataDTO> localizedData = {};
     documentSnapshot.data()?["localization"].forEach(
@@ -27,5 +36,21 @@ class CategoryDTO extends Category {
       techniqueIds: List<String>.from(documentSnapshot["techniques"]),
       localizedData: localizedData,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "isVisible": this.isVisible,
+      "techniques": FieldValue.arrayUnion(this.techniqueIds),
+      "localization": this.localizedData.map(
+            (key, value) => MapEntry(
+              key,
+              {
+                "title": value.title,
+                "description": value.description,
+              },
+            ),
+          ),
+    };
   }
 }

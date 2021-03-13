@@ -7,6 +7,7 @@ import 'package:jews_harp/features/techniques/domain/entities/category.dart';
 import 'package:jews_harp/features/techniques/domain/entities/category_localized_data.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique_localized_data.dart';
+import 'package:jews_harp/features/techniques/infrastructure/DTO/category_DTO.dart';
 import 'package:jews_harp/features/techniques/infrastructure/DTO/category_localized_data_DTO.dart';
 import 'package:jews_harp/features/techniques/infrastructure/DTO/technique_localized_data_DTO.dart';
 
@@ -39,6 +40,9 @@ class CategoryAdminRepository extends ICategoryAdminRepository {
   Future<Category> createCategory(bool isVisible, Iterable<CategoryLocalizedData> localizedData) {
     return _adminDataSource.createCategory(isVisible, localizedData.toDTO());
   }
+
+  @override
+  Future<Category> updateCategory(Category category) => _adminDataSource.updateCategory(CategoryDTO.fromEntity(category));
 
   @override
   Future<Iterable<Category>> getHiddenCategories() => _adminDataSource.getHiddenCategories();

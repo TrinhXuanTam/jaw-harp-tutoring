@@ -7,7 +7,7 @@ class CategoryLocalizedDataDTO extends CategoryLocalizedData {
     required String description,
   }) : super(languageCode: languageCode, title: title, description: description);
 
-  factory CategoryLocalizedDataDTO.fromCategoryLocalizedData(CategoryLocalizedData localizedData) {
+  factory CategoryLocalizedDataDTO.fromEntity(CategoryLocalizedData localizedData) {
     return CategoryLocalizedDataDTO(
       languageCode: localizedData.languageCode,
       title: localizedData.title,
@@ -31,5 +31,5 @@ extension Serializable on Iterable<CategoryLocalizedDataDTO> {
 }
 
 extension Conversion on Iterable<CategoryLocalizedData> {
-  Iterable<CategoryLocalizedDataDTO> toDTO() => this.map((e) => CategoryLocalizedDataDTO.fromCategoryLocalizedData(e));
+  Iterable<CategoryLocalizedDataDTO> toDTO() => this.map((e) => CategoryLocalizedDataDTO.fromEntity(e));
 }

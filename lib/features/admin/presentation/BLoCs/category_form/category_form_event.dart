@@ -22,3 +22,9 @@ class UpdateCategoryVisibility extends CategoryFormEvent {
 }
 
 class CreateCategoryEvent extends CategoryFormEvent {}
+
+class UpdateCategoryEvent extends CategoryFormEvent {
+  final Category category;
+
+  UpdateCategoryEvent(this.category);
+}

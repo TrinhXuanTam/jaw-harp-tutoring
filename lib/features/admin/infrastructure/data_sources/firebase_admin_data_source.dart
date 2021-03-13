@@ -59,6 +59,11 @@ class FirebaseAdminDataSource {
     return CategoryDTO.fromFirestore(snapshot);
   }
 
+  Future<CategoryDTO> updateCategory(CategoryDTO category) async {
+    await _categories.doc(category.id).set(category.toJson());
+    return CategoryDTO.fromFirestore(await _categories.doc(category.id).get());
+  }
+
   Future<Iterable<CategoryDTO>> getVisibleCategories() async {
     final snapshot = await _categories.where("isVisible", isEqualTo: true).get();
     return snapshot.docs.map((e) => CategoryDTO.fromFirestore(e));

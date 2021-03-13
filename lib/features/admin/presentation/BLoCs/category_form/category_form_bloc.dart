@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/features/admin/application/use_cases/create_category.dart';
+import 'package:jews_harp/features/admin/application/use_cases/update_category.dart';
 import 'package:jews_harp/features/techniques/domain/entities/category.dart';
 import 'package:jews_harp/features/techniques/domain/entities/category_localized_data.dart';
 import 'package:meta/meta.dart';
@@ -14,10 +15,12 @@ part 'category_form_state.dart';
 @Injectable(env: [Environment.prod, Environment.dev])
 class CategoryFormBloc extends Bloc<CategoryFormEvent, CategoryFormState> {
   final CreateCategory _createCategory;
+  final UpdateCategory _updateCategory;
 
   CategoryFormBloc(
     @factoryParam CategoryFormState? initialState,
     this._createCategory,
+    this._updateCategory,
   ) : super(initialState ?? CategoryFormState(isVisible: false, localizedData: const {"en": CategoryLocalizedData(languageCode: "en")}));
 
   @override
@@ -37,6 +40,14 @@ class CategoryFormBloc extends Bloc<CategoryFormEvent, CategoryFormState> {
     } else if (event is CreateCategoryEvent) {
       final category = await _createCategory(state.isVisible, state.localizedData.entries.map((e) => e.value));
       yield CategoryFormSubmitted(category);
+    } else if (event is UpdateCategoryEvent) {
+      final updatedCategory = await _updateCategory(Category(
+        id: event.category.id,
+        isVisible: state.isVisible,
+        techniqueIds: event.category.techniqueIds,
+        localizedData: state.localizedData,
+      ));
+      yield CategoryFormSubmitted(updatedCategory);
     }
   }
 }
