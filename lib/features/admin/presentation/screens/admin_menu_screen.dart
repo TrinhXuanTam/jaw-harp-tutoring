@@ -9,12 +9,14 @@ import 'package:jews_harp/core/widgets/bordered_list.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/admin_menu/admin_menu_bloc.dart';
+import 'package:jews_harp/features/admin/presentation/BLoCs/category_form/category_form_bloc.dart';
 import 'package:jews_harp/features/admin/presentation/screens/category_list_screen.dart';
 
 class AdminMenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: IconAppBar(
         backgroundColor: BASE_COLOR,

@@ -89,13 +89,16 @@ class _CategoryLocalizationEditScreenState extends State<CategoryLocalizationEdi
               SizedBox(height: 10),
               RoundedButton(
                 text: "Save",
-                onPressed: () => widget.onSave(
-                  CategoryLocalizedData(
-                    languageCode: widget.data.languageCode,
-                    title: _titleController.text,
-                    description: _descriptionController.text,
-                  ),
-                ),
+                onPressed: () {
+                  widget.onSave(
+                    CategoryLocalizedData(
+                      languageCode: widget.data.languageCode,
+                      title: _titleController.text,
+                      description: _descriptionController.text,
+                    ),
+                  );
+                  Navigator.pop(context);
+                },
               ),
               if (widget.data.languageCode != "en")
                 Column(
@@ -106,7 +109,10 @@ class _CategoryLocalizationEditScreenState extends State<CategoryLocalizationEdi
                       color: Colors.redAccent[200]!,
                       textColor: Colors.white,
                       borderColor: Colors.redAccent[200]!,
-                      onPressed: widget.onRemove,
+                      onPressed: () {
+                        widget.onRemove();
+                        Navigator.pop(context);
+                      },
                     ),
                   ],
                 ),

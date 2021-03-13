@@ -6,25 +6,25 @@ import 'package:jews_harp/core/widgets/rounded_dropdown.dart';
 import 'package:jews_harp/core/widgets/rounded_text_field.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
-import 'package:jews_harp/features/admin/presentation/BLoCs/create_category/create_category_bloc.dart';
+import 'package:jews_harp/features/admin/presentation/BLoCs/category_form/category_form_bloc.dart';
 import 'package:jews_harp/features/techniques/domain/entities/category_localized_data.dart';
 
 class CategoryLocalizationAddScreenArgs {
-  final CreateCategoryBloc createCategoryBloc;
+  final CategoryFormBloc categoryFormBloc;
 
-  CategoryLocalizationAddScreenArgs({required this.createCategoryBloc});
+  CategoryLocalizationAddScreenArgs({required this.categoryFormBloc});
 }
 
 class CategoryLocalizationAddScreen extends StatefulWidget {
-  final CreateCategoryBloc createCategoryBloc;
+  final CategoryFormBloc categoryFormBloc;
 
   factory CategoryLocalizationAddScreen.fromArgs(CategoryLocalizationAddScreenArgs args) {
-    return CategoryLocalizationAddScreen(createCategoryBloc: args.createCategoryBloc);
+    return CategoryLocalizationAddScreen(categoryFormBloc: args.categoryFormBloc);
   }
 
   const CategoryLocalizationAddScreen({
     Key? key,
-    required this.createCategoryBloc,
+    required this.categoryFormBloc,
   }) : super(key: key);
 
   @override
@@ -39,7 +39,7 @@ class _CategoryLocalizationAddScreenState extends State<CategoryLocalizationAddS
   List<DropdownMenuItem<String>> _createDropdownMenuItems(AppLocalizations l10n) {
     return SupportedLanguages.languages
         .where(
-          (element) => !widget.createCategoryBloc.localizedData.containsKey(element.code),
+          (element) => !widget.categoryFormBloc.state.localizedData.containsKey(element.code),
         )
         .map(
           (e) => DropdownMenuItem(
@@ -95,8 +95,8 @@ class _CategoryLocalizationAddScreenState extends State<CategoryLocalizationAddS
               RoundedButton(
                 text: "Add",
                 onPressed: () {
-                  widget.createCategoryBloc.add(
-                    AddCategoryLocalizationEvent(
+                  widget.categoryFormBloc.add(
+                    UpdateCategoryLocalization(
                       CategoryLocalizedData(
                         languageCode: _languageController.value!,
                         title: _titleController.text,

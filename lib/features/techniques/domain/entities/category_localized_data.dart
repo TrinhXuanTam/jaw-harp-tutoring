@@ -7,8 +7,8 @@ class CategoryLocalizedData extends Equatable {
 
   const CategoryLocalizedData({
     required this.languageCode,
-    required this.title,
-    required this.description,
+    this.title = "",
+    this.description = "",
   });
 
   @override

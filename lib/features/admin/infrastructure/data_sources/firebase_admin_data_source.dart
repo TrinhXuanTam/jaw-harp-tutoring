@@ -78,8 +78,6 @@ class FirebaseAdminDataSource {
     final List<TechniqueDTO> res = [];
     final techniqueIdsList = techniqueIds.toList();
 
-    print(techniqueIds);
-
     for (var i = 0; i < techniqueIds.length; i++) {
       final document = await _techniques.doc(techniqueIdsList[i]).get();
       if (document.exists) res.add(TechniqueDTO.fromFirestore(document));
