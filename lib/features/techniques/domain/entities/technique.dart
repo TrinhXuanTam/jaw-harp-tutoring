@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:jews_harp/core/constants/language_codes.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique_localized_data.dart';
 
 class Technique extends Equatable {
@@ -23,7 +24,7 @@ class Technique extends Equatable {
   String getLocalizedTitle(String languageCode) {
     final data = localizedData[languageCode];
 
-    if (data == null) return localizedData["en"]!.title;
+    if (data == null) return localizedData[ENGLISH_CODE]!.title;
 
     return data.title;
   }
@@ -31,7 +32,7 @@ class Technique extends Equatable {
   String getLocalizedDescription(String languageCode) {
     final data = localizedData[languageCode];
 
-    if (data == null) return localizedData["en"]!.description;
+    if (data == null) return localizedData[ENGLISH_CODE]!.description;
 
     return data.description;
   }
@@ -39,7 +40,7 @@ class Technique extends Equatable {
   String getLocalizedAccompanyingText(String languageCode) {
     final data = localizedData[languageCode];
 
-    if (data == null) return localizedData["en"]!.accompanyingText;
+    if (data == null) return localizedData[ENGLISH_CODE]!.accompanyingText;
 
     return data.accompanyingText;
   }

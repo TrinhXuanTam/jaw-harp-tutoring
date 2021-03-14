@@ -5,7 +5,7 @@ abstract class CategoryDetailState {}
 
 class CategoryInitial extends CategoryDetailState {}
 
-class Loading extends CategoryDetailState {}
+class CategoryDetailLoading extends CategoryDetailState {}
 
 class CategoryDetailLoaded extends CategoryDetailState {
   final Category category;

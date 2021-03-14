@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:jews_harp/core/constants/language_codes.dart';
 
 import 'category_localized_data.dart';
 
@@ -11,7 +12,7 @@ class Category extends Equatable {
   String getLocalizedTitle(String languageCode) {
     final data = localizedData[languageCode];
 
-    if (data == null) return localizedData["en"]!.title;
+    if (data == null) return localizedData[ENGLISH_CODE]!.title;
 
     return data.title;
   }
@@ -19,7 +20,7 @@ class Category extends Equatable {
   String getLocalizedDescription(String languageCode) {
     final data = localizedData[languageCode];
 
-    if (data == null) return localizedData["en"]!.description;
+    if (data == null) return localizedData[ENGLISH_CODE]!.description;
 
     return data.description;
   }

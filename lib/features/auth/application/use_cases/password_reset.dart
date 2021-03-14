@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/constants/language_codes.dart';
 import 'package:jews_harp/core/constants/test_environments.dart';
 import 'package:jews_harp/core/errors/email_not_found_error.dart';
 import 'package:jews_harp/core/errors/validation_error.dart';
@@ -12,7 +13,7 @@ class PasswordReset {
 
   PasswordReset(this._userFacade);
 
-  Future<void> call(String email, {String languageCode = "en"}) async {
+  Future<void> call(String email, {String languageCode = ENGLISH_CODE}) async {
     if (email.isEmpty) throw ValidationError("Please fill out all fields!");
 
     if (!RegExMatchers.email.hasMatch(email)) throw ValidationError("Invalid email format!");

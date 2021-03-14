@@ -40,92 +40,94 @@ class CategoryDetailScreen extends StatelessWidget {
 
     return BlocProvider<CategoryDetailBloc>(
       create: (_) => serviceLocator<CategoryDetailBloc>()..add(LoadData(this.category)),
-      child: BlocBuilder<CategoryDetailBloc, CategoryDetailState>(builder: (ctx, state) {
-        if (state is CategoryDetailLoaded)
-          return Scaffold(
-            resizeToAvoidBottomInset: false,
-            appBar: IconAppBar(
-              backgroundColor: BASE_COLOR,
-              iconColor: Colors.white,
-              onPressed: () => Navigator.pop(context),
-            ),
-            backgroundColor: Colors.grey[200],
-            body: CenteredStack(
-              children: [
-                Positioned(
-                  top: 0,
-                  child: BigAppBarBackground(height: size.height * 0.2),
+      child: BlocBuilder<CategoryDetailBloc, CategoryDetailState>(
+          buildWhen: (prevState, newState) => prevState is CategoryDetailLoading,
+          builder: (ctx, state) {
+            if (state is CategoryDetailLoaded)
+              return Scaffold(
+                resizeToAvoidBottomInset: false,
+                appBar: IconAppBar(
+                  backgroundColor: BASE_COLOR,
+                  iconColor: Colors.white,
+                  onPressed: () => Navigator.pop(context),
                 ),
-                Container(
-                  width: size.width * 0.9,
-                  child: Column(
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                backgroundColor: Colors.grey[200],
+                body: CenteredStack(
+                  children: [
+                    Positioned(
+                      top: 0,
+                      child: BigAppBarBackground(height: size.height * 0.2),
+                    ),
+                    Container(
+                      width: size.width * 0.9,
+                      child: Column(
                         children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  state.category.getLocalizedTitle(l10n.locale.languageCode),
-                                  style: TextStyle(
-                                    fontSize: 25,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      state.category.getLocalizedTitle(l10n.locale.languageCode),
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      state.category.getLocalizedDescription(l10n.locale.languageCode),
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  state.category.getLocalizedDescription(l10n.locale.languageCode),
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(width: 30),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(29),
-                            child: Material(
-                              color: Colors.white,
-                              child: InkWell(
-                                onTap: () => Navigator.pushNamed(context, EDIT_CATEGORY_SCREEN_ROUTE, arguments: EditCategoryScreenArgs(category)),
-                                child: Container(
-                                  padding: const EdgeInsets.all(15),
-                                  child: Icon(
-                                    Icons.edit_outlined,
-                                    size: 30,
-                                    color: BASE_COLOR,
+                              ),
+                              SizedBox(width: 30),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(29),
+                                child: Material(
+                                  color: Colors.white,
+                                  child: InkWell(
+                                    onTap: () => Navigator.pushNamed(context, EDIT_CATEGORY_SCREEN_ROUTE, arguments: EditCategoryScreenArgs(category)),
+                                    child: Container(
+                                      padding: const EdgeInsets.all(15),
+                                      child: Icon(
+                                        Icons.edit_outlined,
+                                        size: 30,
+                                        color: BASE_COLOR,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
+                            ],
+                          ),
+                          SizedBox(height: 15),
+                          ScrollableTechniqueList(
+                            items: state.techniques
+                                .map((e) => ScrollableTechniqueListItem(
+                                      onTap: () {},
+                                      title: e.getLocalizedTitle(l10n.locale.languageCode),
+                                      productId: e.productId ?? "Free",
+                                      thumbnailUrl: e.thumbnailUrl,
+                                    ))
+                                .toList(),
+                            height: size.height * 0.7,
                           ),
                         ],
                       ),
-                      SizedBox(height: 15),
-                      ScrollableTechniqueList(
-                        items: state.techniques
-                            .map((e) => ScrollableTechniqueListItem(
-                                  onTap: () {},
-                                  title: e.getLocalizedTitle(l10n.locale.languageCode),
-                                  productId: e.productId ?? "Free",
-                                  thumbnailUrl: e.thumbnailUrl,
-                                ))
-                            .toList(),
-                        height: size.height * 0.7,
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          );
-        else
-          return LoadingScreen();
-      }),
+              );
+            else
+              return LoadingScreen();
+          }),
     );
   }
 }

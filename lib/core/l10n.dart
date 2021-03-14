@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jews_harp/core/errors/language_not_supported_error.dart';
 
+import 'constants/language_codes.dart';
+
 class Language {
   final String code;
   final String name;
@@ -14,8 +16,8 @@ class Language {
 
 class SupportedLanguages {
   static final languages = [
-    Language("en", "English", "English"),
-    Language("cs", "Czech", "Čeština"),
+    Language(ENGLISH_CODE, "English", "English"),
+    Language(CZECH_CODE, "Czech", "Čeština"),
   ];
 
   static String getNativeName(String languageCode) {

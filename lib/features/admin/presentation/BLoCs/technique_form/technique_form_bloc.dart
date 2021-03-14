@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/core/BLoCs/errors/error_bloc.dart';
+import 'package:jews_harp/core/constants/language_codes.dart';
 import 'package:jews_harp/core/widgets/rounded_dropdown.dart';
 import 'package:jews_harp/features/admin/application/use_cases/create_technique.dart';
 import 'package:jews_harp/features/admin/application/use_cases/get_all_categories.dart';
@@ -23,7 +24,7 @@ final _defaultFormState = TechniqueFormState(
   idController: TextEditingController(),
   categoryController: DropdownButtonFormFieldController<String>(),
   difficultyController: DropdownButtonFormFieldController<TechniqueDifficulty>(),
-  localizedData: {"en": TechniqueLocalizedData(languageCode: "en")},
+  localizedData: {ENGLISH_CODE: TechniqueLocalizedData(languageCode: ENGLISH_CODE)},
   thumbnailController: ThumbnailPickerController(),
   videoController: VideoPickerController(),
 );

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/constants/language_codes.dart';
 import 'package:jews_harp/features/admin/application/use_cases/create_category.dart';
 import 'package:jews_harp/features/admin/application/use_cases/update_category.dart';
 import 'package:jews_harp/features/techniques/domain/entities/category.dart';
@@ -21,7 +22,7 @@ class CategoryFormBloc extends Bloc<CategoryFormEvent, CategoryFormState> {
     @factoryParam CategoryFormState? initialState,
     this._createCategory,
     this._updateCategory,
-  ) : super(initialState ?? CategoryFormState(isVisible: false, localizedData: const {"en": CategoryLocalizedData(languageCode: "en")}));
+  ) : super(initialState ?? CategoryFormState(isVisible: false, localizedData: const {ENGLISH_CODE: CategoryLocalizedData(languageCode: ENGLISH_CODE)}));
 
   @override
   Stream<CategoryFormState> mapEventToState(

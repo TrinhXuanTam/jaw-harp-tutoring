@@ -22,6 +22,7 @@ class CategoryDetailBloc extends Bloc<CategoryDetailEvent, CategoryDetailState> 
     CategoryDetailEvent event,
   ) async* {
     if (event is LoadData) {
+      yield CategoryDetailLoading();
       final techniques = await _getTechniquesByCategory(event.category);
       yield CategoryDetailLoaded(event.category, techniques.toList());
     }

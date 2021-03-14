@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jews_harp/core/constants/language_codes.dart';
 import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
@@ -113,7 +114,7 @@ class _TechniqueLocalizationEditScreenState extends State<TechniqueLocalizationE
                       ),
                     ),
                   ),
-                  if (widget.data.languageCode != "en")
+                  if (widget.data.languageCode != ENGLISH_CODE)
                     Column(
                       children: [
                         SizedBox(height: 5),
