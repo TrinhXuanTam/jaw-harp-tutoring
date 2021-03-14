@@ -29,13 +29,13 @@ class CategoryForm extends StatelessWidget {
     final bloc = BlocProvider.of<CategoryFormBloc>(context);
     final size = MediaQuery.of(context).size;
 
-    return Column(
-      children: [
-        BlocListener<CategoryFormBloc, CategoryFormState>(
-          listener: (ctx, state) {
-            if (state is CategoryFormSubmitted) onSuccess(state.category);
-          },
-          child: Container(
+    return BlocListener<CategoryFormBloc, CategoryFormState>(
+      listener: (ctx, state) {
+        if (state.success != null) onSuccess(state.success!);
+      },
+      child: Column(
+        children: [
+          Container(
             width: size.width * 0.75,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,13 +110,13 @@ class CategoryForm extends StatelessWidget {
               ],
             ),
           ),
-        ),
-        SizedBox(height: 10),
-        RoundedButton(
-          text: this.submitButtonText,
-          onPressed: this.onSubmit,
-        ),
-      ],
+          SizedBox(height: 10),
+          RoundedButton(
+            text: this.submitButtonText,
+            onPressed: this.onSubmit,
+          ),
+        ],
+      ),
     );
   }
 

@@ -4,26 +4,23 @@ part of 'category_form_bloc.dart';
 class CategoryFormState {
   final bool isVisible;
   final Map<String, CategoryLocalizedData> localizedData;
+  final Category? success;
 
   CategoryFormState({
     required this.isVisible,
     required this.localizedData,
+    this.success,
   });
 
   CategoryFormState copyWith({
     bool? isVisible,
     Map<String, CategoryLocalizedData>? localizedData,
-    bool? success,
+    Category? success,
   }) {
     return CategoryFormState(
       isVisible: isVisible ?? this.isVisible,
       localizedData: localizedData ?? this.localizedData,
+      success: success ?? this.success,
     );
   }
-}
-
-class CategoryFormSubmitted extends CategoryFormState {
-  final Category category;
-
-  CategoryFormSubmitted(this.category) : super(isVisible: category.isVisible, localizedData: category.localizedData);
 }

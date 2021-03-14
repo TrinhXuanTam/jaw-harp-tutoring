@@ -39,7 +39,7 @@ class CategoryFormBloc extends Bloc<CategoryFormEvent, CategoryFormState> {
       yield state.copyWith(localizedData: localizedData);
     } else if (event is CreateCategoryEvent) {
       final category = await _createCategory(state.isVisible, state.localizedData.entries.map((e) => e.value));
-      yield CategoryFormSubmitted(category);
+      yield state.copyWith(success: category);
     } else if (event is UpdateCategoryEvent) {
       final updatedCategory = await _updateCategory(Category(
         id: event.category.id,
@@ -47,7 +47,7 @@ class CategoryFormBloc extends Bloc<CategoryFormEvent, CategoryFormState> {
         techniqueIds: event.category.techniqueIds,
         localizedData: state.localizedData,
       ));
-      yield CategoryFormSubmitted(updatedCategory);
+      yield state.copyWith(success: updatedCategory);
     }
   }
 }

@@ -8,9 +8,9 @@ class TechniqueLocalizedData extends Equatable {
 
   const TechniqueLocalizedData({
     required this.languageCode,
-    required this.title,
-    required this.description,
-    required this.accompanyingText,
+    this.title = "",
+    this.description = "",
+    this.accompanyingText = "",
   });
 
   @override

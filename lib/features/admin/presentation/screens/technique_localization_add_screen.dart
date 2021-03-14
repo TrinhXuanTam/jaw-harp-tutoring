@@ -7,25 +7,25 @@ import 'package:jews_harp/core/widgets/rounded_multiline_text_field.dart';
 import 'package:jews_harp/core/widgets/rounded_text_field.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
-import 'package:jews_harp/features/admin/presentation/BLoCs/create_technique/create_technique_bloc.dart';
+import 'package:jews_harp/features/admin/presentation/BLoCs/technique_form/technique_form_bloc.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique_localized_data.dart';
 
 class TechniqueLocalizationAddScreenArgs {
-  final CreateTechniqueBloc createTechniqueBloc;
+  final TechniqueFormBloc techniqueFormBloc;
 
-  TechniqueLocalizationAddScreenArgs(this.createTechniqueBloc);
+  TechniqueLocalizationAddScreenArgs(this.techniqueFormBloc);
 }
 
 class TechniqueLocalizationAddScreen extends StatefulWidget {
-  final CreateTechniqueBloc createTechniqueBloc;
+  final TechniqueFormBloc techniqueFormBloc;
 
   factory TechniqueLocalizationAddScreen.fromArgs(TechniqueLocalizationAddScreenArgs args) {
-    return TechniqueLocalizationAddScreen(createTechniqueBloc: args.createTechniqueBloc);
+    return TechniqueLocalizationAddScreen(techniqueFormBloc: args.techniqueFormBloc);
   }
 
   const TechniqueLocalizationAddScreen({
     Key? key,
-    required this.createTechniqueBloc,
+    required this.techniqueFormBloc,
   }) : super(key: key);
 
   @override
@@ -41,7 +41,7 @@ class _TechniqueLocalizationAddScreenState extends State<TechniqueLocalizationAd
   List<DropdownMenuItem<String>> _createDropdownMenuItems(AppLocalizations l10n) {
     return SupportedLanguages.languages
         .where(
-          (element) => !widget.createTechniqueBloc.localizedData.containsKey(element.code),
+          (element) => !widget.techniqueFormBloc.state.localizedData.containsKey(element.code),
         )
         .map(
           (e) => DropdownMenuItem(
@@ -109,8 +109,8 @@ class _TechniqueLocalizationAddScreenState extends State<TechniqueLocalizationAd
                   RoundedButton(
                     text: "Add",
                     onPressed: () {
-                      widget.createTechniqueBloc.add(
-                        AddTechniqueLocalizationEvent(
+                      widget.techniqueFormBloc.add(
+                        UpdateTechniqueLocalization(
                           TechniqueLocalizedData(
                             languageCode: _languageController.value!,
                             title: _titleController.text,
