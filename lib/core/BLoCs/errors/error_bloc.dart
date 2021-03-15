@@ -5,7 +5,6 @@ import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 
 part 'error_event.dart';
-
 part 'error_state.dart';
 
 @LazySingleton(env: [Environment.prod, Environment.dev])

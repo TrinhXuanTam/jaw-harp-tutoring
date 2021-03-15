@@ -8,7 +8,6 @@ import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
 import 'package:meta/meta.dart';
 
 part 'category_detail_event.dart';
-
 part 'category_detail_state.dart';
 
 @Injectable(env: [Environment.prod, Environment.dev])

@@ -7,7 +7,6 @@ import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/facebook_button.dart';
 import 'package:jews_harp/core/widgets/google_button.dart';
-import 'package:jews_harp/core/widgets/one_button_alert_dialog.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/core/widgets/rounded_password_field.dart';
 import 'package:jews_harp/core/widgets/text_divider.dart';

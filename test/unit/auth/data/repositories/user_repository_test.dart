@@ -3,7 +3,6 @@ import 'package:jews_harp/core/constants/test_environments.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/errors/email_already_used_error.dart';
 import 'package:jews_harp/core/errors/wrong_email_or_password_error.dart';
-import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
 import 'package:jews_harp/features/auth/infrastructure/DTO/user_DTO.dart';
 import 'package:jews_harp/features/auth/infrastructure/data_sources/firebase_auth_data_source.dart';

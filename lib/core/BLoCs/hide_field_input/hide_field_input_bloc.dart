@@ -5,7 +5,6 @@ import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 
 part 'hide_field_input_event.dart';
-
 part 'hide_field_input_state.dart';
 
 /// Show or hide input field text

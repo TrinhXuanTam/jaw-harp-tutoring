@@ -13,7 +13,6 @@ import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:meta/meta.dart';
 
 part 'third_party_auth_event.dart';
-
 part 'third_party_auth_state.dart';
 
 @Injectable(env: [Environment.prod, Environment.dev])

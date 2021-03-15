@@ -17,7 +17,6 @@ import 'package:meta/meta.dart';
 import 'package:optional/optional.dart';
 
 part 'technique_form_event.dart';
-
 part 'technique_form_state.dart';
 
 final _defaultFormState = TechniqueFormState(

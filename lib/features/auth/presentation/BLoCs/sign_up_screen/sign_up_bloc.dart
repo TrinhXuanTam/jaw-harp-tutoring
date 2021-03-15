@@ -9,12 +9,10 @@ import 'package:jews_harp/core/errors/email_already_used_error.dart';
 import 'package:jews_harp/features/auth/application/use_cases/get_authentication_providers.dart';
 import 'package:jews_harp/features/auth/application/use_cases/link_email_provider.dart';
 import 'package:jews_harp/features/auth/application/use_cases/sign_up.dart';
-import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
 import 'package:meta/meta.dart';
 
 part 'sign_up_event.dart';
-
 part 'sign_up_state.dart';
 
 @Injectable(env: [Environment.prod, Environment.dev])

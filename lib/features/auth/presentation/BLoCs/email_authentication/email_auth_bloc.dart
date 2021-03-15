@@ -9,7 +9,6 @@ import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:meta/meta.dart';
 
 part 'email_auth_event.dart';
-
 part 'email_auth_state.dart';
 
 @Injectable(env: [Environment.prod, Environment.dev])

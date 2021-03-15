@@ -7,7 +7,6 @@ import 'package:jews_harp/features/admin/application/use_cases/pick_image.dart';
 import 'package:meta/meta.dart';
 
 part 'thumbnail_picker_event.dart';
-
 part 'thumbnail_picker_state.dart';
 
 @Injectable(env: [Environment.prod, Environment.dev])

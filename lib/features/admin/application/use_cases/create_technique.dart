@@ -5,7 +5,6 @@ import 'package:jews_harp/features/admin/domain/repository_interfaces/category_a
 import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique_localized_data.dart';
 import 'package:optional/optional.dart';
-import 'package:optional/optional.dart';
 
 @LazySingleton(env: [Environment.prod, Environment.dev])
 class CreateTechnique {

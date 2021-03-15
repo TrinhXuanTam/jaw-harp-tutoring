@@ -13,7 +13,6 @@ import 'package:meta/meta.dart';
 import 'package:wakelock/wakelock.dart';
 
 part 'auth_event.dart';
-
 part 'auth_state.dart';
 
 @LazySingleton(env: [Environment.prod, Environment.dev])

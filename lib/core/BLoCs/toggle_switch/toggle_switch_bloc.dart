@@ -5,7 +5,6 @@ import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 
 part 'toggle_switch_event.dart';
-
 part 'toggle_switch_state.dart';
 
 @Injectable(env: [Environment.prod, Environment.dev])

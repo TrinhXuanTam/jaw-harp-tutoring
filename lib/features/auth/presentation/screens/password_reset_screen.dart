@@ -4,7 +4,6 @@ import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
-import 'package:jews_harp/core/widgets/one_button_alert_dialog.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/core/widgets/rounded_text_field.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';

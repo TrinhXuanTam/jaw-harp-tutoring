@@ -6,7 +6,6 @@ import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
-import 'package:jews_harp/features/admin/presentation/BLoCs/category_detail/category_detail_bloc.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_form/category_form_bloc.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/category_form.dart';
 

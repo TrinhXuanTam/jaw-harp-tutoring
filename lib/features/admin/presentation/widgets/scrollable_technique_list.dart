@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jews_harp/core/constants/theme.dart';
 
 class ScrollableTechniqueList extends StatelessWidget {
   final List<ScrollableTechniqueListItem> items;
@@ -9,20 +10,28 @@ class ScrollableTechniqueList extends StatelessWidget {
   Widget _getThumbnail(ScrollableTechniqueListItem item) {
     final thumbnailUrl = item.thumbnailUrl;
 
-    if (thumbnailUrl != null)
-      return Container(
-        height: 70,
-        width: 70,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: FittedBox(
-            fit: BoxFit.cover,
-            child: Image.network(thumbnailUrl),
-          ),
+    final thumbnail = thumbnailUrl != null
+        ? Image.network(thumbnailUrl)
+        : Container(
+            color: BASE_COLOR_VERY_LIGHT,
+            padding: const EdgeInsets.all(5),
+            child: Icon(
+              Icons.image_not_supported_outlined,
+              color: BASE_COLOR,
+            ),
+          );
+
+    return Container(
+      height: 70,
+      width: 70,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: FittedBox(
+          fit: BoxFit.cover,
+          child: thumbnail,
         ),
-      );
-    else
-      return Container();
+      ),
+    );
   }
 
   @override

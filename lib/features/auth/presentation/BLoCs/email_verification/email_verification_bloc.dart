@@ -10,7 +10,6 @@ import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect
 import 'package:meta/meta.dart';
 
 part 'email_verification_event.dart';
-
 part 'email_verification_state.dart';
 
 @Injectable(env: [Environment.prod, Environment.dev])

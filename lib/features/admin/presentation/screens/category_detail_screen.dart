@@ -4,6 +4,7 @@ import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/l10n.dart';
+import 'package:jews_harp/core/utils.dart';
 import 'package:jews_harp/core/widgets/big_app_bar_background.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/loading_wrapper.dart';
@@ -12,7 +13,6 @@ import 'package:jews_harp/features/admin/presentation/BLoCs/category_detail/cate
 import 'package:jews_harp/features/admin/presentation/screens/edit_category_screen.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/scrollable_technique_list.dart';
 import 'package:jews_harp/features/techniques/domain/entities/category.dart';
-import 'package:jews_harp/core/utils.dart';
 
 class CategoryDetailScreenArgs {
   final Category category;

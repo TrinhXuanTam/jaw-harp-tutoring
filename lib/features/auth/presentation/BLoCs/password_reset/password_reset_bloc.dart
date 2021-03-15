@@ -8,7 +8,6 @@ import 'package:jews_harp/features/auth/application/use_cases/password_reset.dar
 import 'package:meta/meta.dart';
 
 part 'password_reset_event.dart';
-
 part 'password_reset_state.dart';
 
 @Injectable(env: [Environment.prod, Environment.dev])
