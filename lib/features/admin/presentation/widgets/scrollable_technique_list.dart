@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
+import 'package:jews_harp/features/techniques/domain/entities/media.dart';
+import 'package:jews_harp/core/utils.dart';
 
 class ScrollableTechniqueList extends StatelessWidget {
   final List<ScrollableTechniqueListItem> items;
@@ -8,10 +10,8 @@ class ScrollableTechniqueList extends StatelessWidget {
   const ScrollableTechniqueList({Key? key, required this.items, this.height}) : super(key: key);
 
   Widget _getThumbnail(ScrollableTechniqueListItem item) {
-    final thumbnailUrl = item.thumbnailUrl;
-
-    final thumbnail = thumbnailUrl != null
-        ? Image.network(thumbnailUrl)
+    final thumbnail = item.thumbnail != null
+        ? getImageFromMedia(item.thumbnail!)
         : Container(
             color: BASE_COLOR_VERY_LIGHT,
             padding: const EdgeInsets.all(5),
@@ -114,13 +114,13 @@ class ScrollableTechniqueList extends StatelessWidget {
 
 class ScrollableTechniqueListItem {
   final VoidCallback onTap;
-  final String? thumbnailUrl;
+  final Media? thumbnail;
   final String productId;
   final String title;
 
   ScrollableTechniqueListItem({
     required this.onTap,
-    this.thumbnailUrl,
+    this.thumbnail,
     required this.title,
     required this.productId,
   });

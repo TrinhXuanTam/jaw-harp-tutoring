@@ -4,7 +4,7 @@ import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/l10n.dart';
-import 'package:jews_harp/core/utils.dart';
+import 'package:jews_harp/core/extensions.dart';
 import 'package:jews_harp/core/widgets/big_app_bar_background.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/loading_wrapper.dart';
@@ -113,7 +113,7 @@ class CategoryDetailScreen extends StatelessWidget {
                                       onTap: () {},
                                       title: e.getLocalizedTitle(l10n.locale.languageCode),
                                       productId: e.productId.orElseGet(() => "Free"),
-                                      thumbnailUrl: e.thumbnailUrl.toNullable(),
+                                      thumbnail: e.thumbnail.toNullable(),
                                     ))
                                 .toList(),
                             height: size.height * 0.7,
