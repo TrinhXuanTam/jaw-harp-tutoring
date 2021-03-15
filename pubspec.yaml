@@ -51,7 +51,7 @@ dependencies:
   # Pick images and videos
   image_picker: ^0.7.2
   # Play videos
-  video_player: ^2.0.0
+  video_player: ^2.0.2
   # Keep the screen awake
   wakelock: ^0.5.0+2
   # Spinner

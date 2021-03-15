@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:jews_harp/core/constants/language_codes.dart';
+import 'package:jews_harp/features/techniques/domain/entities/media.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique_localized_data.dart';
 import 'package:optional/optional.dart';
 
@@ -8,8 +9,8 @@ class Technique extends Equatable {
   final Optional<String> productId;
   final String categoryId;
   final TechniqueDifficulty difficulty;
-  final Optional<String> thumbnailUrl;
-  final Optional<String> videoUrl;
+  final Optional<Media> thumbnail;
+  final Optional<Media> video;
   final Map<String, TechniqueLocalizedData> localizedData;
 
   const Technique({
@@ -17,8 +18,8 @@ class Technique extends Equatable {
     this.productId = const Optional.empty(),
     required this.categoryId,
     required this.difficulty,
-    this.thumbnailUrl = const Optional.empty(),
-    this.videoUrl = const Optional.empty(),
+    this.thumbnail = const Optional.empty(),
+    this.video = const Optional.empty(),
     required this.localizedData,
   });
 

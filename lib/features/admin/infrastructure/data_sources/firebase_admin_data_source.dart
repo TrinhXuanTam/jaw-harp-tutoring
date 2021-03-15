@@ -44,10 +44,8 @@ class FirebaseAdminDataSource {
       "localization": localizedData.toJson(),
     });
 
-    snapshot.update({
-      "videoUrl": video.isPresent ? await _uploadFile(snapshot.id, "video", video.value) : null,
-      "thumbnailUrl": thumbnail.isPresent ? await _uploadFile(snapshot.id, "thumbnail", thumbnail.value) : null,
-    });
+    if (video.isPresent) await _uploadFile(snapshot.id, "video", video.value);
+    if (thumbnail.isPresent) await _uploadFile(snapshot.id, "thumbnail", thumbnail.value);
 
     _categories.doc(categoryId).update({
       "techniques": FieldValue.arrayUnion([snapshot.id])
@@ -92,7 +90,7 @@ class FirebaseAdminDataSource {
 
     for (var i = 0; i < techniqueIds.length; i++) {
       final document = await _techniques.doc(techniqueIdsList[i]).get();
-      if (document.exists) res.add(TechniqueDTO.fromFirestore(document));
+      if (document.exists) res.add(await TechniqueDTO.fromFirestore(document));
     }
 
     return res;
