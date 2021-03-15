@@ -6,7 +6,6 @@ import 'package:jews_harp/features/techniques/domain/entities/category_localized
 import 'package:jews_harp/features/techniques/domain/entities/media.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique_localized_data.dart';
-import 'package:jews_harp/features/techniques/infrastructure/DTO/category_DTO.dart';
 import 'package:jews_harp/features/techniques/infrastructure/DTO/category_localized_data_DTO.dart';
 import 'package:jews_harp/features/techniques/infrastructure/DTO/mediaDTO.dart';
 import 'package:jews_harp/features/techniques/infrastructure/DTO/technique_localized_data_DTO.dart';
@@ -84,6 +83,9 @@ class CategoryAdminRepository extends ICategoryAdminRepository {
 
   @override
   Future<Iterable<Category>> getAllCategories() => _adminDataSource.getAllCategories();
+
+  @override
+  Future<Iterable<Technique>> getAllTechniques() => _adminDataSource.getAllTechniques();
 
   @override
   Future<Iterable<Technique>> getTechniquesByCategory(Category category) => _adminDataSource.getTechniquesById(category.techniqueIds);

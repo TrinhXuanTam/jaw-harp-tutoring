@@ -10,7 +10,6 @@ import 'package:jews_harp/features/techniques/domain/entities/category_localized
 import 'package:meta/meta.dart';
 
 part 'category_form_event.dart';
-
 part 'category_form_state.dart';
 
 @Injectable(env: [Environment.prod, Environment.dev])

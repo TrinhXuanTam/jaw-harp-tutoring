@@ -15,13 +15,14 @@ import 'package:jews_harp/features/admin/presentation/screens/create_category_sc
 import 'package:jews_harp/features/admin/presentation/screens/create_technique_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/edit_category_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/edit_technique_screen.dart';
+import 'package:jews_harp/features/admin/presentation/screens/technique_list_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/technique_localization_add_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/technique_localization_edit_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/upload_files_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/link_auth_providers_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_sent_screen.dart';
-import 'package:jews_harp/features/techniques/presentation/screens/technique_list_screen.dart';
+import 'package:jews_harp/features/techniques/presentation/screens/home_screen.dart';
 import 'package:jews_harp/features/techniques/presentation/screens/video_full_screen_mode_screen.dart';
 
 import 'core/constants/routes.dart';
@@ -131,7 +132,7 @@ class _EntryPoint extends StatelessWidget {
           navigatorKey: globalKey,
           routes: {
             SPLASH_SCREEN_ROUTE: (ctx) => SplashScreen(onLoad: () => BlocProvider.of<AuthBloc>(ctx).add(SplashScreenDisplayedEvent(AppLocalizations.of(ctx).locale.languageCode))),
-            HOME_SCREEN_ROUTE: (_) => TechniqueListScreen(),
+            HOME_SCREEN_ROUTE: (_) => HomeScreen(),
             AUTH_SCREEN_ROUTE: (_) => AuthenticationScreen(),
             SIGN_UP_SCREEN_ROUTE: (_) => SignUpScreen(),
             PASSWORD_RESET_SCREEN_ROUTE: (_) => PasswordResetScreen(),
@@ -148,6 +149,7 @@ class _EntryPoint extends StatelessWidget {
             CATEGORY_LOCALIZATION_EDIT_SCREEN_ROUTE: (ctx) => CategoryLocalizationEditScreen.fromArgs(_getArgs<CategoryLocalizationEditScreenArgs>(ctx)),
             TECHNIQUE_LOCALIZATION_ADD_SCREEN_ROUTE: (ctx) => TechniqueLocalizationAddScreen.fromArgs(_getArgs<TechniqueLocalizationAddScreenArgs>(ctx)),
             TECHNIQUE_LOCALIZATION_EDIT_SCREEN_ROUTE: (ctx) => TechniqueLocalizationEditScreen.fromArgs(_getArgs<TechniqueLocalizationEditScreenArgs>(ctx)),
+            TECHNIQUE_LIST_SCREEN_ROUTE: (ctx) => TechniqueListScreen(),
             VISIBLE_CATEGORIES_LIST_SCREEN_ROUTE: (ctx) => CategoryListScreen.fromArgs(_getArgs<CategoryListScreenArgs>(ctx)),
             HIDDEN_CATEGORIES_LIST_SCREEN_ROUTE: (ctx) => CategoryListScreen.fromArgs(_getArgs<CategoryListScreenArgs>(ctx)),
             VIDEO_FULL_SCREEN_SCREEN_ROUTE: (ctx) => VideoFullScreenModeScreen.fromArgs(_getArgs<VideoFullScreenModeScreenArgs>(ctx)),

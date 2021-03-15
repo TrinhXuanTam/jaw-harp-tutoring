@@ -158,6 +158,17 @@ class FirebaseAdminDataSource {
     return snapshot.docs.map((e) => CategoryDTO.fromFirestore(e));
   }
 
+  Future<Iterable<TechniqueDTO>> getAllTechniques() async {
+    final snapshot = await _techniques.get();
+    final List<TechniqueDTO> res = [];
+
+    for (final doc in snapshot.docs) {
+      res.add(await TechniqueDTO.fromFirestore(doc));
+    }
+
+    return res;
+  }
+
   Future<Iterable<TechniqueDTO>> getTechniquesById(List<String> techniqueIds) async {
     final List<TechniqueDTO> res = [];
     final techniqueIdsList = techniqueIds.toList();

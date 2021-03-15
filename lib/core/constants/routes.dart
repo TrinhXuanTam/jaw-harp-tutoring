@@ -15,6 +15,7 @@ const String EDIT_CATEGORY_SCREEN_ROUTE = "/categoryEdit";
 const String EDIT_TECHNIQUE_SCREEN_ROUTE = "/techniqueEdit";
 const String CATEGORY_DETAIL_SCREEN_ROUTE = "/categoryDetail";
 const String CREATE_TECHNIQUE_SCREEN_ROUTE = "/techniqueCreate";
+const String TECHNIQUE_LIST_SCREEN_ROUTE = "/techniqueList";
 const String VISIBLE_CATEGORIES_LIST_SCREEN_ROUTE = "/visibleCategoriesList";
 const String HIDDEN_CATEGORIES_LIST_SCREEN_ROUTE = "/hiddenCategoriesList";
 const String CATEGORY_LOCALIZATION_EDIT_SCREEN_ROUTE = "/categoryLocalizationEdit";

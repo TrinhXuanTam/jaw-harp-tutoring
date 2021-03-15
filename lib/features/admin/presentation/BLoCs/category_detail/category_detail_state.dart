@@ -3,7 +3,6 @@ part of 'category_detail_bloc.dart';
 @immutable
 abstract class CategoryDetailState {}
 
-class CategoryInitial extends CategoryDetailState {}
 
 class CategoryDetailLoading extends CategoryDetailState {}
 

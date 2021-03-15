@@ -39,7 +39,7 @@ class CategoryDetailScreen extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
 
     return BlocProvider<CategoryDetailBloc>(
-      create: (_) => serviceLocator<CategoryDetailBloc>()..add(LoadData(this.category)),
+      create: (_) => serviceLocator<CategoryDetailBloc>()..add(LoadTechniques(this.category)),
       child: BlocBuilder<CategoryDetailBloc, CategoryDetailState>(
           buildWhen: (prevState, newState) => prevState is CategoryDetailLoading,
           builder: (ctx, state) {

@@ -14,13 +14,13 @@ part 'category_detail_state.dart';
 class CategoryDetailBloc extends Bloc<CategoryDetailEvent, CategoryDetailState> {
   final GetTechniquesByCategory _getTechniquesByCategory;
 
-  CategoryDetailBloc(this._getTechniquesByCategory) : super(CategoryInitial());
+  CategoryDetailBloc(this._getTechniquesByCategory) : super(CategoryDetailLoading());
 
   @override
   Stream<CategoryDetailState> mapEventToState(
     CategoryDetailEvent event,
   ) async* {
-    if (event is LoadData) {
+    if (event is LoadTechniques) {
       yield CategoryDetailLoading();
       final techniques = await _getTechniquesByCategory(event.category);
       yield CategoryDetailLoaded(event.category, techniques.toList());
