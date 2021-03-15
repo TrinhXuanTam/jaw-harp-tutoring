@@ -23,6 +23,16 @@ abstract class ICategoryAdminRepository {
     Iterable<CategoryLocalizedData>? localizedData,
   });
 
+  Future<Technique> updateTechnique(
+    String id, {
+    Optional<String>? productId,
+    String? categoryId,
+    TechniqueDifficulty? difficulty,
+    Iterable<TechniqueLocalizedData>? localizedData,
+    Optional<Media>? thumbnail,
+    Optional<Media>? video,
+  });
+
   Future<Iterable<Category>> getVisibleCategories();
 
   Future<Iterable<Category>> getHiddenCategories();

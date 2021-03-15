@@ -8,15 +8,19 @@ import 'package:jews_harp/core/constants/language_codes.dart';
 import 'package:jews_harp/core/widgets/rounded_dropdown.dart';
 import 'package:jews_harp/features/admin/application/use_cases/create_technique.dart';
 import 'package:jews_harp/features/admin/application/use_cases/get_all_categories.dart';
+import 'package:jews_harp/features/admin/application/use_cases/update_technique.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/thumbnail_picker.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/video_picker.dart';
 import 'package:jews_harp/features/techniques/domain/entities/category.dart';
+import 'package:jews_harp/features/techniques/domain/entities/media.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique_localized_data.dart';
 import 'package:meta/meta.dart';
 import 'package:optional/optional.dart';
+import 'package:jews_harp/core/extensions.dart';
 
 part 'technique_form_event.dart';
+
 part 'technique_form_state.dart';
 
 final _defaultFormState = TechniqueFormState(
@@ -32,6 +36,7 @@ final _defaultFormState = TechniqueFormState(
 @Injectable(env: [Environment.prod, Environment.dev])
 class TechniqueFormBloc extends Bloc<TechniqueFormEvent, TechniqueFormState> {
   final CreateTechnique _createTechnique;
+  final UpdateTechnique _updateTechnique;
   final GetAllCategories _getAllCategories;
   final ErrorBloc _errorBloc;
 
@@ -39,6 +44,7 @@ class TechniqueFormBloc extends Bloc<TechniqueFormEvent, TechniqueFormState> {
     @factoryParam TechniqueFormState? initialState,
     this._getAllCategories,
     this._createTechnique,
+    this._updateTechnique,
     this._errorBloc,
   ) : super(initialState != null ? initialState : _defaultFormState);
 
@@ -58,21 +64,47 @@ class TechniqueFormBloc extends Bloc<TechniqueFormEvent, TechniqueFormState> {
       final localizedData = Map.of(state.localizedData);
       localizedData.remove(event.languageCode);
       yield state.copyWith(localizedData: localizedData);
-    } else if (event is CreateTechniqueEvent) {
+    } else if (event is CreateTechniqueEvent || event is UpdateTechniqueEvent) {
       final categoryId = state.categoryController.value;
       final difficulty = state.difficultyController.value;
 
       if ((state.isPaid && state.idController.text.isEmpty) || categoryId == null || difficulty == null)
         _errorBloc.add(UserErrorEvent("Failed to create technique", "Please fill out all fields!"));
       else {
-        final technique = await _createTechnique(
-          productId: state.isPaid ? Optional.ofNullable(state.idController.text) : Optional.empty(),
-          categoryId: categoryId,
-          difficulty: difficulty,
-          localizedData: state.localizedData.entries.map((e) => e.value),
-          thumbnail: Optional.ofNullable(state.thumbnailController.image),
-          video: Optional.ofNullable(state.videoController.video),
-        );
+        late final technique;
+        if (event is CreateTechniqueEvent)
+          technique = await _createTechnique(
+            productId: state.isPaid ? Optional.ofNullable(state.idController.text) : Optional.empty(),
+            categoryId: categoryId,
+            difficulty: difficulty,
+            localizedData: state.localizedData.entries.map((e) => e.value),
+            thumbnail: Optional.ofNullable(state.thumbnailController.image),
+            video: Optional.ofNullable(state.videoController.video),
+          );
+        else if (event is UpdateTechniqueEvent) {
+          late final Optional<Media>? thumbnail;
+          late final Optional<Media>? video;
+
+          if (event.technique.thumbnail.toNullable() == state.thumbnailController.image)
+            thumbnail = null;
+          else
+            thumbnail = state.thumbnailController.image != null ? Optional.of(state.thumbnailController.image!) : Optional.empty();
+
+          if (event.technique.video.toNullable() == state.videoController.video)
+            video = null;
+          else
+            video = state.videoController.video != null ? Optional.of(state.videoController.video!) : Optional.empty();
+
+          technique = await _updateTechnique(
+            event.technique.id,
+            productId: state.isPaid ? Optional.of(state.idController.text) : Optional.empty(),
+            categoryId: state.categoryController.value,
+            difficulty: state.difficultyController.value,
+            localizedData: state.localizedData.entries.map((e) => e.value),
+            thumbnail: thumbnail,
+            video: video,
+          );
+        }
         yield state.copyWith(success: technique);
       }
     }

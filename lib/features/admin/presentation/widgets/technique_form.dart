@@ -223,7 +223,7 @@ class TechniqueForm extends StatelessWidget {
           ),
           SizedBox(height: 10),
           RoundedButton(
-            text: "Create",
+            text: this.submitButtonText,
             onPressed: this.onSubmit,
           ),
         ],

@@ -56,6 +56,27 @@ class CategoryAdminRepository extends ICategoryAdminRepository {
   }
 
   @override
+  Future<Technique> updateTechnique(
+    String id, {
+    Optional<String>? productId,
+    String? categoryId,
+    TechniqueDifficulty? difficulty,
+    Iterable<TechniqueLocalizedData>? localizedData,
+    Optional<Media>? thumbnail,
+    Optional<Media>? video,
+  }) {
+    return _adminDataSource.updateTechnique(
+      id,
+      productId: productId,
+      categoryId: categoryId,
+      difficulty: difficulty,
+      localizedData: localizedData?.toDTO(),
+      thumbnail: thumbnail?.map((t) => MediaDTO.fromEntity(t)),
+      video: video?.map((v) => MediaDTO.fromEntity(v)),
+    );
+  }
+
+  @override
   Future<Iterable<Category>> getHiddenCategories() => _adminDataSource.getHiddenCategories();
 
   @override

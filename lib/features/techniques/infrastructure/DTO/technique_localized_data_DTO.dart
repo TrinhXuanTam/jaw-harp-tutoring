@@ -8,7 +8,7 @@ class TechniqueLocalizedDataDTO extends TechniqueLocalizedData {
     required String accompanyingText,
   }) : super(languageCode: languageCode, title: title, description: description, accompanyingText: accompanyingText);
 
-  factory TechniqueLocalizedDataDTO.fromCategoryLocalizedData(TechniqueLocalizedData localizedData) {
+  factory TechniqueLocalizedDataDTO.fromEntity(TechniqueLocalizedData localizedData) {
     return TechniqueLocalizedDataDTO(
       languageCode: localizedData.languageCode,
       title: localizedData.title,
@@ -34,5 +34,5 @@ extension Serializable on Iterable<TechniqueLocalizedDataDTO> {
 }
 
 extension Conversion on Iterable<TechniqueLocalizedData> {
-  Iterable<TechniqueLocalizedDataDTO> toDTO() => this.map((e) => TechniqueLocalizedDataDTO.fromCategoryLocalizedData(e));
+  Iterable<TechniqueLocalizedDataDTO> toDTO() => this.map((e) => TechniqueLocalizedDataDTO.fromEntity(e));
 }
