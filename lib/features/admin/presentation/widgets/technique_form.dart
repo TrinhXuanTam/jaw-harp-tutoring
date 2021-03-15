@@ -98,8 +98,10 @@ class TechniqueForm extends StatelessWidget {
             future: bloc.categories,
             builder: (ctx, snapshot) {
               late final items;
+              late final controller;
 
               if (snapshot.hasData) {
+                controller = bloc.state.categoryController;
                 items = snapshot.data!
                     .map(
                       (e) => DropdownMenuItem<String>(
@@ -113,6 +115,7 @@ class TechniqueForm extends StatelessWidget {
                     )
                     .toList();
               } else {
+                controller = DropdownButtonFormFieldController<String>();
                 items = [DropdownMenuItem<String>(child: Text("Loading categories..."))];
               }
 
@@ -120,7 +123,7 @@ class TechniqueForm extends StatelessWidget {
                 items: items,
                 placeholderText: "Category",
                 icon: Icons.folder_open_rounded,
-                controller: bloc.state.categoryController,
+                controller: controller,
               );
             },
           ),

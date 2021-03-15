@@ -5,7 +5,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/core/errors/technique_already_exists_error.dart';
 import 'package:jews_harp/core/extensions.dart';
-import 'package:jews_harp/features/techniques/domain/entities/media.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
 import 'package:jews_harp/features/techniques/infrastructure/DTO/category_DTO.dart';
 import 'package:jews_harp/features/techniques/infrastructure/DTO/category_localized_data_DTO.dart';

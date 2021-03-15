@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -10,7 +9,6 @@ import 'package:meta/meta.dart';
 import 'package:video_player/video_player.dart';
 
 part 'video_picker_event.dart';
-
 part 'video_picker_state.dart';
 
 @Injectable(env: [Environment.prod, Environment.dev])

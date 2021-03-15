@@ -3,14 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
-import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/extensions.dart';
+import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/big_app_bar_background.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/loading_wrapper.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_detail/category_detail_bloc.dart';
 import 'package:jews_harp/features/admin/presentation/screens/edit_category_screen.dart';
+import 'package:jews_harp/features/admin/presentation/screens/edit_technique_screen.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/scrollable_technique_list.dart';
 import 'package:jews_harp/features/techniques/domain/entities/category.dart';
 
@@ -109,11 +110,11 @@ class CategoryDetailScreen extends StatelessWidget {
                           SizedBox(height: 15),
                           ScrollableTechniqueList(
                             items: state.techniques
-                                .map((e) => ScrollableTechniqueListItem(
-                                      onTap: () {},
-                                      title: e.getLocalizedTitle(l10n.locale.languageCode),
-                                      productId: e.productId.orElseGet(() => "Free"),
-                                      thumbnail: e.thumbnail.toNullable(),
+                                .map((technique) => ScrollableTechniqueListItem(
+                                      onTap: () => Navigator.pushNamed(context, EDIT_TECHNIQUE_SCREEN_ROUTE, arguments: EditTechniqueScreenArgs(technique)),
+                                      title: technique.getLocalizedTitle(l10n.locale.languageCode),
+                                      productId: technique.productId.orElseGet(() => "Free"),
+                                      thumbnail: technique.thumbnail.toNullable(),
                                     ))
                                 .toList(),
                             height: size.height * 0.7,

@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:jews_harp/features/techniques/domain/entities/category.dart';
 import 'package:jews_harp/features/techniques/domain/entities/category_localized_data.dart';

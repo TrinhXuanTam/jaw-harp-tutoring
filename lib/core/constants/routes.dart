@@ -12,6 +12,7 @@ const String EMAIL_VERIFICATION_UP_SCREEN_ROUTE = "/emailVerification";
 const String ADMIN_MENU_SCREEN_ROUTE = "/admin";
 const String CREATE_CATEGORY_SCREEN_ROUTE = "/categoryCreate";
 const String EDIT_CATEGORY_SCREEN_ROUTE = "/categoryEdit";
+const String EDIT_TECHNIQUE_SCREEN_ROUTE = "/techniqueEdit";
 const String CATEGORY_DETAIL_SCREEN_ROUTE = "/categoryDetail";
 const String CREATE_TECHNIQUE_SCREEN_ROUTE = "/techniqueCreate";
 const String VISIBLE_CATEGORIES_LIST_SCREEN_ROUTE = "/visibleCategoriesList";
