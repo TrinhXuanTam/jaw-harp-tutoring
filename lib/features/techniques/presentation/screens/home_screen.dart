@@ -16,14 +16,14 @@ class HomeScreen extends StatelessWidget {
           TabItem(icon: Icons.person_outline_rounded, activeIcon: Icons.person_rounded),
         ],
         initialActiveIndex: 0,
-        onTap: (_) {
+        onTap: (index) {
           // final authBlocState = BlocProvider.of<AuthBloc>(context).state;
           //
           // if (authBlocState is AuthenticatedState) {
           //   BlocProvider.of<AuthBloc>(context).add(UserSignOutEvent());
           // }
 
-          Navigator.pushNamed(context, ADMIN_MENU_SCREEN_ROUTE);
+          if (index == 3) Navigator.pushNamed(context, ADMIN_MENU_SCREEN_ROUTE);
         },
       ),
     );

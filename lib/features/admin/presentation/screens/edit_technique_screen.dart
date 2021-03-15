@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/extensions.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
+import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/core/widgets/rounded_dropdown.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
@@ -75,10 +76,22 @@ class _EditTechniqueForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TechniqueForm(
-      submitButtonText: "Save",
-      onSubmit: () => BlocProvider.of<TechniqueFormBloc>(context).add(UpdateTechniqueEvent(technique)),
-      onSuccess: (technique) => Navigator.pop(context),
+    return Column(
+      children: [
+        TechniqueForm(
+          submitButtonText: "Save",
+          onSubmit: () => BlocProvider.of<TechniqueFormBloc>(context).add(UpdateTechniqueEvent(technique)),
+          onSuccess: (technique) => Navigator.pop(context),
+        ),
+        SizedBox(height: 5),
+        RoundedButton(
+          text: "Remove",
+          color: Colors.redAccent[200]!,
+          textColor: Colors.white,
+          borderColor: Colors.redAccent[200]!,
+          onPressed: () {},
+        ),
+      ],
     );
   }
 }

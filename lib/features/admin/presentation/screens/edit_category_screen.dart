@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
+import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_form/category_form_bloc.dart';
@@ -67,15 +68,27 @@ class _CreateCategoryForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CategoryForm(
-      submitButtonText: "Save",
-      onSubmit: () => BlocProvider.of<CategoryFormBloc>(context).add(UpdateCategoryEvent(category)),
-      onSuccess: (category) => Navigator.pushNamedAndRemoveUntil(
-        context,
-        CATEGORY_DETAIL_SCREEN_ROUTE,
-        ModalRoute.withName(ADMIN_MENU_SCREEN_ROUTE),
-        arguments: CategoryDetailScreenArgs(category),
-      ),
+    return Column(
+      children: [
+        CategoryForm(
+          submitButtonText: "Save",
+          onSubmit: () => BlocProvider.of<CategoryFormBloc>(context).add(UpdateCategoryEvent(category)),
+          onSuccess: (category) => Navigator.pushNamedAndRemoveUntil(
+            context,
+            CATEGORY_DETAIL_SCREEN_ROUTE,
+            ModalRoute.withName(ADMIN_MENU_SCREEN_ROUTE),
+            arguments: CategoryDetailScreenArgs(category),
+          ),
+        ),
+        SizedBox(height: 5),
+        RoundedButton(
+          text: "Remove",
+          color: Colors.redAccent[200]!,
+          textColor: Colors.white,
+          borderColor: Colors.redAccent[200]!,
+          onPressed: () {},
+        ),
+      ],
     );
   }
 }
