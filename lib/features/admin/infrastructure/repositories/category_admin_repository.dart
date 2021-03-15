@@ -1,4 +1,3 @@
-
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/features/admin/domain/repository_interfaces/category_admin_repository.dart';
 import 'package:jews_harp/features/admin/infrastructure/data_sources/firebase_admin_data_source.dart';
@@ -44,7 +43,17 @@ class CategoryAdminRepository extends ICategoryAdminRepository {
   }
 
   @override
-  Future<Category> updateCategory(Category category) => _adminDataSource.updateCategory(CategoryDTO.fromEntity(category));
+  Future<Category> updateCategory(
+    String id, {
+    bool? isVisible,
+    Iterable<CategoryLocalizedData>? localizedData,
+  }) {
+    return _adminDataSource.updateCategory(
+      id,
+      isVisible: isVisible,
+      localizedData: localizedData?.map((e) => CategoryLocalizedDataDTO.fromEntity(e)),
+    );
+  }
 
   @override
   Future<Iterable<Category>> getHiddenCategories() => _adminDataSource.getHiddenCategories();

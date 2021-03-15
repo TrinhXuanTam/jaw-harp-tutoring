@@ -10,6 +10,7 @@ import 'package:jews_harp/features/techniques/domain/entities/category_localized
 import 'package:meta/meta.dart';
 
 part 'category_form_event.dart';
+
 part 'category_form_state.dart';
 
 @Injectable(env: [Environment.prod, Environment.dev])
@@ -41,12 +42,11 @@ class CategoryFormBloc extends Bloc<CategoryFormEvent, CategoryFormState> {
       final category = await _createCategory(state.isVisible, state.localizedData.entries.map((e) => e.value));
       yield state.copyWith(success: category);
     } else if (event is UpdateCategoryEvent) {
-      final updatedCategory = await _updateCategory(Category(
-        id: event.category.id,
+      final updatedCategory = await _updateCategory(
+        event.category.id,
         isVisible: state.isVisible,
-        techniqueIds: event.category.techniqueIds,
-        localizedData: state.localizedData,
-      ));
+        localizedData: state.localizedData.entries.map((e) => e.value),
+      );
       yield state.copyWith(success: updatedCategory);
     }
   }

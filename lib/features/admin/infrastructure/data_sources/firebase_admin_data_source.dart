@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/errors/NotFoundError.dart';
 import 'package:jews_harp/core/errors/technique_already_exists_error.dart';
 import 'package:jews_harp/core/extensions.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
@@ -65,8 +66,21 @@ class FirebaseAdminDataSource {
     return CategoryDTO.fromFirestore(snapshot);
   }
 
-  Future<CategoryDTO> updateCategory(CategoryDTO category) async {
-    await _categories.doc(category.id).set(category.toJson());
+  Future<CategoryDTO> updateCategory(
+    String id, {
+    bool? isVisible,
+    Iterable<CategoryLocalizedDataDTO>? localizedData,
+  }) async {
+    final category = await _categories.doc(id).get();
+    if (!category.exists) throw NotFoundError("Category with the given ID doesn't exist!");
+
+    final Map<String, dynamic> updatedData = {};
+
+    if (isVisible != null) updatedData["isVisible"] = isVisible;
+    if (localizedData != null) updatedData["localization"] = localizedData.toJson();
+
+    await _categories.doc(id).update(updatedData);
+
     return CategoryDTO.fromFirestore(await _categories.doc(category.id).get());
   }
 
