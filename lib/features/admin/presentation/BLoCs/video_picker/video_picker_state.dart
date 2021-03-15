@@ -6,7 +6,7 @@ abstract class VideoPickerState {}
 class NoVideoPickedState extends VideoPickerState {}
 
 class VideoPickedState extends VideoPickerState {
-  final File video;
+  final Media video;
   final VideoPlayerController playableVideo;
 
   VideoPickedState(this.video, this.playableVideo);

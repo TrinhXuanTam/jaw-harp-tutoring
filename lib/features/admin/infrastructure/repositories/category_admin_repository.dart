@@ -5,10 +5,12 @@ import 'package:jews_harp/features/admin/domain/repository_interfaces/category_a
 import 'package:jews_harp/features/admin/infrastructure/data_sources/firebase_admin_data_source.dart';
 import 'package:jews_harp/features/techniques/domain/entities/category.dart';
 import 'package:jews_harp/features/techniques/domain/entities/category_localized_data.dart';
+import 'package:jews_harp/features/techniques/domain/entities/media.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique_localized_data.dart';
 import 'package:jews_harp/features/techniques/infrastructure/DTO/category_DTO.dart';
 import 'package:jews_harp/features/techniques/infrastructure/DTO/category_localized_data_DTO.dart';
+import 'package:jews_harp/features/techniques/infrastructure/DTO/mediaDTO.dart';
 import 'package:jews_harp/features/techniques/infrastructure/DTO/technique_localized_data_DTO.dart';
 import 'package:optional/optional.dart';
 
@@ -24,16 +26,16 @@ class CategoryAdminRepository extends ICategoryAdminRepository {
     required String categoryId,
     required TechniqueDifficulty difficulty,
     required Iterable<TechniqueLocalizedData> localizedData,
-    required Optional<File> thumbnail,
-    required Optional<File> video,
+    required Optional<Media> thumbnail,
+    required Optional<Media> video,
   }) {
     return _adminDataSource.createTechnique(
       productId: productId,
       categoryId: categoryId,
       difficulty: difficulty,
       localizedData: localizedData.toDTO(),
-      thumbnail: thumbnail,
-      video: video,
+      thumbnail: thumbnail.map((t) => MediaDTO.fromEntity(t)),
+      video: video.map((v) => MediaDTO.fromEntity(v)),
     );
   }
 

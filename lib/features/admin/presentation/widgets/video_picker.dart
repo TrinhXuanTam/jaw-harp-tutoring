@@ -7,6 +7,7 @@ import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/rounded_input_field_container.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/video_picker/video_picker_bloc.dart';
+import 'package:jews_harp/features/techniques/domain/entities/media.dart';
 import 'package:jews_harp/features/techniques/presentation/screens/video_full_screen_mode_screen.dart';
 import 'package:video_player/video_player.dart';
 
@@ -127,7 +128,7 @@ class VideoPicker extends StatelessWidget {
 }
 
 class VideoPickerController {
-  File? video;
+  Media? video;
 
   VideoPickerController({this.video});
 }

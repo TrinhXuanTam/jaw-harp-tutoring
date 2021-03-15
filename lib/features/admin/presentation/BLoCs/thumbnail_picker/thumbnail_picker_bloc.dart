@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/features/admin/application/use_cases/pick_image.dart';
+import 'package:jews_harp/features/techniques/domain/entities/media.dart';
 import 'package:meta/meta.dart';
 
 part 'thumbnail_picker_event.dart';

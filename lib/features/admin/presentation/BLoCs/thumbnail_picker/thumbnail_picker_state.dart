@@ -6,7 +6,7 @@ abstract class ThumbnailPickerState {}
 class NoImagePickedState extends ThumbnailPickerState {}
 
 class ImagePickedState extends ThumbnailPickerState {
-  final File image;
+  final Media image;
 
   ImagePickedState(this.image);
 }

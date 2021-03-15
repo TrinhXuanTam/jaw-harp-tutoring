@@ -4,7 +4,7 @@ part of 'thumbnail_picker_bloc.dart';
 abstract class ThumbnailPickerEvent {}
 
 class UploadScreenLoadedEvent extends ThumbnailPickerEvent {
-  final File? image;
+  final Media? image;
 
   UploadScreenLoadedEvent({this.image});
 }

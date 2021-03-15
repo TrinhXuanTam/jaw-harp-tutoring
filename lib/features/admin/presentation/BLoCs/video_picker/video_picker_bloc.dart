@@ -3,11 +3,14 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/utils.dart';
 import 'package:jews_harp/features/admin/application/use_cases/pick_video.dart';
+import 'package:jews_harp/features/techniques/domain/entities/media.dart';
 import 'package:meta/meta.dart';
 import 'package:video_player/video_player.dart';
 
 part 'video_picker_event.dart';
+
 part 'video_picker_state.dart';
 
 @Injectable(env: [Environment.prod, Environment.dev])
@@ -23,7 +26,7 @@ class VideoPickerBloc extends Bloc<VideoPickerEvent, VideoPickerState> {
       if (video == null)
         yield NoVideoPickedState();
       else {
-        final playableVideo = VideoPlayerController.file(video);
+        final playableVideo = getVideoPlayerControllerFromMedia(video);
         await playableVideo.initialize();
         yield VideoPickedState(video, playableVideo);
       }
@@ -32,7 +35,7 @@ class VideoPickerBloc extends Bloc<VideoPickerEvent, VideoPickerState> {
       if (video == null)
         yield NoVideoPickedState();
       else {
-        final playableVideo = VideoPlayerController.file(video);
+        final playableVideo = getVideoPlayerControllerFromMedia(video);
         await playableVideo.initialize();
         yield VideoPickedState(video, playableVideo);
       }

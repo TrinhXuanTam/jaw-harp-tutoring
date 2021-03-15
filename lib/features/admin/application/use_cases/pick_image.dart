@@ -2,13 +2,15 @@ import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/features/techniques/domain/entities/media.dart';
+import 'package:optional/optional.dart';
 
 @LazySingleton(env: [Environment.prod, Environment.dev])
 class PickImage {
-  Future<File?> call() async {
+  Future<Media?> call() async {
     final picker = ImagePicker();
     final image = await picker.getImage(source: ImageSource.gallery);
     if (image == null) return null;
-    return File(image.path);
+    return Media(filePath: Optional.of(image.path));
   }
 }

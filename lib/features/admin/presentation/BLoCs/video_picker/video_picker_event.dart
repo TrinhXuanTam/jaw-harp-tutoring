@@ -4,7 +4,7 @@ part of 'video_picker_bloc.dart';
 abstract class VideoPickerEvent {}
 
 class UploadScreenLoadedEvent extends VideoPickerEvent {
-  final File? video;
+  final Media? video;
 
   UploadScreenLoadedEvent({this.video});
 }

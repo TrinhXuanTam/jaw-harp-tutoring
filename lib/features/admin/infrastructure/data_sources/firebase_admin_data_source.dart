@@ -5,9 +5,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/core/errors/technique_already_exists_error.dart';
 import 'package:jews_harp/core/extensions.dart';
+import 'package:jews_harp/features/techniques/domain/entities/media.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
 import 'package:jews_harp/features/techniques/infrastructure/DTO/category_DTO.dart';
 import 'package:jews_harp/features/techniques/infrastructure/DTO/category_localized_data_DTO.dart';
+import 'package:jews_harp/features/techniques/infrastructure/DTO/mediaDTO.dart';
 import 'package:jews_harp/features/techniques/infrastructure/DTO/technique_DTO.dart';
 import 'package:jews_harp/features/techniques/infrastructure/DTO/technique_localized_data_DTO.dart';
 import 'package:optional/optional.dart';
@@ -18,8 +20,8 @@ class FirebaseAdminDataSource {
   CollectionReference _techniques = FirebaseFirestore.instance.collection('techniques');
   Reference _media = FirebaseStorage.instance.ref("techniques");
 
-  Future<String> _uploadFile(String techniqueId, String filename, File file) async {
-    final task = await _media.child(techniqueId).child(filename).putFile(file);
+  Future<String> _uploadFile(String techniqueId, String filename, String path) async {
+    final task = await _media.child(techniqueId).child(filename).putFile(File(path));
     final url = await task.ref.getDownloadURL();
     return url;
   }
@@ -29,8 +31,8 @@ class FirebaseAdminDataSource {
     required String categoryId,
     required TechniqueDifficulty difficulty,
     required Iterable<TechniqueLocalizedDataDTO> localizedData,
-    required Optional<File> thumbnail,
-    required Optional<File> video,
+    required Optional<MediaDTO> thumbnail,
+    required Optional<MediaDTO> video,
   }) async {
     if (productId.isPresent) {
       final techniquesWithSameProductId = await _techniques.where("productId", isEqualTo: productId.value).get();
@@ -44,8 +46,8 @@ class FirebaseAdminDataSource {
       "localization": localizedData.toJson(),
     });
 
-    if (video.isPresent) await _uploadFile(snapshot.id, "video", video.value);
-    if (thumbnail.isPresent) await _uploadFile(snapshot.id, "thumbnail", thumbnail.value);
+    if (video.isPresent && video.value.filePath.isPresent) await _uploadFile(snapshot.id, "video", video.value.filePath.value);
+    if (thumbnail.isPresent && thumbnail.value.filePath.isPresent) await _uploadFile(snapshot.id, "thumbnail", thumbnail.value.filePath.value);
 
     _categories.doc(categoryId).update({
       "techniques": FieldValue.arrayUnion([snapshot.id])
