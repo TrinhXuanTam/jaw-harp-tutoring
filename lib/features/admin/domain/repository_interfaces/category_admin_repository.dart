@@ -4,15 +4,16 @@ import 'package:jews_harp/features/techniques/domain/entities/category.dart';
 import 'package:jews_harp/features/techniques/domain/entities/category_localized_data.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique_localized_data.dart';
+import 'package:optional/optional_internal.dart';
 
 abstract class ICategoryAdminRepository {
   Future<Technique> createTechnique({
-    String? productId,
+    required Optional<String> productId,
     required String categoryId,
     required TechniqueDifficulty difficulty,
     required Iterable<TechniqueLocalizedData> localizedData,
-    File? thumbnail,
-    File? video,
+    required Optional<File> thumbnail,
+    required Optional<File> video,
   });
 
   Future<Category> createCategory(bool isVisible, Iterable<CategoryLocalizedData> localizedData);

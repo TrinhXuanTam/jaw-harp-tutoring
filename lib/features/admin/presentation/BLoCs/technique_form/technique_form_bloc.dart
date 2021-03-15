@@ -14,6 +14,7 @@ import 'package:jews_harp/features/techniques/domain/entities/category.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
 import 'package:jews_harp/features/techniques/domain/entities/technique_localized_data.dart';
 import 'package:meta/meta.dart';
+import 'package:optional/optional.dart';
 
 part 'technique_form_event.dart';
 
@@ -66,12 +67,12 @@ class TechniqueFormBloc extends Bloc<TechniqueFormEvent, TechniqueFormState> {
         _errorBloc.add(UserErrorEvent("Failed to create technique", "Please fill out all fields!"));
       else {
         final technique = await _createTechnique(
-          productId: state.isPaid ? state.idController.text : null,
+          productId: state.isPaid ? Optional.ofNullable(state.idController.text) : Optional.empty(),
           categoryId: categoryId,
           difficulty: difficulty,
           localizedData: state.localizedData.entries.map((e) => e.value),
-          thumbnail: state.thumbnailController.image,
-          video: state.videoController.video,
+          thumbnail: Optional.ofNullable(state.thumbnailController.image),
+          video: Optional.ofNullable(state.videoController.video),
         );
         yield state.copyWith(success: technique);
       }

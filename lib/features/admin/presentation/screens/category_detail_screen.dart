@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
@@ -13,7 +12,7 @@ import 'package:jews_harp/features/admin/presentation/BLoCs/category_detail/cate
 import 'package:jews_harp/features/admin/presentation/screens/edit_category_screen.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/scrollable_technique_list.dart';
 import 'package:jews_harp/features/techniques/domain/entities/category.dart';
-import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
+import 'package:jews_harp/core/utils.dart';
 
 class CategoryDetailScreenArgs {
   final Category category;
@@ -113,8 +112,8 @@ class CategoryDetailScreen extends StatelessWidget {
                                 .map((e) => ScrollableTechniqueListItem(
                                       onTap: () {},
                                       title: e.getLocalizedTitle(l10n.locale.languageCode),
-                                      productId: e.productId ?? "Free",
-                                      thumbnailUrl: e.thumbnailUrl,
+                                      productId: e.productId.orElseGet(() => "Free"),
+                                      thumbnailUrl: e.thumbnailUrl.toNullable(),
                                     ))
                                 .toList(),
                             height: size.height * 0.7,

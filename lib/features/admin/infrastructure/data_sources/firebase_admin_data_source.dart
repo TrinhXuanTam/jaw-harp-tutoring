@@ -9,6 +9,8 @@ import 'package:jews_harp/features/techniques/infrastructure/DTO/category_DTO.da
 import 'package:jews_harp/features/techniques/infrastructure/DTO/category_localized_data_DTO.dart';
 import 'package:jews_harp/features/techniques/infrastructure/DTO/technique_DTO.dart';
 import 'package:jews_harp/features/techniques/infrastructure/DTO/technique_localized_data_DTO.dart';
+import 'package:optional/optional.dart';
+import 'package:jews_harp/core/utils.dart';
 
 @LazySingleton(env: [Environment.prod])
 class FirebaseAdminDataSource {
@@ -23,23 +25,28 @@ class FirebaseAdminDataSource {
   }
 
   Future<TechniqueDTO> createTechnique({
-    String? productId,
+    required Optional<String> productId,
     required String categoryId,
     required TechniqueDifficulty difficulty,
     required Iterable<TechniqueLocalizedDataDTO> localizedData,
-    File? thumbnail,
-    File? video,
+    required Optional<File> thumbnail,
+    required Optional<File> video,
   }) async {
+    if (productId.isPresent) {
+      final techniquesWithSameProductId = await _techniques.where("productId", isEqualTo: productId.value).get();
+      if (techniquesWithSameProductId.size > 0) throw TechniqueAlreadyExistsError();
+    }
+
     final snapshot = await _techniques.add({
-      "productId": productId,
+      "productId": productId.toNullable(),
       "category": categoryId,
       "difficulty": difficulty.index,
       "localization": localizedData.toJson(),
     });
 
     snapshot.update({
-      "videoUrl": video == null ? null : await _uploadFile(snapshot.id, "video", video),
-      "thumbnailUrl": thumbnail == null ? null : await _uploadFile(snapshot.id, "thumbnail", thumbnail),
+      "videoUrl": video.isPresent ? await _uploadFile(snapshot.id, "video", video.value) : null,
+      "thumbnailUrl": thumbnail.isPresent ? await _uploadFile(snapshot.id, "thumbnail", thumbnail.value) : null,
     });
 
     _categories.doc(categoryId).update({

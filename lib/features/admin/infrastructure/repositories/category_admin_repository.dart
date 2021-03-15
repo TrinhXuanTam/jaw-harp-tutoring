@@ -10,6 +10,7 @@ import 'package:jews_harp/features/techniques/domain/entities/technique_localize
 import 'package:jews_harp/features/techniques/infrastructure/DTO/category_DTO.dart';
 import 'package:jews_harp/features/techniques/infrastructure/DTO/category_localized_data_DTO.dart';
 import 'package:jews_harp/features/techniques/infrastructure/DTO/technique_localized_data_DTO.dart';
+import 'package:optional/optional.dart';
 
 @LazySingleton(as: ICategoryAdminRepository, env: [Environment.prod])
 class CategoryAdminRepository extends ICategoryAdminRepository {
@@ -19,12 +20,12 @@ class CategoryAdminRepository extends ICategoryAdminRepository {
 
   @override
   Future<Technique> createTechnique({
-    String? productId,
+    required Optional<String> productId,
     required String categoryId,
     required TechniqueDifficulty difficulty,
     required Iterable<TechniqueLocalizedData> localizedData,
-    File? thumbnail,
-    File? video,
+    required Optional<File> thumbnail,
+    required Optional<File> video,
   }) {
     return _adminDataSource.createTechnique(
       productId: productId,
