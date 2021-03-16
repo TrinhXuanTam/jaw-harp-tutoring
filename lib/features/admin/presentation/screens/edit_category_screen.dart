@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
@@ -10,29 +9,36 @@ import 'package:jews_harp/features/admin/presentation/BLoCs/category_form/catego
 import 'package:jews_harp/features/admin/presentation/widgets/category_form.dart';
 import 'package:jews_harp/features/techniques/domain/entities/category.dart';
 
-import 'category_detail_screen.dart';
-
 class EditCategoryScreenArgs {
   final Category category;
+  final void Function(BuildContext ctx) onClose;
 
-  EditCategoryScreenArgs(this.category);
+  EditCategoryScreenArgs(this.category, this.onClose);
 }
 
 class EditCategoryScreen extends StatelessWidget {
   final Category category;
+  final void Function(BuildContext ctx) onClose;
 
   factory EditCategoryScreen.fromArgs(EditCategoryScreenArgs args) {
-    return EditCategoryScreen(category: args.category);
+    return EditCategoryScreen(
+      category: args.category,
+      onClose: args.onClose,
+    );
   }
 
-  const EditCategoryScreen({Key? key, required this.category}) : super(key: key);
+  const EditCategoryScreen({
+    Key? key,
+    required this.category,
+    required this.onClose,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: IconAppBar(
-        onPressed: () => Navigator.pop(context),
+        onPressed: () => this.onClose(context),
       ),
       body: CenteredStack(
         children: [
@@ -48,10 +54,13 @@ class EditCategoryScreen extends StatelessWidget {
               BlocProvider<CategoryFormBloc>(
                 create: (ctx) => serviceLocator<CategoryFormBloc>(
                     param1: CategoryFormState(
-                  isVisible: category.isVisible,
-                  localizedData: category.localizedData,
+                  isVisible: this.category.isVisible,
+                  localizedData: this.category.localizedData,
                 )),
-                child: _CreateCategoryForm(category: category),
+                child: _CreateCategoryForm(
+                  category: this.category,
+                  onClose: () => this.onClose(context),
+                ),
               ),
             ],
           ),
@@ -63,8 +72,13 @@ class EditCategoryScreen extends StatelessWidget {
 
 class _CreateCategoryForm extends StatelessWidget {
   final Category category;
+  final VoidCallback onClose;
 
-  const _CreateCategoryForm({Key? key, required this.category}) : super(key: key);
+  const _CreateCategoryForm({
+    Key? key,
+    required this.category,
+    required this.onClose,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -73,12 +87,7 @@ class _CreateCategoryForm extends StatelessWidget {
         CategoryForm(
           submitButtonText: "Save",
           onSubmit: () => BlocProvider.of<CategoryFormBloc>(context).add(UpdateCategoryEvent(category)),
-          onSuccess: (category) => Navigator.pushNamedAndRemoveUntil(
-            context,
-            CATEGORY_DETAIL_SCREEN_ROUTE,
-            ModalRoute.withName(ADMIN_MENU_SCREEN_ROUTE),
-            arguments: CategoryDetailScreenArgs(category),
-          ),
+          onSuccess: (category) => this.onClose(),
         ),
         SizedBox(height: 5),
         RoundedButton(
@@ -86,7 +95,9 @@ class _CreateCategoryForm extends StatelessWidget {
           color: Colors.redAccent[200]!,
           textColor: Colors.white,
           borderColor: Colors.redAccent[200]!,
-          onPressed: () {},
+          onPressed: () {
+            this.onClose();
+          },
         ),
       ],
     );

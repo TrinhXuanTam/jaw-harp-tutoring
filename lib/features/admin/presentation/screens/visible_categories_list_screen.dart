@@ -64,7 +64,7 @@ class VisibleCategoriesListScreen extends StatelessWidget {
                           items: state.categories
                               .map(
                                 (category) => ScrollableCategoryListItem(
-                                  () => Navigator.pushNamed(
+                                  () => Navigator.pushReplacementNamed(
                                     context,
                                     CATEGORY_DETAIL_SCREEN_ROUTE,
                                     arguments: CategoryDetailScreenArgs(category),

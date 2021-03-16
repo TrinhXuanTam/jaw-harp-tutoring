@@ -65,7 +65,14 @@ class TechniqueListScreen extends StatelessWidget {
                             ScrollableTechniqueList(
                               items: state.techniques
                                   .map((technique) => ScrollableTechniqueListItem(
-                                        onTap: () => Navigator.pushNamed(context, EDIT_TECHNIQUE_SCREEN_ROUTE, arguments: EditTechniqueScreenArgs(technique)),
+                                        onTap: () => Navigator.pushReplacementNamed(
+                                          context,
+                                          EDIT_TECHNIQUE_SCREEN_ROUTE,
+                                          arguments: EditTechniqueScreenArgs(
+                                            technique,
+                                            (ctx) => Navigator.pushReplacementNamed(ctx, TECHNIQUE_LIST_SCREEN_ROUTE),
+                                          ),
+                                        ),
                                         title: technique.getLocalizedTitle(l10n.locale.languageCode),
                                         productId: technique.productId.orElseGet(() => "Free"),
                                         thumbnail: technique.thumbnail.toNullable(),

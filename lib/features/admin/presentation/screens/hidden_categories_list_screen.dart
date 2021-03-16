@@ -9,7 +9,6 @@ import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/loading_wrapper.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/hidden_categories/hidden_categories_bloc.dart';
-import 'package:jews_harp/features/admin/presentation/BLoCs/visible_categories/visible_categories_bloc.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/scrollable_category_list.dart';
 
 import 'category_detail_screen.dart';
@@ -22,9 +21,9 @@ class HiddenCategoriesListScreen extends StatelessWidget {
 
     return BlocProvider<HiddenCategoriesBloc>(
       create: (_) => serviceLocator<HiddenCategoriesBloc>()..add(LoadHiddenCategories()),
-      child: BlocBuilder<VisibleCategoriesBloc, VisibleCategoriesState>(
+      child: BlocBuilder<HiddenCategoriesBloc, HiddenCategoriesState>(
         builder: (ctx, state) {
-          if (state is VisibleCategoriesLoaded)
+          if (state is HiddenCategoriesLoaded)
             return Scaffold(
               resizeToAvoidBottomInset: false,
               appBar: IconAppBar(
@@ -65,7 +64,7 @@ class HiddenCategoriesListScreen extends StatelessWidget {
                           items: state.categories
                               .map(
                                 (category) => ScrollableCategoryListItem(
-                                  () => Navigator.pushNamed(
+                                  () => Navigator.pushReplacementNamed(
                                     context,
                                     CATEGORY_DETAIL_SCREEN_ROUTE,
                                     arguments: CategoryDetailScreenArgs(category),

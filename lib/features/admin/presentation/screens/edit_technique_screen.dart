@@ -15,18 +15,23 @@ import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
 
 class EditTechniqueScreenArgs {
   final Technique technique;
+  final void Function(BuildContext ctx) onClose;
 
-  EditTechniqueScreenArgs(this.technique);
+  EditTechniqueScreenArgs(this.technique, this.onClose);
 }
 
 class EditTechniqueScreen extends StatelessWidget {
   final Technique technique;
+  final void Function(BuildContext ctx) onClose;
 
   factory EditTechniqueScreen.fromArgs(EditTechniqueScreenArgs args) {
-    return EditTechniqueScreen(technique: args.technique);
+    return EditTechniqueScreen(
+      technique: args.technique,
+      onClose: args.onClose,
+    );
   }
 
-  const EditTechniqueScreen({Key? key, required this.technique}) : super(key: key);
+  const EditTechniqueScreen({Key? key, required this.technique, required this.onClose}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +39,7 @@ class EditTechniqueScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       appBar: IconAppBar(
-        onPressed: () => Navigator.pop(context),
+        onPressed: () => this.onClose(context),
       ),
       body: CenteredStack(
         children: [
@@ -59,7 +64,7 @@ class EditTechniqueScreen extends StatelessWidget {
                     videoController: VideoPickerController(video: technique.video.toNullable()),
                   ),
                 ),
-                child: _EditTechniqueForm(technique: this.technique),
+                child: _EditTechniqueForm(technique: this.technique, onClose: this.onClose),
               ),
             ],
           ),
@@ -71,8 +76,9 @@ class EditTechniqueScreen extends StatelessWidget {
 
 class _EditTechniqueForm extends StatelessWidget {
   final Technique technique;
+  final void Function(BuildContext ctx) onClose;
 
-  const _EditTechniqueForm({Key? key, required this.technique}) : super(key: key);
+  const _EditTechniqueForm({Key? key, required this.technique, required this.onClose}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +87,7 @@ class _EditTechniqueForm extends StatelessWidget {
         TechniqueForm(
           submitButtonText: "Save",
           onSubmit: () => BlocProvider.of<TechniqueFormBloc>(context).add(UpdateTechniqueEvent(technique)),
-          onSuccess: (technique) => Navigator.pop(context),
+          onSuccess: (_) => this.onClose(context),
         ),
         SizedBox(height: 5),
         RoundedButton(
@@ -89,7 +95,9 @@ class _EditTechniqueForm extends StatelessWidget {
           color: Colors.redAccent[200]!,
           textColor: Colors.white,
           borderColor: Colors.redAccent[200]!,
-          onPressed: () {},
+          onPressed: () {
+            this.onClose(context);
+          },
         ),
       ],
     );

@@ -49,7 +49,12 @@ class CategoryDetailScreen extends StatelessWidget {
                 appBar: IconAppBar(
                   backgroundColor: BASE_COLOR,
                   iconColor: Colors.white,
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () {
+                    if (this.category.isVisible)
+                      Navigator.pushReplacementNamed(context, VISIBLE_CATEGORIES_LIST_SCREEN_ROUTE);
+                    else
+                      Navigator.pushReplacementNamed(context, HIDDEN_CATEGORIES_LIST_SCREEN_ROUTE);
+                  },
                 ),
                 backgroundColor: Colors.grey[200],
                 body: CenteredStack(
@@ -93,7 +98,14 @@ class CategoryDetailScreen extends StatelessWidget {
                                 child: Material(
                                   color: Colors.white,
                                   child: InkWell(
-                                    onTap: () => Navigator.pushNamed(context, EDIT_CATEGORY_SCREEN_ROUTE, arguments: EditCategoryScreenArgs(category)),
+                                    onTap: () => Navigator.pushReplacementNamed(
+                                      context,
+                                      EDIT_CATEGORY_SCREEN_ROUTE,
+                                      arguments: EditCategoryScreenArgs(
+                                        category,
+                                        (ctx) => Navigator.pushReplacementNamed(ctx, CATEGORY_DETAIL_SCREEN_ROUTE, arguments: CategoryDetailScreenArgs(this.category)),
+                                      ),
+                                    ),
                                     child: Container(
                                       padding: const EdgeInsets.all(15),
                                       child: Icon(
@@ -111,7 +123,14 @@ class CategoryDetailScreen extends StatelessWidget {
                           ScrollableTechniqueList(
                             items: state.techniques
                                 .map((technique) => ScrollableTechniqueListItem(
-                                      onTap: () => Navigator.pushNamed(context, EDIT_TECHNIQUE_SCREEN_ROUTE, arguments: EditTechniqueScreenArgs(technique)),
+                                      onTap: () => Navigator.pushReplacementNamed(
+                                        context,
+                                        EDIT_TECHNIQUE_SCREEN_ROUTE,
+                                        arguments: EditTechniqueScreenArgs(
+                                          technique,
+                                          (ctx) => Navigator.pushReplacementNamed(ctx, CATEGORY_DETAIL_SCREEN_ROUTE, arguments: CategoryDetailScreenArgs(this.category)),
+                                        ),
+                                      ),
                                       title: technique.getLocalizedTitle(l10n.locale.languageCode),
                                       productId: technique.productId.orElseGet(() => "Free"),
                                       thumbnail: technique.thumbnail.toNullable(),
