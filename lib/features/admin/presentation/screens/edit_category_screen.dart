@@ -11,14 +11,14 @@ import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 
 class EditCategoryScreenArgs {
   final Category category;
-  final void Function(BuildContext ctx) onClose;
+  final void Function(BuildContext ctx, Category category) onClose;
 
   EditCategoryScreenArgs(this.category, this.onClose);
 }
 
 class EditCategoryScreen extends StatelessWidget {
   final Category category;
-  final void Function(BuildContext ctx) onClose;
+  final void Function(BuildContext ctx, Category category) onClose;
 
   factory EditCategoryScreen.fromArgs(EditCategoryScreenArgs args) {
     return EditCategoryScreen(
@@ -38,7 +38,7 @@ class EditCategoryScreen extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: IconAppBar(
-        onPressed: () => this.onClose(context),
+        onPressed: () => this.onClose(context, this.category),
       ),
       body: CenteredStack(
         children: [
@@ -57,9 +57,9 @@ class EditCategoryScreen extends StatelessWidget {
                   isVisible: this.category.isVisible,
                   localizedData: this.category.localizedData,
                 )),
-                child: _CreateCategoryForm(
+                child: _EditCategoryForm(
                   category: this.category,
-                  onClose: () => this.onClose(context),
+                  onClose: (category) => this.onClose(context, category),
                 ),
               ),
             ],
@@ -70,11 +70,11 @@ class EditCategoryScreen extends StatelessWidget {
   }
 }
 
-class _CreateCategoryForm extends StatelessWidget {
+class _EditCategoryForm extends StatelessWidget {
   final Category category;
-  final VoidCallback onClose;
+  final void Function(Category category) onClose;
 
-  const _CreateCategoryForm({
+  const _EditCategoryForm({
     Key? key,
     required this.category,
     required this.onClose,
@@ -86,8 +86,8 @@ class _CreateCategoryForm extends StatelessWidget {
       children: [
         CategoryForm(
           submitButtonText: "Save",
-          onSubmit: () => BlocProvider.of<CategoryFormBloc>(context).add(UpdateCategoryEvent(category)),
-          onSuccess: (category) => this.onClose(),
+          onSubmit: () => BlocProvider.of<CategoryFormBloc>(context).add(UpdateCategoryEvent(this.category)),
+          onSuccess: (updatedCategory) => this.onClose(updatedCategory),
         ),
         SizedBox(height: 5),
         RoundedButton(
@@ -96,7 +96,7 @@ class _CreateCategoryForm extends StatelessWidget {
           textColor: Colors.white,
           borderColor: Colors.redAccent[200]!,
           onPressed: () {
-            this.onClose();
+            this.onClose(this.category);
           },
         ),
       ],

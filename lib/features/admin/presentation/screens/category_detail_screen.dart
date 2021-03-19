@@ -103,7 +103,7 @@ class CategoryDetailScreen extends StatelessWidget {
                                       EDIT_CATEGORY_SCREEN_ROUTE,
                                       arguments: EditCategoryScreenArgs(
                                         category,
-                                        (ctx) => Navigator.pushReplacementNamed(ctx, CATEGORY_DETAIL_SCREEN_ROUTE, arguments: CategoryDetailScreenArgs(this.category)),
+                                        (ctx, category) => Navigator.pushReplacementNamed(ctx, CATEGORY_DETAIL_SCREEN_ROUTE, arguments: CategoryDetailScreenArgs(category)),
                                       ),
                                     ),
                                     child: Container(

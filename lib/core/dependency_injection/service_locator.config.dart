@@ -42,9 +42,9 @@ import 'package:jews_harp/features/admin/infrastructure/repositories/category_ad
 import 'package:jews_harp/features/admin/infrastructure/repositories/technique_admin_repository.dart'
     as _i13;
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_detail/category_detail_bloc.dart'
-    as _i52;
-import 'package:jews_harp/features/admin/presentation/BLoCs/category_form/category_form_bloc.dart'
     as _i53;
+import 'package:jews_harp/features/admin/presentation/BLoCs/category_form/category_form_bloc.dart'
+    as _i54;
 import 'package:jews_harp/features/admin/presentation/BLoCs/hidden_categories/hidden_categories_bloc.dart'
     as _i46;
 import 'package:jews_harp/features/admin/presentation/BLoCs/technique_form/technique_form_bloc.dart'
@@ -94,15 +94,15 @@ import 'package:jews_harp/features/auth/infrastructure/facades/user_facade.dart'
 import 'package:jews_harp/features/auth/infrastructure/repositories/user_repository.dart'
     as _i17;
 import 'package:jews_harp/features/auth/presentation/BLoCs/email_authentication/email_auth_bloc.dart'
-    as _i54;
-import 'package:jews_harp/features/auth/presentation/BLoCs/email_verification/email_verification_bloc.dart'
     as _i55;
+import 'package:jews_harp/features/auth/presentation/BLoCs/email_verification/email_verification_bloc.dart'
+    as _i56;
 import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart'
     as _i51;
 import 'package:jews_harp/features/auth/presentation/BLoCs/password_reset/password_reset_bloc.dart'
     as _i21;
 import 'package:jews_harp/features/auth/presentation/BLoCs/sign_up_screen/sign_up_bloc.dart'
-    as _i56;
+    as _i57;
 import 'package:jews_harp/features/auth/presentation/BLoCs/third_party_authentication/third_party_auth_bloc.dart'
     as _i49;
 import 'package:jews_harp/features/user_section/application/get_visible_categories.dart'
@@ -113,6 +113,8 @@ import 'package:jews_harp/features/user_section/infrastructure/data_sources/fire
     as _i6;
 import 'package:jews_harp/features/user_section/infrastructure/repositories/category_repository.dart'
     as _i11;
+import 'package:jews_harp/features/user_section/presentation/BLoCs/Categories/categories_bloc.dart'
+    as _i52;
 
 const String _prod = 'prod';
 const String _dev = 'dev';
@@ -278,27 +280,30 @@ _i1.GetIt initGetIt(_i1.GetIt get,
           get<_i25.SetLocale>(),
           get<_i26.SignOut>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i52.CategoryDetailBloc>(
-      () => _i52.CategoryDetailBloc(get<_i43.GetTechniquesByCategory>()),
+  gh.factory<_i52.CategoriesBloc>(
+      () => _i52.CategoriesBloc(get<_i44.GetVisibleCategories>()),
       registerFor: {_prod, _dev});
-  gh.factoryParam<_i53.CategoryFormBloc, _i53.CategoryFormState?, dynamic>(
-      (initialState, _) => _i53.CategoryFormBloc(
+  gh.factory<_i53.CategoryDetailBloc>(
+      () => _i53.CategoryDetailBloc(get<_i43.GetTechniquesByCategory>()),
+      registerFor: {_prod, _dev});
+  gh.factoryParam<_i54.CategoryFormBloc, _i54.CategoryFormState?, dynamic>(
+      (initialState, _) => _i54.CategoryFormBloc(
           initialState, get<_i33.CreateCategory>(), get<_i30.UpdateCategory>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i54.EmailAuthBloc>(
-      () => _i54.EmailAuthBloc(
+  gh.factory<_i55.EmailAuthBloc>(
+      () => _i55.EmailAuthBloc(
           get<_i35.EmailAuthentication>(), get<_i3.ErrorBloc>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i55.EmailVerificationBloc>(
-      () => _i55.EmailVerificationBloc(
+  gh.factory<_i56.EmailVerificationBloc>(
+      () => _i56.EmailVerificationBloc(
           get<_i26.SignOut>(),
           get<_i24.SendEmailVerification>(),
           get<_i36.EmailIsVerified>(),
           get<_i3.ErrorBloc>(),
           get<_i51.AuthBloc>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i56.SignUpBloc>(
-      () => _i56.SignUpBloc(
+  gh.factory<_i57.SignUpBloc>(
+      () => _i57.SignUpBloc(
           get<_i27.SignUp>(),
           get<_i40.GetAuthProviders>(),
           get<_i18.LinkEmailProvider>(),
