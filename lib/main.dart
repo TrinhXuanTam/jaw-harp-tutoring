@@ -23,6 +23,7 @@ import 'package:jews_harp/features/admin/presentation/screens/visible_categories
 import 'package:jews_harp/features/auth/presentation/screens/link_auth_providers_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_sent_screen.dart';
+import 'package:jews_harp/features/techniques/presentation/screens/categories_screen.dart';
 import 'package:jews_harp/features/techniques/presentation/screens/home_screen.dart';
 import 'package:jews_harp/features/techniques/presentation/screens/video_full_screen_mode_screen.dart';
 
@@ -155,6 +156,7 @@ class _EntryPoint extends StatelessWidget {
             HIDDEN_CATEGORIES_LIST_SCREEN_ROUTE: (_) => HiddenCategoriesListScreen(),
             VIDEO_FULL_SCREEN_SCREEN_ROUTE: (ctx) => VideoFullScreenModeScreen.fromArgs(_getArgs<VideoFullScreenModeScreenArgs>(ctx)),
             UPLOAD_FILES_SCREEN_ROUTE: (ctx) => UploadFilesScreen.fromArgs(_getArgs<UploadFilesScreenArgs>(ctx)),
+            CATEGORIES_SCREEN_ROUTE: (_) => CategoriesScreen(),
           },
           initialRoute: SPLASH_SCREEN_ROUTE,
         ),
