@@ -144,8 +144,8 @@ class CategoriesScreen extends StatelessWidget {
                                   );
                               },
                               staggeredTileBuilder: (int index) => StaggeredTile.fit(2),
-                              mainAxisSpacing: 4,
-                              crossAxisSpacing: 4,
+                              mainAxisSpacing: 10,
+                              crossAxisSpacing: 10,
                             ),
                           ),
                         ),

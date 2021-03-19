@@ -7,6 +7,7 @@ import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:meta/meta.dart';
 
 part 'categories_event.dart';
+
 part 'categories_state.dart';
 
 @Injectable(env: [Environment.prod, Environment.dev])
@@ -19,9 +20,10 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   Stream<CategoriesState> mapEventToState(
     CategoriesEvent event,
   ) async* {
-    if (event is LoadCategories)
-      yield CategoriesLoaded(
-        (await _getVisibleCategories()).toList()..sort((lhs, rhs) => lhs.techniqueIds.length.compareTo(rhs.techniqueIds.length)),
-      );
+    if (event is LoadCategories) {
+      final categories = (await _getVisibleCategories()).toList();
+      categories.sort((lhs, rhs) => lhs.techniqueIds.length.compareTo(rhs.techniqueIds.length));
+      yield CategoriesLoaded(categories);
+    }
   }
 }

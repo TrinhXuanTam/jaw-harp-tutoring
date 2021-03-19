@@ -1,7 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/errors/media_not_found_error.dart';
+import 'package:jews_harp/core/errors/user_not_signed_in_error.dart';
+import 'package:jews_harp/features/auth/domain/entities/user.dart';
+import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
 import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:video_player/video_player.dart';
 
@@ -21,4 +25,12 @@ VideoPlayerController getVideoPlayerControllerFromMedia(Media media) {
     return VideoPlayerController.network(media.url.value);
   else
     throw MediaNotFoundError();
+}
+
+User getUser(BuildContext ctx) {
+  final state = BlocProvider.of<AuthBloc>(ctx).state;
+  if (state is AuthenticatedState) {
+    return state.user;
+  } else
+    throw UserNotSignedInError();
 }

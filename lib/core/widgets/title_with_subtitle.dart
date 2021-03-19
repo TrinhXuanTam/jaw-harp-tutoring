@@ -6,6 +6,8 @@ class TitleWithSubtitle extends StatelessWidget {
   final String subtitleText;
   final double titleSize;
   final double subtitleSize;
+  final Color titleColor;
+  final Color subtitleColor;
 
   const TitleWithSubtitle({
     Key? key,
@@ -13,6 +15,8 @@ class TitleWithSubtitle extends StatelessWidget {
     required this.subtitleText,
     this.titleSize = 45,
     this.subtitleSize = 16,
+    this.titleColor = Colors.black,
+    this.subtitleColor = Colors.grey,
   }) : super(key: key);
 
   @override
@@ -24,6 +28,7 @@ class TitleWithSubtitle extends StatelessWidget {
         Text(
           l10n.translate(this.titleText),
           style: TextStyle(
+            color: this.titleColor,
             fontWeight: FontWeight.bold,
             fontSize: this.titleSize,
           ),
@@ -31,7 +36,7 @@ class TitleWithSubtitle extends StatelessWidget {
         Text(
           l10n.translate(this.subtitleText),
           style: TextStyle(
-            color: Colors.grey,
+            color: this.subtitleColor,
             fontSize: this.subtitleSize,
           ),
         ),

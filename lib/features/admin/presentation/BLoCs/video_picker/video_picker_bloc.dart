@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:jews_harp/core/utils.dart';
 import 'package:jews_harp/features/admin/application/use_cases/pick_video.dart';
 import 'package:jews_harp/features/user_section/domain/entities/media.dart';
+import 'package:jews_harp/features/user_section/utils.dart';
 import 'package:meta/meta.dart';
 import 'package:video_player/video_player.dart';
 
