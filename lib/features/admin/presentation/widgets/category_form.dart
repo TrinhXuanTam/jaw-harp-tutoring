@@ -7,7 +7,7 @@ import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_form/category_form_bloc.dart';
 import 'package:jews_harp/features/admin/presentation/screens/category_localization_add_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/category_localization_edit_screen.dart';
-import 'package:jews_harp/features/techniques/domain/entities/category.dart';
+import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 
 import 'language_side_scroll_grid.dart';
 

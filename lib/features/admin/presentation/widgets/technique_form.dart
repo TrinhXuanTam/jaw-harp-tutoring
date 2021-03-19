@@ -11,8 +11,8 @@ import 'package:jews_harp/features/admin/presentation/screens/technique_localiza
 import 'package:jews_harp/features/admin/presentation/screens/technique_localization_edit_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/upload_files_screen.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/language_side_scroll_grid.dart';
-import 'package:jews_harp/features/techniques/domain/entities/category.dart';
-import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
+import 'package:jews_harp/features/user_section/domain/entities/category.dart';
+import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 
 class TechniqueForm extends StatelessWidget {
   final String submitButtonText;

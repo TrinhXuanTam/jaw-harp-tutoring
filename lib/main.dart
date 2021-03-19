@@ -23,9 +23,6 @@ import 'package:jews_harp/features/admin/presentation/screens/visible_categories
 import 'package:jews_harp/features/auth/presentation/screens/link_auth_providers_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_sent_screen.dart';
-import 'package:jews_harp/features/techniques/presentation/screens/categories_screen.dart';
-import 'package:jews_harp/features/techniques/presentation/screens/home_screen.dart';
-import 'package:jews_harp/features/techniques/presentation/screens/video_full_screen_mode_screen.dart';
 
 import 'core/constants/routes.dart';
 import 'core/constants/settings.dart';
@@ -36,6 +33,9 @@ import 'features/auth/presentation/screens/authentication_screen.dart';
 import 'features/auth/presentation/screens/email_verification_screen.dart';
 import 'features/auth/presentation/screens/sign_up_screen.dart';
 import 'features/auth/presentation/screens/splash_screen.dart';
+import 'features/user_section/presentation/screens/categories_screen.dart';
+import 'features/user_section/presentation/screens/home_screen.dart';
+import 'features/user_section/presentation/screens/video_full_screen_mode_screen.dart';
 
 /// Driver function
 Future<void> main() async {

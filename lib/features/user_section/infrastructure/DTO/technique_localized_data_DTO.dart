@@ -1,4 +1,4 @@
-import 'package:jews_harp/features/techniques/domain/entities/technique_localized_data.dart';
+import 'package:jews_harp/features/user_section/domain/entities/technique_localized_data.dart';
 
 class TechniqueLocalizedDataDTO extends TechniqueLocalizedData {
   const TechniqueLocalizedDataDTO({

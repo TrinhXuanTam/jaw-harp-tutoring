@@ -11,7 +11,7 @@ import 'package:jews_harp/features/admin/presentation/BLoCs/technique_form/techn
 import 'package:jews_harp/features/admin/presentation/widgets/technique_form.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/thumbnail_picker.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/video_picker.dart';
-import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
+import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 
 class EditTechniqueScreenArgs {
   final Technique technique;

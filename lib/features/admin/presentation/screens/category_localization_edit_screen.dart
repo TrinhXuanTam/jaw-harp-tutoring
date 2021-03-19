@@ -6,7 +6,7 @@ import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/core/widgets/rounded_text_field.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
-import 'package:jews_harp/features/techniques/domain/entities/category_localized_data.dart';
+import 'package:jews_harp/features/user_section/domain/entities/category_localized_data.dart';
 
 class CategoryLocalizationEditScreenArgs {
   final CategoryLocalizedData data;

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:jews_harp/features/techniques/domain/entities/category.dart';
+import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 
 import 'category_localized_data_DTO.dart';
 

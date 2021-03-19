@@ -1,15 +1,15 @@
 import 'package:injectable/injectable.dart';
-import 'package:jews_harp/features/admin/domain/repository_interfaces/category_admin_repository.dart';
-import 'package:jews_harp/features/techniques/domain/entities/media.dart';
-import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
-import 'package:jews_harp/features/techniques/domain/entities/technique_localized_data.dart';
+import 'package:jews_harp/features/admin/domain/repository_interfaces/technique_admin_repository.dart';
+import 'package:jews_harp/features/user_section/domain/entities/media.dart';
+import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
+import 'package:jews_harp/features/user_section/domain/entities/technique_localized_data.dart';
 import 'package:optional/optional.dart';
 
 @LazySingleton(env: [Environment.prod, Environment.dev])
 class UpdateTechnique {
-  final ICategoryAdminRepository _adminRepository;
+  final ITechniqueAdminRepository _techniqueAdminRepository;
 
-  UpdateTechnique(this._adminRepository);
+  UpdateTechnique(this._techniqueAdminRepository);
 
   Future<Technique> call(
     String id, {
@@ -20,7 +20,7 @@ class UpdateTechnique {
     Optional<Media>? thumbnail,
     Optional<Media>? video,
   }) {
-    return _adminRepository.updateTechnique(
+    return _techniqueAdminRepository.updateTechnique(
       id,
       productId: productId,
       categoryId: categoryId,

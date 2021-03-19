@@ -1,20 +1,7 @@
-import 'package:jews_harp/features/techniques/domain/entities/category.dart';
-import 'package:jews_harp/features/techniques/domain/entities/category_localized_data.dart';
-import 'package:jews_harp/features/techniques/domain/entities/media.dart';
-import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
-import 'package:jews_harp/features/techniques/domain/entities/technique_localized_data.dart';
-import 'package:optional/optional_internal.dart';
+import 'package:jews_harp/features/user_section/domain/entities/category.dart';
+import 'package:jews_harp/features/user_section/domain/entities/category_localized_data.dart';
 
 abstract class ICategoryAdminRepository {
-  Future<Technique> createTechnique({
-    required Optional<String> productId,
-    required String categoryId,
-    required TechniqueDifficulty difficulty,
-    required Iterable<TechniqueLocalizedData> localizedData,
-    required Optional<Media> thumbnail,
-    required Optional<Media> video,
-  });
-
   Future<Category> createCategory(bool isVisible, Iterable<CategoryLocalizedData> localizedData);
 
   Future<Category> updateCategory(
@@ -23,23 +10,7 @@ abstract class ICategoryAdminRepository {
     Iterable<CategoryLocalizedData>? localizedData,
   });
 
-  Future<Technique> updateTechnique(
-    String id, {
-    Optional<String>? productId,
-    String? categoryId,
-    TechniqueDifficulty? difficulty,
-    Iterable<TechniqueLocalizedData>? localizedData,
-    Optional<Media>? thumbnail,
-    Optional<Media>? video,
-  });
-
-  Future<Iterable<Category>> getVisibleCategories();
-
   Future<Iterable<Category>> getHiddenCategories();
 
   Future<Iterable<Category>> getAllCategories();
-
-  Future<Iterable<Technique>> getAllTechniques();
-
-  Future<Iterable<Technique>> getTechniquesByCategory(Category category);
 }

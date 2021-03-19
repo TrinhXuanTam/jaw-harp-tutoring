@@ -5,8 +5,8 @@ import 'package:injectable/injectable.dart';
 import 'package:jews_harp/core/constants/language_codes.dart';
 import 'package:jews_harp/features/admin/application/use_cases/create_category.dart';
 import 'package:jews_harp/features/admin/application/use_cases/update_category.dart';
-import 'package:jews_harp/features/techniques/domain/entities/category.dart';
-import 'package:jews_harp/features/techniques/domain/entities/category_localized_data.dart';
+import 'package:jews_harp/features/user_section/domain/entities/category.dart';
+import 'package:jews_harp/features/user_section/domain/entities/category_localized_data.dart';
 import 'package:meta/meta.dart';
 
 part 'category_form_event.dart';

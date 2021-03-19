@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:jews_harp/core/constants/language_codes.dart';
-import 'package:jews_harp/features/techniques/domain/entities/media.dart';
-import 'package:jews_harp/features/techniques/domain/entities/technique_localized_data.dart';
+import 'package:jews_harp/features/user_section/domain/entities/technique_localized_data.dart';
 import 'package:optional/optional.dart';
+
+import 'media.dart';
 
 class Technique extends Equatable {
   final String id;

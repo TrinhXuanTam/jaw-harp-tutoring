@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/utils.dart';
-import 'package:jews_harp/features/techniques/domain/entities/media.dart';
+import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 
 class ScrollableTechniqueList extends StatelessWidget {
   final List<ScrollableTechniqueListItem> items;

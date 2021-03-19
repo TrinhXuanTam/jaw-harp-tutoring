@@ -1,17 +1,16 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/core/errors/NotFoundError.dart';
 import 'package:jews_harp/core/errors/technique_already_exists_error.dart';
 import 'package:jews_harp/core/extensions.dart';
-import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
-import 'package:jews_harp/features/techniques/infrastructure/DTO/category_DTO.dart';
-import 'package:jews_harp/features/techniques/infrastructure/DTO/category_localized_data_DTO.dart';
-import 'package:jews_harp/features/techniques/infrastructure/DTO/mediaDTO.dart';
-import 'package:jews_harp/features/techniques/infrastructure/DTO/technique_DTO.dart';
-import 'package:jews_harp/features/techniques/infrastructure/DTO/technique_localized_data_DTO.dart';
+import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
+import 'package:jews_harp/features/user_section/infrastructure/DTO/category_DTO.dart';
+import 'package:jews_harp/features/user_section/infrastructure/DTO/category_localized_data_DTO.dart';
+import 'package:jews_harp/features/user_section/infrastructure/DTO/mediaDTO.dart';
+import 'package:jews_harp/features/user_section/infrastructure/DTO/technique_DTO.dart';
+import 'package:jews_harp/features/user_section/infrastructure/DTO/technique_localized_data_DTO.dart';
 import 'package:optional/optional.dart';
 
 @LazySingleton(env: [Environment.prod])
@@ -141,11 +140,6 @@ class FirebaseAdminDataSource {
     await _techniques.doc(id).update(updatedData);
 
     return TechniqueDTO.fromFirestore(await _techniques.doc(id).get());
-  }
-
-  Future<Iterable<CategoryDTO>> getVisibleCategories() async {
-    final snapshot = await _categories.where("isVisible", isEqualTo: true).get();
-    return snapshot.docs.map((e) => CategoryDTO.fromFirestore(e));
   }
 
   Future<Iterable<CategoryDTO>> getHiddenCategories() async {

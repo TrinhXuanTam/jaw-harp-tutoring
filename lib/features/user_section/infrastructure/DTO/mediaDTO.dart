@@ -1,4 +1,4 @@
-import 'package:jews_harp/features/techniques/domain/entities/media.dart';
+import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:optional/optional_internal.dart';
 
 class MediaDTO extends Media {

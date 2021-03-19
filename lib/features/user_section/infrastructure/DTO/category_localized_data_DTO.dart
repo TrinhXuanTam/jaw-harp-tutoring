@@ -1,4 +1,4 @@
-import 'package:jews_harp/features/techniques/domain/entities/category_localized_data.dart';
+import 'package:jews_harp/features/user_section/domain/entities/category_localized_data.dart';
 
 class CategoryLocalizedDataDTO extends CategoryLocalizedData {
   const CategoryLocalizedDataDTO({

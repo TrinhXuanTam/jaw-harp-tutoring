@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/features/admin/application/use_cases/get_techniques_by_category.dart';
-import 'package:jews_harp/features/techniques/domain/entities/category.dart';
-import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
+import 'package:jews_harp/features/user_section/domain/entities/category.dart';
+import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:meta/meta.dart';
 
 part 'category_detail_event.dart';

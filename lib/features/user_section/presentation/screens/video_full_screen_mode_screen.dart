@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
-import 'package:jews_harp/features/techniques/presentation/widgets/video_controls.dart';
+import 'package:jews_harp/features/user_section/presentation/widgets/video_controls.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoFullScreenModeScreenArgs {

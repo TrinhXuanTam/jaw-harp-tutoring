@@ -7,7 +7,7 @@ import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_form/category_form_bloc.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/category_form.dart';
-import 'package:jews_harp/features/techniques/domain/entities/category.dart';
+import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 
 class EditCategoryScreenArgs {
   final Category category;

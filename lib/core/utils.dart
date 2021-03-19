@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/errors/media_not_found_error.dart';
-import 'package:jews_harp/features/techniques/domain/entities/media.dart';
+import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:video_player/video_player.dart';
 
 Image getImageFromMedia(Media media) {

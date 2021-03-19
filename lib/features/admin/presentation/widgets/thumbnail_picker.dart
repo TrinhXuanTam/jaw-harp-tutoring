@@ -7,7 +7,7 @@ import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/utils.dart';
 import 'package:jews_harp/core/widgets/rounded_input_field_container.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/thumbnail_picker/thumbnail_picker_bloc.dart';
-import 'package:jews_harp/features/techniques/domain/entities/media.dart';
+import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 
 class ThumbnailPicker extends StatelessWidget {
   final ThumbnailPickerController controller;

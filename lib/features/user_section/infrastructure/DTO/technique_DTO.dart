@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
-import 'package:jews_harp/features/techniques/infrastructure/DTO/mediaDTO.dart';
-import 'package:jews_harp/features/techniques/infrastructure/DTO/technique_localized_data_DTO.dart';
+import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
+import 'package:jews_harp/features/user_section/infrastructure/DTO/mediaDTO.dart';
+import 'package:jews_harp/features/user_section/infrastructure/DTO/technique_localized_data_DTO.dart';
 import 'package:optional/optional_internal.dart';
 
 class TechniqueDTO extends Technique {

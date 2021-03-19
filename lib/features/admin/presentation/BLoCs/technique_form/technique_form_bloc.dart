@@ -5,21 +5,22 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/core/BLoCs/errors/error_bloc.dart';
 import 'package:jews_harp/core/constants/language_codes.dart';
-import 'package:jews_harp/core/extensions.dart';
 import 'package:jews_harp/core/widgets/rounded_dropdown.dart';
 import 'package:jews_harp/features/admin/application/use_cases/create_technique.dart';
 import 'package:jews_harp/features/admin/application/use_cases/get_all_categories.dart';
 import 'package:jews_harp/features/admin/application/use_cases/update_technique.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/thumbnail_picker.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/video_picker.dart';
-import 'package:jews_harp/features/techniques/domain/entities/category.dart';
-import 'package:jews_harp/features/techniques/domain/entities/media.dart';
-import 'package:jews_harp/features/techniques/domain/entities/technique.dart';
-import 'package:jews_harp/features/techniques/domain/entities/technique_localized_data.dart';
+import 'package:jews_harp/features/user_section/domain/entities/category.dart';
+import 'package:jews_harp/features/user_section/domain/entities/media.dart';
+import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
+import 'package:jews_harp/features/user_section/domain/entities/technique_localized_data.dart';
 import 'package:meta/meta.dart';
 import 'package:optional/optional.dart';
+import 'package:jews_harp/core/extensions.dart';
 
 part 'technique_form_event.dart';
+
 part 'technique_form_state.dart';
 
 final _defaultFormState = TechniqueFormState(

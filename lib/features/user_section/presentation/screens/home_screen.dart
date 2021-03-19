@@ -7,7 +7,6 @@ import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
-import 'package:jews_harp/features/techniques/presentation/screens/categories_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
