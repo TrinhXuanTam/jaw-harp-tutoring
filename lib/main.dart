@@ -156,7 +156,7 @@ class _EntryPoint extends StatelessWidget {
             HIDDEN_CATEGORIES_LIST_SCREEN_ROUTE: (_) => HiddenCategoriesListScreen(),
             VIDEO_FULL_SCREEN_SCREEN_ROUTE: (ctx) => VideoFullScreenModeScreen.fromArgs(_getArgs<VideoFullScreenModeScreenArgs>(ctx)),
             UPLOAD_FILES_SCREEN_ROUTE: (ctx) => UploadFilesScreen.fromArgs(_getArgs<UploadFilesScreenArgs>(ctx)),
-            CATEGORIES_SCREEN_ROUTE: (_) => CategoriesScreen(),
+            CATEGORIES_SCREEN_ROUTE: (ctx) => CategoriesScreen.fromArgs(_getArgs<CategoriesScreenArgs>(ctx)),
           },
           initialRoute: SPLASH_SCREEN_ROUTE,
         ),

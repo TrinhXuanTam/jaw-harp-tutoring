@@ -1,12 +1,12 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
-import 'package:jews_harp/core/widgets/centered_stack.dart';
-import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
+import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
+import 'package:jews_harp/features/user_section/presentation/BLoCs/home_screen/home_screen_bloc.dart';
+import 'package:jews_harp/features/user_section/presentation/screens/categories_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
             BlocProvider.of<AuthBloc>(context).add(UserSignOutEvent());
           }
 
-          if (index == 2) Navigator.pushNamed(context, CATEGORIES_SCREEN_ROUTE);
+          if (index == 2) Navigator.pushNamed(context, CATEGORIES_SCREEN_ROUTE, arguments: CategoriesScreenArgs(serviceLocator<HomeScreenBloc>()));
 
           if (index == 3) Navigator.pushNamed(context, ADMIN_MENU_SCREEN_ROUTE);
         },
