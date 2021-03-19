@@ -11,14 +11,6 @@ import 'package:jews_harp/features/user_section/presentation/screens/categories_
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final categories = [
-      {
-        "title": "Beginner techniques",
-        "description": "Learn beginner techniques!",
-      },
-    ];
-
     return Scaffold(
       bottomNavigationBar: ConvexAppBar(
         backgroundColor: BASE_COLOR,

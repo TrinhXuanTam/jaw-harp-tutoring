@@ -33,13 +33,13 @@ dependencies:
   # Cloud Firestore
   cloud_firestore: ^1.0.0
   # Google authentication
-  google_sign_in: ^5.0.0
+  google_sign_in: ^5.0.1
   # Facebook authentication
-  flutter_facebook_auth: ^3.0.0-nullsafety.0
+  flutter_facebook_auth: ^3.1.1
   # Business logic components
-  flutter_bloc: ^7.0.0-nullsafety.3
+  flutter_bloc: ^7.0.0
   # Dependency injection
-  injectable: ^1.2.0
+  injectable: ^1.2.1
   # Service locator
   get_it: ^6.0.0
   # Object value comparison
@@ -47,9 +47,9 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  convex_bottom_bar: ^3.0.0-nullsafety.0
+  convex_bottom_bar: ^3.0.0
   # Pick images and videos
-  image_picker: ^0.7.2
+  image_picker: ^0.7.3
   # Play videos
   video_player: ^2.0.2
   # Keep the screen awake
@@ -62,7 +62,7 @@ dependencies:
   flutter_staggered_grid_view: ^0.4.0-nullsafety.3
 
 dev_dependencies:
-  mocktail: ^0.0.2-dev.2
+  mocktail: ^0.1.1
   injectable_generator:
   build_runner: ^1.11.5
   flutter_test:

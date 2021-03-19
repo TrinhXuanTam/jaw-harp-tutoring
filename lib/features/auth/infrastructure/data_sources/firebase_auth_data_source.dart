@@ -85,9 +85,7 @@ class FirebaseAuthDataSource {
     try {
       final accessToken = await FacebookAuth.instance.login();
 
-      if (accessToken == null) throw UserNotSignedInError();
-
-      final AuthCredential facebookCredential = FacebookAuthProvider.credential(accessToken.token!);
+      final AuthCredential facebookCredential = FacebookAuthProvider.credential(accessToken.token);
       final UserCredential firebaseCredential = await _auth.signInWithCredential(facebookCredential);
 
       if (firebaseCredential.additionalUserInfo!.isNewUser) {

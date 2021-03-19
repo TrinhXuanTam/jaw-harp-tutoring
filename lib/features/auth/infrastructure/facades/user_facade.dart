@@ -58,7 +58,7 @@ class FirebaseAuthFacade extends IUserFacade {
     final user = _auth.currentUser;
     final accessToken = await FacebookAuth.instance.accessToken;
     if (user == null || accessToken == null) throw UserNotSignedInError();
-    final credentials = FacebookAuthProvider.credential(accessToken.token!);
+    final credentials = FacebookAuthProvider.credential(accessToken.token);
     await user.linkWithCredential(credentials);
     await _auth.signOut();
     await _auth.signInWithCredential(credentials);
