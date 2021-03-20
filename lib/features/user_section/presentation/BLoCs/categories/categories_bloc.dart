@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 part 'categories_event.dart';
 part 'categories_state.dart';
 
-@Injectable(env: [Environment.prod, Environment.dev])
+@LazySingleton(env: [Environment.prod, Environment.dev])
 class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   final GetCategories _getCategories;
 

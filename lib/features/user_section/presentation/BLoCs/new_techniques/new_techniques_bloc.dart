@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 part 'new_techniques_event.dart';
 part 'new_techniques_state.dart';
 
-@Injectable(env: [Environment.prod, Environment.dev])
+@LazySingleton(env: [Environment.prod, Environment.dev])
 class NewTechniquesBloc extends Bloc<NewTechniquesEvent, NewTechniquesState> {
   final GetMostRecentTechniques _getMostRecentTechniques;
 
