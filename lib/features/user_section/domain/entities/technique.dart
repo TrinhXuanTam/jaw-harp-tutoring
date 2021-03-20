@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:jews_harp/core/constants/language_codes.dart';
+import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique_localized_data.dart';
 import 'package:optional/optional.dart';
 
@@ -9,7 +10,7 @@ class Technique extends Equatable {
   final String id;
   final Optional<DateTime> datePublished;
   final Optional<String> productId;
-  final String categoryId;
+  final Category category;
   final TechniqueDifficulty difficulty;
   final Optional<Media> thumbnail;
   final Optional<Media> video;
@@ -19,7 +20,7 @@ class Technique extends Equatable {
     required this.id,
     this.datePublished = const Optional.empty(),
     this.productId = const Optional.empty(),
-    required this.categoryId,
+    required this.category,
     required this.difficulty,
     this.thumbnail = const Optional.empty(),
     this.video = const Optional.empty(),
@@ -51,7 +52,7 @@ class Technique extends Equatable {
   }
 
   @override
-  List<Object> get props => [id, categoryId, difficulty, localizedData];
+  List<Object> get props => [id, category, difficulty, localizedData];
 }
 
 enum TechniqueDifficulty {

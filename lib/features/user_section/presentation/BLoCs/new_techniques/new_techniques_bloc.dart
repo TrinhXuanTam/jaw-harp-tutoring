@@ -7,7 +7,6 @@ import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:meta/meta.dart';
 
 part 'new_techniques_event.dart';
-
 part 'new_techniques_state.dart';
 
 @Injectable(env: [Environment.prod, Environment.dev])

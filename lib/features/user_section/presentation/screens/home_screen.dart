@@ -80,7 +80,10 @@ class HomeScreen extends StatelessWidget {
                       child: BlocBuilder<NewTechniquesBloc, NewTechniquesState>(
                         builder: (ctx, state) {
                           if (state is NewTechniquesLoaded)
-                            return TechniqueList(techniques: state.techniques);
+                            return TechniqueList(
+                              techniques: state.techniques,
+                              showCategory: true,
+                            );
                           else
                             return Container();
                         },

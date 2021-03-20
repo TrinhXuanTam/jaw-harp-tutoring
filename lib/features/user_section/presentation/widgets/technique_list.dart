@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/locations.dart';
 import 'package:jews_harp/core/constants/theme.dart';
-import 'package:jews_harp/core/dependency_injection/service_locator.dart';
+import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
-import 'package:jews_harp/features/user_section/presentation/BLoCs/new_techniques/new_techniques_bloc.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
 class TechniqueList extends StatelessWidget {
   final List<Technique> techniques;
+  final bool showCategory;
 
-  const TechniqueList({Key? key, required this.techniques}) : super(key: key);
+  const TechniqueList({
+    Key? key,
+    required this.techniques,
+    this.showCategory = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return ListView.builder(
       itemCount: techniques.length,
       itemBuilder: (ctx, index) {
@@ -53,22 +58,26 @@ class TechniqueList extends StatelessWidget {
                         child: thumbnail,
                       ),
                     ),
-                    Positioned(
-                      bottom: 0,
-                      left: 0,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(topRight: Radius.circular(29)),
-                          color: Colors.white,
-                        ),
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Advanced",
-                          style: TextStyle(fontWeight: FontWeight.w500),
+                    if (showCategory)
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(topRight: Radius.circular(29)),
+                            color: Colors.white,
+                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                          alignment: Alignment.center,
+                          child: Text(
+                            item.category.getLocalizedTitle(l10n.locale.languageCode),
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 13,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
                   ],
                 ),
               ),

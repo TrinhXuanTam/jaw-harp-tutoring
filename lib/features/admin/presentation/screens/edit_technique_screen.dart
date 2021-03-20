@@ -57,7 +57,7 @@ class EditTechniqueScreen extends StatelessWidget {
                   param1: TechniqueFormState(
                     isPaid: technique.productId.isPresent,
                     idController: TextEditingController(text: technique.productId.orElseGet(() => "")),
-                    categoryController: DropdownButtonFormFieldController<String>(value: technique.categoryId),
+                    categoryController: DropdownButtonFormFieldController<String>(value: technique.category.id),
                     difficultyController: DropdownButtonFormFieldController<TechniqueDifficulty>(value: technique.difficulty),
                     localizedData: technique.localizedData,
                     thumbnailController: ThumbnailPickerController(image: technique.thumbnail.toNullable()),
