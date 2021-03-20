@@ -44,6 +44,11 @@ class TechniqueList extends StatelessWidget {
           );
 
         return Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey[200]!),
+            borderRadius: BorderRadius.circular(29),
+            color: Colors.white,
+          ),
           margin: const EdgeInsets.only(bottom: 20),
           child: Column(
             children: [
@@ -78,6 +83,53 @@ class TechniqueList extends StatelessWidget {
                           ),
                         ),
                       ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                width: double.infinity,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item.getLocalizedTitle(l10n.locale.languageCode),
+                            style: TextStyle(
+                              fontSize: 19,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.timelapse_rounded,
+                                color: BASE_COLOR,
+                                size: 15,
+                              ),
+                              SizedBox(width: 4),
+                              Text(item.difficulty.string),
+                              SizedBox(width: 20),
+                              Icon(
+                                Icons.attach_money_rounded,
+                                color: BASE_COLOR,
+                                size: 15,
+                              ),
+                              // TODO
+                              Text(item.productId.isPresent ? "99.99\$" : "Free"),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Icon(
+                      Icons.favorite_border_rounded,
+                      color: Colors.redAccent,
+                      size: 30,
+                    ),
                   ],
                 ),
               ),

@@ -10,6 +10,7 @@ import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect
 import 'package:jews_harp/features/user_section/presentation/BLoCs/new_techniques/new_techniques_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/category_side_scroll.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/technique_list.dart';
+import 'package:jews_harp/features/user_section/presentation/widgets/technique_list_loading_effect.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -46,7 +47,7 @@ class HomeScreen extends StatelessWidget {
                 right: 40,
                 top: 40,
                 left: 20,
-                bottom: 20,
+                bottom: 30,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,6 +75,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  SizedBox(height: 10),
                   Expanded(
                     child: BlocProvider<NewTechniquesBloc>(
                       create: (_) => serviceLocator<NewTechniquesBloc>()..add(LoadNewTechniques()),
@@ -85,7 +87,7 @@ class HomeScreen extends StatelessWidget {
                               showCategory: true,
                             );
                           else
-                            return Container();
+                          return TechniqueListLoadingEffect();
                         },
                       ),
                     ),
