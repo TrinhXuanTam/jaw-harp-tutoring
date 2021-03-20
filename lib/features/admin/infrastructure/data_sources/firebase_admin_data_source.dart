@@ -177,16 +177,4 @@ class FirebaseAdminDataSource {
 
     return res;
   }
-
-  Future<Iterable<TechniqueDTO>> getTechniquesById(List<String> techniqueIds) async {
-    final List<TechniqueDTO> res = [];
-    final techniqueIdsList = techniqueIds.toList();
-
-    for (var i = 0; i < techniqueIds.length; i++) {
-      final document = await _techniques.doc(techniqueIdsList[i]).get();
-      if (document.exists) res.add(await TechniqueDTO.fromFirestore(document));
-    }
-
-    return res;
-  }
 }

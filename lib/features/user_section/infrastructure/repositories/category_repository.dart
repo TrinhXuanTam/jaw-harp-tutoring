@@ -10,5 +10,5 @@ class CategoryRepository extends ICategoryRepository {
   CategoryRepository(this._firebaseUserSectionDataSource);
 
   @override
-  Future<Iterable<Category>> getVisibleCategories() => _firebaseUserSectionDataSource.getVisibleCategories();
+  Future<Iterable<Category>> getAllCategories() => _firebaseUserSectionDataSource.getAllCategories();
 }

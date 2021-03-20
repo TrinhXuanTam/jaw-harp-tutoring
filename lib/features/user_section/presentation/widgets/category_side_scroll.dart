@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/l10n.dart';
-import 'package:jews_harp/features/user_section/presentation/BLoCs/Categories/categories_bloc.dart';
+import 'package:jews_harp/features/user_section/presentation/BLoCs/categories/categories_bloc.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 import 'package:shimmer/shimmer.dart';
 

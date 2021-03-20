@@ -12,5 +12,7 @@ abstract class ICategoryAdminRepository {
 
   Future<Iterable<Category>> getHiddenCategories();
 
+  Future<Iterable<Category>> getVisibleCategories();
+
   Future<Iterable<Category>> getAllCategories();
 }
