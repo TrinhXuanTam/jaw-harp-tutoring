@@ -23,6 +23,7 @@ import 'package:jews_harp/features/admin/presentation/screens/visible_categories
 import 'package:jews_harp/features/auth/presentation/screens/link_auth_providers_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_screen.dart';
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_sent_screen.dart';
+import 'package:jews_harp/features/user_section/presentation/screens/user_section.dart';
 
 import 'core/constants/routes.dart';
 import 'core/constants/settings.dart';
@@ -34,7 +35,6 @@ import 'features/auth/presentation/screens/email_verification_screen.dart';
 import 'features/auth/presentation/screens/sign_up_screen.dart';
 import 'features/auth/presentation/screens/splash_screen.dart';
 import 'features/user_section/presentation/screens/categories_screen.dart';
-import 'features/user_section/presentation/screens/home_screen.dart';
 import 'features/user_section/presentation/screens/video_full_screen_mode_screen.dart';
 
 /// Driver function
@@ -62,7 +62,7 @@ class _EntryPoint extends StatelessWidget {
     final currentState = globalKey.currentState!;
 
     if (state is AuthenticatedState) {
-      currentState.pushNamedAndRemoveUntil(HOME_SCREEN_ROUTE, (route) => false);
+      currentState.pushNamedAndRemoveUntil(USER_SECTION_SCREEN_ROUTE, (route) => false);
     } else if (state is UnauthenticatedState)
       currentState.pushNamedAndRemoveUntil(AUTH_SCREEN_ROUTE, (route) => false);
     else if (state is NotVerifiedState)
@@ -134,7 +134,7 @@ class _EntryPoint extends StatelessWidget {
           navigatorKey: globalKey,
           routes: {
             SPLASH_SCREEN_ROUTE: (ctx) => SplashScreen(onLoad: () => BlocProvider.of<AuthBloc>(ctx).add(SplashScreenDisplayedEvent(AppLocalizations.of(ctx).locale.languageCode))),
-            HOME_SCREEN_ROUTE: (_) => HomeScreen(),
+            USER_SECTION_SCREEN_ROUTE: (_) => UserSection(),
             AUTH_SCREEN_ROUTE: (_) => AuthenticationScreen(),
             SIGN_UP_SCREEN_ROUTE: (_) => SignUpScreen(),
             PASSWORD_RESET_SCREEN_ROUTE: (_) => PasswordResetScreen(),

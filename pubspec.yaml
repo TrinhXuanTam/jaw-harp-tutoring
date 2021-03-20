@@ -47,7 +47,6 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  convex_bottom_bar: ^3.0.0
   # Pick images and videos
   image_picker: ^0.7.3
   # Play videos
@@ -64,6 +63,10 @@ dependencies:
   random_color: ^1.0.6-nullsafety
   # Shimmer effect
   shimmer: ^2.0.0-nullsafety.0
+  # Bottom navigation bar
+  bottom_navy_bar: ^6.0.0-nullsafety.0
+  # Animations
+  animations: ^2.0.0
 
 dev_dependencies:
   mocktail: ^0.1.1

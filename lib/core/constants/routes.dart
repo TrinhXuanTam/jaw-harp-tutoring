@@ -1,6 +1,5 @@
 // Auth
 const String SPLASH_SCREEN_ROUTE = "/splash";
-const String HOME_SCREEN_ROUTE = "/home";
 const String AUTH_SCREEN_ROUTE = "/authentication";
 const String PASSWORD_RESET_SCREEN_ROUTE = "/passwordReset";
 const String PASSWORD_RESET_SENT_SCREEN_ROUTE = "/passwordResetSent";
@@ -25,5 +24,6 @@ const String TECHNIQUE_LOCALIZATION_ADD_SCREEN_ROUTE = "/techniqueLocalizationAd
 const String UPLOAD_FILES_SCREEN_ROUTE = "/uploadFiles";
 
 // Techniques
+const String USER_SECTION_SCREEN_ROUTE = "/home";
 const String CATEGORIES_SCREEN_ROUTE = "/categories";
 const String VIDEO_FULL_SCREEN_SCREEN_ROUTE = "/videoFullScreen";
