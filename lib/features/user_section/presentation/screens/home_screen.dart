@@ -10,7 +10,6 @@ import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect
 import 'package:jews_harp/features/user_section/presentation/BLoCs/new_techniques/new_techniques_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/category_side_scroll.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/technique_list.dart';
-import 'package:jews_harp/features/user_section/presentation/widgets/technique_list_loading_effect.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -66,14 +65,30 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(height: 20),
                   CategorySideScroll(),
                   SizedBox(height: 5),
-                  Container(
-                    child: Text(
-                      "New Techniques",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        child: Text(
+                          "New Techniques",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
+                        ),
                       ),
-                    ),
+                      GestureDetector(
+                        onTap: () => {},
+                        child: Text(
+                          "View all",
+                          style: TextStyle(
+                            color: BASE_COLOR,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 10),
                   Expanded(
@@ -87,7 +102,7 @@ class HomeScreen extends StatelessWidget {
                               showCategory: true,
                             );
                           else
-                          return TechniqueListLoadingEffect();
+                            return TechniqueList(isLoading: true);
                         },
                       ),
                     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/l10n.dart';
@@ -27,7 +28,7 @@ class CategorySideScroll extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: () => {},
+                onTap: () => Navigator.pushNamed(context, CATEGORIES_SCREEN_ROUTE),
                 child: Text(
                   "View all",
                   style: TextStyle(

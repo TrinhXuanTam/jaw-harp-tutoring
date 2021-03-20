@@ -9,24 +9,10 @@ import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/loading_wrapper.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
-import 'package:jews_harp/features/user_section/presentation/BLoCs/Categories/categories_bloc.dart';
-import 'package:jews_harp/features/user_section/presentation/BLoCs/home_screen/home_screen_bloc.dart';
-
-class CategoriesScreenArgs {
-  final HomeScreenBloc homeScreenBloc;
-
-  CategoriesScreenArgs(this.homeScreenBloc);
-}
+import 'package:jews_harp/features/user_section/presentation/BLoCs/categories/categories_bloc.dart';
+import 'package:jews_harp/features/user_section/utils.dart';
 
 class CategoriesScreen extends StatelessWidget {
-  final HomeScreenBloc homeScreenBloc;
-
-  factory CategoriesScreen.fromArgs(CategoriesScreenArgs args) {
-    return CategoriesScreen(homeScreenBloc: args.homeScreenBloc);
-  }
-
-  const CategoriesScreen({Key? key, required this.homeScreenBloc}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -62,7 +48,7 @@ class CategoriesScreen extends StatelessWidget {
                                   return Container(
                                     padding: const EdgeInsets.all(20),
                                     decoration: BoxDecoration(
-                                      color: homeScreenBloc.state.category == null ? BASE_COLOR : Colors.white,
+                                      color: getRandomShade("All Techniques".hashCode),
                                       border: Border.all(color: Colors.grey[300]!),
                                       borderRadius: BorderRadius.circular(15),
                                     ),
@@ -70,10 +56,19 @@ class CategoriesScreen extends StatelessWidget {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          l10n.translate("All"),
+                                          "${state.categories.fold<int>(0, (acc, element) => acc + element.techniqueIds.length)}",
                                           style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 50,
                                             fontWeight: FontWeight.bold,
-                                            color: homeScreenBloc.state.category == null ? Colors.white : BASE_COLOR,
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Text(
+                                          l10n.translate("All Techniques"),
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
                                             fontSize: 15,
                                           ),
                                         ),
@@ -81,20 +76,8 @@ class CategoriesScreen extends StatelessWidget {
                                         Text(
                                           l10n.translate("View all techniques"),
                                           style: TextStyle(
+                                            color: Colors.white,
                                             fontSize: 14,
-                                            color: homeScreenBloc.state.category == null ? Colors.white : Colors.black,
-                                          ),
-                                        ),
-                                        SizedBox(height: 10),
-                                        Align(
-                                          alignment: Alignment.bottomRight,
-                                          child: Text(
-                                            "${state.categories.fold<int>(0, (acc, element) => acc + element.techniqueIds.length)} " + "items",
-                                            style: TextStyle(
-                                              fontSize: 13,
-                                              color: homeScreenBloc.state.category == null ? Colors.white : BASE_COLOR,
-                                              fontWeight: FontWeight.bold,
-                                            ),
                                           ),
                                         ),
                                       ],
@@ -104,7 +87,7 @@ class CategoriesScreen extends StatelessWidget {
                                   return Container(
                                     padding: const EdgeInsets.all(20),
                                     decoration: BoxDecoration(
-                                      color: homeScreenBloc.state.category == state.categories[index - 1] ? BASE_COLOR : Colors.white,
+                                      color: getRandomShade(state.categories[index - 1].getLocalizedTitle(l10n.locale.languageCode).hashCode),
                                       border: Border.all(color: Colors.grey[300]!),
                                       borderRadius: BorderRadius.circular(15),
                                     ),
@@ -112,10 +95,19 @@ class CategoriesScreen extends StatelessWidget {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
+                                          "${state.categories[index - 1].techniqueIds.length}",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 50,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Text(
                                           state.categories[index - 1].getLocalizedTitle(l10n.locale.languageCode),
                                           style: TextStyle(
+                                            color: Colors.white,
                                             fontWeight: FontWeight.bold,
-                                            color: homeScreenBloc.state.category == state.categories[index - 1] ? Colors.white : BASE_COLOR,
                                             fontSize: 15,
                                           ),
                                         ),
@@ -123,20 +115,8 @@ class CategoriesScreen extends StatelessWidget {
                                         Text(
                                           state.categories[index - 1].getLocalizedDescription(l10n.locale.languageCode),
                                           style: TextStyle(
+                                            color: Colors.white,
                                             fontSize: 14,
-                                            color: homeScreenBloc.state.category == state.categories[index - 1] ? Colors.white : Colors.black,
-                                          ),
-                                        ),
-                                        SizedBox(height: 10),
-                                        Align(
-                                          alignment: Alignment.bottomRight,
-                                          child: Text(
-                                            "${state.categories[index - 1].techniqueIds.length} " + "items",
-                                            style: TextStyle(
-                                              fontSize: 13,
-                                              color: homeScreenBloc.state.category == state.categories[index - 1] ? Colors.white : BASE_COLOR,
-                                              fontWeight: FontWeight.bold,
-                                            ),
                                           ),
                                         ),
                                       ],
