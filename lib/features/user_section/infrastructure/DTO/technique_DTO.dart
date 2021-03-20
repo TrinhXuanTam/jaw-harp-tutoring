@@ -8,13 +8,14 @@ import 'package:optional/optional_internal.dart';
 class TechniqueDTO extends Technique {
   const TechniqueDTO({
     required String id,
+    Optional<DateTime> datePublished = const Optional.empty(),
     Optional<String> productId = const Optional.empty(),
     required String categoryId,
     required TechniqueDifficulty difficulty,
     Optional<MediaDTO> thumbnail = const Optional.empty(),
     Optional<MediaDTO> video = const Optional.empty(),
     required Map<String, TechniqueLocalizedDataDTO> localizedData,
-  }) : super(id: id, productId: productId, categoryId: categoryId, difficulty: difficulty, thumbnail: thumbnail, video: video, localizedData: localizedData);
+  }) : super(id: id, datePublished: datePublished, productId: productId, categoryId: categoryId, difficulty: difficulty, thumbnail: thumbnail, video: video, localizedData: localizedData);
 
   static Future<TechniqueDTO> fromFirestore(DocumentSnapshot documentSnapshot) async {
     final Map<String, TechniqueLocalizedDataDTO> localizedData = {};
@@ -30,6 +31,7 @@ class TechniqueDTO extends Technique {
 
     return TechniqueDTO(
       id: documentSnapshot.id,
+      datePublished: Optional<Timestamp>.ofNullable(documentSnapshot["datePublished"]).map((val) => val.toDate()),
       productId: Optional<String>.ofNullable(documentSnapshot["productId"]),
       categoryId: documentSnapshot["category"],
       difficulty: difficulty,

@@ -22,7 +22,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   ) async* {
     if (event is LoadCategories) {
       final categories = (await _getVisibleCategories()).toList();
-      categories.sort((lhs, rhs) => lhs.techniqueIds.length.compareTo(rhs.techniqueIds.length));
+      categories.sort((lhs, rhs) => rhs.techniqueIds.length.compareTo(lhs.techniqueIds.length));
       yield CategoriesLoaded(categories);
     }
   }

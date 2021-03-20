@@ -40,22 +40,24 @@ class FirebaseAdminDataSource {
     required Optional<MediaDTO> thumbnail,
     required Optional<MediaDTO> video,
   }) async {
+    final category = await _categories.doc(categoryId).get();
     if (productId.isPresent) {
       final techniquesWithSameProductId = await _techniques.where("productId", isEqualTo: productId.value).get();
       if (techniquesWithSameProductId.size > 0) throw TechniqueAlreadyExistsError();
-    }
+    } else if (!category.exists) throw NotFoundError("Category with given ID was not found!");
 
     final snapshot = await _techniques.add({
       "productId": productId.toNullable(),
       "category": categoryId,
       "difficulty": difficulty.index,
       "localization": localizedData.toJson(),
+      "datePublished": category["isVisible"] as bool ? FieldValue.serverTimestamp() : null,
     });
 
     if (video.isPresent && video.value.filePath.isPresent) await _uploadFile(snapshot.id, "video", video.value.filePath.value);
     if (thumbnail.isPresent && thumbnail.value.filePath.isPresent) await _uploadFile(snapshot.id, "thumbnail", thumbnail.value.filePath.value);
 
-    _categories.doc(categoryId).update({
+    category.reference.update({
       "techniques": FieldValue.arrayUnion([snapshot.id])
     });
 
@@ -82,7 +84,19 @@ class FirebaseAdminDataSource {
 
     if (!category.exists) throw NotFoundError("Category with the given ID doesn't exist!");
 
-    if (isVisible != null) updatedData["isVisible"] = isVisible;
+    if (isVisible != null) {
+      updatedData["isVisible"] = isVisible;
+
+      // Set [datePublished] to server time
+      if (isVisible == true) {
+        final techniqueIds = List<String>.from(category["techniques"]);
+        for (String id in techniqueIds) {
+          final technique = await _techniques.doc(id).get();
+          if (technique["datePublished"] == null) technique.reference.update({"datePublished": FieldValue.serverTimestamp()});
+        }
+      }
+    }
+
     if (localizedData != null) updatedData["localization"] = localizedData.toJson();
 
     await _categories.doc(id).update(updatedData);

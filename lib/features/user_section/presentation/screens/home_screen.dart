@@ -7,6 +7,7 @@ import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/category_side_scroll.dart';
+import 'package:jews_harp/features/user_section/presentation/widgets/technique_list.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -62,8 +63,10 @@ class HomeScreen extends StatelessWidget {
                           fontSize: 23,
                         ),
                       ),
-                      SizedBox(height: 30),
+                      SizedBox(height: 20),
                       CategorySideScroll(),
+                      SizedBox(height: 5),
+                      TechniqueList(techniques: []),
                     ],
                   ),
                 ),

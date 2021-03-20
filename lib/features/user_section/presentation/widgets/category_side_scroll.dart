@@ -4,13 +4,13 @@ import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/Categories/categories_bloc.dart';
-import 'package:random_color/random_color.dart';
+import 'package:jews_harp/features/user_section/utils.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CategorySideScroll extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final hue = getColorNameFromColor(BASE_COLOR).getHue;
 
     return BlocProvider<CategoriesBloc>(
       create: (_) => serviceLocator<CategoriesBloc>()..add(LoadCategories()),
@@ -55,10 +55,7 @@ class CategorySideScroll extends StatelessWidget {
                           return Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(19),
-                              color: RandomColor(state.categories[index - 1].getLocalizedTitle(l10n.locale.languageCode).hashCode).randomColor(
-                                colorHue: ColorHue.custom(Range(hue, hue)),
-                                colorSaturation: ColorSaturation.highSaturation,
-                              ),
+                              color: getRandomShade(state.categories[index - 1].getLocalizedTitle(l10n.locale.languageCode).hashCode),
                             ),
                             margin: const EdgeInsets.only(right: 10),
                             padding: const EdgeInsets.all(15),
@@ -90,10 +87,7 @@ class CategorySideScroll extends StatelessWidget {
                           return Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(19),
-                              color: RandomColor("All Techniques".hashCode).randomColor(
-                                colorHue: ColorHue.custom(Range(hue, hue)),
-                                colorSaturation: ColorSaturation.highSaturation,
-                              ),
+                              color: getRandomShade("All Techniques".hashCode),
                             ),
                             margin: const EdgeInsets.only(right: 10),
                             padding: const EdgeInsets.all(15),
@@ -126,7 +120,31 @@ class CategorySideScroll extends StatelessWidget {
                   ),
                 );
               else
-                return Container();
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    child: Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: Row(
+                        children: List.filled(
+                          3,
+                          Container(
+                            height: 130,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(19),
+                              color: Colors.grey[300]!,
+                            ),
+                            margin: const EdgeInsets.only(right: 10),
+                            padding: const EdgeInsets.all(15),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
             }),
           ),
         ],

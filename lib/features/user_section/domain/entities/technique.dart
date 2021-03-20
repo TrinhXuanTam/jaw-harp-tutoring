@@ -7,6 +7,7 @@ import 'media.dart';
 
 class Technique extends Equatable {
   final String id;
+  final Optional<DateTime> datePublished;
   final Optional<String> productId;
   final String categoryId;
   final TechniqueDifficulty difficulty;
@@ -16,6 +17,7 @@ class Technique extends Equatable {
 
   const Technique({
     required this.id,
+    this.datePublished = const Optional.empty(),
     this.productId = const Optional.empty(),
     required this.categoryId,
     required this.difficulty,
