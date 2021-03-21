@@ -8,3 +8,5 @@ class LoadTechniquesByCategory extends TechniquesEvent {
 
   LoadTechniquesByCategory(this.category);
 }
+
+class LoadAllTechniques extends TechniquesEvent {}

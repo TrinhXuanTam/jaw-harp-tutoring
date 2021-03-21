@@ -9,6 +9,7 @@ import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/categories/categories_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/user_section_navigation/user_section_navigation_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/screens/category_screen.dart';
+import 'package:jews_harp/features/user_section/presentation/screens/default_category_screen.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
 class CategorySideScroll extends StatelessWidget {
@@ -47,36 +48,56 @@ class CategorySideScroll extends StatelessWidget {
       );
     }
 
+    OpenContainer _containerTransition(Color color, Widget src, Widget dst) {
+      return OpenContainer(
+        closedElevation: 0,
+        openElevation: 0,
+        openColor: color,
+        middleColor: color,
+        transitionType: ContainerTransitionType.fadeThrough,
+        openBuilder: (ctx, _) => dst,
+        closedBuilder: (ctx, openContainer) => GestureDetector(
+          onTap: openContainer,
+          child: src,
+        ),
+      );
+    }
+
     Widget _buildDefaultCategory(List<Category> categories) {
-      return Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(19),
-          color: getRandomShade("All Techniques".hashCode),
-        ),
-        padding: const EdgeInsets.all(15),
-        width: 100,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "${categories.fold<int>(0, (previousValue, element) => previousValue + element.techniqueIds.length)}",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                fontSize: 40,
+      final color = getRandomShade("All Techniques".hashCode);
+      return _containerTransition(
+        color,
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(19),
+            color: color,
+          ),
+          padding: const EdgeInsets.all(15),
+          width: 100,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "${categories.fold<int>(0, (previousValue, element) => previousValue + element.techniqueIds.length)}",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: 40,
+                ),
               ),
-            ),
-            SizedBox(height: 5),
-            Text(
-              "All Techniques",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-                fontSize: 10,
+              SizedBox(height: 5),
+              Text(
+                "All Techniques",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 10,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
+        DefaultCategoryScreen(),
       );
     }
 
@@ -89,47 +110,42 @@ class CategorySideScroll extends StatelessWidget {
           separatorBuilder: (BuildContext context, int index) => SizedBox(width: 10),
           itemBuilder: (ctx, index) {
             if (index != 0) {
+              final color = categories[index - 1].getColor(context);
+
               return Container(
-                child: OpenContainer(
-                  closedElevation: 0,
-                  openElevation: 0,
-                  openColor: categories[index - 1].getColor(context),
-                  middleColor: categories[index - 1].getColor(context),
-                  transitionType: ContainerTransitionType.fadeThrough,
-                  openBuilder: (ctx, _) => CategoryScreen(category: categories[index - 1]),
-                  closedBuilder: (ctx, openContainer) => GestureDetector(
-                    onTap: openContainer,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(19),
-                        color: categories[index - 1].getColor(context),
-                      ),
-                      padding: const EdgeInsets.all(15),
-                      width: 100,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${categories[index - 1].techniqueIds.length}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 40,
-                            ),
+                child: _containerTransition(
+                  color,
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(19),
+                      color: color,
+                    ),
+                    padding: const EdgeInsets.all(15),
+                    width: 100,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${categories[index - 1].techniqueIds.length}",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 40,
                           ),
-                          SizedBox(height: 5),
-                          Text(
-                            categories[index - 1].getLocalizedTitle(l10n.locale.languageCode),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 10,
-                            ),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          categories[index - 1].title(ctx),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 10,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
+                  CategoryScreen(category: categories[index - 1]),
                 ),
               );
             } else

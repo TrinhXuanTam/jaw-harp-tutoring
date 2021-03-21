@@ -3,31 +3,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
-import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/techniques/techniques_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/small_technique_list.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
-class CategoryScreen extends StatelessWidget {
-  final Category category;
-
-  const CategoryScreen({Key? key, required this.category}) : super(key: key);
-
+class DefaultCategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final categoryColor = this.category.getColor(context);
-
     return Scaffold(
       appBar: IconAppBar(
         iconColor: Colors.white,
         icon: Icons.close_rounded,
         onPressed: () => Navigator.pop(context),
       ),
-      backgroundColor: categoryColor,
+      backgroundColor: getRandomShade("All Techniques".hashCode),
       body: CenteredStack(
         children: [
           BlocProvider<TechniquesBloc>(
-            create: (_) => serviceLocator<TechniquesBloc>()..add(LoadTechniquesByCategory(this.category)),
+            create: (_) => serviceLocator<TechniquesBloc>()..add(LoadAllTechniques()),
             child: Container(
               width: double.infinity,
               height: double.infinity,
@@ -40,7 +33,7 @@ class CategoryScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          category.title(context),
+                          "All Techniques",
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -49,7 +42,7 @@ class CategoryScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 5),
                         Text(
-                          category.description(context),
+                          "View all techniques",
                           style: TextStyle(
                             color: Colors.white.withOpacity(0.5),
                             fontWeight: FontWeight.w500,
