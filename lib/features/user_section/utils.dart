@@ -100,3 +100,20 @@ extension CategoryLocalization on Category {
     return this.getLocalizedDescription(l10n.locale.languageCode);
   }
 }
+
+extension TechniqueLocalization on Technique {
+  String title(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return this.getLocalizedTitle(l10n.locale.languageCode);
+  }
+
+  String description(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return this.getLocalizedDescription(l10n.locale.languageCode);
+  }
+
+  String accompanyingText(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return this.getLocalizedAccompanyingText(l10n.locale.languageCode);
+  }
+}
