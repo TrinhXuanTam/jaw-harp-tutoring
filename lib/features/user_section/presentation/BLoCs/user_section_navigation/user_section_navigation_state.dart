@@ -4,62 +4,83 @@ part of 'user_section_navigation_bloc.dart';
 abstract class UserSectionNavigationState {
   final Widget body;
   final int bottomNavigatorIndex;
-  final bool reversed;
+  final bool reversedTransition;
   final Widget Function(Widget, Animation<double>, Animation<double>) transition;
 
   UserSectionNavigationState({
     required this.body,
     required this.bottomNavigatorIndex,
     required this.transition,
-    this.reversed = false,
+    this.reversedTransition = false,
   });
 }
 
 class HomePage extends UserSectionNavigationState {
-  HomePage(bool reversed)
-      : super(
+  HomePage({
+    required bool reversedTransition,
+    required Widget Function(Widget, Animation<double>, Animation<double>) transition,
+  }) : super(
           body: HomePageBody(),
           bottomNavigatorIndex: HOME_INDEX,
-          reversed: reversed,
-          transition: defaultHorizontalSharedAxisTransition,
+          reversedTransition: reversedTransition,
+          transition: transition,
         );
 }
 
 class DownloadsPage extends UserSectionNavigationState {
-  DownloadsPage(bool reversed)
-      : super(
+  DownloadsPage({
+    required bool reversedTransition,
+    required Widget Function(Widget, Animation<double>, Animation<double>) transition,
+  }) : super(
           body: Container(),
           bottomNavigatorIndex: DOWNLOADS_INDEX,
-          reversed: reversed,
-          transition: defaultHorizontalSharedAxisTransition,
+          reversedTransition: reversedTransition,
+          transition: transition,
         );
 }
 
 class FavoritesPage extends UserSectionNavigationState {
-  FavoritesPage(bool reversed)
-      : super(
+  FavoritesPage({
+    required bool reversedTransition,
+    required Widget Function(Widget, Animation<double>, Animation<double>) transition,
+  }) : super(
           body: Container(),
           bottomNavigatorIndex: FAVORITES_INDEX,
-          reversed: reversed,
-          transition: defaultHorizontalSharedAxisTransition,
+          reversedTransition: reversedTransition,
+          transition: transition,
         );
 }
 
 class ProfileSectionPage extends UserSectionNavigationState {
-  ProfileSectionPage(bool reversed)
-      : super(
+  ProfileSectionPage({
+    required bool reversedTransition,
+    required Widget Function(Widget, Animation<double>, Animation<double>) transition,
+  }) : super(
           body: AdminMenuScreen(),
           bottomNavigatorIndex: PROFILE_SECTION_INDEX,
-          reversed: reversed,
-          transition: defaultHorizontalSharedAxisTransition,
+          reversedTransition: reversedTransition,
+          transition: transition,
         );
 }
 
 class CategoriesPage extends UserSectionNavigationState {
-  CategoriesPage(List<Category> categories)
-      : super(
+  CategoriesPage({
+    required List<Category> categories,
+    required bool reversedTransition,
+    required Widget Function(Widget, Animation<double>, Animation<double>) transition,
+  }) : super(
           body: CategoriesScreenBody(categories: categories),
           bottomNavigatorIndex: HOME_INDEX,
-          transition: defaultHorizontalSharedAxisTransition,
+          reversedTransition: reversedTransition,
+          transition: transition,
         );
 }
+
+// class CategoryDetailPage extends UserSectionNavigationState {
+//   CategoryDetailPage(List<Category> categories)
+//       : super(
+//           body: CategoriesScreenBody(categories: categories),
+//           bottomNavigatorIndex: HOME_INDEX,
+//           transition: defaultHorizontalSharedAxisTransition,
+//         );
+// }

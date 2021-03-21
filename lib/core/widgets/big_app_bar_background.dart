@@ -3,10 +3,14 @@ import 'package:jews_harp/core/constants/theme.dart';
 
 class BigAppBarBackground extends StatelessWidget {
   final double? height;
+  final Color color;
+  final Widget? child;
 
   const BigAppBarBackground({
     Key? key,
     this.height,
+    this.color = BASE_COLOR,
+    this.child,
   }) : super(key: key);
 
   @override
@@ -17,12 +21,13 @@ class BigAppBarBackground extends StatelessWidget {
       height: this.height,
       width: size.width,
       decoration: BoxDecoration(
-        color: BASE_COLOR,
+        color: this.color,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(29),
           bottomRight: Radius.circular(29),
         ),
       ),
+      child: this.child,
     );
   }
 }

@@ -1,4 +1,3 @@
-import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique_localized_data.dart';
@@ -25,6 +24,4 @@ abstract class ITechniqueAdminRepository {
   });
 
   Future<Iterable<Technique>> getAllTechniques();
-
-  Future<Iterable<Technique>> getTechniquesByCategory(Category category);
 }

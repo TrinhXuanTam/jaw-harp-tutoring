@@ -34,7 +34,6 @@ import 'features/auth/presentation/screens/authentication_screen.dart';
 import 'features/auth/presentation/screens/email_verification_screen.dart';
 import 'features/auth/presentation/screens/sign_up_screen.dart';
 import 'features/auth/presentation/screens/splash_screen.dart';
-import 'features/user_section/presentation/screens/categories_screen.dart';
 import 'features/user_section/presentation/screens/video_full_screen_mode_screen.dart';
 
 /// Driver function
@@ -156,7 +155,6 @@ class _EntryPoint extends StatelessWidget {
             HIDDEN_CATEGORIES_LIST_SCREEN_ROUTE: (_) => HiddenCategoriesListScreen(),
             VIDEO_FULL_SCREEN_SCREEN_ROUTE: (ctx) => VideoFullScreenModeScreen.fromArgs(_getArgs<VideoFullScreenModeScreenArgs>(ctx)),
             UPLOAD_FILES_SCREEN_ROUTE: (ctx) => UploadFilesScreen.fromArgs(_getArgs<UploadFilesScreenArgs>(ctx)),
-            CATEGORIES_SCREEN_ROUTE: (_) => CategoriesScreen(),
           },
           initialRoute: SPLASH_SCREEN_ROUTE,
         ),

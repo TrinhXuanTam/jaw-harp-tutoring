@@ -7,6 +7,7 @@ import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/user_section_navigation/user_section_navigation_bloc.dart';
+import 'package:jews_harp/features/user_section/utils.dart';
 
 // Bottom navigation indexes
 const int HOME_INDEX = 0;
@@ -19,7 +20,11 @@ class UserSection extends StatelessWidget {
     final bloc = BlocProvider.of<UserSectionNavigationBloc>(ctx);
 
     if (bloc.state is CategoriesPage)
-      return IconAppBar(onPressed: () => bloc.add(NavigateToHomePage()));
+      return IconAppBar(
+        onPressed: () => bloc.add(
+          NavigateToHomePage(reversedTransition: true, transition: defaultFadeThroughTransition),
+        ),
+      );
     else
       return AppBar(backgroundColor: Colors.transparent, elevation: 0);
   }
@@ -44,16 +49,29 @@ class UserSection extends StatelessWidget {
               final bloc = BlocProvider.of<UserSectionNavigationBloc>(ctx);
 
               if (value == HOME_INDEX)
-                bloc.add(NavigateToHomePage());
+                bloc.add(NavigateToHomePage(
+                  reversedTransition: state.bottomNavigatorIndex > HOME_INDEX,
+                  transition: defaultHorizontalSharedAxisTransition,
+                ));
               else if (value == DOWNLOADS_INDEX)
-                bloc.add(NavigateToDownloads());
+                bloc.add(NavigateToDownloads(
+                  reversedTransition: state.bottomNavigatorIndex > DOWNLOADS_INDEX,
+                  transition: defaultHorizontalSharedAxisTransition,
+                ));
               else if (value == FAVORITES_INDEX)
-                bloc.add(NavigateToFavorites());
-              else if (value == PROFILE_SECTION_INDEX) bloc.add(NavigateToProfileSection());
+                bloc.add(NavigateToFavorites(
+                  reversedTransition: state.bottomNavigatorIndex > FAVORITES_INDEX,
+                  transition: defaultHorizontalSharedAxisTransition,
+                ));
+              else if (value == PROFILE_SECTION_INDEX)
+                bloc.add(NavigateToProfileSection(
+                  reversedTransition: state.bottomNavigatorIndex > PROFILE_SECTION_INDEX,
+                  transition: defaultHorizontalSharedAxisTransition,
+                ));
             },
           ),
           body: PageTransitionSwitcher(
-            reverse: state.reversed,
+            reverse: state.reversedTransition,
             transitionBuilder: state.transition,
             child: state.body,
           ),

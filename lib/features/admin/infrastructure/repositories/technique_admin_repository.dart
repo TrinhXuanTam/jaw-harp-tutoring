@@ -1,21 +1,18 @@
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/features/admin/domain/repository_interfaces/technique_admin_repository.dart';
 import 'package:jews_harp/features/admin/infrastructure/data_sources/firebase_admin_data_source.dart';
-import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique_localized_data.dart';
 import 'package:jews_harp/features/user_section/infrastructure/DTO/mediaDTO.dart';
 import 'package:jews_harp/features/user_section/infrastructure/DTO/technique_localized_data_DTO.dart';
-import 'package:jews_harp/features/user_section/infrastructure/data_sources/firebase_user_section_data_source.dart';
 import 'package:optional/optional.dart';
 
 @LazySingleton(as: ITechniqueAdminRepository, env: [Environment.prod])
 class TechniqueAdminRepository extends ITechniqueAdminRepository {
   final FirebaseAdminDataSource _adminDataSource;
-  final FirebaseUserSectionDataSource _firebaseUserSectionDataSource;
 
-  TechniqueAdminRepository(this._adminDataSource, this._firebaseUserSectionDataSource);
+  TechniqueAdminRepository(this._adminDataSource);
 
   @override
   Future<Technique> createTechnique({
@@ -59,7 +56,4 @@ class TechniqueAdminRepository extends ITechniqueAdminRepository {
 
   @override
   Future<Iterable<Technique>> getAllTechniques() => _adminDataSource.getAllTechniques();
-
-  @override
-  Future<Iterable<Technique>> getTechniquesByCategory(Category category) => _firebaseUserSectionDataSource.getTechniquesById(category.techniqueIds);
 }
