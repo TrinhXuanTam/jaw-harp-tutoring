@@ -8,6 +8,8 @@ class RoundedTextField extends StatelessWidget {
   final Color color;
   final Color iconColor;
   final TextEditingController controller;
+  final EdgeInsets padding;
+  final void Function(String newValue)? onChanged;
 
   const RoundedTextField({
     Key? key,
@@ -16,14 +18,18 @@ class RoundedTextField extends StatelessWidget {
     this.color = BASE_COLOR_VERY_LIGHT,
     this.iconColor = BASE_COLOR,
     required this.controller,
+    this.padding = const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+    this.onChanged,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return RoundedInputField(
+      padding: this.padding,
       color: this.color,
       child: TextField(
         controller: this.controller,
+        onChanged: this.onChanged,
         decoration: InputDecoration(
           icon: Icon(
             this.icon,

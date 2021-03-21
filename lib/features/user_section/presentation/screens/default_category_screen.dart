@@ -5,6 +5,7 @@ import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/techniques/techniques_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/small_technique_list.dart';
+import 'package:jews_harp/features/user_section/presentation/widgets/technique_search_bar.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
 class DefaultCategoryScreen extends StatelessWidget {
@@ -48,10 +49,20 @@ class DefaultCategoryScreen extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
+                        SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TechniqueSearchBar(),
+                            Icon(
+                              Icons.sort_rounded,
+                              color: Colors.white.withOpacity(0.6),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
-                  SizedBox(height: 20),
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.all(20),

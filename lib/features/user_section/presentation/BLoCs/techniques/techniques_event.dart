@@ -10,3 +10,9 @@ class LoadTechniquesByCategory extends TechniquesEvent {
 }
 
 class LoadAllTechniques extends TechniquesEvent {}
+
+class TextSearchPerformed extends TechniquesEvent {
+  final String keywords;
+
+  TextSearchPerformed(this.keywords);
+}

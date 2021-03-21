@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/features/user_section/application/get_techniques.dart';
 import 'package:jews_harp/features/user_section/application/get_techniques_by_category.dart';
@@ -24,6 +25,8 @@ class TechniquesBloc extends Bloc<TechniquesEvent, TechniquesState> {
   ) async* {
     if (event is LoadTechniquesByCategory)
       yield TechniquesLoaded((await _getTechniquesByCategory(event.category)).toList());
-    else if (event is LoadAllTechniques) yield TechniquesLoaded((await _getTechniques()).toList());
+    else if (event is LoadAllTechniques)
+      yield TechniquesLoaded((await _getTechniques()).toList());
+    else if (event is TextSearchPerformed) yield state.copyWith(keywords: event.keywords);
   }
 }

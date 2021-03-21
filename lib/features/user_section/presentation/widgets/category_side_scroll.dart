@@ -15,8 +15,6 @@ import 'package:jews_harp/features/user_section/utils.dart';
 class CategorySideScroll extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-
     Widget _buildHeader(BuildContext ctx, CategoriesState state) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
