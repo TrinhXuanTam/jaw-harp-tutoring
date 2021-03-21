@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
@@ -11,8 +10,13 @@ import 'package:jews_harp/features/user_section/utils.dart';
 
 class CategoryScreen extends StatelessWidget {
   final Category category;
+  final TechniquesBloc techniquesBloc;
 
-  const CategoryScreen({Key? key, required this.category}) : super(key: key);
+  const CategoryScreen({
+    Key? key,
+    required this.category,
+    required this.techniquesBloc,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +32,7 @@ class CategoryScreen extends StatelessWidget {
       body: CenteredStack(
         children: [
           BlocProvider<TechniquesBloc>(
-            create: (_) => serviceLocator<TechniquesBloc>()..add(LoadTechniquesByCategory(this.category)),
+            create: (_) => techniquesBloc,
             child: Container(
               width: double.infinity,
               height: double.infinity,
