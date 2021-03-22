@@ -138,14 +138,18 @@ class TechniqueScreen extends StatelessWidget {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        TabBar(
-                                          isScrollable: true,
-                                          unselectedLabelColor: Colors.grey,
-                                          labelColor: Colors.black,
-                                          tabs: [
-                                            Tab(text: "Text"),
-                                            Tab(text: "More"),
-                                          ],
+                                        Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.withOpacity(0.3)))),
+                                          child: TabBar(
+                                            isScrollable: true,
+                                            unselectedLabelColor: Colors.grey,
+                                            labelColor: Colors.black,
+                                            tabs: [
+                                              Tab(text: "Text"),
+                                              Tab(text: "More"),
+                                            ],
+                                          ),
                                         ),
                                         Expanded(
                                           child: TabBarView(

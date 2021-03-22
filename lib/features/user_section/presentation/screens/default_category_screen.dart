@@ -66,13 +66,7 @@ class DefaultCategoryScreen extends StatelessWidget {
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(40),
-                          topLeft: Radius.circular(40),
-                        ),
-                        color: Colors.white,
-                      ),
+                      color: Colors.white,
                       child: BlocBuilder<TechniquesBloc, TechniquesState>(
                         builder: (ctx, state) {
                           if (state is TechniquesLoaded)
