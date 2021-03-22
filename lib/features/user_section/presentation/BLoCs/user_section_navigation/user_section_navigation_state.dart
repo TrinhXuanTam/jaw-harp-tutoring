@@ -75,12 +75,3 @@ class CategoriesPage extends UserSectionNavigationState {
           transition: transition,
         );
 }
-
-// class CategoryDetailPage extends UserSectionNavigationState {
-//   CategoryDetailPage(List<Category> categories)
-//       : super(
-//           body: CategoriesScreenBody(categories: categories),
-//           bottomNavigatorIndex: HOME_INDEX,
-//           transition: defaultHorizontalSharedAxisTransition,
-//         );
-// }

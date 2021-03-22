@@ -45,13 +45,3 @@ class NavigateToCategoriesPage extends UserSectionNavigationEvent {
     required Widget Function(Widget, Animation<double>, Animation<double>) transition,
   }) : super(reversedTransition: reversedTransition, transition: transition);
 }
-
-class NavigateToCategoryDetailPage extends UserSectionNavigationEvent {
-  final Category category;
-
-  NavigateToCategoryDetailPage({
-    required this.category,
-    bool reversedTransition = false,
-    required Widget Function(Widget, Animation<double>, Animation<double>) transition,
-  }) : super(reversedTransition: reversedTransition, transition: transition);
-}

@@ -20,9 +20,7 @@ class UserSectionNavigationBloc extends Bloc<UserSectionNavigationEvent, UserSec
   UserSectionNavigationBloc() : super(HomePage(reversedTransition: false, transition: defaultFadeThroughTransition));
 
   @override
-  Stream<UserSectionNavigationState> mapEventToState(
-    UserSectionNavigationEvent event,
-  ) async* {
+  Stream<UserSectionNavigationState> mapEventToState(UserSectionNavigationEvent event) async* {
     if (event is NavigateToHomePage)
       yield HomePage(reversedTransition: event.reversedTransition, transition: event.transition);
     else if (event is NavigateToDownloads)

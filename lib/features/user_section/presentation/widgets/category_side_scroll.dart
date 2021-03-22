@@ -46,45 +46,6 @@ class CategorySideScroll extends StatelessWidget {
       );
     }
 
-    Widget _buildDefaultCategory(BuildContext ctx, List<Category> categories) {
-      final color = getRandomShade("All Techniques".hashCode);
-      return LazyLoadTechniquesWrapper(
-        loadEvent: LoadAllTechniques(),
-        color: color,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(19),
-            color: color,
-          ),
-          padding: const EdgeInsets.all(15),
-          width: 100,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "${categories.fold<int>(0, (previousValue, element) => previousValue + element.techniqueIds.length)}",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  fontSize: 40,
-                ),
-              ),
-              SizedBox(height: 5),
-              Text(
-                "All Techniques",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 10,
-                ),
-              ),
-            ],
-          ),
-        ),
-        openBuilder: (TechniquesBloc bloc) => DefaultCategoryScreen(techniquesBloc: bloc),
-      );
-    }
-
     Widget _buildCategories(List<Category> categories) {
       return Container(
         margin: const EdgeInsets.symmetric(vertical: 10),
@@ -97,45 +58,21 @@ class CategorySideScroll extends StatelessWidget {
               final category = categories[index - 1];
               final color = category.getColor(context);
 
-              return Container(
-                child: LazyLoadTechniquesWrapper(
-                  color: color,
-                  loadEvent: LoadTechniquesByCategory(category),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(19),
-                      color: color,
-                    ),
-                    padding: const EdgeInsets.all(15),
-                    width: 100,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${category.techniqueIds.length}",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 40,
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          category.title(ctx),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 10,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  openBuilder: (TechniquesBloc bloc) => CategoryScreen(category: category, techniquesBloc: bloc),
-                ),
+              return _CategoryCard(
+                color: color,
+                loadEvent: LoadTechniquesByCategory(category),
+                techniquesCnt: category.techniqueIds.length,
+                title: category.title(ctx),
+                openBuilder: (TechniquesBloc bloc) => CategoryScreen(category: category, techniquesBloc: bloc),
               );
             } else
-              return _buildDefaultCategory(ctx, categories);
+              return _CategoryCard(
+                color: getRandomShade("All Techniques".hashCode),
+                loadEvent: LoadAllTechniques(),
+                techniquesCnt: categories.fold<int>(0, (previousValue, element) => previousValue + element.techniqueIds.length),
+                title: "All Techniques",
+                openBuilder: (TechniquesBloc bloc) => DefaultCategoryScreen(techniquesBloc: bloc),
+              );
           },
         ),
       );
@@ -180,6 +117,64 @@ class CategorySideScroll extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _CategoryCard extends StatelessWidget {
+  final Color color;
+  final TechniquesEvent loadEvent;
+  final int techniquesCnt;
+  final String title;
+  final Widget Function(TechniquesBloc) openBuilder;
+
+  const _CategoryCard({
+    Key? key,
+    required this.color,
+    required this.loadEvent,
+    required this.techniquesCnt,
+    required this.title,
+    required this.openBuilder,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: LazyLoadTechniquesWrapper(
+        color: this.color,
+        loadEvent: this.loadEvent,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(19),
+            color: this.color,
+          ),
+          padding: const EdgeInsets.all(15),
+          width: 100,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "${this.techniquesCnt}",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: 40,
+                ),
+              ),
+              SizedBox(height: 5),
+              Text(
+                this.title,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 10,
+                ),
+              ),
+            ],
+          ),
+        ),
+        openBuilder: this.openBuilder,
       ),
     );
   }
