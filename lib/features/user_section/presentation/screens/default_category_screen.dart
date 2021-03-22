@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/techniques/techniques_bloc.dart';
@@ -8,10 +9,6 @@ import 'package:jews_harp/features/user_section/presentation/widgets/technique_s
 import 'package:jews_harp/features/user_section/utils.dart';
 
 class DefaultCategoryScreen extends StatelessWidget {
-  final TechniquesBloc techniquesBloc;
-
-  const DefaultCategoryScreen({Key? key, required this.techniquesBloc}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +21,7 @@ class DefaultCategoryScreen extends StatelessWidget {
       body: CenteredStack(
         children: [
           BlocProvider<TechniquesBloc>(
-            create: (_) => techniquesBloc,
+            create: (_) => serviceLocator<TechniquesBloc>()..add(LoadAllTechniques()),
             child: Container(
               width: double.infinity,
               height: double.infinity,

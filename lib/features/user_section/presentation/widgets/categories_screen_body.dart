@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
-import 'package:jews_harp/features/user_section/presentation/BLoCs/techniques/techniques_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/screens/category_screen.dart';
 import 'package:jews_harp/features/user_section/presentation/screens/default_category_screen.dart';
+import 'package:jews_harp/features/user_section/presentation/widgets/category_transition_wrapper.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
-
-import 'lazy_load_techniques_wrapper.dart';
 
 class CategoriesScreenBody extends StatelessWidget {
   final List<Category> categories;
@@ -38,22 +36,20 @@ class CategoriesScreenBody extends StatelessWidget {
                       if (index == 0)
                         return _CategoryCard(
                           color: getRandomShade("All Techniques".hashCode),
-                          loadEvent: LoadAllTechniques(),
                           techniquesCnt: this.categories.fold<int>(0, (acc, element) => acc + element.techniqueIds.length),
                           title: "All Techniques",
                           description: "View all techniques",
-                          openBuilder: (TechniquesBloc bloc) => DefaultCategoryScreen(techniquesBloc: bloc),
+                          dst: DefaultCategoryScreen(),
                         );
                       else {
                         final category = this.categories[index - 1];
                         final color = category.getColor(context);
                         return _CategoryCard(
                           color: color,
-                          loadEvent: LoadTechniquesByCategory(category),
                           techniquesCnt: category.techniqueIds.length,
                           title: category.title(context),
                           description: category.description(context),
-                          openBuilder: (TechniquesBloc bloc) => CategoryScreen(category: category, techniquesBloc: bloc),
+                          dst: CategoryScreen(category: category),
                         );
                       }
                     },
@@ -73,28 +69,25 @@ class CategoriesScreenBody extends StatelessWidget {
 
 class _CategoryCard extends StatelessWidget {
   final Color color;
-  final TechniquesEvent loadEvent;
   final int techniquesCnt;
   final String title;
   final String description;
-  final Widget Function(TechniquesBloc) openBuilder;
+  final Widget dst;
 
   const _CategoryCard({
     Key? key,
     required this.color,
-    required this.loadEvent,
     required this.techniquesCnt,
     required this.title,
     required this.description,
-    required this.openBuilder,
+    required this.dst,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return LazyLoadTechniquesWrapper(
+    return CategoryTransitionWrapper(
       color: this.color,
-      loadEvent: this.loadEvent,
-      child: Container(
+      src: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: color,
@@ -132,7 +125,7 @@ class _CategoryCard extends StatelessWidget {
           ],
         ),
       ),
-      openBuilder: this.openBuilder,
+      dst: this.dst,
     );
   }
 }

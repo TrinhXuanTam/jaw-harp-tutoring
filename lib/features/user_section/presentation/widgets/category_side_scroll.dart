@@ -5,11 +5,10 @@ import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/shimmer_effect.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/categories/categories_bloc.dart';
-import 'package:jews_harp/features/user_section/presentation/BLoCs/techniques/techniques_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/user_section_navigation/user_section_navigation_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/screens/category_screen.dart';
 import 'package:jews_harp/features/user_section/presentation/screens/default_category_screen.dart';
-import 'package:jews_harp/features/user_section/presentation/widgets/lazy_load_techniques_wrapper.dart';
+import 'package:jews_harp/features/user_section/presentation/widgets/category_transition_wrapper.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
 class CategorySideScroll extends StatelessWidget {
@@ -60,18 +59,16 @@ class CategorySideScroll extends StatelessWidget {
 
               return _CategoryCard(
                 color: color,
-                loadEvent: LoadTechniquesByCategory(category),
                 techniquesCnt: category.techniqueIds.length,
                 title: category.title(ctx),
-                openBuilder: (TechniquesBloc bloc) => CategoryScreen(category: category, techniquesBloc: bloc),
+                dst: CategoryScreen(category: category),
               );
             } else
               return _CategoryCard(
                 color: getRandomShade("All Techniques".hashCode),
-                loadEvent: LoadAllTechniques(),
                 techniquesCnt: categories.fold<int>(0, (previousValue, element) => previousValue + element.techniqueIds.length),
                 title: "All Techniques",
-                openBuilder: (TechniquesBloc bloc) => DefaultCategoryScreen(techniquesBloc: bloc),
+                dst: DefaultCategoryScreen(),
               );
           },
         ),
@@ -124,27 +121,24 @@ class CategorySideScroll extends StatelessWidget {
 
 class _CategoryCard extends StatelessWidget {
   final Color color;
-  final TechniquesEvent loadEvent;
   final int techniquesCnt;
   final String title;
-  final Widget Function(TechniquesBloc) openBuilder;
+  final Widget dst;
 
   const _CategoryCard({
     Key? key,
     required this.color,
-    required this.loadEvent,
     required this.techniquesCnt,
     required this.title,
-    required this.openBuilder,
+    required this.dst,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: LazyLoadTechniquesWrapper(
+      child: CategoryTransitionWrapper(
         color: this.color,
-        loadEvent: this.loadEvent,
-        child: Container(
+        src: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(19),
             color: this.color,
@@ -174,7 +168,7 @@ class _CategoryCard extends StatelessWidget {
             ],
           ),
         ),
-        openBuilder: this.openBuilder,
+        dst: this.dst,
       ),
     );
   }
