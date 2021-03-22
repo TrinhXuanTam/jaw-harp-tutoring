@@ -4,7 +4,7 @@ import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/new_techniques/new_techniques_bloc.dart';
-import 'package:jews_harp/features/user_section/presentation/widgets/technique_list.dart';
+import 'package:jews_harp/features/user_section/presentation/widgets/big_technique_list.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
 import 'category_side_scroll.dart';
@@ -51,12 +51,12 @@ class HomePageBody extends StatelessWidget {
                     child: BlocBuilder<NewTechniquesBloc, NewTechniquesState>(
                       builder: (ctx, state) {
                         if (state is NewTechniquesLoaded)
-                          return TechniqueList(
+                          return BigTechniqueList(
                             techniques: state.techniques,
                             showCategory: true,
                           );
                         else
-                          return TechniqueList(isLoading: true);
+                          return BigTechniqueList(isLoading: true);
                       },
                     ),
                   ),

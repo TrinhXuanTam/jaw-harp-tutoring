@@ -38,7 +38,11 @@ class VideoPlayerWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              VideoControls(controller: controller),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 2),
+                color: Colors.black.withOpacity(0.5),
+                child: VideoControls(controller: controller),
+              ),
             ],
           ),
         ],

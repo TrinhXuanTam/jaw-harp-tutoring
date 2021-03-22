@@ -5,7 +5,7 @@ import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/techniques/techniques_bloc.dart';
-import 'package:jews_harp/features/user_section/presentation/widgets/small_technique_list.dart';
+import 'package:jews_harp/features/user_section/presentation/widgets/technique_list.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/technique_search_bar.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
@@ -86,12 +86,12 @@ class CategoryScreen extends StatelessWidget {
                       child: BlocBuilder<TechniquesBloc, TechniquesState>(
                         builder: (ctx, state) {
                           if (state is TechniquesLoaded)
-                            return SmallTechniqueList(
+                            return TechniqueList(
                               techniques: state.techniques,
                               showCategory: true,
                             );
                           else
-                            return SmallTechniqueList(isLoading: true);
+                            return TechniqueList(isLoading: true);
                         },
                       ),
                     ),
