@@ -27,9 +27,9 @@ Image getImageFromMedia(Media media) {
 VideoPlayerController getVideoPlayerControllerFromMedia(Media media) {
   if (media.filePath.isPresent)
     return VideoPlayerController.file(File(media.filePath.value));
-  else if (media.url.isPresent)
+  else if (media.url.isPresent) {
     return VideoPlayerController.network(media.url.value);
-  else
+  } else
     throw MediaNotFoundError();
 }
 
@@ -115,5 +115,19 @@ extension TechniqueLocalization on Technique {
   String accompanyingText(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return this.getLocalizedAccompanyingText(l10n.locale.languageCode);
+  }
+}
+
+VoidCallback videoOnTap(VideoPlayerController controller) {
+  // Video has ended
+  if (controller.value.position.inSeconds == controller.value.duration.inSeconds) {
+    return () {
+      controller.seekTo(Duration.zero);
+      controller.play();
+    };
+  } else if (controller.value.isPlaying) {
+    return () => controller.pause();
+  } else {
+    return () => controller.play();
   }
 }

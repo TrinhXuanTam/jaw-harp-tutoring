@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
+import 'package:jews_harp/features/user_section/utils.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoControls extends StatelessWidget {
@@ -29,27 +30,45 @@ class VideoControls extends StatelessWidget {
           ),
         ),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(width: 5),
             ValueListenableBuilder(
               valueListenable: controller,
-              builder: (ctx, value, child) => GestureDetector(
-                onTap: () => controller.value.isPlaying ? controller.pause() : controller.play(),
-                child: Icon(
-                  controller.value.isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
-                  size: 20,
-                  color: Colors.white,
-                ),
-              ),
+              builder: (ctx, value, child) {
+                late final IconData icon;
+
+                // Video has ended
+                if (controller.value.position.inSeconds == controller.value.duration.inSeconds) {
+                  icon = Icons.replay_rounded;
+                } else if (controller.value.isPlaying) {
+                  icon = Icons.pause_rounded;
+                } else {
+                  icon = Icons.play_arrow_rounded;
+                }
+
+                return GestureDetector(
+                  onTap: videoOnTap(controller),
+                  child: Icon(
+                    icon,
+                    size: 20,
+                    color: Colors.white,
+                  ),
+                );
+              },
             ),
             SizedBox(width: 5),
             Expanded(
-              child: VideoProgressIndicator(
-                controller,
-                allowScrubbing: true,
-                colors: VideoProgressColors(
-                  backgroundColor: Colors.white,
-                  bufferedColor: BASE_COLOR_VERY_LIGHT,
-                  playedColor: BASE_COLOR,
+              child: Container(
+                height: 13,
+                child: VideoProgressIndicator(
+                  controller,
+                  allowScrubbing: true,
+                  colors: VideoProgressColors(
+                    backgroundColor: Colors.white,
+                    bufferedColor: BASE_COLOR_VERY_LIGHT,
+                    playedColor: BASE_COLOR,
+                  ),
                 ),
               ),
             ),
@@ -80,6 +99,7 @@ class VideoControls extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
+            SizedBox(width: 5),
           ],
         ),
       ],
