@@ -26,6 +26,7 @@ class _TechniqueSearchBarState extends State<TechniqueSearchBar> {
         );
       },
       icon: Icons.search_rounded,
+      iconColor: Colors.white,
       color: Colors.white.withOpacity(0.6),
       padding: EdgeInsets.symmetric(horizontal: 20),
       controller: _searchController,

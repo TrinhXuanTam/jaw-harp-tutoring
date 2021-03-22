@@ -37,37 +37,14 @@ class HomePageBody extends StatelessWidget {
                   SizedBox(height: 20),
                   CategorySideScroll(),
                   SizedBox(height: 5),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        child: Text(
-                          "New Techniques",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                          ),
-                        ),
+                  Container(
+                    child: Text(
+                      "New Techniques",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
                       ),
-                      BlocBuilder<NewTechniquesBloc, NewTechniquesState>(
-                        builder: (ctx, state) {
-                          if (state is NewTechniquesLoaded)
-                            return GestureDetector(
-                              onTap: () => {},
-                              child: Text(
-                                "View all",
-                                style: TextStyle(
-                                  color: BASE_COLOR,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            );
-                          else
-                            return Container();
-                        },
-                      ),
-                    ],
+                    ),
                   ),
                   SizedBox(height: 10),
                   Expanded(
