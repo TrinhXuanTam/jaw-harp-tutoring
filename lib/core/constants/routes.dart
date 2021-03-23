@@ -27,3 +27,4 @@ const String UPLOAD_FILES_SCREEN_ROUTE = "/uploadFiles";
 const String USER_SECTION_SCREEN_ROUTE = "/home";
 const String TECHNIQUE_DETAIL_SCREEN_ROUTE = "/techniqueDetail";
 const String VIDEO_FULL_SCREEN_SCREEN_ROUTE = "/videoFullScreen";
+const String FILTER_SCREEN_ROUTE = "/filter";
