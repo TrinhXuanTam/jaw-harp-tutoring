@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
           LOGO_LOCATION,
           color: Colors.white,
           alignment: Alignment.center,
-          width: size.width * 0.5,
+          width: size.width * 0.2,
         ),
       ),
     );

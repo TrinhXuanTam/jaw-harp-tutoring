@@ -38,7 +38,7 @@ class HomePageBody extends StatelessWidget {
                   SizedBox(height: 10),
                   Container(
                     child: Text(
-                      "New Techniques",
+                      "What's new?",
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
