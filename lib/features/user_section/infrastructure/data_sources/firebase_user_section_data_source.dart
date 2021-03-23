@@ -10,7 +10,9 @@ class FirebaseUserSectionDataSource {
 
   Future<Iterable<CategoryDTO>> getAllCategories() async {
     final snapshot = await _categories.where("isVisible", isEqualTo: true).get();
-    return snapshot.docs.map((e) => CategoryDTO.fromFirestore(e));
+    final List<CategoryDTO> res = [];
+    for (final document in snapshot.docs) res.add(await CategoryDTO.fromFirestore(document));
+    return res;
   }
 
   Future<Iterable<TechniqueDTO>> getTechniquesById(List<String> techniqueIds) async {

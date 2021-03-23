@@ -179,7 +179,7 @@ class TechniqueForm extends StatelessWidget {
                           onTap: () => Navigator.pushNamed(
                             context,
                             UPLOAD_FILES_SCREEN_ROUTE,
-                            arguments: UploadFilesScreenArgs(bloc.state.thumbnailController, bloc.state.videoController),
+                            arguments: UploadFilesScreenArgs(thumbnailController: bloc.state.thumbnailController, videoController: bloc.state.videoController),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(10),

@@ -3,8 +3,11 @@ import 'package:jews_harp/features/admin/domain/repository_interfaces/category_a
 import 'package:jews_harp/features/admin/infrastructure/data_sources/firebase_admin_data_source.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category_localized_data.dart';
+import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:jews_harp/features/user_section/infrastructure/DTO/category_localized_data_DTO.dart';
+import 'package:jews_harp/features/user_section/infrastructure/DTO/mediaDTO.dart';
 import 'package:jews_harp/features/user_section/infrastructure/data_sources/firebase_user_section_data_source.dart';
+import 'package:optional/optional.dart';
 
 @LazySingleton(as: ICategoryAdminRepository, env: [Environment.prod])
 class CategoryAdminRepository extends ICategoryAdminRepository {
@@ -14,19 +17,29 @@ class CategoryAdminRepository extends ICategoryAdminRepository {
   CategoryAdminRepository(this._adminDataSource, this._userSectionDataSource);
 
   @override
-  Future<Category> createCategory(bool isVisible, Iterable<CategoryLocalizedData> localizedData) {
-    return _adminDataSource.createCategory(isVisible, localizedData.toDTO());
+  Future<Category> createCategory(
+    bool isVisible,
+    Optional<Media> thumbnail,
+    Iterable<CategoryLocalizedData> localizedData,
+  ) {
+    return _adminDataSource.createCategory(
+      isVisible,
+      thumbnail.map((t) => MediaDTO.fromEntity(t)),
+      localizedData.toDTO(),
+    );
   }
 
   @override
   Future<Category> updateCategory(
     String id, {
     bool? isVisible,
+    Optional<Media>? thumbnail,
     Iterable<CategoryLocalizedData>? localizedData,
   }) {
     return _adminDataSource.updateCategory(
       id,
       isVisible: isVisible,
+      thumbnail: thumbnail?.map((t) => MediaDTO.fromEntity(t)),
       localizedData: localizedData?.map((e) => CategoryLocalizedDataDTO.fromEntity(e)),
     );
   }

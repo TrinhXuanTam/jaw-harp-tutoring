@@ -7,6 +7,7 @@ import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_form/category_form_bloc.dart';
 import 'package:jews_harp/features/admin/presentation/screens/category_localization_add_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/category_localization_edit_screen.dart';
+import 'package:jews_harp/features/admin/presentation/screens/upload_files_screen.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 
 import 'language_side_scroll_grid.dart';
@@ -75,6 +76,54 @@ class CategoryForm extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 10),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Upload files:",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                          ),
+                          Text(
+                            "Upload additional to improve the user experience.",
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 20),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(29),
+                      child: Material(
+                        color: BASE_COLOR,
+                        child: InkWell(
+                          onTap: () => Navigator.pushNamed(
+                            context,
+                            UPLOAD_FILES_SCREEN_ROUTE,
+                            arguments: UploadFilesScreenArgs(thumbnailController: BlocProvider.of<CategoryFormBloc>(context).state.thumbnailController),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Icon(
+                              Icons.cloud_upload,
+                              color: BASE_COLOR_VERY_LIGHT,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

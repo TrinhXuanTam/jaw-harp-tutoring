@@ -51,7 +51,7 @@ class TechniqueDTO extends Technique {
   static Future<TechniqueDTO> fromFirestore(DocumentSnapshot documentSnapshot) async {
     final localizedData = _getLocalizedData(documentSnapshot);
     final difficulty = TechniqueDifficulty.values[documentSnapshot["difficulty"]];
-    final category = CategoryDTO.fromFirestore(await FirebaseFirestore.instance.collection('categories').doc(documentSnapshot["category"]).get());
+    final category = await CategoryDTO.fromFirestore(await FirebaseFirestore.instance.collection('categories').doc(documentSnapshot["category"]).get());
 
     return TechniqueDTO(
       id: documentSnapshot.id,

@@ -7,15 +7,15 @@ import 'package:jews_harp/features/admin/presentation/widgets/thumbnail_picker.d
 import 'package:jews_harp/features/admin/presentation/widgets/video_picker.dart';
 
 class UploadFilesScreenArgs {
-  final ThumbnailPickerController thumbnailController;
-  final VideoPickerController videoController;
+  final ThumbnailPickerController? thumbnailController;
+  final VideoPickerController? videoController;
 
-  UploadFilesScreenArgs(this.thumbnailController, this.videoController);
+  UploadFilesScreenArgs({this.thumbnailController, this.videoController});
 }
 
 class UploadFilesScreen extends StatelessWidget {
-  final ThumbnailPickerController thumbnailController;
-  final VideoPickerController videoController;
+  final ThumbnailPickerController? thumbnailController;
+  final VideoPickerController? videoController;
 
   factory UploadFilesScreen.fromArgs(UploadFilesScreenArgs args) {
     return UploadFilesScreen(
@@ -46,12 +46,17 @@ class UploadFilesScreen extends StatelessWidget {
               TitleWithSubtitle(
                 titleText: "Choose Files",
                 titleSize: 35,
-                subtitleText: "Choose files to upload with your technique",
+                subtitleText: "Choose files to upload",
               ),
               SizedBox(height: 20),
-              ThumbnailPicker(controller: thumbnailController),
-              SizedBox(height: 10),
-              VideoPicker(controller: videoController),
+              if (thumbnailController != null)
+                Column(
+                  children: [
+                    ThumbnailPicker(controller: thumbnailController!),
+                    SizedBox(height: 10),
+                  ],
+                ),
+              if (videoController != null) VideoPicker(controller: videoController!),
               SizedBox(height: 20),
               RoundedButton(
                 text: "Done",

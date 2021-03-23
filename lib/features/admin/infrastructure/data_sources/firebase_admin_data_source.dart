@@ -18,17 +18,18 @@ import 'package:optional/optional.dart';
 class FirebaseAdminDataSource {
   CollectionReference _categories = FirebaseFirestore.instance.collection('categories');
   CollectionReference _techniques = FirebaseFirestore.instance.collection('techniques');
-  Reference _media = FirebaseStorage.instance.ref("techniques");
+  Reference _techniqueMedia = FirebaseStorage.instance.ref("techniques");
+  Reference _categoryMedia = FirebaseStorage.instance.ref("categories");
 
-  Future<String> _uploadFile(String techniqueId, String filename, String path) async {
-    final task = await _media.child(techniqueId).child(filename).putFile(File(path));
+  Future<String> _uploadFile(Reference media, String techniqueId, String filename, String path) async {
+    final task = await media.child(techniqueId).child(filename).putFile(File(path));
     final url = await task.ref.getDownloadURL();
     return url;
   }
 
-  Future<void> _deleteFile(String techniqueId, String filename) async {
+  Future<void> _deleteFile(Reference media, String techniqueId, String filename) async {
     try {
-      await _media.child(techniqueId).child(filename).delete();
+      await media.child(techniqueId).child(filename).delete();
     } catch (exception) {}
   }
 
@@ -54,8 +55,8 @@ class FirebaseAdminDataSource {
       "datePublished": category["isVisible"] as bool ? FieldValue.serverTimestamp() : null,
     });
 
-    if (video.isPresent && video.value.filePath.isPresent) await _uploadFile(snapshot.id, "video", video.value.filePath.value);
-    if (thumbnail.isPresent && thumbnail.value.filePath.isPresent) await _uploadFile(snapshot.id, "thumbnail", thumbnail.value.filePath.value);
+    if (video.isPresent && video.value.filePath.isPresent) await _uploadFile(_techniqueMedia, snapshot.id, "video", video.value.filePath.value);
+    if (thumbnail.isPresent && thumbnail.value.filePath.isPresent) await _uploadFile(_techniqueMedia, snapshot.id, "thumbnail", thumbnail.value.filePath.value);
 
     category.reference.update({
       "techniques": FieldValue.arrayUnion([snapshot.id])
@@ -64,12 +65,18 @@ class FirebaseAdminDataSource {
     return TechniqueDTO.fromFirestore(await snapshot.get());
   }
 
-  Future<CategoryDTO> createCategory(bool isVisible, Iterable<CategoryLocalizedDataDTO> localizedData) async {
+  Future<CategoryDTO> createCategory(
+    bool isVisible,
+    Optional<MediaDTO> thumbnail,
+    Iterable<CategoryLocalizedDataDTO> localizedData,
+  ) async {
     final snapshot = await _categories.add({
       "isVisible": isVisible,
       "techniques": FieldValue.arrayUnion([]),
       "localization": localizedData.toJson(),
     }).then((value) => value.get());
+
+    if (thumbnail.isPresent && thumbnail.value.filePath.isPresent) await _uploadFile(_categoryMedia, snapshot.id, "thumbnail", thumbnail.value.filePath.value);
 
     return CategoryDTO.fromFirestore(snapshot);
   }
@@ -77,6 +84,7 @@ class FirebaseAdminDataSource {
   Future<CategoryDTO> updateCategory(
     String id, {
     bool? isVisible,
+    Optional<MediaDTO>? thumbnail,
     Iterable<CategoryLocalizedDataDTO>? localizedData,
   }) async {
     final category = await _categories.doc(id).get();
@@ -98,6 +106,12 @@ class FirebaseAdminDataSource {
     }
 
     if (localizedData != null) updatedData["localization"] = localizedData.toJson();
+
+    if (thumbnail != null) {
+      await _deleteFile(_categoryMedia, id, "thumbnail");
+
+      if (thumbnail.isPresent && thumbnail.value.filePath.isPresent) await _uploadFile(_categoryMedia, id, "thumbnail", thumbnail.value.filePath.value);
+    }
 
     await _categories.doc(id).update(updatedData);
 
@@ -141,15 +155,15 @@ class FirebaseAdminDataSource {
     if (localizedData != null) updatedData["localization"] = localizedData.toJson();
 
     if (thumbnail != null) {
-      await _deleteFile(id, "thumbnail");
+      await _deleteFile(_techniqueMedia, id, "thumbnail");
 
-      if (thumbnail.isPresent && thumbnail.value.filePath.isPresent) await _uploadFile(id, "thumbnail", thumbnail.value.filePath.value);
+      if (thumbnail.isPresent && thumbnail.value.filePath.isPresent) await _uploadFile(_techniqueMedia, id, "thumbnail", thumbnail.value.filePath.value);
     }
 
     if (video != null) {
-      await _deleteFile(id, "video");
+      await _deleteFile(_techniqueMedia, id, "video");
 
-      if (video.isPresent && video.value.filePath.isPresent) await _uploadFile(id, "video", video.value.filePath.value);
+      if (video.isPresent && video.value.filePath.isPresent) await _uploadFile(_techniqueMedia, id, "video", video.value.filePath.value);
     }
 
     await _techniques.doc(id).update(updatedData);
@@ -159,12 +173,20 @@ class FirebaseAdminDataSource {
 
   Future<Iterable<CategoryDTO>> getHiddenCategories() async {
     final snapshot = await _categories.where("isVisible", isEqualTo: false).get();
-    return snapshot.docs.map((e) => CategoryDTO.fromFirestore(e));
+    final List<CategoryDTO> res = [];
+
+    for (final document in snapshot.docs) res.add(await CategoryDTO.fromFirestore(document));
+
+    return res;
   }
 
   Future<Iterable<CategoryDTO>> getAllCategories() async {
     final snapshot = await _categories.get();
-    return snapshot.docs.map((e) => CategoryDTO.fromFirestore(e));
+    final List<CategoryDTO> res = [];
+
+    for (final document in snapshot.docs) res.add(await CategoryDTO.fromFirestore(document));
+
+    return res;
   }
 
   Future<Iterable<TechniqueDTO>> getAllTechniques() async {

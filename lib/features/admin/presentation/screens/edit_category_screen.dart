@@ -9,7 +9,9 @@ import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_form/category_form_bloc.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_localization/category_localization_bloc.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/category_form.dart';
+import 'package:jews_harp/features/admin/presentation/widgets/thumbnail_picker.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
+import 'package:jews_harp/core/extensions.dart';
 
 class EditCategoryScreenArgs {
   final Category category;
@@ -62,6 +64,7 @@ class EditCategoryScreen extends StatelessWidget {
                         create: (ctx) => serviceLocator<CategoryFormBloc>(
                             param1: CategoryFormState(
                           isVisible: this.category.isVisible,
+                          thumbnailController: ThumbnailPickerController(image: this.category.thumbnail.toNullable()),
                           localizedData: state.localizedData,
                         )),
                         child: _EditCategoryForm(
