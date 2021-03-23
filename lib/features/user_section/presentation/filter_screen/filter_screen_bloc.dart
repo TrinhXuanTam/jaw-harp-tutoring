@@ -7,7 +7,6 @@ import 'package:jews_harp/core/widgets/rounded_dropdown.dart';
 import 'package:meta/meta.dart';
 
 part 'filter_screen_event.dart';
-
 part 'filter_screen_state.dart';
 
 @Injectable(env: [Environment.prod, Environment.dev])

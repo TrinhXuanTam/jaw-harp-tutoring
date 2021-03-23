@@ -39,4 +39,7 @@ class CategoryAdminRepository extends ICategoryAdminRepository {
 
   @override
   Future<Iterable<Category>> getVisibleCategories() => _userSectionDataSource.getAllCategories();
+
+  @override
+  Future<Map<String, CategoryLocalizedData>> getLocalizedData(Category category) => _adminDataSource.getCategoryLocalizedData(category.id);
 }

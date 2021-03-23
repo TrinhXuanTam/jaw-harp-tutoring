@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category_localized_data.dart';
 
 class CategoryLocalizedDataDTO extends CategoryLocalizedData {
@@ -6,6 +7,19 @@ class CategoryLocalizedDataDTO extends CategoryLocalizedData {
     required String title,
     required String description,
   }) : super(languageCode: languageCode, title: title, description: description);
+
+  static Map<String, CategoryLocalizedDataDTO> getLocalizedData(DocumentSnapshot documentSnapshot) {
+    final Map<String, CategoryLocalizedDataDTO> l10n = {};
+    documentSnapshot.data()?["localization"].forEach(
+          (key, value) => l10n[key] = CategoryLocalizedDataDTO(
+            languageCode: key,
+            title: value["title"],
+            description: value["description"],
+          ),
+        );
+
+    return l10n;
+  }
 
   factory CategoryLocalizedDataDTO.fromEntity(CategoryLocalizedData localizedData) {
     return CategoryLocalizedDataDTO(

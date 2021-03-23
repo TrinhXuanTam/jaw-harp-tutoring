@@ -36,16 +36,7 @@ class TechniqueDTO extends Technique {
 
   static TechniqueLocalizedDataDTO _getLocalizedData(DocumentSnapshot documentSnapshot) {
     final languageCode = FirebaseAuth.instance.languageCode;
-
-    final Map<String, TechniqueLocalizedDataDTO> l10n = {};
-    documentSnapshot.data()?["localization"].forEach(
-          (key, value) => l10n[key] = TechniqueLocalizedDataDTO(
-            languageCode: key,
-            title: value["title"],
-            description: value["description"],
-            accompanyingText: value["accompanyingText"],
-          ),
-        );
+    final Map<String, TechniqueLocalizedDataDTO> l10n = TechniqueLocalizedDataDTO.getLocalizedData(documentSnapshot);
 
     final localizedData = l10n[languageCode];
     if (localizedData != null)

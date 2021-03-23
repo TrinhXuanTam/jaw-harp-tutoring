@@ -15,4 +15,6 @@ abstract class ICategoryAdminRepository {
   Future<Iterable<Category>> getVisibleCategories();
 
   Future<Iterable<Category>> getAllCategories();
+
+  Future<Map<String, CategoryLocalizedData>> getLocalizedData(Category category);
 }

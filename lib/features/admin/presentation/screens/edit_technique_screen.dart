@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/extensions.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
+import 'package:jews_harp/core/widgets/loading_wrapper.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/core/widgets/rounded_dropdown.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/technique_form/technique_form_bloc.dart';
+import 'package:jews_harp/features/admin/presentation/BLoCs/technique_localization/technique_localization_bloc.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/technique_form.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/thumbnail_picker.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/video_picker.dart';
@@ -35,41 +37,49 @@ class EditTechniqueScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      extendBodyBehindAppBar: true,
-      appBar: IconAppBar(
-        onPressed: () => this.onClose(context),
-      ),
-      body: CenteredStack(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TitleWithSubtitle(
-                titleText: "Edit Technique",
-                titleSize: 35,
-                subtitleText: "Edit details of your technique.",
-              ),
-              SizedBox(height: 20),
-              BlocProvider<TechniqueFormBloc>(
-                create: (ctx) => serviceLocator<TechniqueFormBloc>(
-                  param1: TechniqueFormState(
-                    isPaid: technique.productId.isPresent,
-                    idController: TextEditingController(text: technique.productId.orElseGet(() => "")),
-                    categoryController: DropdownButtonFormFieldController<String>(value: technique.category.id),
-                    difficultyController: DropdownButtonFormFieldController<TechniqueDifficulty>(value: technique.difficulty),
-                    localizedData: technique.localizedData,
-                    thumbnailController: ThumbnailPickerController(image: technique.thumbnail.toNullable()),
-                    videoController: VideoPickerController(video: technique.video.toNullable()),
-                  ),
+    return BlocProvider<TechniqueLocalizationBloc>(
+      create: (_) => serviceLocator<TechniqueLocalizationBloc>()..add(LoadTechniqueLocalizedData(this.technique)),
+      child: BlocBuilder<TechniqueLocalizationBloc, TechniqueLocalizationState>(builder: (ctx, state) {
+        if (state is TechniqueLocalizationLoaded)
+          return Scaffold(
+            resizeToAvoidBottomInset: false,
+            extendBodyBehindAppBar: true,
+            appBar: IconAppBar(
+              onPressed: () => this.onClose(context),
+            ),
+            body: CenteredStack(
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TitleWithSubtitle(
+                      titleText: "Edit Technique",
+                      titleSize: 35,
+                      subtitleText: "Edit details of your technique.",
+                    ),
+                    SizedBox(height: 20),
+                    BlocProvider<TechniqueFormBloc>(
+                      create: (ctx) => serviceLocator<TechniqueFormBloc>(
+                        param1: TechniqueFormState(
+                          isPaid: technique.productId.isPresent,
+                          idController: TextEditingController(text: technique.productId.orElseGet(() => "")),
+                          categoryController: DropdownButtonFormFieldController<String>(value: technique.category.id),
+                          difficultyController: DropdownButtonFormFieldController<TechniqueDifficulty>(value: technique.difficulty),
+                          localizedData: state.localizedData,
+                          thumbnailController: ThumbnailPickerController(image: technique.thumbnail.toNullable()),
+                          videoController: VideoPickerController(video: technique.video.toNullable()),
+                        ),
+                      ),
+                      child: _EditTechniqueForm(technique: this.technique, onClose: this.onClose),
+                    ),
+                  ],
                 ),
-                child: _EditTechniqueForm(technique: this.technique, onClose: this.onClose),
-              ),
-            ],
-          ),
-        ],
-      ),
+              ],
+            ),
+          );
+        else
+          return LoadingScreen();
+      }),
     );
   }
 }

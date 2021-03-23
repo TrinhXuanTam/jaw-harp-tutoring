@@ -56,4 +56,7 @@ class TechniqueAdminRepository extends ITechniqueAdminRepository {
 
   @override
   Future<Iterable<Technique>> getAllTechniques() => _adminDataSource.getAllTechniques();
+
+  @override
+  Future<Map<String, TechniqueLocalizedData>> getLocalizedData(Technique technique) => _adminDataSource.getTechniqueLocalizedData(technique.id);
 }

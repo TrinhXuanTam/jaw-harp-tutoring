@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:jews_harp/core/constants/language_codes.dart';
 import 'package:jews_harp/core/errors/language_not_supported_error.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
@@ -18,15 +17,7 @@ class CategoryDTO extends Category {
 
   static CategoryLocalizedDataDTO _getLocalizedData(DocumentSnapshot documentSnapshot) {
     final languageCode = FirebaseAuth.instance.languageCode;
-
-    final Map<String, CategoryLocalizedDataDTO> l10n = {};
-    documentSnapshot.data()?["localization"].forEach(
-          (key, value) => l10n[key] = CategoryLocalizedDataDTO(
-            languageCode: key,
-            title: value["title"],
-            description: value["description"],
-          ),
-        );
+    final l10n = CategoryLocalizedDataDTO.getLocalizedData(documentSnapshot);
 
     final localizedData = l10n[languageCode];
     if (localizedData != null)
