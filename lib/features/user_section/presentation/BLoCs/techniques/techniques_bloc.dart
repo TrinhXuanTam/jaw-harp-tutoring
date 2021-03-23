@@ -8,7 +8,9 @@ import 'package:jews_harp/features/user_section/application/get_techniques.dart'
 import 'package:jews_harp/features/user_section/application/get_techniques_by_category.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
+import 'package:jews_harp/features/user_section/utils.dart';
 import 'package:meta/meta.dart';
+import 'package:optional/optional.dart';
 
 part 'techniques_event.dart';
 part 'techniques_state.dart';
@@ -31,6 +33,12 @@ class TechniquesBloc extends Bloc<TechniquesEvent, TechniquesState> {
       yield TechniquesLoaded((await _getTechniques()).toList());
     else if (event is LoadNewTechniques)
       yield TechniquesLoaded((await _getMostRecentTechniques()).toList());
-    else if (event is TextSearchPerformed) yield state.copyWith(keywords: event.keywords);
+    else if (event is TextSearchPerformed)
+      yield state.copyWith(keywords: event.keywords);
+    else if (event is FilterUpdated)
+      yield state.copyWith(
+        keywords: event.searchKeywords,
+        techniqueOrder: event.techniqueOrder,
+      );
   }
 }

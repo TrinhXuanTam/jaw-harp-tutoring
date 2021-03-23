@@ -10,6 +10,7 @@ import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/domain/entities/media.dart';
+import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:random_color/random_color.dart';
 import 'package:video_player/video_player.dart';
 
@@ -88,4 +89,15 @@ VoidCallback videoOnTap(VideoPlayerController controller) {
   } else {
     return () => controller.play();
   }
+}
+
+int techniqueDatePublishedComparator(Technique lhs, Technique rhs) {
+  if (lhs.datePublished.isEmpty && rhs.datePublished.isEmpty)
+    return 0;
+  else if (lhs.datePublished.isEmpty)
+    return 1;
+  else if (rhs.datePublished.isEmpty)
+    return -1;
+  else
+    return rhs.datePublished.value.compareTo(lhs.datePublished.value);
 }

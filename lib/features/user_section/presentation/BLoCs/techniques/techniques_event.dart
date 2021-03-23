@@ -22,3 +22,15 @@ class TextSearchPerformed extends TechniquesEvent {
 
   TextSearchPerformed(this.keywords);
 }
+
+class FilterUpdated extends TechniquesEvent {
+  final String searchKeywords;
+  final Optional<TechniqueOrder> techniqueOrder;
+  final bool descending;
+
+  FilterUpdated({
+    this.searchKeywords = "",
+    this.techniqueOrder = const Optional.empty(),
+    this.descending = false,
+  });
+}
