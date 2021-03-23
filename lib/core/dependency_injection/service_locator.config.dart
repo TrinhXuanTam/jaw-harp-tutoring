@@ -42,21 +42,21 @@ import 'package:jews_harp/features/admin/infrastructure/repositories/category_ad
 import 'package:jews_harp/features/admin/infrastructure/repositories/technique_admin_repository.dart'
     as _i13;
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_detail/category_detail_bloc.dart'
-    as _i62;
+    as _i61;
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_form/category_form_bloc.dart'
-    as _i63;
+    as _i62;
 import 'package:jews_harp/features/admin/presentation/BLoCs/hidden_categories/hidden_categories_bloc.dart'
     as _i53;
 import 'package:jews_harp/features/admin/presentation/BLoCs/technique_form/technique_form_bloc.dart'
-    as _i55;
+    as _i54;
 import 'package:jews_harp/features/admin/presentation/BLoCs/technique_list/technique_list_bloc.dart'
-    as _i56;
+    as _i55;
 import 'package:jews_harp/features/admin/presentation/BLoCs/thumbnail_picker/thumbnail_picker_bloc.dart'
     as _i31;
 import 'package:jews_harp/features/admin/presentation/BLoCs/video_picker/video_picker_bloc.dart'
     as _i36;
 import 'package:jews_harp/features/admin/presentation/BLoCs/visible_categories/visible_categories_bloc.dart'
-    as _i59;
+    as _i58;
 import 'package:jews_harp/features/auth/application/use_cases/email_authentication.dart'
     as _i39;
 import 'package:jews_harp/features/auth/application/use_cases/email_verification_check.dart'
@@ -94,17 +94,17 @@ import 'package:jews_harp/features/auth/infrastructure/facades/user_facade.dart'
 import 'package:jews_harp/features/auth/infrastructure/repositories/user_repository.dart'
     as _i19;
 import 'package:jews_harp/features/auth/presentation/BLoCs/email_authentication/email_auth_bloc.dart'
-    as _i64;
+    as _i63;
 import 'package:jews_harp/features/auth/presentation/BLoCs/email_verification/email_verification_bloc.dart'
-    as _i65;
+    as _i64;
 import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart'
-    as _i60;
+    as _i59;
 import 'package:jews_harp/features/auth/presentation/BLoCs/password_reset/password_reset_bloc.dart'
     as _i23;
 import 'package:jews_harp/features/auth/presentation/BLoCs/sign_up_screen/sign_up_bloc.dart'
-    as _i66;
+    as _i65;
 import 'package:jews_harp/features/auth/presentation/BLoCs/third_party_authentication/third_party_auth_bloc.dart'
-    as _i58;
+    as _i57;
 import 'package:jews_harp/features/user_section/application/get_categories.dart'
     as _i45;
 import 'package:jews_harp/features/user_section/application/get_most_recent_techniques.dart'
@@ -124,13 +124,11 @@ import 'package:jews_harp/features/user_section/infrastructure/repositories/cate
 import 'package:jews_harp/features/user_section/infrastructure/repositories/technique_repository.dart'
     as _i15;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/categories/categories_bloc.dart'
-    as _i61;
-import 'package:jews_harp/features/user_section/presentation/BLoCs/new_techniques/new_techniques_bloc.dart'
-    as _i54;
+    as _i60;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_detail/technique_detail_bloc.dart'
     as _i30;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/techniques/techniques_bloc.dart'
-    as _i57;
+    as _i56;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/user_section_navigation/user_section_navigation_bloc.dart'
     as _i35;
 
@@ -288,70 +286,67 @@ _i1.GetIt initGetIt(_i1.GetIt get,
   gh.factory<_i53.HiddenCategoriesBloc>(
       () => _i53.HiddenCategoriesBloc(get<_i47.GetHiddenCategories>()),
       registerFor: {_prod, _dev});
-  gh.lazySingleton<_i54.NewTechniquesBloc>(
-      () => _i54.NewTechniquesBloc(get<_i48.GetMostRecentTechniques>()),
-      registerFor: {_prod, _dev});
-  gh.factoryParam<_i55.TechniqueFormBloc, _i55.TechniqueFormState?, dynamic>(
-      (initialState, _) => _i55.TechniqueFormBloc(
+  gh.factoryParam<_i54.TechniqueFormBloc, _i54.TechniqueFormState?, dynamic>(
+      (initialState, _) => _i54.TechniqueFormBloc(
           initialState,
           get<_i42.GetAllCategories>(),
           get<_i38.CreateTechnique>(),
           get<_i34.UpdateTechnique>(),
           get<_i3.ErrorBloc>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i56.TechniqueListBloc>(
-      () => _i56.TechniqueListBloc(get<_i43.GetAllTechniques>()),
+  gh.factory<_i55.TechniqueListBloc>(
+      () => _i55.TechniqueListBloc(get<_i43.GetAllTechniques>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i57.TechniquesBloc>(
-      () => _i57.TechniquesBloc(
+  gh.factory<_i56.TechniquesBloc>(
+      () => _i56.TechniquesBloc(get<_i48.GetMostRecentTechniques>(),
           get<_i50.GetTechniquesByCategory>(), get<_i49.GetTechniques>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i58.ThirdPartyAuthBloc>(
-      () => _i58.ThirdPartyAuthBloc(
+  gh.factory<_i57.ThirdPartyAuthBloc>(
+      () => _i57.ThirdPartyAuthBloc(
           get<_i41.FacebookAuthentication>(),
           get<_i52.GoogleAuthentication>(),
           get<_i44.GetAuthProviders>(),
           get<_i21.LinkFacebookProvider>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i59.VisibleCategoriesBloc>(
-      () => _i59.VisibleCategoriesBloc(get<_i51.GetVisibleCategories>()),
+  gh.factory<_i58.VisibleCategoriesBloc>(
+      () => _i58.VisibleCategoriesBloc(get<_i51.GetVisibleCategories>()),
       registerFor: {_prod, _dev});
-  gh.lazySingleton<_i60.AuthBloc>(
-      () => _i60.AuthBloc(
+  gh.lazySingleton<_i59.AuthBloc>(
+      () => _i59.AuthBloc(
           get<_i46.GetCurrentUser>(),
           get<_i40.EmailIsVerified>(),
           get<_i27.SetLocale>(),
           get<_i28.SignOut>()),
       registerFor: {_prod, _dev});
-  gh.lazySingleton<_i61.CategoriesBloc>(
-      () => _i61.CategoriesBloc(get<_i45.GetCategories>()),
+  gh.lazySingleton<_i60.CategoriesBloc>(
+      () => _i60.CategoriesBloc(get<_i45.GetCategories>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i62.CategoryDetailBloc>(
-      () => _i62.CategoryDetailBloc(get<_i50.GetTechniquesByCategory>()),
+  gh.factory<_i61.CategoryDetailBloc>(
+      () => _i61.CategoryDetailBloc(get<_i50.GetTechniquesByCategory>()),
       registerFor: {_prod, _dev});
-  gh.factoryParam<_i63.CategoryFormBloc, _i63.CategoryFormState?, dynamic>(
-      (initialState, _) => _i63.CategoryFormBloc(
+  gh.factoryParam<_i62.CategoryFormBloc, _i62.CategoryFormState?, dynamic>(
+      (initialState, _) => _i62.CategoryFormBloc(
           initialState, get<_i37.CreateCategory>(), get<_i33.UpdateCategory>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i64.EmailAuthBloc>(
-      () => _i64.EmailAuthBloc(
+  gh.factory<_i63.EmailAuthBloc>(
+      () => _i63.EmailAuthBloc(
           get<_i39.EmailAuthentication>(), get<_i3.ErrorBloc>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i65.EmailVerificationBloc>(
-      () => _i65.EmailVerificationBloc(
+  gh.factory<_i64.EmailVerificationBloc>(
+      () => _i64.EmailVerificationBloc(
           get<_i28.SignOut>(),
           get<_i26.SendEmailVerification>(),
           get<_i40.EmailIsVerified>(),
           get<_i3.ErrorBloc>(),
-          get<_i60.AuthBloc>()),
+          get<_i59.AuthBloc>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i66.SignUpBloc>(
-      () => _i66.SignUpBloc(
+  gh.factory<_i65.SignUpBloc>(
+      () => _i65.SignUpBloc(
           get<_i29.SignUp>(),
           get<_i44.GetAuthProviders>(),
           get<_i20.LinkEmailProvider>(),
           get<_i3.ErrorBloc>(),
-          get<_i60.AuthBloc>()),
+          get<_i59.AuthBloc>()),
       registerFor: {_prod, _dev});
   return get;
 }

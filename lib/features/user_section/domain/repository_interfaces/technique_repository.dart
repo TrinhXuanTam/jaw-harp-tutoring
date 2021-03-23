@@ -4,5 +4,7 @@ import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 abstract class ITechniqueRepository {
   Future<Iterable<Technique>> getAllTechniques();
 
+  Future<Iterable<Technique>> getMostRecentTechniques();
+
   Future<Iterable<Technique>> getTechniquesByCategory(Category category);
 }

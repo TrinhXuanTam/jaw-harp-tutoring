@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class CenteredStack extends StatelessWidget {
@@ -10,6 +11,7 @@ class CenteredStack extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
 
     return Container(
+      color: Colors.white,
       height: size.height,
       width: double.infinity,
       child: Stack(

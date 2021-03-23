@@ -30,4 +30,7 @@ class TechniqueRepository extends ITechniqueRepository {
       return techniques;
     }
   }
+
+  @override
+  Future<Iterable<Technique>> getMostRecentTechniques() => _firebaseUserSectionDataSource.getMostRecentTechniques();
 }

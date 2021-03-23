@@ -30,4 +30,11 @@ class FirebaseUserSectionDataSource {
     final techniquesIds = categories.fold<List<String>>([], (previousValue, element) => previousValue..addAll(element.techniqueIds));
     return getTechniquesById(techniquesIds);
   }
+
+  Future<Iterable<TechniqueDTO>> getMostRecentTechniques() async {
+    final query = await _techniques.where("datePublished", isNotEqualTo: null).orderBy("datePublished", descending: true).limit(10).get();
+    final List<TechniqueDTO> res = [];
+    for (final document in query.docs) res.add(await TechniqueDTO.fromFirestore(document));
+    return res;
+  }
 }
