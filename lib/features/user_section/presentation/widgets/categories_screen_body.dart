@@ -47,8 +47,8 @@ class CategoriesScreenBody extends StatelessWidget {
                         return _CategoryCard(
                           color: color,
                           techniquesCnt: category.techniqueIds.length,
-                          title: category.title(context),
-                          description: category.description(context),
+                          title: category.title,
+                          description: category.description,
                           dst: CategoryScreen(category: category),
                         );
                       }

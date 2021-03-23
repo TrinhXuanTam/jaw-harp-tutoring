@@ -28,7 +28,7 @@ class TechniquesLoaded extends TechniquesState {
 
     return _techniques.where((element) {
       final keywords = this.searchKeywords.split(" ");
-      return element.localizedData.values.any((element) => keywords.any((word) => element.title.contains(new RegExp(word, caseSensitive: false))));
+      return keywords.any((word) => element.title.contains(new RegExp(word, caseSensitive: false)));
     }).toList();
   }
 

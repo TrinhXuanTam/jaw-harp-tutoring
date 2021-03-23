@@ -1,7 +1,9 @@
 part of 'techniques_bloc.dart';
 
 @immutable
-abstract class TechniquesEvent {}
+abstract class TechniquesEvent {
+  const TechniquesEvent();
+}
 
 class LoadTechniquesByCategory extends TechniquesEvent {
   final Category category;
@@ -9,7 +11,11 @@ class LoadTechniquesByCategory extends TechniquesEvent {
   LoadTechniquesByCategory(this.category);
 }
 
-class LoadAllTechniques extends TechniquesEvent {}
+class LoadNewTechniques extends TechniquesEvent {}
+
+class LoadAllTechniques extends TechniquesEvent {
+  const LoadAllTechniques();
+}
 
 class TextSearchPerformed extends TechniquesEvent {
   final String keywords;

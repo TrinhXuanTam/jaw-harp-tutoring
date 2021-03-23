@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
+import 'package:jews_harp/core/widgets/loading_wrapper.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_form/category_form_bloc.dart';
+import 'package:jews_harp/features/admin/presentation/BLoCs/category_localization/category_localization_bloc.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/category_form.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 
@@ -35,36 +37,46 @@ class EditCategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: IconAppBar(
-        onPressed: () => this.onClose(context, this.category),
-      ),
-      body: CenteredStack(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TitleWithSubtitle(
-                titleText: "Edit Category",
-                titleSize: 35,
-                subtitleText: "Edit details of your category.",
+    return BlocProvider<CategoryLocalizationBloc>(
+      create: (_) => serviceLocator<CategoryLocalizationBloc>()..add(LoadCategoryLocalizedData(this.category)),
+      child: BlocBuilder<CategoryLocalizationBloc, CategoryLocalizationState>(
+        builder: (ctx, state) {
+          if (state is CategoryLocalizationLoaded)
+            return Scaffold(
+              extendBodyBehindAppBar: true,
+              appBar: IconAppBar(
+                onPressed: () => this.onClose(context, this.category),
               ),
-              SizedBox(height: 20),
-              BlocProvider<CategoryFormBloc>(
-                create: (ctx) => serviceLocator<CategoryFormBloc>(
-                    param1: CategoryFormState(
-                  isVisible: this.category.isVisible,
-                  localizedData: this.category.localizedData,
-                )),
-                child: _EditCategoryForm(
-                  category: this.category,
-                  onClose: (category) => this.onClose(context, category),
-                ),
+              body: CenteredStack(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TitleWithSubtitle(
+                        titleText: "Edit Category",
+                        titleSize: 35,
+                        subtitleText: "Edit details of your category.",
+                      ),
+                      SizedBox(height: 20),
+                      BlocProvider<CategoryFormBloc>(
+                        create: (ctx) => serviceLocator<CategoryFormBloc>(
+                            param1: CategoryFormState(
+                          isVisible: this.category.isVisible,
+                          localizedData: state.localizedData,
+                        )),
+                        child: _EditCategoryForm(
+                          category: this.category,
+                          onClose: (category) => this.onClose(context, category),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ],
-          ),
-        ],
+            );
+          else
+            return LoadingScreen();
+        },
       ),
     );
   }

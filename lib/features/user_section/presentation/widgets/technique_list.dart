@@ -85,7 +85,7 @@ class TechniqueList extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              item.title(context),
+                              item.title,
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16,
@@ -93,7 +93,7 @@ class TechniqueList extends StatelessWidget {
                             ),
                             if (showCategory)
                               Text(
-                                item.category.title(context),
+                                item.category.title,
                                 style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: 12,

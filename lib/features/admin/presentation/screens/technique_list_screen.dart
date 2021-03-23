@@ -4,7 +4,6 @@ import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/extensions.dart';
-import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/big_app_bar_background.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/loading_wrapper.dart';
@@ -17,7 +16,6 @@ class TechniqueListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final l10n = AppLocalizations.of(context);
 
     return BlocProvider<TechniqueListBloc>(
       create: (_) => serviceLocator<TechniqueListBloc>()..add(LoadAllTechniques()),
@@ -73,7 +71,7 @@ class TechniqueListScreen extends StatelessWidget {
                                             (ctx) => Navigator.pushReplacementNamed(ctx, TECHNIQUE_LIST_SCREEN_ROUTE),
                                           ),
                                         ),
-                                        title: technique.getLocalizedTitle(l10n.locale.languageCode),
+                                        title: technique.title,
                                         productId: technique.productId.orElseGet(() => "Free"),
                                         thumbnail: technique.thumbnail.toNullable(),
                                       ))

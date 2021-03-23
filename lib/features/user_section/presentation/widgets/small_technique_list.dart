@@ -78,7 +78,7 @@ class SmallTechniqueList extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            item.title(context),
+                            item.title,
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                             ),

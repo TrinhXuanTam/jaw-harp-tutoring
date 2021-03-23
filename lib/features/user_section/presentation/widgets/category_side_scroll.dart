@@ -60,7 +60,7 @@ class CategorySideScroll extends StatelessWidget {
               return _CategoryCard(
                 color: color,
                 techniquesCnt: category.techniqueIds.length,
-                title: category.title(ctx),
+                title: category.title,
                 dst: CategoryScreen(category: category),
               );
             } else

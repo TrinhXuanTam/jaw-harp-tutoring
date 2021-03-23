@@ -24,4 +24,6 @@ abstract class ITechniqueAdminRepository {
   });
 
   Future<Iterable<Technique>> getAllTechniques();
+
+  Future<Map<String, TechniqueLocalizedData>> getLocalizedData(Technique technique);
 }

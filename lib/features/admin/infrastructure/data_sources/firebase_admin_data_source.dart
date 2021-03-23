@@ -177,4 +177,20 @@ class FirebaseAdminDataSource {
 
     return res;
   }
+
+  Future<Map<String, CategoryLocalizedDataDTO>> getCategoryLocalizedData(String categoryId) async {
+    final category = await _categories.doc(categoryId).get();
+
+    if (!category.exists) throw NotFoundError("Category with given ID was not found!");
+
+    return CategoryLocalizedDataDTO.getLocalizedData(category);
+  }
+
+  Future<Map<String, TechniqueLocalizedDataDTO>> getTechniqueLocalizedData(String techniqueId) async {
+    final technique = await _techniques.doc(techniqueId).get();
+
+    if (!technique.exists) throw NotFoundError("Technique with given ID was not found!");
+
+    return TechniqueLocalizedDataDTO.getLocalizedData(technique);
+  }
 }

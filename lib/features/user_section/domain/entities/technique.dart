@@ -1,7 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:jews_harp/core/constants/language_codes.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
-import 'package:jews_harp/features/user_section/domain/entities/technique_localized_data.dart';
 import 'package:optional/optional.dart';
 
 import 'media.dart';
@@ -14,7 +12,9 @@ class Technique extends Equatable {
   final TechniqueDifficulty difficulty;
   final Optional<Media> thumbnail;
   final Optional<Media> video;
-  final Map<String, TechniqueLocalizedData> localizedData;
+  final String title;
+  final String description;
+  final String accompanyingText;
 
   const Technique({
     required this.id,
@@ -24,35 +24,13 @@ class Technique extends Equatable {
     required this.difficulty,
     this.thumbnail = const Optional.empty(),
     this.video = const Optional.empty(),
-    required this.localizedData,
+    required this.title,
+    required this.description,
+    required this.accompanyingText,
   });
 
-  String getLocalizedTitle(String languageCode) {
-    final data = localizedData[languageCode];
-
-    if (data == null) return localizedData[ENGLISH_CODE]!.title;
-
-    return data.title;
-  }
-
-  String getLocalizedDescription(String languageCode) {
-    final data = localizedData[languageCode];
-
-    if (data == null) return localizedData[ENGLISH_CODE]!.description;
-
-    return data.description;
-  }
-
-  String getLocalizedAccompanyingText(String languageCode) {
-    final data = localizedData[languageCode];
-
-    if (data == null) return localizedData[ENGLISH_CODE]!.accompanyingText;
-
-    return data.accompanyingText;
-  }
-
   @override
-  List<Object> get props => [id, category, difficulty, localizedData];
+  List<Object> get props => [id, category, difficulty, title, description, accompanyingText];
 }
 
 enum TechniqueDifficulty {

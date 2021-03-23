@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique_localized_data.dart';
 
 class TechniqueLocalizedDataDTO extends TechniqueLocalizedData {
@@ -7,6 +8,19 @@ class TechniqueLocalizedDataDTO extends TechniqueLocalizedData {
     required String description,
     required String accompanyingText,
   }) : super(languageCode: languageCode, title: title, description: description, accompanyingText: accompanyingText);
+
+  static Map<String, TechniqueLocalizedDataDTO> getLocalizedData(DocumentSnapshot documentSnapshot) {
+    final Map<String, TechniqueLocalizedDataDTO> l10n = {};
+    documentSnapshot.data()?["localization"].forEach(
+          (key, value) => l10n[key] = TechniqueLocalizedDataDTO(
+            languageCode: key,
+            title: value["title"],
+            description: value["description"],
+            accompanyingText: value["accompanyingText"],
+          ),
+        );
+    return l10n;
+  }
 
   factory TechniqueLocalizedDataDTO.fromEntity(TechniqueLocalizedData localizedData) {
     return TechniqueLocalizedDataDTO(
