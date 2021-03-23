@@ -73,13 +73,13 @@ class TechniqueSideScroll extends StatelessWidget {
                           ),
                           SizedBox(height: 3),
                           Text(
-                            technique.title(context),
+                            technique.title,
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           Text(
-                            technique.category.title(context),
+                            technique.category.title,
                             style: TextStyle(color: Colors.grey, fontSize: 12),
                           ),
                           SizedBox(height: 5),

@@ -73,7 +73,7 @@ class TechniqueListScreen extends StatelessWidget {
                                             (ctx) => Navigator.pushReplacementNamed(ctx, TECHNIQUE_LIST_SCREEN_ROUTE),
                                           ),
                                         ),
-                                        title: technique.getLocalizedTitle(l10n.locale.languageCode),
+                                        title: technique.title,
                                         productId: technique.productId.orElseGet(() => "Free"),
                                         thumbnail: technique.thumbnail.toNullable(),
                                       ))

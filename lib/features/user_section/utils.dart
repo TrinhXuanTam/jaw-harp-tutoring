@@ -6,12 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/errors/media_not_found_error.dart';
 import 'package:jews_harp/core/errors/user_not_signed_in_error.dart';
-import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/domain/entities/media.dart';
-import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:random_color/random_color.dart';
 import 'package:video_player/video_player.dart';
 
@@ -75,36 +73,7 @@ Widget defaultFadeTransition(Widget child, Animation<double> primaryAnimation, A
 }
 
 extension CategoryRandomColor on Category {
-  Color getColor(BuildContext context) => getRandomShade(this.title(context).hashCode);
-}
-
-extension CategoryLocalization on Category {
-  String title(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return this.getLocalizedTitle(l10n.locale.languageCode);
-  }
-
-  String description(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return this.getLocalizedDescription(l10n.locale.languageCode);
-  }
-}
-
-extension TechniqueLocalization on Technique {
-  String title(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return this.getLocalizedTitle(l10n.locale.languageCode);
-  }
-
-  String description(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return this.getLocalizedDescription(l10n.locale.languageCode);
-  }
-
-  String accompanyingText(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return this.getLocalizedAccompanyingText(l10n.locale.languageCode);
-  }
+  Color getColor(BuildContext context) => getRandomShade(this.title.hashCode);
 }
 
 VoidCallback videoOnTap(VideoPlayerController controller) {

@@ -70,8 +70,8 @@ class VisibleCategoriesListScreen extends StatelessWidget {
                                     arguments: CategoryDetailScreenArgs(category),
                                   ),
                                   category.techniqueIds.length,
-                                  category.getLocalizedTitle(l10n.locale.languageCode),
-                                  category.getLocalizedDescription(l10n.locale.languageCode),
+                                  category.title,
+                                  category.description,
                                 ),
                               )
                               .toList(),

@@ -31,7 +31,6 @@ class TechniqueForm extends StatelessWidget {
     // ignore: close_sinks
     final bloc = BlocProvider.of<TechniqueFormBloc>(context);
     final size = MediaQuery.of(context).size;
-    final l10n = AppLocalizations.of(context);
     final visibleIcon = Icon(Icons.public, color: BASE_COLOR.withAlpha(100), size: 18);
     final hiddenIcon = Icon(Icons.public_off_rounded, color: Colors.grey, size: 18);
 
@@ -106,7 +105,7 @@ class TechniqueForm extends StatelessWidget {
                     .map(
                       (e) => DropdownMenuItem<String>(
                         child: Row(children: [
-                          Text(e.getLocalizedTitle(l10n.locale.languageCode)),
+                          Text(e.title),
                           SizedBox(width: 5),
                           e.isVisible ? visibleIcon : hiddenIcon,
                         ]),

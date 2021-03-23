@@ -36,7 +36,6 @@ class CategoryDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final l10n = AppLocalizations.of(context);
 
     return BlocProvider<CategoryDetailBloc>(
       create: (_) => serviceLocator<CategoryDetailBloc>()..add(LoadTechniques(this.category)),
@@ -75,7 +74,7 @@ class CategoryDetailScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      state.category.getLocalizedTitle(l10n.locale.languageCode),
+                                      state.category.title,
                                       style: TextStyle(
                                         fontSize: 25,
                                         color: Colors.white,
@@ -83,7 +82,7 @@ class CategoryDetailScreen extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      state.category.getLocalizedDescription(l10n.locale.languageCode),
+                                      state.category.description,
                                       style: TextStyle(
                                         fontSize: 13,
                                         color: Colors.white,
@@ -131,7 +130,7 @@ class CategoryDetailScreen extends StatelessWidget {
                                           (ctx) => Navigator.pushReplacementNamed(ctx, CATEGORY_DETAIL_SCREEN_ROUTE, arguments: CategoryDetailScreenArgs(this.category)),
                                         ),
                                       ),
-                                      title: technique.getLocalizedTitle(l10n.locale.languageCode),
+                                      title: technique.title,
                                       productId: technique.productId.orElseGet(() => "Free"),
                                       thumbnail: technique.thumbnail.toNullable(),
                                     ))

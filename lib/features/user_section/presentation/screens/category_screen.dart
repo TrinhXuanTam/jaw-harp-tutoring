@@ -40,7 +40,7 @@ class _Body extends StatelessWidget {
 
     return Scaffold(
       appBar: IconAppBar(
-        title: this.category.title(context),
+        title: this.category.title,
         titleColor: Colors.white,
         iconColor: Colors.white,
         onPressed: () => Navigator.pop(context),

@@ -81,14 +81,14 @@ class TechniqueScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  technique.title(context),
+                                  technique.title,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
                                   ),
                                 ),
                                 Text(
-                                  technique.category.title(context),
+                                  technique.category.title,
                                   style: TextStyle(
                                     color: Colors.grey,
                                     fontSize: 15,
@@ -168,7 +168,7 @@ class TechniqueScreen extends StatelessWidget {
                                                             fontSize: 16,
                                                           ),
                                                         ),
-                                                        Text(technique.description(context)),
+                                                        Text(technique.description),
                                                         SizedBox(height: 20),
                                                         Text(
                                                           "Detail",
@@ -177,7 +177,7 @@ class TechniqueScreen extends StatelessWidget {
                                                             fontSize: 16,
                                                           ),
                                                         ),
-                                                        Text(technique.accompanyingText(context)),
+                                                        Text(technique.accompanyingText),
                                                       ],
                                                     ),
                                                   ),
