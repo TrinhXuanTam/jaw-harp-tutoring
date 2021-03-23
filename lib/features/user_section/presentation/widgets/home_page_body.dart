@@ -13,6 +13,7 @@ class HomePageBody extends StatelessWidget {
     return CenteredStack(
       children: [
         Container(
+          color: Colors.white,
           height: double.infinity,
           width: double.infinity,
           child: SingleChildScrollView(

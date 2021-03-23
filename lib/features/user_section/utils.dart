@@ -50,17 +50,6 @@ Color getRandomShade(int seed) {
   );
 }
 
-int techniqueDatePublishedComparator(Technique lhs, Technique rhs) {
-  if (lhs.datePublished.isEmpty && rhs.datePublished.isEmpty)
-    return 0;
-  else if (lhs.datePublished.isEmpty)
-    return 1;
-  else if (rhs.datePublished.isEmpty)
-    return -1;
-  else
-    return rhs.datePublished.value.compareTo(lhs.datePublished.value);
-}
-
 Widget defaultHorizontalSharedAxisTransition(Widget child, Animation<double> primaryAnimation, Animation<double> secondaryAnimation) {
   return SharedAxisTransition(
     child: child,

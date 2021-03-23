@@ -4,9 +4,17 @@ import 'package:jews_harp/features/user_section/domain/repository_interfaces/cat
 
 @LazySingleton(env: [Environment.prod, Environment.dev])
 class GetCategories {
+  Iterable<Category>? _cachedCategories;
   final ICategoryRepository _categoryRepository;
 
   GetCategories(this._categoryRepository);
 
-  Future<Iterable<Category>> call() => _categoryRepository.getAllCategories();
+  Future<Iterable<Category>> call() async {
+    if (_cachedCategories != null) return _cachedCategories!;
+
+    final categories = await _categoryRepository.getAllCategories();
+    _cachedCategories = categories;
+
+    return categories;
+  }
 }
