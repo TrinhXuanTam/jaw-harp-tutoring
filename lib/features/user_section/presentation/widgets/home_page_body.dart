@@ -4,7 +4,6 @@ import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/techniques/techniques_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/technique_side_scroll.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
-
 import 'category_side_scroll.dart';
 
 class HomePageBody extends StatelessWidget {

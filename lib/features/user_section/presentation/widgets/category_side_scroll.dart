@@ -83,7 +83,7 @@ class CategorySideScroll extends StatelessWidget {
           child: ShimmerEffect(
             child: Row(
               children: List.filled(
-                3,
+                4,
                 Container(
                   height: 130,
                   width: 100,
