@@ -4,12 +4,14 @@ import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/shimmer_effect.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
+import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/categories/categories_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/user_section_navigation/user_section_navigation_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/screens/category_screen.dart';
 import 'package:jews_harp/features/user_section/presentation/screens/default_category_screen.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/category_transition_wrapper.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
+import 'package:optional/optional.dart';
 
 class CategorySideScroll extends StatelessWidget {
   @override
@@ -60,6 +62,7 @@ class CategorySideScroll extends StatelessWidget {
               return _CategoryCard(
                 color: color,
                 techniquesCnt: category.techniqueIds.length,
+                thumbnail: category.thumbnail,
                 title: category.title,
                 dst: CategoryScreen(category: category),
               );
@@ -122,6 +125,7 @@ class CategorySideScroll extends StatelessWidget {
 class _CategoryCard extends StatelessWidget {
   final Color color;
   final int techniquesCnt;
+  final Optional<Media> thumbnail;
   final String title;
   final Widget dst;
 
@@ -129,6 +133,7 @@ class _CategoryCard extends StatelessWidget {
     Key? key,
     required this.color,
     required this.techniquesCnt,
+    this.thumbnail = const Optional.empty(),
     required this.title,
     required this.dst,
   }) : super(key: key);
@@ -136,37 +141,50 @@ class _CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 100,
       child: CategoryTransitionWrapper(
         color: this.color,
-        src: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(19),
-            color: this.color,
-          ),
-          padding: const EdgeInsets.all(15),
-          width: 100,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "${this.techniquesCnt}",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  fontSize: 40,
+        src: Stack(
+          children: [
+            if (thumbnail.isPresent)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(19),
+                child: Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  child: FittedBox(fit: BoxFit.cover, child: getImageFromMedia(thumbnail.value)),
                 ),
               ),
-              SizedBox(height: 5),
-              Text(
-                this.title,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 10,
-                ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(19),
+                color: thumbnail.isPresent ? this.color.withOpacity(0.8) : this.color,
               ),
-            ],
-          ),
+              padding: const EdgeInsets.all(15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${this.techniquesCnt}",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 40,
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    this.title,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 10,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
         dst: this.dst,
       ),
