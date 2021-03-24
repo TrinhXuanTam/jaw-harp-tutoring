@@ -9,12 +9,12 @@ import 'package:jews_harp/features/user_section/utils.dart';
 
 class SmallTechniqueCard extends StatelessWidget {
   final Technique technique;
-  final double width;
+  final double? width;
 
   const SmallTechniqueCard({
     Key? key,
     required this.technique,
-    required this.width,
+    this.width,
   }) : super(key: key);
 
   Widget _getThumbnail() {
@@ -110,9 +110,9 @@ class SmallTechniqueCard extends StatelessWidget {
 }
 
 class SmallTechniqueCardLoading extends StatelessWidget {
-  final double width;
+  final double? width;
 
-  const SmallTechniqueCardLoading({Key? key, required this.width}) : super(key: key);
+  const SmallTechniqueCardLoading({Key? key, this.width}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

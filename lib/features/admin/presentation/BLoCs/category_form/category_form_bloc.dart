@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/core/constants/language_codes.dart';
+import 'package:jews_harp/core/extensions.dart';
 import 'package:jews_harp/features/admin/application/use_cases/create_category.dart';
 import 'package:jews_harp/features/admin/application/use_cases/update_category.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/thumbnail_picker.dart';
@@ -11,10 +12,8 @@ import 'package:jews_harp/features/user_section/domain/entities/category_localiz
 import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:meta/meta.dart';
 import 'package:optional/optional.dart';
-import 'package:jews_harp/core/extensions.dart';
 
 part 'category_form_event.dart';
-
 part 'category_form_state.dart';
 
 @Injectable(env: [Environment.prod, Environment.dev])

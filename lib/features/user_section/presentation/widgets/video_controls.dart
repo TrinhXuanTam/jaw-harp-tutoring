@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
+import 'package:jews_harp/features/user_section/presentation/screens/video_full_screen_mode_screen.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoControls extends StatelessWidget {
   final VideoPlayerController controller;
   final List<double> _playbackSpeeds = const [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
+  final bool fullscreen;
 
-  const VideoControls({Key? key, required this.controller}) : super(key: key);
+  const VideoControls({
+    Key? key,
+    required this.controller,
+    required this.fullscreen,
+  }) : super(key: key);
 
   String _getPosition() {
     final duration = Duration(milliseconds: controller.value.position.inMilliseconds.round());
@@ -17,6 +24,34 @@ class VideoControls extends StatelessWidget {
   String _getVideoLength() {
     final duration = Duration(milliseconds: controller.value.duration.inMilliseconds.round());
     return [duration.inMinutes, duration.inSeconds].map((e) => e.remainder(60).toString().padLeft(2, '0')).join(":");
+  }
+
+  Widget _buildFullscreenButton(BuildContext context) {
+    if (this.fullscreen)
+      return GestureDetector(
+        onTap: () {
+          controller.pause();
+          Navigator.pop(context);
+        },
+        child: Icon(
+          Icons.fullscreen_exit,
+          color: Colors.white,
+          size: 25,
+        ),
+      );
+    else {
+      return GestureDetector(
+        onTap: () {
+          controller.pause();
+          Navigator.pushNamed(context, VIDEO_FULL_SCREEN_SCREEN_ROUTE, arguments: VideoFullScreenModeScreenArgs(this.controller));
+        },
+        child: Icon(
+          Icons.fullscreen_rounded,
+          color: Colors.white,
+          size: 25,
+        ),
+      );
+    }
   }
 
   @override
@@ -96,17 +131,7 @@ class VideoControls extends StatelessWidget {
           ),
         ),
         SizedBox(width: 10),
-        GestureDetector(
-          onTap: () {
-            controller.pause();
-            Navigator.pop(context);
-          },
-          child: Icon(
-            Icons.fullscreen_exit,
-            color: Colors.white,
-            size: 25,
-          ),
-        ),
+        _buildFullscreenButton(context),
         SizedBox(width: 5),
       ],
     );

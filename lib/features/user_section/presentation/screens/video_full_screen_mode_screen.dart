@@ -32,6 +32,7 @@ class VideoFullScreenModeScreen extends StatelessWidget {
       ),
       body: VideoPlayerWidget(
         controller: this.controller,
+        fullscreen: true,
       ),
     );
   }

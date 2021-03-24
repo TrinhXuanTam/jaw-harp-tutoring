@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
+import 'package:jews_harp/core/extensions.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/loading_wrapper.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
@@ -11,7 +12,6 @@ import 'package:jews_harp/features/admin/presentation/BLoCs/category_localizatio
 import 'package:jews_harp/features/admin/presentation/widgets/category_form.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/thumbnail_picker.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
-import 'package:jews_harp/core/extensions.dart';
 
 class EditCategoryScreenArgs {
   final Category category;

@@ -5,8 +5,13 @@ import 'package:video_player/video_player.dart';
 
 class VideoPlayerWidget extends StatelessWidget {
   final VideoPlayerController controller;
+  final bool fullscreen;
 
-  const VideoPlayerWidget({Key? key, required this.controller}) : super(key: key);
+  const VideoPlayerWidget({
+    Key? key,
+    required this.controller,
+    required this.fullscreen,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +46,10 @@ class VideoPlayerWidget extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 2),
                 color: Colors.black.withOpacity(0.5),
-                child: VideoControls(controller: controller),
+                child: VideoControls(
+                  controller: controller,
+                  fullscreen: this.fullscreen,
+                ),
               ),
             ],
           ),

@@ -31,7 +31,10 @@ class TechniqueScreen extends StatelessWidget {
 
   Widget _buildHeader(BuildContext context, TechniqueDetailLoaded state) {
     if (state.videoPlayerController.isPresent)
-      return VideoPlayerWidget(controller: state.videoPlayerController.value);
+      return VideoPlayerWidget(
+        controller: state.videoPlayerController.value,
+        fullscreen: false,
+      );
     else {
       final size = MediaQuery.of(context).size;
 

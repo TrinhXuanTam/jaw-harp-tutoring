@@ -50,19 +50,11 @@ class SmallTechniqueList extends StatelessWidget {
             onTap: () => Navigator.pushReplacementNamed(context, TECHNIQUE_DETAIL_SCREEN_ROUTE, arguments: TechniqueScreenArgs(item)),
             child: Container(
               height: 100,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey[200]!),
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-              ),
               width: double.infinity,
               child: Row(
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      bottomLeft: Radius.circular(10),
-                    ),
+                    borderRadius: BorderRadius.circular(10),
                     child: Container(
                       child: Container(
                         width: 150,
