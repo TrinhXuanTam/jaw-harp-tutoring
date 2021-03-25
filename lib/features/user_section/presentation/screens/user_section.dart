@@ -6,12 +6,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
-import 'package:jews_harp/features/admin/presentation/screens/admin_menu_screen.dart';
-import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/categories/categories_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/user_section_navigation/user_section_navigation_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/categories_screen_body.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/home_page_body.dart';
+import 'package:jews_harp/features/user_section/presentation/widgets/profile_section_body.dart';
 
 // Bottom navigation indexes
 const int HOME_INDEX = 0;
@@ -51,7 +50,7 @@ class UserSection extends StatelessWidget {
               BottomNavyBarItem(icon: Icon(Icons.home_outlined), title: Text("Home"), activeColor: Colors.white, textAlign: TextAlign.center),
               BottomNavyBarItem(icon: Icon(Icons.play_circle_outline_rounded), title: Text("My Techniques", style: TextStyle(fontSize: 12)), activeColor: Colors.white, textAlign: TextAlign.center),
               BottomNavyBarItem(icon: Icon(Icons.apps_rounded), title: Text("Categories"), activeColor: Colors.white, textAlign: TextAlign.center),
-              BottomNavyBarItem(icon: Icon(Icons.person_outline_rounded), title: Text("Profile"), activeColor: Colors.white, textAlign: TextAlign.center),
+              BottomNavyBarItem(icon: Icon(Icons.person_outline_rounded), title: Text("Account"), activeColor: Colors.white, textAlign: TextAlign.center),
             ],
             onItemSelected: (int value) {
               final bloc = BlocProvider.of<UserSectionNavigationBloc>(ctx);
@@ -62,7 +61,7 @@ class UserSection extends StatelessWidget {
                 bloc.add(UserSectionNavigationEvent(body: Container(), bottomNavigatorIndex: MY_TECHNIQUES_INDEX));
               else if (value == CATEGORIES_INDEX)
                 bloc.add(UserSectionNavigationEvent(body: CategoriesScreenBody(), bottomNavigatorIndex: CATEGORIES_INDEX));
-              else if (value == PROFILE_SECTION_INDEX) bloc.add(UserSectionNavigationEvent(body: AdminMenuScreen(), bottomNavigatorIndex: PROFILE_SECTION_INDEX));
+              else if (value == PROFILE_SECTION_INDEX) bloc.add(UserSectionNavigationEvent(body: ProfileSectionBody(), bottomNavigatorIndex: PROFILE_SECTION_INDEX));
             },
           ),
           body: PageTransitionSwitcher(

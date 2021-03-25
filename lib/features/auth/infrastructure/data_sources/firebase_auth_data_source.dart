@@ -5,7 +5,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/core/constants/settings.dart';
 import 'package:jews_harp/core/errors/email_already_used_error.dart';
-import 'package:jews_harp/core/errors/third_party_auth_error.dart';
 import 'package:jews_harp/core/errors/user_does_not_exist_error.dart';
 import 'package:jews_harp/core/errors/user_not_signed_in_error.dart';
 import 'package:jews_harp/core/errors/wrong_email_or_password_error.dart';
