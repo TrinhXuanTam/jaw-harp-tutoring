@@ -8,8 +8,8 @@ import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/core/widgets/rounded_dropdown.dart';
 import 'package:jews_harp/core/widgets/rounded_text_field.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
+import 'package:jews_harp/features/user_section/presentation/BLoCs/filter_screen/filter_screen_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/techniques/techniques_bloc.dart';
-import 'package:jews_harp/features/user_section/presentation/filter_screen/filter_screen_bloc.dart';
 import 'package:optional/optional.dart';
 
 class FilterScreenArgs {

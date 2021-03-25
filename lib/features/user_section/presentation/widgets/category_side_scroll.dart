@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
-import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/shimmer_effect.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/domain/entities/media.dart';
@@ -9,6 +8,8 @@ import 'package:jews_harp/features/user_section/presentation/BLoCs/categories/ca
 import 'package:jews_harp/features/user_section/presentation/BLoCs/user_section_navigation/user_section_navigation_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/screens/category_screen.dart';
 import 'package:jews_harp/features/user_section/presentation/screens/default_category_screen.dart';
+import 'package:jews_harp/features/user_section/presentation/screens/user_section.dart';
+import 'package:jews_harp/features/user_section/presentation/widgets/categories_screen_body.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/category_transition_wrapper.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 import 'package:optional/optional.dart';
@@ -27,22 +28,19 @@ class CategorySideScroll extends StatelessWidget {
               fontSize: 16,
             ),
           ),
-          if (state is CategoriesLoaded)
-            GestureDetector(
-              onTap: () => BlocProvider.of<UserSectionNavigationBloc>(ctx).add(NavigateToCategoriesPage(
-                categories: state.categories,
-                transition: defaultFadeThroughTransition,
-              )),
-              child: Text(
-                "View all",
-                style: TextStyle(
-                  color: BASE_COLOR,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 15,
-                ),
+          GestureDetector(
+            onTap: () => BlocProvider.of<UserSectionNavigationBloc>(ctx).add(
+              UserSectionNavigationEvent(body: CategoriesScreenBody(), bottomNavigatorIndex: CATEGORIES_INDEX),
+            ),
+            child: Text(
+              "View all",
+              style: TextStyle(
+                color: BASE_COLOR,
+                fontWeight: FontWeight.w500,
+                fontSize: 15,
               ),
             ),
-          if (!(state is CategoriesLoaded)) Container(),
+          ),
         ],
       );
     }
@@ -104,19 +102,16 @@ class CategorySideScroll extends StatelessWidget {
       );
     }
 
-    return BlocProvider<CategoriesBloc>(
-      create: (_) => serviceLocator<CategoriesBloc>()..add(LoadCategories()),
-      child: BlocBuilder<CategoriesBloc, CategoriesState>(
-        builder: (ctx, state) => Column(
-          children: [
-            _buildHeader(ctx, state),
-            Container(
-              height: 130,
-              width: double.infinity,
-              child: state is CategoriesLoaded ? _buildCategories(state.categories) : _loadingEffect(),
-            ),
-          ],
-        ),
+    return BlocBuilder<CategoriesBloc, CategoriesState>(
+      builder: (ctx, state) => Column(
+        children: [
+          _buildHeader(ctx, state),
+          Container(
+            height: 130,
+            width: double.infinity,
+            child: state is CategoriesLoaded ? _buildCategories(state.categories) : _loadingEffect(),
+          ),
+        ],
       ),
     );
   }
@@ -156,6 +151,7 @@ class _CategoryCard extends StatelessWidget {
                 ),
               ),
             Container(
+              width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(19),
                 color: thumbnail.isPresent ? this.color.withOpacity(0.8) : this.color,

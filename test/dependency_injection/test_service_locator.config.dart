@@ -133,14 +133,14 @@ import 'package:jews_harp/features/user_section/infrastructure/repositories/tech
     as _i17;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/categories/categories_bloc.dart'
     as _i65;
+import 'package:jews_harp/features/user_section/presentation/BLoCs/filter_screen/filter_screen_bloc.dart'
+    as _i4;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_detail/technique_detail_bloc.dart'
     as _i32;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/techniques/techniques_bloc.dart'
     as _i61;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/user_section_navigation/user_section_navigation_bloc.dart'
     as _i37;
-import 'package:jews_harp/features/user_section/presentation/filter_screen/filter_screen_bloc.dart'
-    as _i4;
 
 import 'mock.dart' as _i7;
 

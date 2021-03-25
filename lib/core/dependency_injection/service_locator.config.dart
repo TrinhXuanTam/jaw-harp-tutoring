@@ -133,14 +133,14 @@ import 'package:jews_harp/features/user_section/infrastructure/repositories/tech
     as _i16;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/categories/categories_bloc.dart'
     as _i64;
+import 'package:jews_harp/features/user_section/presentation/BLoCs/filter_screen/filter_screen_bloc.dart'
+    as _i4;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_detail/technique_detail_bloc.dart'
     as _i31;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/techniques/techniques_bloc.dart'
     as _i60;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/user_section_navigation/user_section_navigation_bloc.dart'
     as _i36;
-import 'package:jews_harp/features/user_section/presentation/filter_screen/filter_screen_bloc.dart'
-    as _i4;
 
 const String _prod = 'prod';
 const String _dev = 'dev';

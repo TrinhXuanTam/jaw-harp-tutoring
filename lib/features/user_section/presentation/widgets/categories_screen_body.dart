@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
-import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/domain/entities/media.dart';
+import 'package:jews_harp/features/user_section/presentation/BLoCs/categories/categories_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/screens/category_screen.dart';
 import 'package:jews_harp/features/user_section/presentation/screens/default_category_screen.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/category_transition_wrapper.dart';
@@ -10,48 +13,58 @@ import 'package:jews_harp/features/user_section/utils.dart';
 import 'package:optional/optional.dart';
 
 class CategoriesScreenBody extends StatelessWidget {
-  final List<Category> categories;
-
-  const CategoriesScreenBody({Key? key, required this.categories}) : super(key: key);
+  const CategoriesScreenBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CenteredStack(
       children: [
-        Container(
-          padding: EdgeInsets.all(10),
-          child: Scrollbar(
-            child: StaggeredGridView.countBuilder(
-              crossAxisCount: 4,
-              itemCount: this.categories.length + 1,
-              itemBuilder: (BuildContext context, int index) {
-                if (index == 0)
-                  return _CategoryCard(
-                    color: getRandomShade("All Techniques".hashCode),
-                    techniquesCnt: this.categories.fold<int>(0, (acc, element) => acc + element.techniqueIds.length),
-                    title: "All Techniques",
-                    description: "View all techniques",
-                    dst: DefaultCategoryScreen(),
-                  );
-                else {
-                  final category = this.categories[index - 1];
-                  final color = category.getColor(context);
-                  return _CategoryCard(
-                    color: color,
-                    techniquesCnt: category.techniqueIds.length,
-                    thumbnail: category.thumbnail,
-                    title: category.title,
-                    description: category.description,
-                    dst: CategoryScreen(category: category),
-                  );
-                }
-              },
-              staggeredTileBuilder: (int index) => StaggeredTile.fit(2),
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-            ),
-          ),
-        ),
+        BlocBuilder<CategoriesBloc, CategoriesState>(builder: (ctx, state) {
+          if (state is CategoriesLoaded)
+            return Container(
+              padding: EdgeInsets.all(10),
+              child: Scrollbar(
+                child: StaggeredGridView.countBuilder(
+                  crossAxisCount: 4,
+                  itemCount: state.categories.length + 1,
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index == 0)
+                      return _CategoryCard(
+                        color: getRandomShade("All Techniques".hashCode),
+                        techniquesCnt: state.categories.fold<int>(0, (acc, element) => acc + element.techniqueIds.length),
+                        title: "All Techniques",
+                        description: "View all techniques",
+                        dst: DefaultCategoryScreen(),
+                      );
+                    else {
+                      final category = state.categories[index - 1];
+                      final color = category.getColor(context);
+                      return _CategoryCard(
+                        color: color,
+                        techniquesCnt: category.techniqueIds.length,
+                        thumbnail: category.thumbnail,
+                        title: category.title,
+                        description: category.description,
+                        dst: CategoryScreen(category: category),
+                      );
+                    }
+                  },
+                  staggeredTileBuilder: (int index) => StaggeredTile.fit(2),
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                ),
+              ),
+            );
+          else
+            return Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: SpinKitPulse(
+                color: BASE_COLOR,
+                size: 100,
+              ),
+            );
+        }),
       ],
     );
   }
@@ -85,10 +98,13 @@ class _CategoryCard extends StatelessWidget {
           src: Stack(
             children: [
               if (thumbnail.isPresent)
-                Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  child: FittedBox(fit: BoxFit.cover, child: getImageFromMedia(thumbnail.value)),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    child: FittedBox(fit: BoxFit.cover, child: getImageFromMedia(thumbnail.value)),
+                  ),
                 ),
               Container(
                 width: double.infinity,

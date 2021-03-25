@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
@@ -46,30 +45,6 @@ Color getRandomShade(int seed) {
     colorHue: ColorHue.custom(Range(hue, hue)),
     colorSaturation: ColorSaturation.highSaturation,
     colorBrightness: ColorBrightness.random,
-  );
-}
-
-Widget defaultHorizontalSharedAxisTransition(Widget child, Animation<double> primaryAnimation, Animation<double> secondaryAnimation) {
-  return SharedAxisTransition(
-    child: child,
-    animation: primaryAnimation,
-    secondaryAnimation: secondaryAnimation,
-    transitionType: SharedAxisTransitionType.horizontal,
-  );
-}
-
-Widget defaultFadeThroughTransition(Widget child, Animation<double> primaryAnimation, Animation<double> secondaryAnimation) {
-  return FadeThroughTransition(
-    child: child,
-    animation: primaryAnimation,
-    secondaryAnimation: secondaryAnimation,
-  );
-}
-
-Widget defaultFadeTransition(Widget child, Animation<double> primaryAnimation, Animation<double> secondaryAnimation) {
-  return FadeScaleTransition(
-    child: child,
-    animation: primaryAnimation,
   );
 }
 
