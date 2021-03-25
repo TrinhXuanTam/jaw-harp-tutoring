@@ -21,6 +21,10 @@ class UserSection extends StatelessWidget {
 
     if (bloc.state is CategoriesPage)
       return IconAppBar(
+        backgroundColor: BASE_COLOR,
+        title: "Categories",
+        iconColor: Colors.white,
+        titleColor: Colors.white,
         onPressed: () => bloc.add(
           NavigateToHomePage(reversedTransition: true, transition: defaultFadeThroughTransition),
         ),

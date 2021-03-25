@@ -18,52 +18,39 @@ class CategoriesScreenBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return CenteredStack(
       children: [
-        Column(
-          children: [
-            Text(
-              "Categories",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 30,
-              ),
+        Container(
+          padding: EdgeInsets.all(10),
+          child: Scrollbar(
+            child: StaggeredGridView.countBuilder(
+              crossAxisCount: 4,
+              itemCount: this.categories.length + 1,
+              itemBuilder: (BuildContext context, int index) {
+                if (index == 0)
+                  return _CategoryCard(
+                    color: getRandomShade("All Techniques".hashCode),
+                    techniquesCnt: this.categories.fold<int>(0, (acc, element) => acc + element.techniqueIds.length),
+                    title: "All Techniques",
+                    description: "View all techniques",
+                    dst: DefaultCategoryScreen(),
+                  );
+                else {
+                  final category = this.categories[index - 1];
+                  final color = category.getColor(context);
+                  return _CategoryCard(
+                    color: color,
+                    techniquesCnt: category.techniqueIds.length,
+                    thumbnail: category.thumbnail,
+                    title: category.title,
+                    description: category.description,
+                    dst: CategoryScreen(category: category),
+                  );
+                }
+              },
+              staggeredTileBuilder: (int index) => StaggeredTile.fit(2),
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
             ),
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.all(10),
-                child: Scrollbar(
-                  child: StaggeredGridView.countBuilder(
-                    crossAxisCount: 4,
-                    itemCount: this.categories.length + 1,
-                    itemBuilder: (BuildContext context, int index) {
-                      if (index == 0)
-                        return _CategoryCard(
-                          color: getRandomShade("All Techniques".hashCode),
-                          techniquesCnt: this.categories.fold<int>(0, (acc, element) => acc + element.techniqueIds.length),
-                          title: "All Techniques",
-                          description: "View all techniques",
-                          dst: DefaultCategoryScreen(),
-                        );
-                      else {
-                        final category = this.categories[index - 1];
-                        final color = category.getColor(context);
-                        return _CategoryCard(
-                          color: color,
-                          techniquesCnt: category.techniqueIds.length,
-                          thumbnail: category.thumbnail,
-                          title: category.title,
-                          description: category.description,
-                          dst: CategoryScreen(category: category),
-                        );
-                      }
-                    },
-                    staggeredTileBuilder: (int index) => StaggeredTile.fit(2),
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ],
     );
@@ -90,62 +77,61 @@ class _CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IntrinsicHeight(
-      child: CategoryTransitionWrapper(
-        color: this.color,
-        src: Stack(
-          children: [
-            if (thumbnail.isPresent)
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Container(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(15),
+      child: IntrinsicHeight(
+        child: CategoryTransitionWrapper(
+          color: this.color,
+          src: Stack(
+            children: [
+              if (thumbnail.isPresent)
+                Container(
                   width: double.infinity,
                   height: double.infinity,
                   child: FittedBox(fit: BoxFit.cover, child: getImageFromMedia(thumbnail.value)),
                 ),
-              ),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: thumbnail.isPresent ? this.color.withOpacity(0.8) : this.color,
-                border: Border.all(color: Colors.grey[300]!),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "${this.techniquesCnt}",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 50,
-                      fontWeight: FontWeight.bold,
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: thumbnail.isPresent ? this.color.withOpacity(0.8) : this.color,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${this.techniquesCnt}",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 50,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    this.title,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
+                    SizedBox(height: 10),
+                    Text(
+                      this.title,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    this.description,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
+                    SizedBox(height: 5),
+                    Text(
+                      this.description,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
+          dst: this.dst,
         ),
-        dst: this.dst,
       ),
     );
   }
