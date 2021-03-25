@@ -83,9 +83,11 @@ class FirebaseAuthDataSource {
 
   Future<UserDTO> authenticateWithFacebook() async {
     try {
-      final accessToken = await FacebookAuth.instance.login();
+      final loginResult = await FacebookAuth.instance.login();
 
-      final AuthCredential facebookCredential = FacebookAuthProvider.credential(accessToken.token);
+      if (loginResult.status == LoginStatus.failed || loginResult.accessToken == null) throw UserNotSignedInError();
+
+      final AuthCredential facebookCredential = FacebookAuthProvider.credential(loginResult.accessToken!.token);
       final UserCredential firebaseCredential = await _auth.signInWithCredential(facebookCredential);
 
       if (firebaseCredential.additionalUserInfo!.isNewUser) {
@@ -97,8 +99,6 @@ class FirebaseAuthDataSource {
       return UserDTO.fromFirebaseCredentials(firebaseCredential);
     } on FirebaseAuthException catch (e) {
       throw EmailAlreadyUsedError(e.email!);
-    } on FacebookAuthException catch (e) {
-      throw ThirdPartyAuthError(e.errorCode);
     }
   }
 

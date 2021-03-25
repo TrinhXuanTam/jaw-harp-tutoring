@@ -27,15 +27,15 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   # Firebase
-  firebase_core: ^1.0.0
+  firebase_core: ^1.0.2
   firebase_auth: ^1.0.0
   firebase_storage: ^8.0.0
   # Cloud Firestore
-  cloud_firestore: ^1.0.0
+  cloud_firestore: ^1.0.2
   # Google authentication
   google_sign_in: ^5.0.1
   # Facebook authentication
-  flutter_facebook_auth: ^3.1.1
+  flutter_facebook_auth: ^3.2.0
   # Business logic components
   flutter_bloc: ^7.0.0
   # Dependency injection

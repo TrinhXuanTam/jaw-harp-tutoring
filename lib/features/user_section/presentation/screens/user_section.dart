@@ -7,6 +7,7 @@ import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/presentation/screens/admin_menu_screen.dart';
+import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/categories/categories_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/user_section_navigation/user_section_navigation_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/categories_screen_body.dart';
