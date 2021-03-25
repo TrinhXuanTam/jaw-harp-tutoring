@@ -11,7 +11,7 @@ import 'package:meta/meta.dart';
 part 'user_section_navigation_event.dart';
 part 'user_section_navigation_state.dart';
 
-@LazySingleton(env: [Environment.prod, Environment.dev])
+@Injectable(env: [Environment.prod, Environment.dev])
 class UserSectionNavigationBloc extends Bloc<UserSectionNavigationEvent, UserSectionNavigationState> {
   UserSectionNavigationBloc() : super(UserSectionNavigationState(body: HomePageBody(), bottomNavigatorIndex: HOME_INDEX));
 

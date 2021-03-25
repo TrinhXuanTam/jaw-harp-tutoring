@@ -177,11 +177,11 @@ _i1.GetIt testInitGetIt(_i1.GetIt get,
       () => _i5.FirebaseAdminDataSource(),
       registerFor: {_prod});
   gh.lazySingleton<_i6.FirebaseAuthDataSource>(
-      () => _i6.FirebaseAuthDataSource(),
-      registerFor: {_prod});
-  gh.lazySingleton<_i6.FirebaseAuthDataSource>(
       () => _i7.FirebaseAuthDataSourceMock(),
       registerFor: {_user_repository_test_env});
+  gh.lazySingleton<_i6.FirebaseAuthDataSource>(
+      () => _i6.FirebaseAuthDataSource(),
+      registerFor: {_prod});
   gh.lazySingleton<_i8.FirebaseUserSectionDataSource>(
       () => _i8.FirebaseUserSectionDataSource(),
       registerFor: {_prod});
@@ -265,7 +265,7 @@ _i1.GetIt testInitGetIt(_i1.GetIt get,
   gh.lazySingleton<_i36.UpdateTechnique>(
       () => _i36.UpdateTechnique(get<_i14.ITechniqueAdminRepository>()),
       registerFor: {_prod, _dev});
-  gh.lazySingleton<_i37.UserSectionNavigationBloc>(
+  gh.factory<_i37.UserSectionNavigationBloc>(
       () => _i37.UserSectionNavigationBloc(),
       registerFor: {_prod, _dev});
   gh.factory<_i38.VideoPickerBloc>(

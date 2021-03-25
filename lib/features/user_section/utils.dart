@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
@@ -13,11 +14,14 @@ import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:random_color/random_color.dart';
 import 'package:video_player/video_player.dart';
 
-Image getImageFromMedia(Media media) {
+Widget getImageFromMedia(Media media) {
   if (media.filePath.isPresent)
     return Image.file(File(media.filePath.value));
   else if (media.url.isPresent)
-    return Image.network(media.url.value);
+    return CachedNetworkImage(
+      imageUrl: media.url.value,
+      placeholder: (context, url) => Container(),
+    );
   else
     throw MediaNotFoundError();
 }

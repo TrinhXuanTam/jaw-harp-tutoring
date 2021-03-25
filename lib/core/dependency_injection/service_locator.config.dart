@@ -241,7 +241,7 @@ _i1.GetIt initGetIt(_i1.GetIt get,
   gh.lazySingleton<_i35.UpdateTechnique>(
       () => _i35.UpdateTechnique(get<_i13.ITechniqueAdminRepository>()),
       registerFor: {_prod, _dev});
-  gh.lazySingleton<_i36.UserSectionNavigationBloc>(
+  gh.factory<_i36.UserSectionNavigationBloc>(
       () => _i36.UserSectionNavigationBloc(),
       registerFor: {_prod, _dev});
   gh.factory<_i37.VideoPickerBloc>(
