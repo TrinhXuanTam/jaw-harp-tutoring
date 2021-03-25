@@ -8,7 +8,6 @@ const String LINK_AUTH_PROVIDERS_SCREEN_ROUTE = "/linkAuthProviders";
 const String EMAIL_VERIFICATION_UP_SCREEN_ROUTE = "/emailVerification";
 
 // Admin
-const String ADMIN_MENU_SCREEN_ROUTE = "/admin";
 const String CREATE_CATEGORY_SCREEN_ROUTE = "/categoryCreate";
 const String EDIT_CATEGORY_SCREEN_ROUTE = "/categoryEdit";
 const String EDIT_TECHNIQUE_SCREEN_ROUTE = "/techniqueEdit";

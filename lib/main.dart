@@ -6,7 +6,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:jews_harp/core/BLoCs/errors/error_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/widgets/one_button_alert_dialog.dart';
-import 'package:jews_harp/features/admin/presentation/screens/admin_menu_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/category_detail_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/category_localization_add_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/category_localization_edit_screen.dart';
@@ -142,7 +141,6 @@ class _EntryPoint extends StatelessWidget {
             PASSWORD_RESET_SENT_SCREEN_ROUTE: (_) => PasswordResetSentScreen(),
             EMAIL_VERIFICATION_UP_SCREEN_ROUTE: (ctx) => EmailVerificationScreen.fromArgs(_getArgs<EmailVerificationScreenArgs>(ctx)),
             LINK_AUTH_PROVIDERS_SCREEN_ROUTE: (ctx) => LinkAuthProvidersScreen.fromArgs(_getArgs<LinkAuthProvidersScreenArgs>(ctx)),
-            ADMIN_MENU_SCREEN_ROUTE: (_) => AdminMenuScreen(),
             CREATE_CATEGORY_SCREEN_ROUTE: (_) => CreateCategoryScreen(),
             EDIT_CATEGORY_SCREEN_ROUTE: (ctx) => EditCategoryScreen.fromArgs(_getArgs<EditCategoryScreenArgs>(ctx)),
             EDIT_TECHNIQUE_SCREEN_ROUTE: (ctx) => EditTechniqueScreen.fromArgs(_getArgs<EditTechniqueScreenArgs>(ctx)),

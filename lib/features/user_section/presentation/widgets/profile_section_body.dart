@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
@@ -77,11 +78,21 @@ class ProfileSectionBody extends StatelessWidget {
                 ),
                 SizedBox(height: 30),
                 SimpleMenu(
+                  title: "Admin",
+                  items: [
+                    SimpleMenuItem("Create Technique", () => Navigator.pushNamed(context, CREATE_TECHNIQUE_SCREEN_ROUTE)),
+                    SimpleMenuItem("Create Category", () => Navigator.pushNamed(context, CREATE_CATEGORY_SCREEN_ROUTE)),
+                    SimpleMenuItem("Visible Categories", () => Navigator.pushNamed(context, VISIBLE_CATEGORIES_LIST_SCREEN_ROUTE)),
+                    SimpleMenuItem("Hidden Categories", () => Navigator.pushNamed(context, HIDDEN_CATEGORIES_LIST_SCREEN_ROUTE)),
+                  ],
+                ),
+                SizedBox(height: 20),
+                SimpleMenu(
                   title: "Account settings",
                   items: [
                     SimpleMenuItem("Sign out", () => BlocProvider.of<AuthBloc>(context).add(UserSignOutEvent())),
                   ],
-                )
+                ),
               ],
             ),
           ),

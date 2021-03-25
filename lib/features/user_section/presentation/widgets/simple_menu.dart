@@ -40,7 +40,7 @@ class SimpleMenu extends StatelessWidget {
                     children: [
                       Text(
                         item.title,
-                        style: TextStyle(fontSize: 17),
+                        style: TextStyle(fontSize: 16),
                       ),
                       Icon(
                         Icons.navigate_next_rounded,
