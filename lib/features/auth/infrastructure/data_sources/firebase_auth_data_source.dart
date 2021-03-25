@@ -86,13 +86,20 @@ class FirebaseAuthDataSource {
 
       if (loginResult.status == LoginStatus.failed || loginResult.accessToken == null) throw UserNotSignedInError();
 
-      final AuthCredential facebookCredential = FacebookAuthProvider.credential(loginResult.accessToken!.token);
+      final accessToken = loginResult.accessToken!.token;
+      final AuthCredential facebookCredential = FacebookAuthProvider.credential(accessToken);
       final UserCredential firebaseCredential = await _auth.signInWithCredential(facebookCredential);
 
       if (firebaseCredential.additionalUserInfo!.isNewUser) {
         final user = firebaseCredential.user!;
         user.sendEmailVerification();
         _addUserToFirestore(user);
+      }
+
+      final user = firebaseCredential.user!;
+      if (user.photoURL != null) {
+        String photoUrl = user.photoURL! + "?height=500&access_token=" + accessToken;
+        await user.updateProfile(photoURL: photoUrl);
       }
 
       return UserDTO.fromFirebaseCredentials(firebaseCredential);

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/routes.dart';
@@ -9,9 +10,47 @@ import 'package:jews_harp/features/user_section/presentation/widgets/simple_menu
 import 'package:jews_harp/features/user_section/utils.dart';
 
 class ProfileSectionBody extends StatelessWidget {
-  String _getFirstCharacters(User user) {
+  Widget _generateProfilePhoto(User user) {
     final words = user.name.split(" ");
-    return words.map((e) => e[0]).join();
+
+    return ClipOval(
+      child: Container(
+        width: 120,
+        height: 120,
+        color: getRandomShade(user.name.hashCode),
+        padding: const EdgeInsets.all(30),
+        child: FittedBox(
+          fit: BoxFit.fitWidth,
+          child: Text(
+            words.map((e) => e[0]).join(),
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProfilePhoto(User user) {
+    if (user.profilePictureUrl.isEmpty)
+      return _generateProfilePhoto(user);
+    else
+      return ClipOval(
+        child: Container(
+          width: 120,
+          height: 120,
+          child: FittedBox(
+            fit: BoxFit.cover,
+            child: CachedNetworkImage(
+              imageUrl: user.profilePictureUrl.value,
+              placeholder: (context, url) => _generateProfilePhoto(user),
+              errorWidget: (ctx, url, error) => _generateProfilePhoto(user),
+            ),
+          ),
+        ),
+      );
   }
 
   @override
@@ -26,29 +65,7 @@ class ProfileSectionBody extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Container(
-                  height: 120,
-                  width: 120,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: getRandomShade(user.name.hashCode),
-                  ),
-                  child: Container(
-                    padding: const EdgeInsets.all(30),
-                    width: double.infinity,
-                    child: FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: Text(
-                        _getFirstCharacters(user),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                _buildProfilePhoto(user),
                 SizedBox(height: 20),
                 Text(
                   user.name,

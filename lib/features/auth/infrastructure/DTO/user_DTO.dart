@@ -1,13 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart' as Firebase;
 import 'package:jews_harp/core/errors/user_does_not_exist_error.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
+import 'package:optional/optional.dart';
 
 class UserDTO extends User {
   const UserDTO({
     required String uid,
     required String name,
     required String email,
-  }) : super(uid: uid, name: name, email: email);
+    Optional<String> profilePictureUrl = const Optional.empty(),
+  }) : super(uid: uid, name: name, email: email, profilePictureUrl: profilePictureUrl);
 
   /// Create [FirebaseUserModel] from [FirebaseAuth.UserCredential]
   factory UserDTO.fromFirebaseCredentials(Firebase.UserCredential credentials) {
@@ -22,6 +24,7 @@ class UserDTO extends User {
       uid: firebaseUser.uid,
       name: firebaseUser.displayName ?? "",
       email: firebaseUser.email!,
+      profilePictureUrl: Optional.ofNullable(firebaseUser.photoURL),
     );
   }
 }
