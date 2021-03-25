@@ -37,19 +37,20 @@ class ProfileSectionBody extends StatelessWidget {
     if (user.profilePictureUrl.isEmpty)
       return _generateProfilePhoto(user);
     else
-      return ClipOval(
-        child: Container(
-          width: 120,
-          height: 120,
-          child: FittedBox(
-            fit: BoxFit.cover,
-            child: CachedNetworkImage(
-              imageUrl: user.profilePictureUrl.value,
-              placeholder: (context, url) => _generateProfilePhoto(user),
-              errorWidget: (ctx, url, error) => _generateProfilePhoto(user),
+      return CachedNetworkImage(
+        imageUrl: user.profilePictureUrl.value,
+        imageBuilder: (ctx, imageProvider) => ClipOval(
+          child: Container(
+            width: 120,
+            height: 120,
+            child: FittedBox(
+              fit: BoxFit.cover,
+              child: Image(image: imageProvider),
             ),
           ),
         ),
+        placeholder: (context, url) => _generateProfilePhoto(user),
+        errorWidget: (ctx, url, error) => _generateProfilePhoto(user),
       );
   }
 

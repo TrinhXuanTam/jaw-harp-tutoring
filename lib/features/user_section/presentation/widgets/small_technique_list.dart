@@ -148,22 +148,15 @@ class _LoadingEffect extends StatelessWidget {
           ShimmerEffect(
             child: Container(
               margin: const EdgeInsets.only(bottom: 10),
-              height: 140,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey[200]!),
-                borderRadius: BorderRadius.circular(20),
-              ),
+              height: 100,
               width: double.infinity,
               child: Row(
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      bottomLeft: Radius.circular(20),
-                    ),
+                    borderRadius: BorderRadius.circular(10),
                     child: Container(
                       child: Container(
-                        width: 170,
+                        width: 150,
                         height: double.infinity,
                         child: Container(
                           decoration: BoxDecoration(
@@ -181,14 +174,8 @@ class _LoadingEffect extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            height: 16,
+                            height: 13,
                             width: 100,
-                            color: Colors.grey,
-                          ),
-                          SizedBox(height: 5),
-                          Container(
-                            height: 16,
-                            width: 50,
                             color: Colors.grey,
                           ),
                           Expanded(
@@ -208,7 +195,7 @@ class _LoadingEffect extends StatelessWidget {
                                           ),
                                           SizedBox(width: 4),
                                           Container(
-                                            height: 16,
+                                            height: 12,
                                             width: 50,
                                             color: Colors.grey,
                                           ),
@@ -224,7 +211,7 @@ class _LoadingEffect extends StatelessWidget {
                                           ),
                                           SizedBox(width: 4),
                                           Container(
-                                            height: 16,
+                                            height: 12,
                                             width: 50,
                                             color: Colors.grey,
                                           ),

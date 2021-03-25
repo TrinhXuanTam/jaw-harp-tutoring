@@ -10,6 +10,7 @@ import 'package:jews_harp/features/user_section/presentation/BLoCs/categories/ca
 import 'package:jews_harp/features/user_section/presentation/BLoCs/user_section_navigation/user_section_navigation_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/categories_screen_body.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/home_page_body.dart';
+import 'package:jews_harp/features/user_section/presentation/widgets/my_techniques_screen_body.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/profile_section_body.dart';
 
 // Bottom navigation indexes
@@ -58,7 +59,7 @@ class UserSection extends StatelessWidget {
               if (value == HOME_INDEX)
                 bloc.add(UserSectionNavigationEvent(body: HomePageBody(), bottomNavigatorIndex: HOME_INDEX));
               else if (value == MY_TECHNIQUES_INDEX)
-                bloc.add(UserSectionNavigationEvent(body: Container(), bottomNavigatorIndex: MY_TECHNIQUES_INDEX));
+                bloc.add(UserSectionNavigationEvent(body: MyTechniquesScreenBody(), bottomNavigatorIndex: MY_TECHNIQUES_INDEX));
               else if (value == CATEGORIES_INDEX)
                 bloc.add(UserSectionNavigationEvent(body: CategoriesScreenBody(), bottomNavigatorIndex: CATEGORIES_INDEX));
               else if (value == PROFILE_SECTION_INDEX) bloc.add(UserSectionNavigationEvent(body: ProfileSectionBody(), bottomNavigatorIndex: PROFILE_SECTION_INDEX));
