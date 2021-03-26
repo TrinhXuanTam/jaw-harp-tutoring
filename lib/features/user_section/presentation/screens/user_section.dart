@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
-import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/categories/categories_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/user_section_navigation/user_section_navigation_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/categories_screen_body.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/home_page_body.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/my_techniques_screen_body.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/profile_section_body.dart';
+import 'package:jews_harp/features/user_section/utils.dart';
 
 // Bottom navigation indexes
 const int HOME_INDEX = 0;
@@ -22,15 +22,39 @@ const int PROFILE_SECTION_INDEX = 3;
 class UserSection extends StatelessWidget {
   PreferredSizeWidget? _buildAppBar(BuildContext ctx) {
     final bloc = BlocProvider.of<UserSectionNavigationBloc>(ctx);
+    final index = bloc.state.bottomNavigatorIndex;
+    bool showAvatar = true;
+    String title = "";
 
-    if (bloc.state.bottomNavigatorIndex == CATEGORIES_INDEX)
-      return IconAppBar(
-        backgroundColor: BASE_COLOR,
-        title: "Categories",
-        titleColor: Colors.white,
-      );
-    else
-      return AppBar(backgroundColor: Colors.transparent, elevation: 0);
+    if (index == HOME_INDEX)
+      title = "Explore";
+    else if (index == MY_TECHNIQUES_INDEX)
+      title = "My techniques";
+    else if (index == CATEGORIES_INDEX)
+      title = "Select a category";
+    else if (index == PROFILE_SECTION_INDEX) showAvatar = false;
+
+    return AppBar(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      title: Text(
+        title,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 25,
+        ),
+      ),
+      actions: [
+        if (showAvatar)
+          GestureDetector(
+            onTap: () => bloc.add(UserSectionNavigationEvent(body: ProfileSectionBody(), bottomNavigatorIndex: PROFILE_SECTION_INDEX)),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+              child: CircleAvatar(backgroundColor: Colors.transparent, child: buildProfilePhoto(ctx)),
+            ),
+          ),
+      ],
+    );
   }
 
   @override
@@ -65,15 +89,18 @@ class UserSection extends StatelessWidget {
               else if (value == PROFILE_SECTION_INDEX) bloc.add(UserSectionNavigationEvent(body: ProfileSectionBody(), bottomNavigatorIndex: PROFILE_SECTION_INDEX));
             },
           ),
-          body: PageTransitionSwitcher(
-            reverse: state.reversedTransition,
-            transitionBuilder: (child, primaryAnimation, secondaryAnimation) => SharedAxisTransition(
-              child: child,
-              animation: primaryAnimation,
-              secondaryAnimation: secondaryAnimation,
-              transitionType: SharedAxisTransitionType.horizontal,
+          body: Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: PageTransitionSwitcher(
+              reverse: state.reversedTransition,
+              transitionBuilder: (child, primaryAnimation, secondaryAnimation) => SharedAxisTransition(
+                child: child,
+                animation: primaryAnimation,
+                secondaryAnimation: secondaryAnimation,
+                transitionType: SharedAxisTransitionType.horizontal,
+              ),
+              child: state.body,
             ),
-            child: state.body,
           ),
         ),
       ),

@@ -80,3 +80,52 @@ int techniqueDatePublishedComparator(Technique lhs, Technique rhs) {
   else
     return rhs.datePublished.value.compareTo(lhs.datePublished.value);
 }
+
+Widget generateProfilePhoto(BuildContext context, {double? size}) {
+  final user = getUser(context);
+  final words = user.name.split(" ");
+
+  return ClipOval(
+    child: Container(
+      width: size,
+      height: size,
+      color: getRandomShade(user.name.hashCode),
+      child: FittedBox(
+        fit: BoxFit.fitWidth,
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Text(
+            words.take(2).map((e) => e[0]).join(),
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget buildProfilePhoto(BuildContext context, {double? size}) {
+  final user = getUser(context);
+
+  if (user.profilePictureUrl.isEmpty)
+    return generateProfilePhoto(context, size: size);
+  else
+    return CachedNetworkImage(
+      imageUrl: user.profilePictureUrl.value,
+      imageBuilder: (ctx, imageProvider) => ClipOval(
+        child: Container(
+          width: size,
+          height: size,
+          child: FittedBox(
+            fit: BoxFit.cover,
+            child: Image(image: imageProvider),
+          ),
+        ),
+      ),
+      placeholder: (context, url) => generateProfilePhoto(context, size: size),
+      errorWidget: (ctx, url, error) => generateProfilePhoto(context, size: size),
+    );
+}

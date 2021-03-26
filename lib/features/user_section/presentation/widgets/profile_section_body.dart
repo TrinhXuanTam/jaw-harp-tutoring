@@ -1,59 +1,13 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
-import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/simple_menu.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
 class ProfileSectionBody extends StatelessWidget {
-  Widget _generateProfilePhoto(User user) {
-    final words = user.name.split(" ");
-
-    return ClipOval(
-      child: Container(
-        width: 120,
-        height: 120,
-        color: getRandomShade(user.name.hashCode),
-        padding: const EdgeInsets.all(30),
-        child: FittedBox(
-          fit: BoxFit.fitWidth,
-          child: Text(
-            words.map((e) => e[0]).join(),
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildProfilePhoto(User user) {
-    if (user.profilePictureUrl.isEmpty)
-      return _generateProfilePhoto(user);
-    else
-      return CachedNetworkImage(
-        imageUrl: user.profilePictureUrl.value,
-        imageBuilder: (ctx, imageProvider) => ClipOval(
-          child: Container(
-            width: 120,
-            height: 120,
-            child: FittedBox(
-              fit: BoxFit.cover,
-              child: Image(image: imageProvider),
-            ),
-          ),
-        ),
-        placeholder: (context, url) => _generateProfilePhoto(user),
-        errorWidget: (ctx, url, error) => _generateProfilePhoto(user),
-      );
-  }
-
   @override
   Widget build(BuildContext context) {
     final user = getUser(context);
@@ -66,7 +20,7 @@ class ProfileSectionBody extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                _buildProfilePhoto(user),
+                buildProfilePhoto(context, size: 120),
                 SizedBox(height: 20),
                 Text(
                   user.name,

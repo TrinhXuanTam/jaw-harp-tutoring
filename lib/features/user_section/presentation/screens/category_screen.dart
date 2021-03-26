@@ -58,15 +58,15 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: IconAppBar(
-        backgroundColor: this.category.getColor(context),
-        iconColor: Colors.white,
+        backgroundColor: Colors.white,
+        iconColor: Colors.black,
         onPressed: () => Navigator.pop(context),
         actions: [
           IconButton(
             onPressed: () => Navigator.pushNamed(context, FILTER_SCREEN_ROUTE, arguments: FilterScreenArgs(BlocProvider.of<TechniquesBloc>(context))),
             icon: Icon(
               Icons.search_rounded,
-              color: Colors.white,
+              color: Colors.black,
               size: 30,
             ),
           ),
