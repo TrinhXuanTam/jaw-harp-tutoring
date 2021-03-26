@@ -20,7 +20,9 @@ Widget getImageFromMedia(Media media) {
   else if (media.url.isPresent)
     return CachedNetworkImage(
       imageUrl: media.url.value,
-      placeholder: (context, url) => Container(),
+      placeholder: (context, url) => Container(
+        color: Colors.transparent,
+      ),
     );
   else
     throw MediaNotFoundError();

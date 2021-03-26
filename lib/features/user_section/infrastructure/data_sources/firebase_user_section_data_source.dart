@@ -15,22 +15,17 @@ class FirebaseUserSectionDataSource {
     return res;
   }
 
-  Future<Iterable<TechniqueDTO>> getTechniquesById(List<String> techniqueIds) async {
-    final List<TechniqueDTO> res = [];
-    final techniqueIdsList = techniqueIds.toList();
-
-    for (var i = 0; i < techniqueIds.length; i++) {
-      final document = await _techniques.doc(techniqueIdsList[i]).get();
-      if (document.exists) res.add(await TechniqueDTO.fromFirestore(document));
-    }
-
-    return res;
+  Future<TechniqueDTO> getTechniqueById(String techniqueId) async {
+    return TechniqueDTO.fromFirestore(await _techniques.doc(techniqueId).get());
   }
 
   Future<Iterable<TechniqueDTO>> getAllTechniques() async {
-    final categories = await getAllCategories();
-    final techniquesIds = categories.fold<List<String>>([], (previousValue, element) => previousValue..addAll(element.techniqueIds));
-    return getTechniquesById(techniquesIds);
+    final publishedTechniques = await _techniques.where("datePublished", isNotEqualTo: null).orderBy("datePublished", descending: true).get();
+    final List<TechniqueDTO> res = [];
+
+    for (final doc in publishedTechniques.docs) res.add(await TechniqueDTO.fromFirestore(doc));
+
+    return res;
   }
 
   Future<Iterable<TechniqueDTO>> getMostRecentTechniques() async {

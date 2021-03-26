@@ -5,14 +5,8 @@ import 'package:jews_harp/features/user_section/domain/repository_interfaces/tec
 @LazySingleton(env: [Environment.prod, Environment.dev])
 class GetMostRecentTechniques {
   final ITechniqueRepository _techniqueRepository;
-  Iterable<Technique>? _cachedTechniques;
 
   GetMostRecentTechniques(this._techniqueRepository);
 
-  Future<Iterable<Technique>> call() async {
-    if (_cachedTechniques != null) return _cachedTechniques!;
-
-    _cachedTechniques = await _techniqueRepository.getMostRecentTechniques();
-    return _cachedTechniques!;
-  }
+  Future<Iterable<Technique>> call() => _techniqueRepository.getMostRecentTechniques();
 }

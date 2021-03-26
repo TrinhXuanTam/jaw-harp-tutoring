@@ -69,6 +69,8 @@ dependencies:
   animations: ^2.0.0
   # Animations
   cached_network_image: ^3.0.0-nullsafety
+  # File system locations
+  path_provider: ^2.0.1
 
 dev_dependencies:
   mocktail: ^0.1.1

@@ -56,17 +56,19 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final categoryColor = this.category.getColor(context);
+
     return Scaffold(
       appBar: IconAppBar(
-        backgroundColor: Colors.white,
-        iconColor: Colors.black,
+        backgroundColor: category.thumbnail.isPresent ? Colors.white : categoryColor,
+        iconColor: category.thumbnail.isPresent ? Colors.black : Colors.white,
         onPressed: () => Navigator.pop(context),
         actions: [
           IconButton(
             onPressed: () => Navigator.pushNamed(context, FILTER_SCREEN_ROUTE, arguments: FilterScreenArgs(BlocProvider.of<TechniquesBloc>(context))),
             icon: Icon(
               Icons.search_rounded,
-              color: Colors.black,
+              color: category.thumbnail.isPresent ? Colors.black : Colors.white,
               size: 30,
             ),
           ),
