@@ -10,4 +10,18 @@ class MediaDTO extends Media {
   factory MediaDTO.fromEntity(Media media) {
     return MediaDTO(url: media.url, filePath: media.filePath);
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      if (url.isPresent) "url": url.value,
+      if (filePath.isPresent) "filePath": filePath.isPresent,
+    };
+  }
+
+  factory MediaDTO.fromJson(Map<String, dynamic> json) {
+    return MediaDTO(
+      url: Optional<String>.ofNullable(json["url"]),
+      filePath: Optional<String>.ofNullable(json["filePath"]),
+    );
+  }
 }

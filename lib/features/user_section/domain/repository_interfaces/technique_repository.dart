@@ -7,4 +7,8 @@ abstract class ITechniqueRepository {
   Future<Iterable<Technique>> getMostRecentTechniques();
 
   Future<Iterable<Technique>> getTechniquesByCategory(Category category);
+
+  Future<Technique> getTechniquesById(String id);
+
+  Future<void> downloadTechnique(String techniqueId);
 }

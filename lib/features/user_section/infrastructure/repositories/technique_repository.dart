@@ -3,6 +3,7 @@ import 'package:jews_harp/core/errors/NotFoundError.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/domain/repository_interfaces/technique_repository.dart';
+import 'package:jews_harp/features/user_section/infrastructure/DTO/technique_DTO.dart';
 import 'package:jews_harp/features/user_section/infrastructure/data_sources/firebase_user_section_data_source.dart';
 import 'package:jews_harp/features/user_section/infrastructure/data_sources/technique_local_data_source.dart';
 
@@ -28,15 +29,7 @@ class TechniqueRepository extends ITechniqueRepository {
   Future<Iterable<Technique>> getTechniquesByCategory(Category category) async {
     final List<Technique> techniques = [];
 
-    for (final techniqueId in category.techniqueIds) {
-      try {
-        techniques.add(_techniqueLocalDataSource.getCachedTechnique(techniqueId));
-      } on NotFoundError {
-        final technique = await _firebaseUserSectionDataSource.getTechniqueById(techniqueId);
-        _techniqueLocalDataSource.cacheTechnique(technique);
-        techniques.add(technique);
-      }
-    }
+    for (final techniqueId in category.techniqueIds) techniques.add(await getTechniquesById(techniqueId));
 
     return techniques;
   }
@@ -50,5 +43,22 @@ class TechniqueRepository extends ITechniqueRepository {
       _techniqueLocalDataSource.cacheMostRecentTechniques(techniques);
       return techniques;
     }
+  }
+
+  @override
+  Future<Technique> getTechniquesById(String id) async {
+    try {
+      return _techniqueLocalDataSource.getCachedTechnique(id);
+    } on NotFoundError {
+      final technique = await _firebaseUserSectionDataSource.getTechniqueById(id);
+      _techniqueLocalDataSource.cacheTechnique(technique);
+      return technique;
+    }
+  }
+
+  @override
+  Future<void> downloadTechnique(String techniqueId) async {
+    final technique = await getTechniquesById(techniqueId);
+    return _techniqueLocalDataSource.downloadTechnique(TechniqueDTO.fromEntity(technique));
   }
 }

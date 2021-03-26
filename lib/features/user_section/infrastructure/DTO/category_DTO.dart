@@ -4,18 +4,19 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:jews_harp/core/constants/language_codes.dart';
 import 'package:jews_harp/core/errors/language_not_supported_error.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
-import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:jews_harp/features/user_section/infrastructure/DTO/mediaDTO.dart';
 import 'package:optional/optional.dart';
 
 import 'category_localized_data_DTO.dart';
 
 class CategoryDTO extends Category {
+  final Optional<MediaDTO> thumbnail;
+
   const CategoryDTO({
     required String id,
     required bool isVisible,
     required List<String> techniqueIds,
-    Optional<Media> thumbnail = const Optional.empty(),
+    this.thumbnail = const Optional.empty(),
     required String title,
     required String description,
   }) : super(id: id, isVisible: isVisible, thumbnail: thumbnail, techniqueIds: techniqueIds, title: title, description: description);
@@ -54,6 +55,28 @@ class CategoryDTO extends Category {
       thumbnail: await _getDownloadUrl(documentSnapshot, "thumbnail"),
       title: localizedData.title,
       description: localizedData.description,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "isVisible": isVisible,
+      "techniqueIds": techniqueIds,
+      if (thumbnail.isPresent) "thumbnail": thumbnail.value.toJson(),
+      "title": title,
+      "description": description,
+    };
+  }
+
+  factory CategoryDTO.fromJson(Map<String, dynamic> json) {
+    return CategoryDTO(
+      id: json["id"],
+      isVisible: json["isVisible"],
+      techniqueIds: json["techniqueIds"],
+      thumbnail: json["thumbnail"] != null ? Optional.of(MediaDTO.fromJson(json["thumbnail"])) : Optional.empty(),
+      title: json["title"],
+      description: json["description"],
     );
   }
 }

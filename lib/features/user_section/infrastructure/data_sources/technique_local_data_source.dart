@@ -49,4 +49,6 @@ class TechniqueLocalDataSource {
 
     return _cachedAllTechniques!;
   }
+
+  Future<void> downloadTechnique(TechniqueDTO technique) async {}
 }

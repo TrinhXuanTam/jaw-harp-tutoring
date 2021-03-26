@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/categories/categories_bloc.dart';
+import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_local_storage/technique_local_storage_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/user_section_navigation/user_section_navigation_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/categories_screen_body.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/home_page_body.dart';
@@ -63,6 +64,7 @@ class UserSection extends StatelessWidget {
       providers: [
         BlocProvider<CategoriesBloc>(create: (_) => serviceLocator<CategoriesBloc>()..add(LoadCategories())),
         BlocProvider<UserSectionNavigationBloc>(create: (_) => serviceLocator<UserSectionNavigationBloc>()),
+        BlocProvider<TechniqueLocalStorageBloc>(create: (_) => serviceLocator<TechniqueLocalStorageBloc>()),
       ],
       child: BlocBuilder<UserSectionNavigationBloc, UserSectionNavigationState>(
         builder: (ctx, state) => Scaffold(

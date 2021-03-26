@@ -165,6 +165,15 @@ class TechniqueScreen extends StatelessWidget {
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
                                                         Text(
+                                                          "Difficulty",
+                                                          style: TextStyle(
+                                                            fontWeight: FontWeight.w500,
+                                                            fontSize: 16,
+                                                          ),
+                                                        ),
+                                                        Text(technique.difficulty.string),
+                                                        SizedBox(height: 20),
+                                                        Text(
                                                           "Description",
                                                           style: TextStyle(
                                                             fontWeight: FontWeight.w500,

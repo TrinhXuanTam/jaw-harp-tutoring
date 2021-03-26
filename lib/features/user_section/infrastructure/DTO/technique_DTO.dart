@@ -10,14 +10,18 @@ import 'package:jews_harp/features/user_section/infrastructure/DTO/technique_loc
 import 'package:optional/optional_internal.dart';
 
 class TechniqueDTO extends Technique {
+  final CategoryDTO category;
+  final Optional<MediaDTO> thumbnail;
+  final Optional<MediaDTO> video;
+
   const TechniqueDTO({
     required String id,
     Optional<DateTime> datePublished = const Optional.empty(),
     Optional<String> productId = const Optional.empty(),
-    required CategoryDTO category,
+    required this.category,
     required TechniqueDifficulty difficulty,
-    Optional<MediaDTO> thumbnail = const Optional.empty(),
-    Optional<MediaDTO> video = const Optional.empty(),
+    this.thumbnail = const Optional.empty(),
+    this.video = const Optional.empty(),
     required String title,
     required String description,
     required String accompanyingText,
@@ -33,6 +37,17 @@ class TechniqueDTO extends Technique {
           description: description,
           accompanyingText: accompanyingText,
         );
+
+  factory TechniqueDTO.fromEntity(Technique technique) {
+    return TechniqueDTO(
+      id: technique.id,
+      category: CategoryDTO.fromEntity(technique.category),
+      difficulty: technique.difficulty,
+      title: technique.title,
+      description: technique.description,
+      accompanyingText: technique.accompanyingText,
+    );
+  }
 
   static TechniqueLocalizedDataDTO _getLocalizedData(DocumentSnapshot documentSnapshot) {
     final languageCode = FirebaseAuth.instance.languageCode;
@@ -64,6 +79,36 @@ class TechniqueDTO extends Technique {
       title: localizedData.title,
       description: localizedData.description,
       accompanyingText: localizedData.accompanyingText,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      if (datePublished.isPresent) "datePublished": datePublished.value.toIso8601String(),
+      if (productId.isPresent) "productId": productId.value,
+      "category": category.toJson(),
+      "difficulty": difficulty.index,
+      if (thumbnail.isPresent) "thumbnail": thumbnail.value.toJson(),
+      if (video.isPresent) "video": video.value.toJson(),
+      "title": title,
+      "description": description,
+      "accompanyingText": accompanyingText,
+    };
+  }
+
+  factory TechniqueDTO.fromJson(Map<String, dynamic> json) {
+    return TechniqueDTO(
+      id: json["id"],
+      datePublished: json["datePublished"] != null ? Optional.of(DateTime.parse(json["datePublished"])) : Optional.empty(),
+      productId: Optional.ofNullable(json["productId"]),
+      category: CategoryDTO.fromJson(json["category"]),
+      difficulty: TechniqueDifficulty.values[json["difficulty"]],
+      thumbnail: json["thumbnail"] != null ? Optional.of(MediaDTO.fromJson(json["thumbnail"])) : Optional.empty(),
+      video: json["video"] != null ? Optional.of(MediaDTO.fromJson(json["video"])) : Optional.empty(),
+      title: json["title"],
+      description: json["description"],
+      accompanyingText: json["accompanyingText"],
     );
   }
 }
