@@ -71,6 +71,8 @@ dependencies:
   cached_network_image: ^3.0.0-nullsafety
   # File system locations
   path_provider: ^2.0.1
+  # Http client for Dart
+  dio: ^4.0.0-prev3
 
 dev_dependencies:
   mocktail: ^0.1.1

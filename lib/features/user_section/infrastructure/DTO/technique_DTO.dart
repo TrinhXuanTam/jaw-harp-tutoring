@@ -38,6 +38,32 @@ class TechniqueDTO extends Technique {
           accompanyingText: accompanyingText,
         );
 
+  TechniqueDTO copyWith({
+    String? id,
+    Optional<DateTime>? datePublished,
+    Optional<String>? productId,
+    CategoryDTO? category,
+    TechniqueDifficulty? difficulty,
+    Optional<MediaDTO>? thumbnail,
+    Optional<MediaDTO>? video,
+    String? title,
+    String? description,
+    String? accompanyingText,
+  }) {
+    return TechniqueDTO(
+      id: id != null ? id : this.id,
+      datePublished: datePublished != null ? datePublished : this.datePublished,
+      productId: productId != null ? productId : this.productId,
+      category: category != null ? category : this.category,
+      difficulty: difficulty != null ? difficulty : this.difficulty,
+      thumbnail: thumbnail != null ? thumbnail : this.thumbnail,
+      video: video != null ? video : this.video,
+      title: title != null ? title : this.title,
+      description: description != null ? description : this.description,
+      accompanyingText: accompanyingText != null ? accompanyingText : this.accompanyingText,
+    );
+  }
+
   factory TechniqueDTO.fromEntity(Technique technique) {
     return TechniqueDTO(
       id: technique.id,

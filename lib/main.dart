@@ -35,6 +35,7 @@ import 'features/auth/presentation/screens/authentication_screen.dart';
 import 'features/auth/presentation/screens/email_verification_screen.dart';
 import 'features/auth/presentation/screens/sign_up_screen.dart';
 import 'features/auth/presentation/screens/splash_screen.dart';
+import 'features/user_section/presentation/BLoCs/technique_local_storage/technique_local_storage_bloc.dart';
 import 'features/user_section/presentation/screens/video_full_screen_mode_screen.dart';
 
 /// Driver function
@@ -101,6 +102,7 @@ class _EntryPoint extends StatelessWidget {
       providers: [
         BlocProvider<AuthBloc>(create: (_) => serviceLocator<AuthBloc>()),
         BlocProvider<ErrorBloc>(create: (_) => serviceLocator<ErrorBloc>()),
+        BlocProvider<TechniqueLocalStorageBloc>(create: (_) => serviceLocator<TechniqueLocalStorageBloc>()),
       ],
       child: MultiBlocListener(
         listeners: [

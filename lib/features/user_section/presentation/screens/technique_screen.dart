@@ -8,6 +8,7 @@ import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/loading_wrapper.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_detail/technique_detail_bloc.dart';
+import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_local_storage/technique_local_storage_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/techniques/techniques_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/small_technique_list.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/video_player_widget.dart';
@@ -60,6 +61,66 @@ class TechniqueScreen extends StatelessWidget {
           ),
         );
     }
+  }
+
+  Widget _buildDownloadButton(BuildContext context) {
+    return BlocBuilder<TechniqueLocalStorageBloc, TechniqueLocalStorageState>(builder: (ctx, state) {
+      if (state.downloadingInProgress.contains(this.technique.id))
+        return Column(
+          children: [
+            Icon(
+              Icons.download_rounded,
+              color: Colors.grey,
+              size: 20,
+            ),
+            Text(
+              "Downloading...",
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey,
+              ),
+            ),
+          ],
+        );
+      else if (!state.downloadedTechniques.containsKey(technique.id))
+        return GestureDetector(
+          onTap: () => BlocProvider.of<TechniqueLocalStorageBloc>(ctx).add(DownloadTechniqueEvent(this.technique.id)),
+          child: Column(
+            children: [
+              Icon(
+                Icons.download_outlined,
+                color: Colors.grey,
+                size: 20,
+              ),
+              Text(
+                "Download",
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey,
+                ),
+              ),
+            ],
+          ),
+        );
+      else
+        return Column(
+          children: [
+            Icon(
+              Icons.download_outlined,
+              color: BASE_COLOR,
+              size: 20,
+            ),
+            Text(
+              "Downloaded",
+              style: TextStyle(
+                fontSize: 12,
+                color: BASE_COLOR,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        );
+    });
   }
 
   @override
@@ -117,22 +178,7 @@ class TechniqueScreen extends StatelessWidget {
                                       ],
                                     ),
                                     SizedBox(width: 25),
-                                    Column(
-                                      children: [
-                                        Icon(
-                                          Icons.download_outlined,
-                                          color: Colors.grey,
-                                          size: 20,
-                                        ),
-                                        Text(
-                                          "Download",
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                    _buildDownloadButton(context),
                                   ],
                                 ),
                                 DefaultTabController(

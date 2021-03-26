@@ -57,7 +57,7 @@ class TechniqueRepository extends ITechniqueRepository {
   }
 
   @override
-  Future<void> downloadTechnique(String techniqueId) async {
+  Future<Technique> downloadTechnique(String techniqueId) async {
     final technique = await getTechniquesById(techniqueId);
     return _techniqueLocalDataSource.downloadTechnique(TechniqueDTO.fromEntity(technique));
   }
