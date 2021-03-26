@@ -67,8 +67,12 @@ class TechniqueDTO extends Technique {
   factory TechniqueDTO.fromEntity(Technique technique) {
     return TechniqueDTO(
       id: technique.id,
+      datePublished: technique.datePublished,
+      productId: technique.productId,
       category: CategoryDTO.fromEntity(technique.category),
       difficulty: technique.difficulty,
+      thumbnail: technique.thumbnail.map((e) => MediaDTO.fromEntity(e)),
+      video: technique.video.map((e) => MediaDTO.fromEntity(e)),
       title: technique.title,
       description: technique.description,
       accompanyingText: technique.accompanyingText,

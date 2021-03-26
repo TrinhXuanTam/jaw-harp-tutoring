@@ -40,6 +40,7 @@ class CategoryDTO extends Category {
       id: category.id,
       isVisible: category.isVisible,
       techniqueIds: category.techniqueIds,
+      thumbnail: category.thumbnail.map((e) => MediaDTO.fromEntity(e)),
       title: category.title,
       description: category.description,
     );

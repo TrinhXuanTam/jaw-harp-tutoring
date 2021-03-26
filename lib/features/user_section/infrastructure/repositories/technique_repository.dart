@@ -61,4 +61,7 @@ class TechniqueRepository extends ITechniqueRepository {
     final technique = await getTechniquesById(techniqueId);
     return _techniqueLocalDataSource.downloadTechnique(TechniqueDTO.fromEntity(technique));
   }
+
+  @override
+  Future<List<Technique>> getDownloadedTechniques() => _techniqueLocalDataSource.getDownloadedTechniques();
 }

@@ -6,7 +6,7 @@ class TechniqueLocalStorageState {
   final Set<String> downloadingInProgress;
 
   TechniqueLocalStorageState({
-    required this.downloadedTechniques,
+    this.downloadedTechniques = const {},
     this.downloadingInProgress = const {},
   });
 

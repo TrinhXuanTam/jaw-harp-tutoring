@@ -102,7 +102,7 @@ class _EntryPoint extends StatelessWidget {
       providers: [
         BlocProvider<AuthBloc>(create: (_) => serviceLocator<AuthBloc>()),
         BlocProvider<ErrorBloc>(create: (_) => serviceLocator<ErrorBloc>()),
-        BlocProvider<TechniqueLocalStorageBloc>(create: (_) => serviceLocator<TechniqueLocalStorageBloc>()),
+        BlocProvider<TechniqueLocalStorageBloc>(create: (_) => serviceLocator<TechniqueLocalStorageBloc>()..add(InitTechniqueLocalStorage()), lazy: false),
       ],
       child: MultiBlocListener(
         listeners: [

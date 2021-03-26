@@ -14,7 +14,7 @@ class MediaDTO extends Media {
   Map<String, dynamic> toJson() {
     return {
       if (url.isPresent) "url": url.value,
-      if (filePath.isPresent) "filePath": filePath.isPresent,
+      if (filePath.isPresent) "filePath": filePath.value,
     };
   }
 

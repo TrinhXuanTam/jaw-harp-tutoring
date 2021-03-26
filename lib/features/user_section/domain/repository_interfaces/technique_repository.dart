@@ -11,4 +11,6 @@ abstract class ITechniqueRepository {
   Future<Technique> getTechniquesById(String id);
 
   Future<Technique> downloadTechnique(String techniqueId);
+
+  Future<List<Technique>> getDownloadedTechniques();
 }
