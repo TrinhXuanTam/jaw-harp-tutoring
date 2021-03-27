@@ -248,14 +248,7 @@ class TechniqueScreen extends StatelessWidget {
                                                 create: (_) => serviceLocator<TechniquesBloc>()..add(LoadTechniquesByCategory(this.technique.category)),
                                                 child: Padding(
                                                   padding: const EdgeInsets.all(10),
-                                                  child: BlocBuilder<TechniquesBloc, TechniquesState>(
-                                                    builder: (ctx, state) {
-                                                      if (state is TechniquesLoaded)
-                                                        return SmallTechniqueList(techniques: state.techniques);
-                                                      else
-                                                        return SmallTechniqueList(isLoading: true);
-                                                    },
-                                                  ),
+                                                  child: SmallTechniqueList(techniquesIds: this.technique.category.techniqueIds),
                                                 ),
                                               ),
                                             ],
