@@ -46,7 +46,7 @@ import 'package:jews_harp/features/admin/infrastructure/repositories/category_ad
 import 'package:jews_harp/features/admin/infrastructure/repositories/technique_admin_repository.dart'
     as _i15;
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_detail/category_detail_bloc.dart'
-    as _i77;
+    as _i78;
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_form/category_form_bloc.dart'
     as _i63;
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_localization/category_localization_bloc.dart'
@@ -110,7 +110,7 @@ import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect
 import 'package:jews_harp/features/auth/presentation/BLoCs/password_reset/password_reset_bloc.dart'
     as _i23;
 import 'package:jews_harp/features/auth/presentation/BLoCs/sign_up_screen/sign_up_bloc.dart'
-    as _i74;
+    as _i75;
 import 'package:jews_harp/features/auth/presentation/BLoCs/third_party_authentication/third_party_auth_bloc.dart'
     as _i59;
 import 'package:jews_harp/features/user_section/application/delete_downloaded_technique.dart'
@@ -147,14 +147,16 @@ import 'package:jews_harp/features/user_section/presentation/BLoCs/categories/ca
     as _i62;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/filter_screen/filter_screen_bloc.dart'
     as _i5;
+import 'package:jews_harp/features/user_section/presentation/BLoCs/most_recent_techniques/most_recent_techniques_bloc.dart'
+    as _i74;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique/technique_bloc.dart'
-    as _i75;
+    as _i76;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_detail/technique_detail_bloc.dart'
     as _i30;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_local_storage/technique_local_storage_bloc.dart'
-    as _i78;
+    as _i79;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/techniques/techniques_bloc.dart'
-    as _i76;
+    as _i77;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/user_section_navigation/user_section_navigation_bloc.dart'
     as _i36;
 
@@ -395,26 +397,29 @@ _i1.GetIt initGetIt(_i1.GetIt get,
   gh.lazySingleton<_i73.GetTechniquesByCategory>(
       () => _i73.GetTechniquesByCategory(get<_i54.ITechniqueRepository>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i74.SignUpBloc>(
-      () => _i74.SignUpBloc(
+  gh.factory<_i74.MostRecentTechniquesBloc>(
+      () => _i74.MostRecentTechniquesBloc(get<_i70.GetMostRecentTechniques>()),
+      registerFor: {_prod, _dev});
+  gh.factory<_i75.SignUpBloc>(
+      () => _i75.SignUpBloc(
           get<_i29.SignUp>(),
           get<_i45.GetAuthProviders>(),
           get<_i20.LinkEmailProvider>(),
           get<_i4.ErrorBloc>(),
           get<_i61.AuthBloc>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i75.TechniqueBloc>(
-      () => _i75.TechniqueBloc(get<_i71.GetTechniqueById>()),
+  gh.factory<_i76.TechniqueBloc>(
+      () => _i76.TechniqueBloc(get<_i71.GetTechniqueById>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i76.TechniquesBloc>(
-      () => _i76.TechniquesBloc(get<_i70.GetMostRecentTechniques>(),
+  gh.factory<_i77.TechniquesBloc>(
+      () => _i77.TechniquesBloc(get<_i70.GetMostRecentTechniques>(),
           get<_i73.GetTechniquesByCategory>(), get<_i72.GetTechniques>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i77.CategoryDetailBloc>(
-      () => _i77.CategoryDetailBloc(get<_i73.GetTechniquesByCategory>()),
+  gh.factory<_i78.CategoryDetailBloc>(
+      () => _i78.CategoryDetailBloc(get<_i73.GetTechniquesByCategory>()),
       registerFor: {_prod, _dev});
-  gh.singleton<_i78.TechniqueLocalStorageBloc>(
-      _i78.TechniqueLocalStorageBloc(
+  gh.singleton<_i79.TechniqueLocalStorageBloc>(
+      _i79.TechniqueLocalStorageBloc(
           get<_i66.DownloadTechnique>(),
           get<_i69.GetDownloadedTechniques>(),
           get<_i65.DeleteDownloadedTechnique>()),

@@ -34,7 +34,7 @@ class CategoriesScreenBody extends StatelessWidget {
                         techniquesCnt: state.categories.fold<int>(0, (acc, element) => acc + element.techniqueIds.length),
                         title: "All Techniques",
                         description: "View all techniques",
-                        dst: DefaultCategoryScreen(),
+                        dst: DefaultCategoryScreen(categories: state.categories),
                       );
                     else {
                       final category = state.categories[index - 1];

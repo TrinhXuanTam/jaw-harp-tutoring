@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:jews_harp/core/constants/routes.dart';
-import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
@@ -18,22 +17,6 @@ class CategoryScreen extends StatelessWidget {
     Key? key,
     required this.category,
   }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider<TechniquesBloc>(
-      create: (_) => serviceLocator<TechniquesBloc>()..add(LoadTechniquesByCategory(category)),
-      child: _Body(
-        category: this.category,
-      ),
-    );
-  }
-}
-
-class _Body extends StatelessWidget {
-  final Category category;
-
-  const _Body({Key? key, required this.category}) : super(key: key);
 
   Widget _buildThumbnail(BuildContext ctx) {
     return Container(
@@ -126,37 +109,15 @@ class _Body extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(20),
                     color: Colors.white,
-                    child: BlocBuilder<TechniquesBloc, TechniquesState>(
-                      builder: (ctx, state) {
-                        if (state is TechniquesLoaded)
-                          return StaggeredGridView.countBuilder(
-                            crossAxisCount: 2,
-                            itemCount: state.techniques.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                child: SmallTechniqueCard(
-                                  technique: state.techniques[index],
-                                ),
-                              );
-                            },
-                            staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-                            mainAxisSpacing: 20,
-                            crossAxisSpacing: 20,
-                          );
-                        else
-                          return StaggeredGridView.countBuilder(
-                            crossAxisCount: 2,
-                            itemCount: 6,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                child: SmallTechniqueCardLoading(width: 160),
-                              );
-                            },
-                            staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-                            mainAxisSpacing: 20,
-                            crossAxisSpacing: 20,
-                          );
-                      },
+                    child: StaggeredGridView.countBuilder(
+                      crossAxisCount: 2,
+                      itemCount: this.category.techniqueIds.length,
+                      itemBuilder: (BuildContext context, int index) => Container(
+                        child: SmallTechniqueCard(techniqueId: this.category.techniqueIds[index]),
+                      ),
+                      staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+                      mainAxisSpacing: 20,
+                      crossAxisSpacing: 20,
                     ),
                   ),
                 ),

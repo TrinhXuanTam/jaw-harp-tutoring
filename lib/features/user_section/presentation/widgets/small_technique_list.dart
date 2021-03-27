@@ -5,10 +5,10 @@ import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/shimmer_effect.dart';
+import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique/technique_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/screens/technique_screen.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
-import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 
 class SmallTechniqueList extends StatelessWidget {
   final List<String> techniquesIds;

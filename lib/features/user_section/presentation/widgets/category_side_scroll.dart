@@ -69,7 +69,7 @@ class CategorySideScroll extends StatelessWidget {
                 color: getRandomShade("All Techniques".hashCode),
                 techniquesCnt: categories.fold<int>(0, (previousValue, element) => previousValue + element.techniqueIds.length),
                 title: "All Techniques",
-                dst: DefaultCategoryScreen(),
+                dst: DefaultCategoryScreen(categories: categories),
               );
           },
         ),
@@ -84,7 +84,7 @@ class CategorySideScroll extends StatelessWidget {
           child: ShimmerEffect(
             child: Row(
               children: List.filled(
-                4,
+                10,
                 Container(
                   height: 130,
                   width: 100,

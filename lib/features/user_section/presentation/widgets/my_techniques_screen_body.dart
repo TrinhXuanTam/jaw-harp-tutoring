@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_local_storage/technique_local_storage_bloc.dart';
-import 'package:jews_harp/features/user_section/presentation/widgets/technique_list.dart';
+import 'package:jews_harp/features/user_section/presentation/widgets/downloaded_techniques_list.dart';
 
 class MyTechniquesScreenBody extends StatelessWidget {
   @override
@@ -35,14 +35,9 @@ class MyTechniquesScreenBody extends StatelessWidget {
                     child: TabBarView(
                       children: <Widget>[
                         Container(),
-                        Container(
+                        Padding(
                           padding: const EdgeInsets.all(10),
-                          child: BlocBuilder<TechniqueLocalStorageBloc, TechniqueLocalStorageState>(
-                            builder: (ctx, state) => TechniqueList(
-                              techniques: state.downloadedTechniques.entries.map((e) => e.value).toList(),
-                              showCategory: true,
-                            ),
-                          ),
+                          child: DownloadedTechniquesList(),
                         ),
                         Container(),
                       ],

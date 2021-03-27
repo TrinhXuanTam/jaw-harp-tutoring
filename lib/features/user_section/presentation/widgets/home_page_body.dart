@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
-import 'package:jews_harp/features/user_section/presentation/BLoCs/techniques/techniques_bloc.dart';
+import 'package:jews_harp/features/user_section/presentation/BLoCs/most_recent_techniques/most_recent_techniques_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/technique_side_scroll.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
@@ -45,7 +46,14 @@ class HomePageBody extends StatelessWidget {
                       ),
                     ),
                   ),
-                  TechniqueSideScroll(loadEvent: LoadNewTechniques()),
+                  BlocBuilder<MostRecentTechniquesBloc, MostRecentTechniquesState>(
+                    builder: (ctx, state) {
+                      if (state is MostRecentTechniquesLoaded)
+                        return TechniqueSideScroll.fromTechniques(state.techniques);
+                      else
+                        return TechniqueSideScrollLoading();
+                    },
+                  ),
                 ],
               ),
             ),
