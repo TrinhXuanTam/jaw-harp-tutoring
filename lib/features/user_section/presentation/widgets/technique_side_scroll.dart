@@ -4,23 +4,39 @@ import 'package:jews_harp/features/user_section/presentation/widgets/small_techn
 
 class TechniqueSideScroll extends StatelessWidget {
   final List<String> techniqueIds;
+  final String? title;
 
-  factory TechniqueSideScroll.fromTechniques(List<Technique> techniques) => TechniqueSideScroll(techniqueIds: techniques.map((e) => e.id).toList());
+  factory TechniqueSideScroll.fromTechniques(List<Technique> techniques, {String? title}) => TechniqueSideScroll(techniqueIds: techniques.map((e) => e.id).toList(), title: title);
 
-  const TechniqueSideScroll({Key? key, required this.techniqueIds}) : super(key: key);
+  const TechniqueSideScroll({Key? key, required this.techniqueIds, this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 180,
-      width: double.infinity,
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      child: ListView.separated(
-        itemCount: techniqueIds.length,
-        scrollDirection: Axis.horizontal,
-        separatorBuilder: (BuildContext context, int index) => SizedBox(width: 20),
-        itemBuilder: (ctx, index) => SmallTechniqueCard(techniqueId: techniqueIds[index], width: 160),
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (this.title != null)
+          Container(
+            child: Text(
+              this.title!,
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        Container(
+          height: 170,
+          width: double.infinity,
+          margin: const EdgeInsets.symmetric(vertical: 10),
+          child: ListView.separated(
+            itemCount: techniqueIds.length,
+            scrollDirection: Axis.horizontal,
+            separatorBuilder: (BuildContext context, int index) => SizedBox(width: 20),
+            itemBuilder: (ctx, index) => SmallTechniqueCard(techniqueId: techniqueIds[index], width: 160),
+          ),
+        ),
+      ],
     );
   }
 }

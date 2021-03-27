@@ -70,12 +70,14 @@ class SmallTechniqueCard extends StatelessWidget {
                     SizedBox(height: 3),
                     Text(
                       technique.title,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     Text(
                       technique.category.title,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(color: Colors.grey, fontSize: 12),
                     ),
                     SizedBox(height: 5),

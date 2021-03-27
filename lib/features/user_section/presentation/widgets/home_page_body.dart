@@ -11,6 +11,8 @@ import 'category_side_scroll.dart';
 class HomePageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final user = getUser(context);
+
     return CenteredStack(
       children: [
         Container(
@@ -37,23 +39,19 @@ class HomePageBody extends StatelessWidget {
                   SizedBox(height: 20),
                   CategorySideScroll(),
                   SizedBox(height: 10),
-                  Container(
-                    child: Text(
-                      "What's new?",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
                   BlocBuilder<MostRecentTechniquesBloc, MostRecentTechniquesState>(
                     builder: (ctx, state) {
                       if (state is MostRecentTechniquesLoaded)
-                        return TechniqueSideScroll.fromTechniques(state.techniques);
+                        return TechniqueSideScroll.fromTechniques(state.techniques, title: "What's new?");
                       else
                         return TechniqueSideScrollLoading();
                     },
                   ),
+                  if (user.favoriteTechniques.isNotEmpty)
+                    TechniqueSideScroll(
+                      techniqueIds: user.favoriteTechniques.toList(),
+                      title: "Your favorites",
+                    ),
                 ],
               ),
             ),
