@@ -46,7 +46,7 @@ import 'package:jews_harp/features/admin/infrastructure/repositories/category_ad
 import 'package:jews_harp/features/admin/infrastructure/repositories/technique_admin_repository.dart'
     as _i14;
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_detail/category_detail_bloc.dart'
-    as _i80;
+    as _i81;
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_form/category_form_bloc.dart'
     as _i66;
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_localization/category_localization_bloc.dart'
@@ -160,7 +160,7 @@ import 'package:jews_harp/features/user_section/presentation/BLoCs/technique/tec
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_detail/technique_detail_bloc.dart'
     as _i33;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_local_storage/technique_local_storage_bloc.dart'
-    as _i81;
+    as _i80;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/user_section_navigation/user_section_navigation_bloc.dart'
     as _i39;
 
@@ -217,7 +217,7 @@ _i1.GetIt initGetIt(_i1.GetIt get,
       () => _i14.TechniqueAdminRepository(get<_i5.FirebaseAdminDataSource>()),
       registerFor: {_prod});
   gh.lazySingleton<_i15.IUserAuthRepository>(
-      () => _i16.UserRepository(get<_i6.FirebaseAuthDataSource>()),
+      () => _i16.UserAuthRepository(get<_i6.FirebaseAuthDataSource>()),
       registerFor: {_prod, _user_repository_test_env});
   gh.lazySingleton<_i17.IUserFacade>(() => _i18.FirebaseAuthFacade(),
       registerFor: {_prod});
@@ -425,14 +425,14 @@ _i1.GetIt initGetIt(_i1.GetIt get,
   gh.factory<_i79.TechniqueBloc>(
       () => _i79.TechniqueBloc(get<_i74.GetTechniqueById>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i80.CategoryDetailBloc>(
-      () => _i80.CategoryDetailBloc(get<_i76.GetTechniquesByCategory>()),
-      registerFor: {_prod, _dev});
-  gh.singleton<_i81.TechniqueLocalStorageBloc>(
-      _i81.TechniqueLocalStorageBloc(
+  gh.factory<_i80.TechniqueLocalStorageBloc>(
+      () => _i80.TechniqueLocalStorageBloc(
           get<_i69.DownloadTechnique>(),
           get<_i72.GetDownloadedTechniques>(),
           get<_i68.DeleteDownloadedTechnique>()),
+      registerFor: {_prod, _dev});
+  gh.factory<_i81.CategoryDetailBloc>(
+      () => _i81.CategoryDetailBloc(get<_i76.GetTechniquesByCategory>()),
       registerFor: {_prod, _dev});
   return get;
 }

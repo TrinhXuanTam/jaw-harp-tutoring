@@ -46,7 +46,7 @@ import 'package:jews_harp/features/admin/infrastructure/repositories/category_ad
 import 'package:jews_harp/features/admin/infrastructure/repositories/technique_admin_repository.dart'
     as _i15;
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_detail/category_detail_bloc.dart'
-    as _i81;
+    as _i82;
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_form/category_form_bloc.dart'
     as _i67;
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_localization/category_localization_bloc.dart'
@@ -160,7 +160,7 @@ import 'package:jews_harp/features/user_section/presentation/BLoCs/technique/tec
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_detail/technique_detail_bloc.dart'
     as _i34;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_local_storage/technique_local_storage_bloc.dart'
-    as _i82;
+    as _i81;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/user_section_navigation/user_section_navigation_bloc.dart'
     as _i40;
 
@@ -200,11 +200,11 @@ _i1.GetIt testInitGetIt(_i1.GetIt get,
       () => _i5.FirebaseAdminDataSource(),
       registerFor: {_prod});
   gh.lazySingleton<_i6.FirebaseAuthDataSource>(
-      () => _i7.FirebaseAuthDataSourceMock(),
-      registerFor: {_user_repository_test_env});
-  gh.lazySingleton<_i6.FirebaseAuthDataSource>(
       () => _i6.FirebaseAuthDataSource(),
       registerFor: {_prod});
+  gh.lazySingleton<_i6.FirebaseAuthDataSource>(
+      () => _i7.FirebaseAuthDataSourceMock(),
+      registerFor: {_user_repository_test_env});
   gh.lazySingleton<_i8.FirebaseUserSectionDataSource>(
       () => _i8.FirebaseUserSectionDataSource(),
       registerFor: {_prod});
@@ -222,7 +222,7 @@ _i1.GetIt testInitGetIt(_i1.GetIt get,
       () => _i15.TechniqueAdminRepository(get<_i5.FirebaseAdminDataSource>()),
       registerFor: {_prod});
   gh.lazySingleton<_i16.IUserAuthRepository>(
-      () => _i17.UserRepository(get<_i6.FirebaseAuthDataSource>()),
+      () => _i17.UserAuthRepository(get<_i6.FirebaseAuthDataSource>()),
       registerFor: {_prod, _user_repository_test_env});
   gh.lazySingleton<_i16.IUserAuthRepository>(() => _i7.IUserRepositoryMock(),
       registerFor: {
@@ -233,8 +233,6 @@ _i1.GetIt testInitGetIt(_i1.GetIt get,
         _google_authentication_test_env,
         _get_authentication_providers_test_env
       });
-  gh.lazySingleton<_i18.IUserFacade>(() => _i19.FirebaseAuthFacade(),
-      registerFor: {_prod});
   gh.lazySingleton<_i18.IUserFacade>(() => _i7.IUserFacadeMock(), registerFor: {
     _email_authentication_test_env,
     _get_current_user_test_env,
@@ -245,6 +243,8 @@ _i1.GetIt testInitGetIt(_i1.GetIt get,
     _password_reset_test_env,
     _send_email_verification_test_env
   });
+  gh.lazySingleton<_i18.IUserFacade>(() => _i19.FirebaseAuthFacade(),
+      registerFor: {_prod});
   gh.lazySingleton<_i20.IUserRepository>(
       () => _i21.UserRepository(get<_i8.FirebaseUserSectionDataSource>()),
       registerFor: {_prod});
@@ -449,14 +449,14 @@ _i1.GetIt testInitGetIt(_i1.GetIt get,
   gh.factory<_i80.TechniqueBloc>(
       () => _i80.TechniqueBloc(get<_i75.GetTechniqueById>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i81.CategoryDetailBloc>(
-      () => _i81.CategoryDetailBloc(get<_i77.GetTechniquesByCategory>()),
-      registerFor: {_prod, _dev});
-  gh.singleton<_i82.TechniqueLocalStorageBloc>(
-      _i82.TechniqueLocalStorageBloc(
+  gh.factory<_i81.TechniqueLocalStorageBloc>(
+      () => _i81.TechniqueLocalStorageBloc(
           get<_i70.DownloadTechnique>(),
           get<_i73.GetDownloadedTechniques>(),
           get<_i69.DeleteDownloadedTechnique>()),
+      registerFor: {_prod, _dev});
+  gh.factory<_i82.CategoryDetailBloc>(
+      () => _i82.CategoryDetailBloc(get<_i77.GetTechniquesByCategory>()),
       registerFor: {_prod, _dev});
   return get;
 }

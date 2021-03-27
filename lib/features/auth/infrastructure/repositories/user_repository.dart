@@ -5,10 +5,10 @@ import 'package:jews_harp/features/auth/domain/repository_interfaces/user_reposi
 import 'package:jews_harp/features/auth/infrastructure/data_sources/firebase_auth_data_source.dart';
 
 @LazySingleton(as: IUserAuthRepository, env: [Environment.prod, USER_REPOSITORY_TEST_ENV])
-class UserRepository extends IUserAuthRepository {
+class UserAuthRepository extends IUserAuthRepository {
   final FirebaseAuthDataSource _firebaseAuthDataSource;
 
-  UserRepository(this._firebaseAuthDataSource);
+  UserAuthRepository(this._firebaseAuthDataSource);
 
   @override
   Future<User> createUser(String name, String email, String password) => _firebaseAuthDataSource.signUpWithEmail(name, email, password);

@@ -11,7 +11,7 @@ import 'package:meta/meta.dart';
 part 'technique_local_storage_event.dart';
 part 'technique_local_storage_state.dart';
 
-@Singleton(env: [Environment.prod, Environment.dev])
+@Injectable(env: [Environment.prod, Environment.dev])
 class TechniqueLocalStorageBloc extends Bloc<TechniqueLocalStorageEvent, TechniqueLocalStorageState> {
   final DownloadTechnique _downloadTechnique;
   final GetDownloadedTechniques _getDownloadedTechniques;

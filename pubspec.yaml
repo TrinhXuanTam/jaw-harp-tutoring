@@ -68,7 +68,7 @@ dependencies:
   # Animations
   animations: ^2.0.0
   # Animations
-  cached_network_image: ^3.0.0-nullsafety
+  cached_network_image: ^3.0.0
   # File system locations
   path_provider: ^2.0.1
   # Http client for Dart
