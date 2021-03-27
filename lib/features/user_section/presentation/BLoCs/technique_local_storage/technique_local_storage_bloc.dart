@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/features/user_section/application/delete_downloaded_technique.dart';
 import 'package:jews_harp/features/user_section/application/download_technique.dart';
 import 'package:jews_harp/features/user_section/application/get_downloaded_techniques.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
@@ -14,12 +15,16 @@ part 'technique_local_storage_state.dart';
 class TechniqueLocalStorageBloc extends Bloc<TechniqueLocalStorageEvent, TechniqueLocalStorageState> {
   final DownloadTechnique _downloadTechnique;
   final GetDownloadedTechniques _getDownloadedTechniques;
+  final DeleteDownloadedTechnique _deleteDownloadedTechnique;
 
-  TechniqueLocalStorageBloc(this._downloadTechnique, this._getDownloadedTechniques) : super(TechniqueLocalStorageState());
+  TechniqueLocalStorageBloc(
+    this._downloadTechnique,
+    this._getDownloadedTechniques,
+    this._deleteDownloadedTechnique,
+  ) : super(TechniqueLocalStorageState());
 
   @override
   Stream<TechniqueLocalStorageState> mapEventToState(TechniqueLocalStorageEvent event) async* {
-
     if (event is InitTechniqueLocalStorage) {
       final downloadedTechniques = await _getDownloadedTechniques();
       final downloadedTechniquesCopy = Map.of(state.downloadedTechniques);
@@ -42,6 +47,11 @@ class TechniqueLocalStorageBloc extends Bloc<TechniqueLocalStorageEvent, Techniq
         downloadedTechniques: downloadedTechniquesCopy,
         downloadingInProgress: state.downloadingInProgress.toSet()..remove(technique.id),
       );
+    } else if (event is DeleteDownloadedTechniqueEvent) {
+      final downloadedTechniquesCopy = Map.of(state.downloadedTechniques);
+      downloadedTechniquesCopy.remove(event.techniqueId);
+      _deleteDownloadedTechnique(event.techniqueId);
+      yield state.copyWith(downloadedTechniques: downloadedTechniquesCopy);
     }
   }
 }

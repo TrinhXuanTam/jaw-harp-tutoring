@@ -10,3 +10,9 @@ class DownloadTechniqueEvent extends TechniqueLocalStorageEvent {
 
   DownloadTechniqueEvent(this.techniqueId);
 }
+
+class DeleteDownloadedTechniqueEvent extends TechniqueLocalStorageEvent {
+  final String techniqueId;
+
+  DeleteDownloadedTechniqueEvent(this.techniqueId);
+}

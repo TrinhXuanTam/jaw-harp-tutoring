@@ -63,5 +63,8 @@ class TechniqueRepository extends ITechniqueRepository {
   }
 
   @override
+  Future<void> deleteDownloadedTechnique(String techniqueId) => _techniqueLocalDataSource.deleteDownloadedTechnique(techniqueId);
+
+  @override
   Future<List<Technique>> getDownloadedTechniques() => _techniqueLocalDataSource.getDownloadedTechniques();
 }

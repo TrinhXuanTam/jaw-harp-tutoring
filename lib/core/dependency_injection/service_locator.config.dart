@@ -46,7 +46,7 @@ import 'package:jews_harp/features/admin/infrastructure/repositories/category_ad
 import 'package:jews_harp/features/admin/infrastructure/repositories/technique_admin_repository.dart'
     as _i15;
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_detail/category_detail_bloc.dart'
-    as _i74;
+    as _i75;
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_form/category_form_bloc.dart'
     as _i63;
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_localization/category_localization_bloc.dart'
@@ -102,29 +102,31 @@ import 'package:jews_harp/features/auth/infrastructure/facades/user_facade.dart'
 import 'package:jews_harp/features/auth/infrastructure/repositories/user_repository.dart'
     as _i19;
 import 'package:jews_harp/features/auth/presentation/BLoCs/email_authentication/email_auth_bloc.dart'
-    as _i66;
-import 'package:jews_harp/features/auth/presentation/BLoCs/email_verification/email_verification_bloc.dart'
     as _i67;
+import 'package:jews_harp/features/auth/presentation/BLoCs/email_verification/email_verification_bloc.dart'
+    as _i68;
 import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart'
     as _i61;
 import 'package:jews_harp/features/auth/presentation/BLoCs/password_reset/password_reset_bloc.dart'
     as _i23;
 import 'package:jews_harp/features/auth/presentation/BLoCs/sign_up_screen/sign_up_bloc.dart'
-    as _i72;
+    as _i73;
 import 'package:jews_harp/features/auth/presentation/BLoCs/third_party_authentication/third_party_auth_bloc.dart'
     as _i59;
-import 'package:jews_harp/features/user_section/application/download_technique.dart'
+import 'package:jews_harp/features/user_section/application/delete_downloaded_technique.dart'
     as _i65;
+import 'package:jews_harp/features/user_section/application/download_technique.dart'
+    as _i66;
 import 'package:jews_harp/features/user_section/application/get_categories.dart'
     as _i46;
 import 'package:jews_harp/features/user_section/application/get_downloaded_techniques.dart'
-    as _i68;
-import 'package:jews_harp/features/user_section/application/get_most_recent_techniques.dart'
     as _i69;
-import 'package:jews_harp/features/user_section/application/get_techniques.dart'
+import 'package:jews_harp/features/user_section/application/get_most_recent_techniques.dart'
     as _i70;
-import 'package:jews_harp/features/user_section/application/get_techniques_by_category.dart'
+import 'package:jews_harp/features/user_section/application/get_techniques.dart'
     as _i71;
+import 'package:jews_harp/features/user_section/application/get_techniques_by_category.dart'
+    as _i72;
 import 'package:jews_harp/features/user_section/domain/repository_interfaces/category_repository.dart'
     as _i12;
 import 'package:jews_harp/features/user_section/domain/repository_interfaces/technique_repository.dart'
@@ -146,9 +148,9 @@ import 'package:jews_harp/features/user_section/presentation/BLoCs/filter_screen
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_detail/technique_detail_bloc.dart'
     as _i30;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_local_storage/technique_local_storage_bloc.dart'
-    as _i75;
+    as _i76;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/techniques/techniques_bloc.dart'
-    as _i73;
+    as _i74;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/user_section_navigation/user_section_navigation_bloc.dart'
     as _i36;
 
@@ -356,51 +358,56 @@ _i1.GetIt initGetIt(_i1.GetIt get,
   gh.factory<_i64.CategoryLocalizationBloc>(
       () => _i64.CategoryLocalizationBloc(get<_i47.GetCategoryLocalizedData>()),
       registerFor: {_prod, _dev});
-  gh.lazySingleton<_i65.DownloadTechnique>(
-      () => _i65.DownloadTechnique(get<_i54.ITechniqueRepository>()),
+  gh.lazySingleton<_i65.DeleteDownloadedTechnique>(
+      () => _i65.DeleteDownloadedTechnique(get<_i54.ITechniqueRepository>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i66.EmailAuthBloc>(
-      () => _i66.EmailAuthBloc(
+  gh.lazySingleton<_i66.DownloadTechnique>(
+      () => _i66.DownloadTechnique(get<_i54.ITechniqueRepository>()),
+      registerFor: {_prod, _dev});
+  gh.factory<_i67.EmailAuthBloc>(
+      () => _i67.EmailAuthBloc(
           get<_i40.EmailAuthentication>(), get<_i4.ErrorBloc>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i67.EmailVerificationBloc>(
-      () => _i67.EmailVerificationBloc(
+  gh.factory<_i68.EmailVerificationBloc>(
+      () => _i68.EmailVerificationBloc(
           get<_i28.SignOut>(),
           get<_i26.SendEmailVerification>(),
           get<_i41.EmailIsVerified>(),
           get<_i4.ErrorBloc>(),
           get<_i61.AuthBloc>()),
       registerFor: {_prod, _dev});
-  gh.lazySingleton<_i68.GetDownloadedTechniques>(
-      () => _i68.GetDownloadedTechniques(get<_i54.ITechniqueRepository>()),
+  gh.lazySingleton<_i69.GetDownloadedTechniques>(
+      () => _i69.GetDownloadedTechniques(get<_i54.ITechniqueRepository>()),
       registerFor: {_prod, _dev});
-  gh.lazySingleton<_i69.GetMostRecentTechniques>(
-      () => _i69.GetMostRecentTechniques(get<_i54.ITechniqueRepository>()),
+  gh.lazySingleton<_i70.GetMostRecentTechniques>(
+      () => _i70.GetMostRecentTechniques(get<_i54.ITechniqueRepository>()),
       registerFor: {_prod, _dev});
-  gh.lazySingleton<_i70.GetTechniques>(
-      () => _i70.GetTechniques(get<_i54.ITechniqueRepository>()),
+  gh.lazySingleton<_i71.GetTechniques>(
+      () => _i71.GetTechniques(get<_i54.ITechniqueRepository>()),
       registerFor: {_prod, _dev});
-  gh.lazySingleton<_i71.GetTechniquesByCategory>(
-      () => _i71.GetTechniquesByCategory(get<_i54.ITechniqueRepository>()),
+  gh.lazySingleton<_i72.GetTechniquesByCategory>(
+      () => _i72.GetTechniquesByCategory(get<_i54.ITechniqueRepository>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i72.SignUpBloc>(
-      () => _i72.SignUpBloc(
+  gh.factory<_i73.SignUpBloc>(
+      () => _i73.SignUpBloc(
           get<_i29.SignUp>(),
           get<_i45.GetAuthProviders>(),
           get<_i20.LinkEmailProvider>(),
           get<_i4.ErrorBloc>(),
           get<_i61.AuthBloc>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i73.TechniquesBloc>(
-      () => _i73.TechniquesBloc(get<_i69.GetMostRecentTechniques>(),
-          get<_i71.GetTechniquesByCategory>(), get<_i70.GetTechniques>()),
+  gh.factory<_i74.TechniquesBloc>(
+      () => _i74.TechniquesBloc(get<_i70.GetMostRecentTechniques>(),
+          get<_i72.GetTechniquesByCategory>(), get<_i71.GetTechniques>()),
       registerFor: {_prod, _dev});
-  gh.factory<_i74.CategoryDetailBloc>(
-      () => _i74.CategoryDetailBloc(get<_i71.GetTechniquesByCategory>()),
+  gh.factory<_i75.CategoryDetailBloc>(
+      () => _i75.CategoryDetailBloc(get<_i72.GetTechniquesByCategory>()),
       registerFor: {_prod, _dev});
-  gh.singleton<_i75.TechniqueLocalStorageBloc>(
-      _i75.TechniqueLocalStorageBloc(
-          get<_i65.DownloadTechnique>(), get<_i68.GetDownloadedTechniques>()),
+  gh.singleton<_i76.TechniqueLocalStorageBloc>(
+      _i76.TechniqueLocalStorageBloc(
+          get<_i66.DownloadTechnique>(),
+          get<_i69.GetDownloadedTechniques>(),
+          get<_i65.DeleteDownloadedTechnique>()),
       registerFor: {_prod, _dev});
   return get;
 }

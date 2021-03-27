@@ -12,5 +12,7 @@ abstract class ITechniqueRepository {
 
   Future<Technique> downloadTechnique(String techniqueId);
 
+  Future<void> deleteDownloadedTechnique(String techniqueId);
+
   Future<List<Technique>> getDownloadedTechniques();
 }

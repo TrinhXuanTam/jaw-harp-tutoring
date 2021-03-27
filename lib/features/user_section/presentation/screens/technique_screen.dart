@@ -103,22 +103,25 @@ class TechniqueScreen extends StatelessWidget {
           ),
         );
       else
-        return Column(
-          children: [
-            Icon(
-              Icons.download_outlined,
-              color: BASE_COLOR,
-              size: 20,
-            ),
-            Text(
-              "Downloaded",
-              style: TextStyle(
-                fontSize: 12,
-                color: BASE_COLOR,
-                fontWeight: FontWeight.w500,
+        return GestureDetector(
+          onTap: () => BlocProvider.of<TechniqueLocalStorageBloc>(ctx).add(DeleteDownloadedTechniqueEvent(this.technique.id)),
+          child: Column(
+            children: [
+              Icon(
+                Icons.delete_outline_rounded,
+                color: Colors.redAccent,
+                size: 20,
               ),
-            ),
-          ],
+              Text(
+                "Delete",
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.redAccent,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
         );
     });
   }

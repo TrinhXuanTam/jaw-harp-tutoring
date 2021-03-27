@@ -91,6 +91,13 @@ class TechniqueLocalDataSource {
     return savedTechnique;
   }
 
+  Future<void> deleteDownloadedTechnique(String techniqueId) async {
+    final savedPath = "${await techniquePath}/$techniqueId";
+    final techniqueDirectory = Directory(savedPath);
+
+    if (await techniqueDirectory.exists()) techniqueDirectory.delete(recursive: true);
+  }
+
   Future<List<TechniqueDTO>> getDownloadedTechniques() async {
     final techniquesDirectory = Directory(await techniquePath);
     final List<TechniqueDTO> techniques = [];
