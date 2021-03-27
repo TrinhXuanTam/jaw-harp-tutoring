@@ -9,7 +9,6 @@ import 'package:jews_harp/core/widgets/loading_wrapper.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_detail/technique_detail_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_local_storage/technique_local_storage_bloc.dart';
-import 'package:jews_harp/features/user_section/presentation/BLoCs/techniques/techniques_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/small_technique_list.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/video_player_widget.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
@@ -244,12 +243,9 @@ class TechniqueScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                               ),
-                                              BlocProvider<TechniquesBloc>(
-                                                create: (_) => serviceLocator<TechniquesBloc>()..add(LoadTechniquesByCategory(this.technique.category)),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(10),
-                                                  child: SmallTechniqueList(techniquesIds: this.technique.category.techniqueIds),
-                                                ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(10),
+                                                child: SmallTechniqueList(techniquesIds: this.technique.category.techniqueIds),
                                               ),
                                             ],
                                           ),

@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
-import 'package:jews_harp/features/user_section/presentation/BLoCs/techniques/techniques_bloc.dart';
-import 'package:jews_harp/features/user_section/presentation/screens/filter_screen.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/small_technique_card.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
@@ -48,7 +44,7 @@ class CategoryScreen extends StatelessWidget {
         onPressed: () => Navigator.pop(context),
         actions: [
           IconButton(
-            onPressed: () => Navigator.pushNamed(context, FILTER_SCREEN_ROUTE, arguments: FilterScreenArgs(BlocProvider.of<TechniquesBloc>(context))),
+            onPressed: () {},
             icon: Icon(
               Icons.search_rounded,
               color: category.thumbnail.isPresent ? Colors.black : Colors.white,
