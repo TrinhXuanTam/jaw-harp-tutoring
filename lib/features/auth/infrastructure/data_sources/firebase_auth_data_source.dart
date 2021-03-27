@@ -18,7 +18,8 @@ class FirebaseAuthDataSource {
   void _addUserToFirestore(User user) {
     _users.doc(user.uid).set({
       "roles": FieldValue.arrayUnion([USER_ROLE]),
-      "purchasedTechniques": FieldValue.arrayUnion([]),
+      "favoriteTechniques": [],
+      "purchasedTechniques": [],
     });
   }
 

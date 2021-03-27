@@ -32,6 +32,7 @@ class SmallTechniqueList extends StatelessWidget {
             builder: (ctx, state) {
               if (state is TechniqueLoaded) {
                 final technique = state.technique;
+                final user = getUser(ctx);
 
                 if (technique.thumbnail.isPresent)
                   thumbnail = FittedBox(
@@ -122,8 +123,8 @@ class SmallTechniqueList extends StatelessWidget {
                                         ),
                                       ),
                                       Icon(
-                                        Icons.favorite_border_rounded,
-                                        color: Colors.redAccent,
+                                        user.favoriteTechniques.contains(technique.id) ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                                        color: BASE_COLOR,
                                         size: 20,
                                       ),
                                     ],

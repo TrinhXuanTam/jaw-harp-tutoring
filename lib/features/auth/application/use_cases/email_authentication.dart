@@ -8,7 +8,7 @@ import 'package:jews_harp/features/auth/domain/repository_interfaces/user_reposi
 /// Sing in user with email and password use case
 @LazySingleton(env: [Environment.prod, Environment.dev, EMAIL_AUTHENTICATION_TEST_ENV])
 class EmailAuthentication {
-  final IUserRepository _userRepository;
+  final IUserAuthRepository _userRepository;
 
   EmailAuthentication(this._userRepository);
 

@@ -5,7 +5,7 @@ import 'package:jews_harp/features/auth/domain/repository_interfaces/user_reposi
 /// Create a new account use case
 @LazySingleton(env: [Environment.prod, Environment.dev, GET_AUTHENTICATION_PROVIDERS_TEST_ENV])
 class GetAuthProviders {
-  final IUserRepository _userRepository;
+  final IUserAuthRepository _userRepository;
 
   GetAuthProviders(this._userRepository);
 

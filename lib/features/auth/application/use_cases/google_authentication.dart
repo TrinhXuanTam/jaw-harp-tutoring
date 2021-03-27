@@ -5,7 +5,7 @@ import 'package:jews_harp/features/auth/domain/repository_interfaces/user_reposi
 
 @LazySingleton(env: [Environment.prod, Environment.dev, GOOGLE_AUTHENTICATION_TEST_ENV])
 class GoogleAuthentication {
-  final IUserRepository _userRepository;
+  final IUserAuthRepository _userRepository;
 
   GoogleAuthentication(this._userRepository);
 

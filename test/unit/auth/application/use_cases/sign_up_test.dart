@@ -18,7 +18,7 @@ void main() {
   final password = "John123456";
   final signUp = testServiceLocator<SignUp>();
 
-  when(() => testServiceLocator<IUserRepository>().createUser(name, email, password)).thenAnswer(
+  when(() => testServiceLocator<IUserAuthRepository>().createUser(name, email, password)).thenAnswer(
     (_) async => User(uid: uid, name: name, email: email),
   );
 
@@ -76,7 +76,7 @@ void main() {
   test("[SignUp] should throw [EmailAlreadyUsedError] when email is already used", () async {
     final takenEmail = "taken@gmail.com";
 
-    when(() => testServiceLocator<IUserRepository>().createUser(name, takenEmail, password)).thenThrow(EmailAlreadyUsedError(email));
+    when(() => testServiceLocator<IUserAuthRepository>().createUser(name, takenEmail, password)).thenThrow(EmailAlreadyUsedError(email));
 
     expect(() => signUp(name, takenEmail, password, password), throwsA(isInstanceOf<EmailAlreadyUsedError>()));
   });

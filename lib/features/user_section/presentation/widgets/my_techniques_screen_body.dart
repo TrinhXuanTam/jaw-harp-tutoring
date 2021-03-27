@@ -4,6 +4,8 @@ import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_local_storage/technique_local_storage_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/downloaded_techniques_list.dart';
+import 'package:jews_harp/features/user_section/presentation/widgets/technique_list.dart';
+import 'package:jews_harp/features/user_section/utils.dart';
 
 class MyTechniquesScreenBody extends StatelessWidget {
   @override
@@ -39,7 +41,10 @@ class MyTechniquesScreenBody extends StatelessWidget {
                           padding: const EdgeInsets.all(10),
                           child: DownloadedTechniquesList(),
                         ),
-                        Container(),
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: TechniqueList(techniqueIds: getUser(context).favoriteTechniques.toList()),
+                        ),
                       ],
                     ),
                   ),

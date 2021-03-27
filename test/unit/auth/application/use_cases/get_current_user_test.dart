@@ -16,7 +16,7 @@ void main() {
   final getCurrentUser = testServiceLocator<GetCurrentUser>();
 
   test("[GetCurrentUser] should return user data when user is returned from local data source", () async {
-    when(() => testServiceLocator<IUserRepository>().getCurrentUser()).thenAnswer(
+    when(() => testServiceLocator<IUserAuthRepository>().getCurrentUser()).thenAnswer(
       (_) async => User(uid: uid, name: name, email: email),
     );
 
@@ -29,7 +29,7 @@ void main() {
   });
 
   test("[GetCurrentUser] should return null when user data is not found in local data source", () async {
-    when(() => testServiceLocator<IUserRepository>().getCurrentUser()).thenAnswer(
+    when(() => testServiceLocator<IUserAuthRepository>().getCurrentUser()).thenAnswer(
       (_) async => null,
     );
 

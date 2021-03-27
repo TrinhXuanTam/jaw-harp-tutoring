@@ -17,7 +17,7 @@ import 'package:mocktail/mocktail.dart';
 ])
 class IUserFacadeMock extends Mock implements IUserFacade {}
 
-@Injectable.LazySingleton(as: IUserRepository, env: [
+@Injectable.LazySingleton(as: IUserAuthRepository, env: [
   EMAIL_AUTHENTICATION_TEST_ENV,
   GET_CURRENT_USER_TEST_ENV,
   SIGN_UP_TEST_ENV,
@@ -25,7 +25,7 @@ class IUserFacadeMock extends Mock implements IUserFacade {}
   GOOGLE_AUTHENTICATION_TEST_ENV,
   GET_AUTHENTICATION_PROVIDERS_TEST_ENV,
 ])
-class IUserRepositoryMock extends Mock implements IUserRepository {}
+class IUserRepositoryMock extends Mock implements IUserAuthRepository {}
 
 @Injectable.LazySingleton(as: FirebaseAuthDataSource, env: [USER_REPOSITORY_TEST_ENV])
 class FirebaseAuthDataSourceMock extends Mock implements FirebaseAuthDataSource {}

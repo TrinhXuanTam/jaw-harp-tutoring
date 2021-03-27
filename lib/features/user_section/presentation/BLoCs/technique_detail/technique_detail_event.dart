@@ -8,3 +8,17 @@ class LoadTechniqueDetail extends TechniqueDetailEvent {
 
   LoadTechniqueDetail(this.technique);
 }
+
+class MarkTechniqueAsFavoriteEvent extends TechniqueDetailEvent {
+  final Technique technique;
+  final User user;
+
+  MarkTechniqueAsFavoriteEvent(this.technique, this.user);
+}
+
+class RemoveTechniqueFromFavoritesEvent extends TechniqueDetailEvent {
+  final Technique technique;
+  final User user;
+
+  RemoveTechniqueFromFavoritesEvent(this.technique, this.user);
+}

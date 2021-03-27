@@ -17,7 +17,7 @@ void main() {
   final facebookAuthentication = testServiceLocator<FacebookAuthentication>();
 
   test("[FacebookAuthentication] should return user data when user signs into facebook", () async {
-    when(() => testServiceLocator<IUserRepository>().getUserWithFacebook()).thenAnswer(
+    when(() => testServiceLocator<IUserAuthRepository>().getUserWithFacebook()).thenAnswer(
       (_) async => User(uid: uid, name: name, email: email),
     );
 
@@ -29,7 +29,7 @@ void main() {
   });
 
   test("[FacebookAuthentication] should throw [WrongEmailOrPasswordError] when user fails to log into facebook", () async {
-    when(() => testServiceLocator<IUserRepository>().getUserWithFacebook()).thenThrow(WrongEmailOrPasswordError());
+    when(() => testServiceLocator<IUserAuthRepository>().getUserWithFacebook()).thenThrow(WrongEmailOrPasswordError());
     expect(() => facebookAuthentication(), throwsA(isInstanceOf<WrongEmailOrPasswordError>()));
   });
 }

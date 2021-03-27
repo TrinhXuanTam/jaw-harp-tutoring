@@ -28,30 +28,20 @@ class CategoryScreen extends StatelessWidget {
             ),
           )
           .orElseGet(() => Container(
-                color: this.category.getColor(ctx),
+                color: this.category.getColor(),
               )),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final categoryColor = this.category.getColor(context);
+    final categoryColor = this.category.getColor();
 
     return Scaffold(
       appBar: IconAppBar(
         backgroundColor: category.thumbnail.isPresent ? Colors.white : categoryColor,
         iconColor: category.thumbnail.isPresent ? Colors.black : Colors.white,
         onPressed: () => Navigator.pop(context),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.search_rounded,
-              color: category.thumbnail.isPresent ? Colors.black : Colors.white,
-              size: 30,
-            ),
-          ),
-        ],
       ),
       body: CenteredStack(
         children: [

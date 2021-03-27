@@ -33,6 +33,7 @@ class DownloadedTechniquesList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TechniqueLocalStorageBloc, TechniqueLocalStorageState>(builder: (ctx, state) {
       final techniques = state.downloadedTechniques.values.toList();
+      final user = getUser(context);
 
       return ListView.separated(
         itemCount: state.downloadedTechniques.length,
@@ -118,8 +119,8 @@ class DownloadedTechniquesList extends StatelessWidget {
                                     ),
                                   ),
                                   Icon(
-                                    Icons.favorite_border_rounded,
-                                    color: Colors.redAccent,
+                                    user.favoriteTechniques.contains(item.id) ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                                    color: BASE_COLOR,
                                     size: 20,
                                   ),
                                 ],

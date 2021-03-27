@@ -17,7 +17,7 @@ void main() {
   final googleAuthentication = testServiceLocator<GoogleAuthentication>();
 
   test("[GoogleAuthentication] should return user data when user signs into google", () async {
-    when(() => testServiceLocator<IUserRepository>().getUserWithGoogle()).thenAnswer(
+    when(() => testServiceLocator<IUserAuthRepository>().getUserWithGoogle()).thenAnswer(
       (_) async => User(uid: uid, name: name, email: email),
     );
 
@@ -29,7 +29,7 @@ void main() {
   });
 
   test("[GoogleAuthentication] should throw [WrongEmailOrPasswordError] when user fails to log into google", () async {
-    when(() => testServiceLocator<IUserRepository>().getUserWithGoogle()).thenThrow(WrongEmailOrPasswordError());
+    when(() => testServiceLocator<IUserAuthRepository>().getUserWithGoogle()).thenThrow(WrongEmailOrPasswordError());
     expect(() => googleAuthentication(), throwsA(isInstanceOf<WrongEmailOrPasswordError>()));
   });
 }

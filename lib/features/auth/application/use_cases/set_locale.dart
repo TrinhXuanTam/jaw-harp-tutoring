@@ -5,7 +5,7 @@ import 'package:jews_harp/features/auth/domain/repository_interfaces/user_reposi
 @LazySingleton(env: [Environment.prod, Environment.dev])
 class SetLocale {
   final IUserFacade _userFacade;
-  final IUserRepository _userRepository;
+  final IUserAuthRepository _userRepository;
 
   SetLocale(this._userFacade, this._userRepository);
 

@@ -38,7 +38,7 @@ class CategoriesScreenBody extends StatelessWidget {
                       );
                     else {
                       final category = state.categories[index - 1];
-                      final color = category.getColor(context);
+                      final color = category.getColor();
                       return _CategoryCard(
                         color: color,
                         techniquesCnt: category.techniqueIds.length,

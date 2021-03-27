@@ -18,7 +18,7 @@ void main() {
   final password = "John123456";
   final emailAuthentication = testServiceLocator<EmailAuthentication>();
 
-  when(() => testServiceLocator<IUserRepository>().getUserWithEmailAndPassword(email, password)).thenAnswer(
+  when(() => testServiceLocator<IUserAuthRepository>().getUserWithEmailAndPassword(email, password)).thenAnswer(
     (_) async => User(uid: uid, name: name, email: email),
   );
 
@@ -33,7 +33,7 @@ void main() {
   test("[EmailAuthentication] should throw [WrongEmailOrPasswordError] when incorrect credentials are given", () async {
     final nonExistentEmail = "nonexistent@gmail.com";
 
-    when(() => testServiceLocator<IUserRepository>().getUserWithEmailAndPassword(nonExistentEmail, password)).thenThrow(WrongEmailOrPasswordError());
+    when(() => testServiceLocator<IUserAuthRepository>().getUserWithEmailAndPassword(nonExistentEmail, password)).thenThrow(WrongEmailOrPasswordError());
 
     expect(() => emailAuthentication(nonExistentEmail, password), throwsA(isInstanceOf<WrongEmailOrPasswordError>()));
   });

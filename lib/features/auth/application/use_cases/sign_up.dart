@@ -8,7 +8,7 @@ import 'package:jews_harp/features/auth/domain/repository_interfaces/user_reposi
 /// Create a new account use case
 @LazySingleton(env: [Environment.prod, Environment.dev, SIGN_UP_TEST_ENV])
 class SignUp {
-  final IUserRepository _userRepository;
+  final IUserAuthRepository _userRepository;
 
   SignUp(this._userRepository);
 

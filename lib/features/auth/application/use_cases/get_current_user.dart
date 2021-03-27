@@ -5,7 +5,7 @@ import 'package:jews_harp/features/auth/domain/repository_interfaces/user_reposi
 
 @LazySingleton(env: [Environment.prod, Environment.dev, GET_CURRENT_USER_TEST_ENV])
 class GetCurrentUser {
-  final IUserRepository _userRepository;
+  final IUserAuthRepository _userRepository;
 
   GetCurrentUser(this._userRepository);
 

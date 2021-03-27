@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/features/auth/domain/entities/user.dart';
+import 'package:jews_harp/features/user_section/application/mark_technique_as_favorite.dart';
+import 'package:jews_harp/features/user_section/application/remove_technique_from_favorites.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 import 'package:meta/meta.dart';
@@ -14,7 +17,10 @@ part 'technique_detail_state.dart';
 
 @Injectable(env: [Environment.prod, Environment.dev])
 class TechniqueDetailBloc extends Bloc<TechniqueDetailEvent, TechniqueDetailState> {
-  TechniqueDetailBloc() : super(TechniqueDetailLoading());
+  final MarkTechniqueAsFavorite _markTechniqueAsFavorite;
+  final RemoveTechniqueFromFavorites _removeTechniqueFromFavorites;
+
+  TechniqueDetailBloc(this._markTechniqueAsFavorite, this._removeTechniqueFromFavorites) : super(TechniqueDetailLoading());
 
   @override
   Stream<TechniqueDetailState> mapEventToState(
@@ -28,6 +34,14 @@ class TechniqueDetailBloc extends Bloc<TechniqueDetailEvent, TechniqueDetailStat
         await videoController.value.initialize();
       }
       yield TechniqueDetailLoaded(technique: technique, videoPlayerController: videoController);
+    } else if (event is MarkTechniqueAsFavoriteEvent) {
+      _markTechniqueAsFavorite(event.technique.id);
+      event.user.favoriteTechniques.add(event.technique.id);
+      yield state.copyWith();
+    } else if (event is RemoveTechniqueFromFavoritesEvent) {
+      _removeTechniqueFromFavorites(event.technique.id);
+      event.user.favoriteTechniques.remove(event.technique.id);
+      yield state.copyWith();
     }
   }
 }

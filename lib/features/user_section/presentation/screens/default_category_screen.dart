@@ -21,16 +21,6 @@ class DefaultCategoryScreen extends StatelessWidget {
         titleColor: Colors.white,
         iconColor: Colors.white,
         onPressed: () => Navigator.pop(context),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.search_rounded,
-              color: Colors.white,
-              size: 30,
-            ),
-          ),
-        ],
       ),
       backgroundColor: getRandomShade("All Techniques".hashCode),
       body: CenteredStack(

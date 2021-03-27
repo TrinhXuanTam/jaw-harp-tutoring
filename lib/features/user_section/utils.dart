@@ -55,7 +55,7 @@ Color getRandomShade(int seed) {
 }
 
 extension CategoryRandomColor on Category {
-  Color getColor(BuildContext context) => getRandomShade(this.title.hashCode);
+  Color getColor() => getRandomShade(this.title.hashCode);
 }
 
 VoidCallback videoOnTap(VideoPlayerController controller) {

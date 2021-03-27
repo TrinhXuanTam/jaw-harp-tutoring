@@ -14,7 +14,7 @@ void main() {
   final email = "john.doe@gmail.com";
 
   test("[GetAuthProviders] should return set of authentication providers when user when user has multiple authentication providers", () async {
-    when(() => testServiceLocator<IUserRepository>().getAuthProviders(email)).thenAnswer(
+    when(() => testServiceLocator<IUserAuthRepository>().getAuthProviders(email)).thenAnswer(
       (_) async => Set<String>.of([FACEBOOK_PROVIDER, GOOGLE_PROVIDER, EMAIL_PROVIDER]),
     );
 
@@ -26,7 +26,7 @@ void main() {
   });
 
   test("[GetAuthProviders] should return empty set when user when user doesn't exist", () async {
-    when(() => testServiceLocator<IUserRepository>().getAuthProviders(email)).thenAnswer(
+    when(() => testServiceLocator<IUserAuthRepository>().getAuthProviders(email)).thenAnswer(
       (_) async => Set(),
     );
 

@@ -1,6 +1,6 @@
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 
-abstract class IUserRepository {
+abstract class IUserAuthRepository {
   /// Sign up user
   Future<User> createUser(String name, String email, String password);
 

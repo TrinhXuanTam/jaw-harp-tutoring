@@ -62,6 +62,46 @@ class TechniqueScreen extends StatelessWidget {
     }
   }
 
+  Widget _buildFavoriteButton(BuildContext context) {
+    final user = getUser(context);
+    final isFavorite = user.favoriteTechniques.contains(this.technique.id);
+
+    return GestureDetector(
+      onTap: () {
+        final techniqueDetailBloc = BlocProvider.of<TechniqueDetailBloc>(context);
+        final user = getUser(context);
+
+        if (isFavorite)
+          techniqueDetailBloc.add(RemoveTechniqueFromFavoritesEvent(technique, user));
+        else
+          techniqueDetailBloc.add(MarkTechniqueAsFavoriteEvent(technique, user));
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Column(
+            children: [
+              Icon(
+                isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                color: isFavorite ? BASE_COLOR : Colors.grey,
+                size: 20,
+              ),
+              Text(
+                "Favorite",
+                style: TextStyle(
+                  fontSize: 12,
+                  color: isFavorite ? BASE_COLOR : Colors.grey,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(width: 25),
+          _buildDownloadButton(context),
+        ],
+      ),
+    );
+  }
+
   Widget _buildDownloadButton(BuildContext context) {
     return BlocBuilder<TechniqueLocalStorageBloc, TechniqueLocalStorageState>(builder: (ctx, state) {
       if (state.downloadingInProgress.contains(this.technique.id))
@@ -107,7 +147,7 @@ class TechniqueScreen extends StatelessWidget {
           child: Column(
             children: [
               Icon(
-                Icons.delete_outline_rounded,
+                Icons.delete_forever_rounded,
                 color: Colors.redAccent,
                 size: 20,
               ),
@@ -138,7 +178,7 @@ class TechniqueScreen extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        _buildHeader(context, state),
+                        _buildHeader(ctx, state),
                         Expanded(
                           child: Container(
                             width: double.infinity,
@@ -160,29 +200,7 @@ class TechniqueScreen extends StatelessWidget {
                                     fontSize: 15,
                                   ),
                                 ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Column(
-                                      children: [
-                                        Icon(
-                                          Icons.favorite_border_rounded,
-                                          color: Colors.grey,
-                                          size: 20,
-                                        ),
-                                        Text(
-                                          "Favorite",
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(width: 25),
-                                    _buildDownloadButton(context),
-                                  ],
-                                ),
+                                _buildFavoriteButton(ctx),
                                 DefaultTabController(
                                   length: 2,
                                   child: Expanded(

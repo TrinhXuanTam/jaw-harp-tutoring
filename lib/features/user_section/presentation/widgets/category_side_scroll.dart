@@ -55,7 +55,7 @@ class CategorySideScroll extends StatelessWidget {
           itemBuilder: (ctx, index) {
             if (index != 0) {
               final category = categories[index - 1];
-              final color = category.getColor(context);
+              final color = category.getColor();
 
               return _CategoryCard(
                 color: color,
