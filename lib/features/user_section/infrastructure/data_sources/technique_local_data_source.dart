@@ -86,7 +86,7 @@ class TechniqueLocalDataSource {
     var savedFile = File("$savePath/data");
     if (!(await savedFile.exists())) savedFile = await savedFile.create(recursive: true);
 
-    await savedFile.writeAsString(json.encode(savedTechnique.toJson()));
+    await savedFile.writeAsString(jsonEncode(savedTechnique.toJson()));
 
     return savedTechnique;
   }
@@ -99,8 +99,8 @@ class TechniqueLocalDataSource {
       for (final directory in techniquesDirectory.listSync(followLinks: false)) {
         final rawData = File("${directory.path}/data");
         if (await rawData.exists()) {
-          final jsonData = await rawData.readAsString();
-          print(json.decode(jsonData));
+          final jsonData = jsonDecode(await rawData.readAsString());
+          techniques.add(TechniqueDTO.fromJson(jsonData));
         }
       }
     }

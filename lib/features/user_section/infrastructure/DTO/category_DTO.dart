@@ -74,7 +74,7 @@ class CategoryDTO extends Category {
     return CategoryDTO(
       id: json["id"],
       isVisible: json["isVisible"],
-      techniqueIds: json["techniqueIds"],
+      techniqueIds: List<String>.from(json["techniqueIds"]),
       thumbnail: json["thumbnail"] != null ? Optional.of(MediaDTO.fromJson(json["thumbnail"])) : Optional.empty(),
       title: json["title"],
       description: json["description"],

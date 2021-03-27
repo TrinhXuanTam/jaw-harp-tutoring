@@ -57,19 +57,12 @@ class TechniqueList extends StatelessWidget {
               onTap: openContainer,
               child: Container(
                 height: 140,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey[200]!),
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.white,
-                ),
                 width: double.infinity,
+                color: Colors.transparent,
                 child: Row(
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        bottomLeft: Radius.circular(20),
-                      ),
+                      borderRadius: BorderRadius.circular(10),
                       child: Container(
                         child: Container(
                           width: 170,

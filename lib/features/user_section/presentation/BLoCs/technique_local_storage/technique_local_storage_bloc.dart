@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 part 'technique_local_storage_event.dart';
 part 'technique_local_storage_state.dart';
 
-@LazySingleton(env: [Environment.prod, Environment.dev])
+@Singleton(env: [Environment.prod, Environment.dev])
 class TechniqueLocalStorageBloc extends Bloc<TechniqueLocalStorageEvent, TechniqueLocalStorageState> {
   final DownloadTechnique _downloadTechnique;
   final GetDownloadedTechniques _getDownloadedTechniques;
@@ -18,9 +18,8 @@ class TechniqueLocalStorageBloc extends Bloc<TechniqueLocalStorageEvent, Techniq
   TechniqueLocalStorageBloc(this._downloadTechnique, this._getDownloadedTechniques) : super(TechniqueLocalStorageState());
 
   @override
-  Stream<TechniqueLocalStorageState> mapEventToState(
-    TechniqueLocalStorageEvent event,
-  ) async* {
+  Stream<TechniqueLocalStorageState> mapEventToState(TechniqueLocalStorageEvent event) async* {
+
     if (event is InitTechniqueLocalStorage) {
       final downloadedTechniques = await _getDownloadedTechniques();
       final downloadedTechniquesCopy = Map.of(state.downloadedTechniques);
