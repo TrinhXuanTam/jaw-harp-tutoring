@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jews_harp/core/constants/locations.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/errors/media_not_found_error.dart';
 import 'package:jews_harp/core/errors/user_not_signed_in_error.dart';
@@ -129,5 +130,22 @@ Widget buildProfilePhoto(BuildContext context, {double? size}) {
       ),
       placeholder: (context, url) => generateProfilePhoto(context, size: size),
       errorWidget: (ctx, url, error) => generateProfilePhoto(context, size: size),
+    );
+}
+
+Widget getTechniqueThumbnail(Technique technique) {
+  if (technique.thumbnail.isPresent)
+    return FittedBox(
+      fit: BoxFit.cover,
+      child: getImageFromMedia(technique.thumbnail.value),
+    );
+  else
+    return Container(
+      padding: const EdgeInsets.all(20),
+      color: BASE_COLOR,
+      child: FittedBox(
+        fit: BoxFit.contain,
+        child: Image.asset(LOGO_LOCATION),
+      ),
     );
 }

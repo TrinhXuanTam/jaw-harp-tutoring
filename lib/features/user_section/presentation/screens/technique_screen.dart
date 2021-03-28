@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jews_harp/core/constants/locations.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
@@ -38,27 +37,13 @@ class TechniqueScreen extends StatelessWidget {
     else {
       final size = MediaQuery.of(context).size;
 
-      if (state.technique.thumbnail.isPresent) {
-        return ClipRect(
-          child: Container(
-            height: size.height * 0.3,
-            width: double.infinity,
-            child: FittedBox(
-              fit: BoxFit.cover,
-              child: getImageFromMedia(state.technique.thumbnail.value),
-            ),
-          ),
-        );
-      } else
-        return Container(
+      return ClipRect(
+        child: Container(
           height: size.height * 0.3,
           width: double.infinity,
-          color: BASE_COLOR,
-          child: FittedBox(
-            fit: BoxFit.contain,
-            child: Image.asset(LOGO_LOCATION),
-          ),
-        );
+          child: getTechniqueThumbnail(state.technique),
+        ),
+      );
     }
   }
 
@@ -279,8 +264,8 @@ class TechniqueScreen extends StatelessWidget {
                       ],
                     ),
                     Positioned(
-                      top: 5,
-                      left: 5,
+                      top: 10,
+                      left: 10,
                       child: GestureDetector(
                         onTap: () => Navigator.pop(context),
                         child: Icon(

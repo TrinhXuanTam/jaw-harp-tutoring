@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jews_harp/core/constants/locations.dart';
 import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
@@ -24,7 +23,6 @@ class SmallTechniqueList extends StatelessWidget {
       itemCount: techniquesIds.length,
       itemBuilder: (ctx, index) {
         final id = techniquesIds[index];
-        late Widget thumbnail;
 
         return BlocProvider<TechniqueBloc>(
           create: (ctx) => serviceLocator<TechniqueBloc>()..add(LoadTechnique(id)),
@@ -33,24 +31,6 @@ class SmallTechniqueList extends StatelessWidget {
               if (state is TechniqueLoaded) {
                 final technique = state.technique;
                 final user = getUser(ctx);
-
-                if (technique.thumbnail.isPresent)
-                  thumbnail = FittedBox(
-                    fit: BoxFit.cover,
-                    child: getImageFromMedia(technique.thumbnail.value),
-                  );
-                else
-                  thumbnail = Container(
-                    padding: const EdgeInsets.all(20),
-                    color: BASE_COLOR,
-                    child: FittedBox(
-                      fit: BoxFit.contain,
-                      child: Image.asset(
-                        LOGO_LOCATION,
-                        width: 30,
-                      ),
-                    ),
-                  );
 
                 return GestureDetector(
                   onTap: () => Navigator.pushReplacementNamed(context, TECHNIQUE_DETAIL_SCREEN_ROUTE, arguments: TechniqueScreenArgs(technique)),
@@ -65,7 +45,7 @@ class SmallTechniqueList extends StatelessWidget {
                             child: Container(
                               width: 150,
                               height: double.infinity,
-                              child: thumbnail,
+                              child: getTechniqueThumbnail(technique),
                             ),
                           ),
                         ),

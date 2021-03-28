@@ -1,7 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jews_harp/core/constants/locations.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/shimmer_effect.dart';
@@ -21,23 +20,6 @@ class SmallTechniqueCard extends StatelessWidget {
     required this.techniqueId,
     this.width,
   }) : super(key: key);
-
-  Widget _getThumbnail(Technique technique) {
-    if (technique.thumbnail.isPresent)
-      return FittedBox(
-        fit: BoxFit.cover,
-        child: getImageFromMedia(technique.thumbnail.value),
-      );
-    else
-      return Container(
-        padding: const EdgeInsets.all(20),
-        color: BASE_COLOR,
-        child: FittedBox(
-          fit: BoxFit.contain,
-          child: Image.asset(LOGO_LOCATION),
-        ),
-      );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +46,7 @@ class SmallTechniqueCard extends StatelessWidget {
                       child: Container(
                         height: 100,
                         width: double.infinity,
-                        child: _getThumbnail(technique),
+                        child: getTechniqueThumbnail(technique),
                       ),
                     ),
                     SizedBox(height: 3),

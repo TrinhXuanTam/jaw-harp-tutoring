@@ -1,7 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jews_harp/core/constants/locations.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_local_storage/technique_local_storage_bloc.dart';
@@ -9,26 +8,6 @@ import 'package:jews_harp/features/user_section/presentation/screens/technique_s
 import 'package:jews_harp/features/user_section/utils.dart';
 
 class DownloadedTechniquesList extends StatelessWidget {
-  Widget _buildThumbnail(Technique technique) {
-    if (technique.thumbnail.isPresent)
-      return FittedBox(
-        fit: BoxFit.cover,
-        child: getImageFromMedia(technique.thumbnail.value),
-      );
-    else
-      return Container(
-        padding: const EdgeInsets.all(20),
-        color: BASE_COLOR,
-        child: FittedBox(
-          fit: BoxFit.contain,
-          child: Image.asset(
-            LOGO_LOCATION,
-            width: 30,
-          ),
-        ),
-      );
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TechniqueLocalStorageBloc, TechniqueLocalStorageState>(builder: (ctx, state) {
@@ -59,7 +38,7 @@ class DownloadedTechniquesList extends StatelessWidget {
                         child: Container(
                           width: 170,
                           height: double.infinity,
-                          child: _buildThumbnail(item),
+                          child: getTechniqueThumbnail(item),
                         ),
                       ),
                     ),

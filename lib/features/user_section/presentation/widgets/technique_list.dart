@@ -1,7 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jews_harp/core/constants/locations.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/shimmer_effect.dart';
@@ -15,26 +14,6 @@ class TechniqueList extends StatelessWidget {
   final bool showFavoriteIcon;
 
   const TechniqueList({Key? key, required this.techniqueIds, this.showFavoriteIcon = false}) : super(key: key);
-
-  Widget _buildThumbnail(Technique technique) {
-    if (technique.thumbnail.isPresent)
-      return FittedBox(
-        fit: BoxFit.cover,
-        child: getImageFromMedia(technique.thumbnail.value),
-      );
-    else
-      return Container(
-        padding: const EdgeInsets.all(20),
-        color: BASE_COLOR,
-        child: FittedBox(
-          fit: BoxFit.contain,
-          child: Image.asset(
-            LOGO_LOCATION,
-            width: 30,
-          ),
-        ),
-      );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +48,7 @@ class TechniqueList extends StatelessWidget {
                               child: Container(
                                 width: 170,
                                 height: double.infinity,
-                                child: _buildThumbnail(technique),
+                                child: getTechniqueThumbnail(technique),
                               ),
                             ),
                           ),
