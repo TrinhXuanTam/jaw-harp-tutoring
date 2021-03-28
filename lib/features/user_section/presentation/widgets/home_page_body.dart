@@ -38,7 +38,7 @@ class HomePageBody extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   CategorySideScroll(),
-                  SizedBox(height: 10),
+                  SizedBox(height: 15),
                   BlocBuilder<MostRecentTechniquesBloc, MostRecentTechniquesState>(
                     builder: (ctx, state) {
                       if (state is MostRecentTechniquesLoaded)

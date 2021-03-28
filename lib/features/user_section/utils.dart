@@ -37,8 +37,8 @@ VideoPlayerController getVideoPlayerControllerFromMedia(Media media) {
     throw MediaNotFoundError();
 }
 
-User getUser(BuildContext ctx) {
-  final state = BlocProvider.of<AuthBloc>(ctx).state;
+User getUser(BuildContext context) {
+  final state = BlocProvider.of<AuthBloc>(context).state;
   if (state is AuthenticatedState) {
     return state.user;
   } else

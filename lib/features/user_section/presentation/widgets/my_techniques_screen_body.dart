@@ -7,6 +7,8 @@ import 'package:jews_harp/features/user_section/utils.dart';
 class MyTechniquesScreenBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final user = getUser(context);
+
     return CenteredStack(
       children: [
         DefaultTabController(
@@ -31,14 +33,17 @@ class MyTechniquesScreenBody extends StatelessWidget {
                 Expanded(
                   child: TabBarView(
                     children: <Widget>[
-                      Container(),
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: TechniqueList(techniqueIds: user.purchasedTechniques.toList(), showFavoriteIcon: true),
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(10),
                         child: DownloadedTechniquesList(),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(10),
-                        child: TechniqueList(techniqueIds: getUser(context).favoriteTechniques.toList()),
+                        child: TechniqueList(techniqueIds: user.favoriteTechniques.toList()),
                       ),
                     ],
                   ),
