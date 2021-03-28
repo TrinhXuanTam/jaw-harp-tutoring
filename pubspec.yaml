@@ -73,6 +73,8 @@ dependencies:
   path_provider: ^2.0.1
   # Http client for Dart
   dio: ^4.0.0-prev3
+  # In-app purchases
+  in_app_purchase: ^0.5.1+1
 
 dev_dependencies:
   mocktail: ^0.1.1

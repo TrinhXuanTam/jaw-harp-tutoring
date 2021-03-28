@@ -91,7 +91,7 @@ class UnlockTechniqueScreen extends StatelessWidget {
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
                                   child: Container(
-                                    constraints: BoxConstraints(maxHeight: 200, minHeight: 0),
+                                    height: 200,
                                     width: double.infinity,
                                     child: thumbnail,
                                   ),
@@ -153,7 +153,7 @@ class UnlockTechniqueScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 10),
-                  RoundedButton(text: "Buy now", onPressed: () {}),
+                  RoundedButton(text: "Unlock now", onPressed: () {}),
                 ],
               ),
             ),
