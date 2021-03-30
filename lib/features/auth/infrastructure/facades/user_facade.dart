@@ -13,20 +13,20 @@ class FirebaseAuthFacade extends IUserFacade {
   Future<bool> resetPassword(String email) => _authService.resetPassword(email);
 
   @override
-  Future<void> signOut() => signOut();
+  Future<void> signOut() => _authService.signOut();
 
   @override
-  Future<bool> isVerified() => isVerified();
+  Future<bool> isVerified() => _authService.isVerified();
 
   @override
-  Future<void> sendVerificationEmail() => sendVerificationEmail();
+  Future<void> sendVerificationEmail() => _authService.sendVerificationEmail();
 
   @override
-  Future<UserDTO> linkAccountToEmail(String email, String password) => linkAccountToEmail(email, password);
+  Future<UserDTO> linkAccountToEmail(String email, String password) => _authService.linkAccountToEmail(email, password);
 
   @override
-  Future<UserDTO> linkAccountToFacebook() => linkAccountToFacebook();
+  Future<UserDTO> linkAccountToFacebook() => _authService.linkAccountToFacebook();
 
   @override
-  Future<void> setLocale(String languageCode) => setLocale(languageCode);
+  Future<void> setLocale(String languageCode) => _authService.setLocale(languageCode);
 }
