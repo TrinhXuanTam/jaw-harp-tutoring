@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,12 +10,10 @@ import 'package:jews_harp/features/user_section/utils.dart';
 
 class ThumbnailPicker extends StatelessWidget {
   final ThumbnailPickerController controller;
-  final double height;
 
   const ThumbnailPicker({
     Key? key,
     required this.controller,
-    this.height = 135,
   }) : super(key: key);
 
   void _thumbnailPickerBlocListener(BuildContext ctx, ThumbnailPickerState state) {
@@ -29,14 +26,13 @@ class ThumbnailPicker extends StatelessWidget {
     if (state is ImagePickedState)
       return GestureDetector(
         onTap: () => BlocProvider.of<ThumbnailPickerBloc>(ctx).add(PickImageEvent()),
-        child: Container(
-          height: this.height,
+        child: AspectRatio(
+          aspectRatio: 16 / 9,
           child: Stack(
             alignment: Alignment.center,
             children: [
               Container(
                 width: double.infinity,
-                height: this.height,
                 child: FittedBox(
                   fit: BoxFit.cover,
                   child: getImageFromMedia(state.image),
@@ -61,8 +57,8 @@ class ThumbnailPicker extends StatelessWidget {
     else
       return GestureDetector(
         onTap: () => BlocProvider.of<ThumbnailPickerBloc>(ctx).add(PickImageEvent()),
-        child: Container(
-          height: this.height,
+        child: AspectRatio(
+          aspectRatio: 16 / 9,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

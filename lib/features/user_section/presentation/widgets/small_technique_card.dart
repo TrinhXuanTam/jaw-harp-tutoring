@@ -43,9 +43,8 @@ class SmallTechniqueCard extends StatelessWidget {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Container(
-                        height: 100,
-                        width: double.infinity,
+                      child: AspectRatio(
+                        aspectRatio: 16 / 9,
                         child: getTechniqueThumbnail(technique),
                       ),
                     ),
@@ -102,7 +101,7 @@ class SmallTechniqueCard extends StatelessWidget {
             ),
           );
         } else
-          return SmallTechniqueCardLoading(width: width);
+        return SmallTechniqueCardLoading(width: width);
       }),
     );
   }
@@ -117,17 +116,17 @@ class SmallTechniqueCardLoading extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShimmerEffect(
       child: Container(
-        margin: const EdgeInsets.only(top: 10, bottom: 10, right: 20),
         width: this.width,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Container(
-                height: 100,
-                width: double.infinity,
-                color: Colors.grey,
+              child: AspectRatio(
+                aspectRatio: 16 / 9,
+                child: Container(
+                  color: Colors.grey,
+                ),
               ),
             ),
             SizedBox(height: 2),

@@ -32,10 +32,11 @@ class DefaultCategoryScreen extends StatelessWidget {
               children: [
                 Stack(
                   children: [
-                    Container(
-                      height: 250,
-                      width: double.infinity,
-                      color: getRandomShade("All Techniques".hashCode),
+                    AspectRatio(
+                      aspectRatio: 16 / 9,
+                      child: Container(
+                        color: getRandomShade("All Techniques".hashCode),
+                      ),
                     ),
                     Positioned(
                       bottom: 20,

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/routes.dart';
@@ -35,80 +36,77 @@ class SmallTechniqueList extends StatelessWidget {
                 return GestureDetector(
                   onTap: () => Navigator.pushReplacementNamed(context, TECHNIQUE_DETAIL_SCREEN_ROUTE, arguments: TechniqueScreenArgs(technique)),
                   child: Container(
-                    height: 100,
+                    height: 90,
                     width: double.infinity,
                     child: Row(
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: Container(
-                            child: Container(
-                              width: 150,
-                              height: double.infinity,
-                              child: getTechniqueThumbnail(technique),
-                            ),
+                          child: AspectRatio(
+                            aspectRatio: 16 / 9,
+                            child: getTechniqueThumbnail(technique),
                           ),
                         ),
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsets.all(10),
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   technique.title,
+                                  overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                                Expanded(
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.end,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.timelapse_rounded,
-                                                  color: BASE_COLOR,
-                                                  size: 15,
-                                                ),
-                                                SizedBox(width: 4),
-                                                Text(
-                                                  technique.difficulty.string,
-                                                  style: TextStyle(fontSize: 12),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(height: 4),
-                                            Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.attach_money_rounded,
-                                                  color: BASE_COLOR,
-                                                  size: 15,
-                                                ),
-                                                SizedBox(width: 4),
-                                                // TODO
-                                                Text(
-                                                  technique.productId.isPresent ? "99.99\$" : "Free",
-                                                  style: TextStyle(fontSize: 12),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.timelapse_rounded,
+                                                color: BASE_COLOR,
+                                                size: 15,
+                                              ),
+                                              SizedBox(width: 4),
+                                              Text(
+                                                technique.difficulty.string,
+                                                style: TextStyle(fontSize: 12),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(height: 4),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.attach_money_rounded,
+                                                color: BASE_COLOR,
+                                                size: 15,
+                                              ),
+                                              SizedBox(width: 4),
+                                              // TODO
+                                              Text(
+                                                technique.productId.isPresent ? "99.99\$" : "Free",
+                                                style: TextStyle(fontSize: 12),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
-                                      Icon(
-                                        user.favoriteTechniques.contains(technique.id) ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-                                        color: BASE_COLOR,
-                                        size: 20,
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                    Icon(
+                                      user.favoriteTechniques.contains(technique.id) ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                                      color: BASE_COLOR,
+                                      size: 20,
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -135,22 +133,17 @@ class _LoadingEffect extends StatelessWidget {
     return ShimmerEffect(
       child: Container(
         margin: const EdgeInsets.only(bottom: 10),
-        height: 100,
+        height: 90,
         width: double.infinity,
         child: Row(
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Container(
+              child: AspectRatio(
+                aspectRatio: 16 / 9,
                 child: Container(
-                  width: 150,
-                  height: double.infinity,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                    ),
-                    width: double.infinity,
-                  ),
+                  color: Colors.grey,
+                  width: double.infinity,
                 ),
               ),
             ),

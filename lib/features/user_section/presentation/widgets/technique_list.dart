@@ -37,24 +37,21 @@ class TechniqueList extends StatelessWidget {
                   closedBuilder: (ctx, openContainer) => GestureDetector(
                     onTap: openContainer,
                     child: Container(
-                      height: 140,
+                      height: 100,
                       width: double.infinity,
                       color: Colors.transparent,
                       child: Row(
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                            child: Container(
-                              child: Container(
-                                width: 170,
-                                height: double.infinity,
-                                child: getTechniqueThumbnail(technique),
-                              ),
+                            child: AspectRatio(
+                              aspectRatio: 16 / 9,
+                              child: getTechniqueThumbnail(technique),
                             ),
                           ),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.all(15),
+                              padding: const EdgeInsets.all(5),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -145,17 +142,16 @@ class _LoadingEffect extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShimmerEffect(
       child: Container(
-        height: 140,
+        height: 100,
         width: double.infinity,
         color: Colors.transparent,
         child: Row(
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Container(
+              child: AspectRatio(
+                aspectRatio: 16 / 9,
                 child: Container(
-                  width: 170,
-                  height: double.infinity,
                   color: Colors.grey,
                 ),
               ),
