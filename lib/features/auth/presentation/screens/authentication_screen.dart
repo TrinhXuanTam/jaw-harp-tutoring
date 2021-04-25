@@ -11,13 +11,8 @@ class AuthenticationScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: CenteredStack(
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AuthenticationScreenBackground(),
-              AuthMethods(),
-            ],
-          ),
+          AuthenticationScreenBackground(),
+          AuthMethods(),
           Positioned(
             bottom: 20,
             child: SignUpText(),
