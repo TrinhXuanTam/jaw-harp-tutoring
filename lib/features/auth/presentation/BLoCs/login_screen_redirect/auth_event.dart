@@ -10,6 +10,7 @@ class SplashScreenDisplayedEvent extends AuthEvent {
   SplashScreenDisplayedEvent(this.languageCode);
 }
 
+/// App has been initialized.
 class SplashScreenTransitionEvent extends AuthEvent {
   final User? user;
 
@@ -19,4 +20,5 @@ class SplashScreenTransitionEvent extends AuthEvent {
 /// Indicates that user has successfully been authenticated.
 class UserAuthenticatedEvent extends AuthEvent {}
 
+/// User signs out.
 class UserSignOutEvent extends AuthEvent {}

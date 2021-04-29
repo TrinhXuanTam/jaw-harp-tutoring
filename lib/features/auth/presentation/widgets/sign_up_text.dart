@@ -3,7 +3,7 @@ import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/l10n.dart';
 
-/// Sign up link
+/// Sign up text that redirects users to a sign up form.
 class SignUpText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
