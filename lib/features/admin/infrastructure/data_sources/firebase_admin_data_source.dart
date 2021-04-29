@@ -12,7 +12,9 @@ import 'package:jews_harp/features/user_section/infrastructure/DTO/category_loca
 import 'package:jews_harp/features/user_section/infrastructure/DTO/mediaDTO.dart';
 import 'package:jews_harp/features/user_section/infrastructure/DTO/technique_DTO.dart';
 import 'package:jews_harp/features/user_section/infrastructure/DTO/technique_localized_data_DTO.dart';
+import 'package:light_compressor/light_compressor.dart';
 import 'package:optional/optional.dart';
+import 'package:path_provider/path_provider.dart';
 
 @LazySingleton(env: [Environment.prod])
 class FirebaseAdminDataSource {
@@ -22,7 +24,21 @@ class FirebaseAdminDataSource {
   Reference _categoryMedia = FirebaseStorage.instance.ref("categories");
 
   Future<String> _uploadFile(Reference media, String techniqueId, String filename, String path) async {
-    final task = await media.child(techniqueId).child(filename).putFile(File(path));
+    final tmp = await getTemporaryDirectory();
+
+    print("started");
+
+    final response = await LightCompressor.compressVideo(
+      path: path,
+      destinationPath: tmp.path + "/compressedVideo",
+      videoQuality: VideoQuality.medium,
+      isMinBitRateEnabled: false,
+      keepOriginalResolution: false,
+    );
+
+    print(response);
+
+    final task = await media.child(techniqueId).child(filename).putFile(File(response!['onSuccess']));
     final url = await task.ref.getDownloadURL();
     return url;
   }
