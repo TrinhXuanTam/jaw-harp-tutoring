@@ -16,18 +16,27 @@ import 'package:light_compressor/light_compressor.dart';
 import 'package:optional/optional.dart';
 import 'package:path_provider/path_provider.dart';
 
+/// Firebase Admin Section data source
 @LazySingleton(env: [Environment.prod])
 class FirebaseAdminDataSource {
+  /// Category collection
   CollectionReference _categories = FirebaseFirestore.instance.collection('categories');
+
+  /// Technique collection
   CollectionReference _techniques = FirebaseFirestore.instance.collection('techniques');
+
+  /// Cloud storage technique location
   Reference _techniqueMedia = FirebaseStorage.instance.ref("techniques");
+
+  /// Cloud storage categories location
   Reference _categoryMedia = FirebaseStorage.instance.ref("categories");
 
+  /// Compress and upload the file to cloud storage
   Future<String> _uploadFile(Reference media, String techniqueId, String filename, String path) async {
+    // get temporary directory
     final tmp = await getTemporaryDirectory();
 
-    print("started");
-
+    // Compress the file
     final response = await LightCompressor.compressVideo(
       path: path,
       destinationPath: tmp.path + "/compressedVideo",
@@ -36,19 +45,20 @@ class FirebaseAdminDataSource {
       keepOriginalResolution: false,
     );
 
-    print(response);
-
+    // Upload the file to cloud storage
     final task = await media.child(techniqueId).child(filename).putFile(File(response!['onSuccess']));
     final url = await task.ref.getDownloadURL();
     return url;
   }
 
+  /// Delete the file from cloud storage if it exists
   Future<void> _deleteFile(Reference media, String techniqueId, String filename) async {
     try {
       await media.child(techniqueId).child(filename).delete();
     } catch (exception) {}
   }
 
+  /// Save a new technique document to Firestore
   Future<TechniqueDTO> createTechnique({
     required Optional<String> productId,
     required String categoryId,
@@ -57,7 +67,9 @@ class FirebaseAdminDataSource {
     required Optional<MediaDTO> thumbnail,
     required Optional<MediaDTO> video,
   }) async {
+    // Get the category document
     final category = await _categories.doc(categoryId).get();
+
     if (productId.isPresent) {
       final techniquesWithSameProductId = await _techniques.where("productId", isEqualTo: productId.value).get();
       if (techniquesWithSameProductId.size > 0) throw TechniqueAlreadyExistsError();

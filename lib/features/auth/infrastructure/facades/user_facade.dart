@@ -3,8 +3,10 @@ import 'package:jews_harp/features/auth/domain/facade_interfaces/user_facade_int
 import 'package:jews_harp/features/auth/infrastructure/DTO/user_DTO.dart';
 import 'package:jews_harp/features/auth/infrastructure/external_services/firebase_auth.dart';
 
+/// User authentication facade.
 @LazySingleton(as: IUserFacade, env: [Environment.prod])
 class FirebaseAuthFacade extends IUserFacade {
+  /// Firebase Authentication external service.
   final FirebaseAuthService _authService;
 
   FirebaseAuthFacade(this._authService);

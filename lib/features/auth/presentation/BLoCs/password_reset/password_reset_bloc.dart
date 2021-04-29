@@ -23,7 +23,7 @@ class PasswordResetBloc extends Bloc<PasswordResetEvent, PasswordResetState> {
   ) async* {
     if (event is PasswordResetRequestEvent) {
       try {
-        await _resetPassword(event.email, languageCode: event.languageCode);
+        await _resetPassword(event.email);
         yield PasswordResetSuccess();
       } on BaseError catch (e) {
         _errorBloc.add(UserErrorEvent("Password reset failed", e.message));

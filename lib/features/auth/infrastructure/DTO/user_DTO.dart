@@ -4,6 +4,7 @@ import 'package:jews_harp/core/errors/user_does_not_exist_error.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:optional/optional.dart';
 
+/// User data transfer object.
 class UserDTO extends User {
   const UserDTO({
     required String uid,

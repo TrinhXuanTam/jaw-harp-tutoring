@@ -13,10 +13,13 @@ class EmailAuthentication {
   EmailAuthentication(this._userRepository);
 
   Future<User> call(String email, String password) async {
+    // Email and password must not be empty.
     if (email.isEmpty || password.isEmpty) throw ValidationError("Please fill out all fields!");
 
+    // Check email format.
     if (!RegExMatchers.email.hasMatch(email)) throw ValidationError("Invalid email format!");
 
+    // Check password format.
     if (!RegExMatchers.password.hasMatch(password)) throw ValidationError("Invalid password format!");
 
     return _userRepository.getUserWithEmailAndPassword(email, password);
