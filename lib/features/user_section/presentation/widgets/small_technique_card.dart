@@ -7,6 +7,7 @@ import 'package:jews_harp/core/widgets/shimmer_effect.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique/technique_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/screens/technique_screen.dart';
+import 'package:jews_harp/features/user_section/presentation/screens/unlock_technique_screen.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
 class SmallTechniqueCard extends StatelessWidget {

@@ -24,34 +24,31 @@ class ThumbnailPicker extends StatelessWidget {
 
   Widget _thumbnailPickerBlocBuilder(BuildContext ctx, ThumbnailPickerState state) {
     if (state is ImagePickedState)
-      return GestureDetector(
-        onTap: () => BlocProvider.of<ThumbnailPickerBloc>(ctx).add(PickImageEvent()),
-        child: AspectRatio(
-          aspectRatio: 16 / 9,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Container(
-                width: double.infinity,
-                child: FittedBox(
-                  fit: BoxFit.cover,
-                  child: getImageFromMedia(state.image),
+      return AspectRatio(
+        aspectRatio: 16 / 9,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Container(
+              width: double.infinity,
+              child: FittedBox(
+                fit: BoxFit.cover,
+                child: getImageFromMedia(state.image),
+              ),
+            ),
+            Positioned(
+              top: 10,
+              right: 10,
+              child: GestureDetector(
+                onTap: () => BlocProvider.of<ThumbnailPickerBloc>(ctx).add(RemoveImageEvent()),
+                child: Icon(
+                  Icons.close_rounded,
+                  color: BASE_COLOR,
+                  size: 30,
                 ),
               ),
-              Positioned(
-                top: 10,
-                right: 10,
-                child: GestureDetector(
-                  onTap: () => BlocProvider.of<ThumbnailPickerBloc>(ctx).add(RemoveImageEvent()),
-                  child: Icon(
-                    Icons.close_rounded,
-                    color: BASE_COLOR,
-                    size: 30,
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       );
     else

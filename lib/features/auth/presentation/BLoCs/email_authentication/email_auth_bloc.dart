@@ -16,7 +16,7 @@ class EmailAuthBloc extends Bloc<EmailAuthEvent, EmailAuthState> {
   final EmailAuthentication _emailAuthentication;
   final ErrorBloc _errorBloc;
 
-  EmailAuthBloc(this._emailAuthentication, this._errorBloc) : super(EmailAuthInitialState());
+  EmailAuthBloc(this._emailAuthentication, this._errorBloc,) : super(EmailAuthInitialState());
 
   @override
   Stream<EmailAuthState> mapEventToState(
