@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:jews_harp/core/BLoCs/errors/error_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/widgets/one_button_alert_dialog.dart';
@@ -41,6 +42,7 @@ import 'features/user_section/presentation/screens/video_full_screen_mode_screen
 Future<void> main() async {
   // Initialize dependencies
   WidgetsFlutterBinding.ensureInitialized();
+  InAppPurchaseConnection.enablePendingPurchases();
   await Firebase.initializeApp();
   configureDependencies();
 

@@ -1,14 +1,15 @@
-import 'package:equatable/equatable.dart';
+abstract class ProductInfo {}
 
-class ProductInfo extends Equatable {
+class FreeProduct extends ProductInfo {}
+
+class UnavailableProduct extends ProductInfo {}
+
+class AvailableProduct extends ProductInfo {
   final String id;
   final String price;
 
-  ProductInfo({
+  AvailableProduct({
     required this.id,
     required this.price,
   });
-
-  @override
-  List<Object?> get props => [id, price];
 }
