@@ -1,15 +1,13 @@
-abstract class ProductInfo {}
+/// Product information entity.
+class ProductInfo {
+  final ProductType type;
+  final String? price;
 
-class FreeProduct extends ProductInfo {}
+  ProductInfo(this.type, {this.price});
+}
 
-class UnavailableProduct extends ProductInfo {}
-
-class AvailableProduct extends ProductInfo {
-  final String id;
-  final String price;
-
-  AvailableProduct({
-    required this.id,
-    required this.price,
-  });
+enum ProductType {
+  free,
+  unavailable,
+  available,
 }

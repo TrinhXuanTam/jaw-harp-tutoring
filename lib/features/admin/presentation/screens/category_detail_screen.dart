@@ -96,27 +96,19 @@ class CategoryDetailScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 15),
                         ScrollableTechniqueList(
-                          items: state.techniques
-                              .map(
-                                (technique) => ScrollableTechniqueListItem(
-                                  onTap: () => Navigator.pushReplacementNamed(
-                                    context,
-                                    EDIT_TECHNIQUE_SCREEN_ROUTE,
-                                    arguments: EditTechniqueScreenArgs(
-                                      technique,
-                                      (ctx) => Navigator.pushReplacementNamed(
-                                        ctx,
-                                        CATEGORY_DETAIL_SCREEN_ROUTE,
-                                        arguments: CategoryDetailScreenArgs(this.category),
-                                      ),
-                                    ),
-                                  ),
-                                  title: technique.title,
-                                  productId: technique.productId.orElseGet(() => "Free"),
-                                  thumbnail: technique.thumbnail.toNullable(),
-                                ),
-                              )
-                              .toList(),
+                          items: state.techniques,
+                          onTap: (technique) => Navigator.pushReplacementNamed(
+                            context,
+                            EDIT_TECHNIQUE_SCREEN_ROUTE,
+                            arguments: EditTechniqueScreenArgs(
+                              technique,
+                              (ctx) => Navigator.pushReplacementNamed(
+                                ctx,
+                                CATEGORY_DETAIL_SCREEN_ROUTE,
+                                arguments: CategoryDetailScreenArgs(this.category),
+                              ),
+                            ),
+                          ),
                           height: size.height * 0.7,
                         ),
                       ],

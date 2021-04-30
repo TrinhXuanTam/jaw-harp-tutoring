@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/features/user_section/domain/entities/media.dart';
+import 'package:jews_harp/features/user_section/domain/entities/product_info.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
 class ScrollableTechniqueList extends StatelessWidget {
-  final List<ScrollableTechniqueListItem> items;
+  final void Function(Technique technique) onTap;
+  final List<Technique> items;
   final double? height;
 
-  const ScrollableTechniqueList({Key? key, required this.items, this.height}) : super(key: key);
+  const ScrollableTechniqueList({
+    Key? key,
+    required this.onTap,
+    required this.items,
+    this.height,
+  }) : super(key: key);
 
-  Widget _getThumbnail(ScrollableTechniqueListItem item) {
-    final thumbnail = item.thumbnail != null
-        ? getImageFromMedia(item.thumbnail!)
+  Widget _getThumbnail(Technique item) {
+    final thumbnail = item.thumbnail.isPresent
+        ? getImageFromMedia(item.thumbnail.value)
         : Container(
             color: BASE_COLOR_VERY_LIGHT,
             padding: const EdgeInsets.all(5),
@@ -33,6 +40,25 @@ class ScrollableTechniqueList extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _getProductStatus(Technique technique) {
+    final productInfo = technique.productInfo;
+    if (productInfo.type == ProductType.free)
+      return Text(
+        "Free",
+        style: TextStyle(color: Colors.grey),
+      );
+    else if (productInfo.type == ProductType.unavailable)
+      return Text(
+        "Unavailable",
+        style: TextStyle(color: Colors.redAccent),
+      );
+    else
+      return Text(
+        productInfo.price!,
+        style: TextStyle(color: Colors.grey),
+      );
   }
 
   @override
@@ -61,7 +87,7 @@ class ScrollableTechniqueList extends StatelessWidget {
                         Material(
                           color: Colors.transparent,
                           child: InkWell(
-                            onTap: items[index].onTap,
+                            onTap: () => onTap(items[index]),
                             child: Container(
                               padding: EdgeInsets.all(14),
                               child: Row(
@@ -72,10 +98,7 @@ class ScrollableTechniqueList extends StatelessWidget {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          items[index].productId,
-                                          style: TextStyle(color: Colors.grey),
-                                        ),
+                                        _getProductStatus(items[index]),
                                         SizedBox(height: 1),
                                         Text(
                                           items[index].title,
@@ -111,18 +134,4 @@ class ScrollableTechniqueList extends StatelessWidget {
       ),
     );
   }
-}
-
-class ScrollableTechniqueListItem {
-  final VoidCallback onTap;
-  final Media? thumbnail;
-  final String productId;
-  final String title;
-
-  ScrollableTechniqueListItem({
-    required this.onTap,
-    this.thumbnail,
-    required this.title,
-    required this.productId,
-  });
 }

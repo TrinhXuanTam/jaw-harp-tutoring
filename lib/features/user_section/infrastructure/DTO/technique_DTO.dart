@@ -3,9 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:jews_harp/core/constants/language_codes.dart';
 import 'package:jews_harp/core/errors/language_not_supported_error.dart';
+import 'package:jews_harp/core/extensions.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/infrastructure/DTO/category_DTO.dart';
 import 'package:jews_harp/features/user_section/infrastructure/DTO/mediaDTO.dart';
+import 'package:jews_harp/features/user_section/infrastructure/DTO/product_info_DTO.dart';
 import 'package:optional/optional_internal.dart';
 
 /// Technique DTO
@@ -13,11 +15,13 @@ class TechniqueDTO extends Technique {
   final CategoryDTO category;
   final Optional<MediaDTO> thumbnail;
   final Optional<MediaDTO> video;
+  final ProductInfoDTO productInfo;
 
   const TechniqueDTO({
     required String id,
     Optional<DateTime> datePublished = const Optional.empty(),
     Optional<String> productId = const Optional.empty(),
+    required this.productInfo,
     required this.category,
     required TechniqueDifficulty difficulty,
     this.thumbnail = const Optional.empty(),
@@ -29,6 +33,7 @@ class TechniqueDTO extends Technique {
           id: id,
           datePublished: datePublished,
           productId: productId,
+          productInfo: productInfo,
           category: category,
           difficulty: difficulty,
           thumbnail: thumbnail,
@@ -43,6 +48,7 @@ class TechniqueDTO extends Technique {
     String? id,
     Optional<DateTime>? datePublished,
     Optional<String>? productId,
+    ProductInfoDTO? productInfo,
     CategoryDTO? category,
     TechniqueDifficulty? difficulty,
     Optional<MediaDTO>? thumbnail,
@@ -55,6 +61,7 @@ class TechniqueDTO extends Technique {
       id: id != null ? id : this.id,
       datePublished: datePublished != null ? datePublished : this.datePublished,
       productId: productId != null ? productId : this.productId,
+      productInfo: productInfo != null ? productInfo : this.productInfo,
       category: category != null ? category : this.category,
       difficulty: difficulty != null ? difficulty : this.difficulty,
       thumbnail: thumbnail != null ? thumbnail : this.thumbnail,
@@ -71,6 +78,7 @@ class TechniqueDTO extends Technique {
       id: technique.id,
       datePublished: technique.datePublished,
       productId: technique.productId,
+      productInfo: ProductInfoDTO.fromEntity(technique.productInfo),
       category: CategoryDTO.fromEntity(technique.category),
       difficulty: technique.difficulty,
       thumbnail: technique.thumbnail.map((e) => MediaDTO.fromEntity(e)),
@@ -110,11 +118,13 @@ class TechniqueDTO extends Technique {
     final localizedData = _getLocalizedData(documentSnapshot);
     final difficulty = TechniqueDifficulty.values[documentSnapshot["difficulty"]];
     final category = await CategoryDTO.fromFirestore(await FirebaseFirestore.instance.collection('categories').doc(documentSnapshot["category"]).get());
+    final productId = Optional<String>.ofNullable(documentSnapshot["productId"]);
 
     return TechniqueDTO(
       id: documentSnapshot.id,
       datePublished: Optional<Timestamp>.ofNullable(documentSnapshot["datePublished"]).map((val) => val.toDate()),
-      productId: Optional<String>.ofNullable(documentSnapshot["productId"]),
+      productId: productId,
+      productInfo: await ProductInfoDTO.fromProductId(productId.toNullable()),
       category: category,
       difficulty: difficulty,
       thumbnail: await _getDownloadUrl(documentSnapshot, "thumbnail"),
@@ -131,6 +141,7 @@ class TechniqueDTO extends Technique {
       "id": id,
       if (datePublished.isPresent) "datePublished": datePublished.value.toIso8601String(),
       if (productId.isPresent) "productId": productId.value,
+      "productInfo": productInfo.toJson(),
       "category": category.toJson(),
       "difficulty": difficulty.index,
       if (thumbnail.isPresent) "thumbnail": thumbnail.value.toJson(),
@@ -147,6 +158,7 @@ class TechniqueDTO extends Technique {
       id: json["id"],
       datePublished: json["datePublished"] != null ? Optional.of(DateTime.parse(json["datePublished"])) : Optional.empty(),
       productId: Optional.ofNullable(json["productId"]),
+      productInfo: ProductInfoDTO.fromJson(json["productInfo"]),
       category: CategoryDTO.fromJson(json["category"]),
       difficulty: TechniqueDifficulty.values[json["difficulty"]],
       thumbnail: json["thumbnail"] != null ? Optional.of(MediaDTO.fromJson(json["thumbnail"])) : Optional.empty(),
