@@ -12,6 +12,7 @@ import 'package:meta/meta.dart';
 part 'email_form_event.dart';
 part 'email_form_state.dart';
 
+/// Email form state management.
 @injectable
 class EmailFormBloc extends Bloc<EmailFormEvent, EmailFormState> {
   final EmailAuthentication _emailAuthentication;

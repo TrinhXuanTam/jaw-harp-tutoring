@@ -19,6 +19,7 @@ part 'link_providers_event.dart';
 
 part 'link_providers_state.dart';
 
+/// State management for linking two existing accounts.
 @Injectable(env: [Environment.prod, Environment.dev])
 class LinkProvidersBloc extends Bloc<LinkProvidersEvent, LinkProvidersState> {
   final FacebookAuthentication _facebookAuthentication;
@@ -42,17 +43,24 @@ class LinkProvidersBloc extends Bloc<LinkProvidersEvent, LinkProvidersState> {
     this._authBloc,
   ) : super(initialState!);
 
+  /// Check if two accounts have the same email and link accounts.
   void _checkEmail(User user) async {
     if (user.email == state.email) {
+      // The linked account.
       late final User newUser;
+
       if (state is LinkEmail) {
+        // Link current account to email and password.
         newUser = await _linkEmail(state.email, (state as LinkEmail).password);
       } else if (state is LinkFacebook) {
+        // Link Current account to Facebook profile.
         newUser = await _linkFacebook();
       }
 
+      // Sign in with the linked account.
       _authBloc.add(UserAuthenticatedEvent(newUser));
     } else {
+      // Log out and show error dialog if emails don't match.
       _signOut();
       _errorBloc.add(
         UserErrorEvent(
@@ -69,6 +77,7 @@ class LinkProvidersBloc extends Bloc<LinkProvidersEvent, LinkProvidersState> {
   ) async* {
     if (event is EmailAuthenticationEvent) {
       try {
+        // Link accounts via email and password.
         final user = await _emailAuthentication(state.email, state.passwordController.text);
         _checkEmail(user);
       } on BaseError catch (e) {
@@ -76,11 +85,13 @@ class LinkProvidersBloc extends Bloc<LinkProvidersEvent, LinkProvidersState> {
       }
     } else if (event is FacebookAuthenticationEvent) {
       try {
+        // Link accounts via Facebook profile.
         final user = await _facebookAuthentication();
         _checkEmail(user);
       } on BaseError {}
     } else if (event is GoogleAuthenticationEvent) {
       try {
+        // Link accounts via Google account.
         final user = await _googleAuthentication();
         _checkEmail(user);
       } on BaseError {}

@@ -13,6 +13,7 @@ part 'splash_screen_event.dart';
 
 part 'splash_screen_state.dart';
 
+/// Splash screen state management.
 @Injectable(env: [Environment.prod, Environment.dev])
 class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
   final GetCurrentUser _getCurrentUser;
@@ -24,13 +25,17 @@ class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
   @override
   Stream<SplashScreenState> mapEventToState(SplashScreenEvent event) async* {
     if (event is SplashScreenDisplayedEvent) {
+      // Set Firebase locale.
       _setLocale(event.languageCode);
+      // Disable device auto sleep mode.
       Wakelock.enabled;
+      // Sign in user after [SPLASH_SCREEN_DURATION] seconds.
       Future.delayed(
         const Duration(seconds: SPLASH_SCREEN_DURATION),
         () => this.add(SplashScreenTransitionEvent()),
       );
     } else if (event is SplashScreenTransitionEvent) {
+      // Try to sign in the user.
       final user = await _getCurrentUser();
       if (user != null)
         _authBloc.add(UserAuthenticatedEvent(user));

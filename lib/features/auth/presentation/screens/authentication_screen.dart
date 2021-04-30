@@ -13,7 +13,6 @@ class AuthenticationScreen extends StatelessWidget {
         children: [
           // Authentication methods.
           AuthMethods(),
-
           // Sign up text.
           Positioned(
             bottom: 20,

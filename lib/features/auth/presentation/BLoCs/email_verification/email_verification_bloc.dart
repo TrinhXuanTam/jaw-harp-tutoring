@@ -13,6 +13,7 @@ part 'email_verification_event.dart';
 
 part 'email_verification_state.dart';
 
+/// Email verification screen state management.
 @Injectable(env: [Environment.prod, Environment.dev])
 class EmailVerificationBloc extends Bloc<EmailVerificationEvent, EmailVerificationState> {
   final SignOut _signOut;
@@ -34,13 +35,19 @@ class EmailVerificationBloc extends Bloc<EmailVerificationEvent, EmailVerificati
     EmailVerificationEvent event,
   ) async* {
     if (event is EmailVerificationRequestEvent) {
+      // Send email confirmation.
       _sendEmailVerification();
       yield EmailVerificationSentState();
     } else if (event is EmailVerificationClosedEvent) {
+      // Verification page has been closed,
+      // therefore sign out the user.
       _signOut();
       yield EmailVerificationClosedState();
     } else if (event is EmailVerificationContinueEvent) {
+      // Refresh the user data form firebase.
       final user = await _reloadUser();
+
+      // Check if user account is verified.
       if (user.isVerified)
         _authBloc.add(UserAuthenticatedEvent(user));
       else

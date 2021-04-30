@@ -12,6 +12,7 @@ part 'auth_event.dart';
 
 part 'auth_state.dart';
 
+/// Global authentication state.
 @LazySingleton(env: [Environment.prod, Environment.dev])
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final GetCurrentUser _getCurrentUser;
@@ -27,11 +28,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthEvent event,
   ) async* {
     if (event is UserAuthenticatedEvent) {
-      final user = await _getCurrentUser();
-
-      if (user == null) throw UserNotSignedInError();
-
-      yield UserAuthenticated(user);
+      yield UserAuthenticated(event.user);
     } else if (event is UserSignOutEvent) {
       await _signOut();
       yield UserUnauthenticated();

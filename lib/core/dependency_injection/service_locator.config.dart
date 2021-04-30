@@ -431,12 +431,8 @@ _i1.GetIt initGetIt(_i1.GetIt get,
       () => _i80.MostRecentTechniquesBloc(get<_i75.GetMostRecentTechniques>()),
       registerFor: {_prod, _dev});
   gh.factory<_i81.SignUpBloc>(
-      () => _i81.SignUpBloc(
-          get<_i36.SignUp>(),
-          get<_i51.GetAuthProviders>(),
-          get<_i24.LinkEmailProvider>(),
-          get<_i4.ErrorBloc>(),
-          get<_i66.AuthBloc>()),
+      () => _i81.SignUpBloc(get<_i36.SignUp>(), get<_i51.GetAuthProviders>(),
+          get<_i4.ErrorBloc>(), get<_i66.AuthBloc>()),
       registerFor: {_prod, _dev});
   gh.factory<_i82.SplashScreenBloc>(
       () => _i82.SplashScreenBloc(get<_i54.GetCurrentUser>(),
@@ -456,7 +452,6 @@ _i1.GetIt initGetIt(_i1.GetIt get,
           get<_i48.FacebookAuthentication>(),
           get<_i58.GoogleAuthentication>(),
           get<_i51.GetAuthProviders>(),
-          get<_i25.LinkFacebookProvider>(),
           get<_i66.AuthBloc>()),
       registerFor: {_prod, _dev});
   gh.factory<_i86.CategoryDetailBloc>(
