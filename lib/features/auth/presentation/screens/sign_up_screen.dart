@@ -7,6 +7,7 @@ import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
+import 'package:jews_harp/features/auth/presentation/BLoCs/link_providers/link_providers_bloc.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/sign_up_screen/sign_up_bloc.dart';
 import 'package:jews_harp/features/auth/presentation/screens/link_auth_providers_screen.dart';
 import 'package:jews_harp/features/auth/presentation/widgets/sign_up_form.dart';
@@ -18,9 +19,8 @@ class SignUpScreen extends StatelessWidget {
         ctx,
         LINK_AUTH_PROVIDERS_SCREEN_ROUTE,
         arguments: LinkAuthProvidersScreenArgs(
-          email: state.email,
           providers: state.providers,
-          onSuccess: () => BlocProvider.of<SignUpBloc>(ctx).add(LinkEmailEvent(state.email, state.password)),
+          initialState: LinkEmail(state.email, state.password),
         ),
       );
   }

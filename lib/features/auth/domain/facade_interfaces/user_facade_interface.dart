@@ -7,8 +7,6 @@ abstract class IUserFacade {
 
   Future<bool> resetPassword(String email);
 
-  Future<bool> isVerified();
-
   Future<void> sendVerificationEmail();
 
   Future<UserDTO> linkAccountToEmail(String email, String password);

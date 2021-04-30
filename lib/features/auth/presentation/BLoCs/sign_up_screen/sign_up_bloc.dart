@@ -9,10 +9,11 @@ import 'package:jews_harp/core/errors/email_already_used_error.dart';
 import 'package:jews_harp/features/auth/application/use_cases/get_authentication_providers.dart';
 import 'package:jews_harp/features/auth/application/use_cases/link_email_provider.dart';
 import 'package:jews_harp/features/auth/application/use_cases/sign_up.dart';
-import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
+import 'package:jews_harp/features/auth/presentation/BLoCs/auth_state/auth_bloc.dart';
 import 'package:meta/meta.dart';
 
 part 'sign_up_event.dart';
+
 part 'sign_up_state.dart';
 
 @Injectable(env: [Environment.prod, Environment.dev])
@@ -37,8 +38,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   ) async* {
     if (event is SignUpButtonPressedEvent) {
       try {
-        await _signUp(event.name, event.email, event.password, event.passwordRepeat);
-        _authBloc.add(UserAuthenticatedEvent());
+        final user = await _signUp(event.name, event.email, event.password, event.passwordRepeat);
+        _authBloc.add(UserAuthenticatedEvent(user));
       } on EmailAlreadyUsedError catch (e) {
         final providers = await _getAuthProviders(event.email);
 
@@ -54,8 +55,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     }
     if (event is LinkEmailEvent) {
       try {
-        await _linkEmailProvider(event.email, event.password);
-        _authBloc.add(UserAuthenticatedEvent());
+        final user = await _linkEmailProvider(event.email, event.password);
+        _authBloc.add(UserAuthenticatedEvent(user));
       } on BaseError catch (e) {
         _errorBloc.add(UserErrorEvent("Failed to sign up", e.message));
       }

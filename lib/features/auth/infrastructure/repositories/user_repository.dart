@@ -19,6 +19,9 @@ class UserAuthRepository extends IUserAuthRepository {
   Future<User?> getCurrentUser() => _firebaseAuthDataSource.getCurrentUser();
 
   @override
+  Future<User> reloadUser() => _firebaseAuthDataSource.reloadUser();
+
+  @override
   Future<User> getUserWithEmailAndPassword(String email, String password) => _firebaseAuthDataSource.signInWithEmail(email, password);
 
   @override

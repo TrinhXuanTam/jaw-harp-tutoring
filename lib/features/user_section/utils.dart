@@ -8,7 +8,7 @@ import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/errors/media_not_found_error.dart';
 import 'package:jews_harp/core/errors/user_not_signed_in_error.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
-import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
+import 'package:jews_harp/features/auth/presentation/BLoCs/auth_state/auth_bloc.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
@@ -40,7 +40,7 @@ VideoPlayerController getVideoPlayerControllerFromMedia(Media media) {
 
 User getUser(BuildContext context) {
   final state = BlocProvider.of<AuthBloc>(context).state;
-  if (state is AuthenticatedState) {
+  if (state is UserAuthenticated) {
     return state.user;
   } else
     throw UserNotSignedInError();

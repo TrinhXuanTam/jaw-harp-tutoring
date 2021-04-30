@@ -5,7 +5,7 @@ import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/core/widgets/rounded_password_field.dart';
 import 'package:jews_harp/core/widgets/rounded_text_field.dart';
-import 'package:jews_harp/features/auth/presentation/BLoCs/email_form_bloc.dart';
+import 'package:jews_harp/features/auth/presentation/BLoCs/email_form/email_form_bloc.dart';
 
 /// Email authentication form
 class EmailAuthenticationForm extends StatelessWidget {

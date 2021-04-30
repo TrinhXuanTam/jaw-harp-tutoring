@@ -39,6 +39,16 @@ class FirebaseAuthDataSource {
     return UserDTO.fromFirebaseUser(user);
   }
 
+  /// Reload user data from Firebase Authentication.
+  Future<UserDTO> reloadUser() async {
+    final user = _auth.currentUser;
+    if (user == null) throw UserNotSignedInError();
+
+    // Refresh the user data.
+    await user.reload();
+    return UserDTO.fromFirebaseUser(_auth.currentUser!);
+  }
+
   /// Sign in with [email] and [password].
   /// Throw [WrongEmailOrPasswordError] if authentication fails.
   Future<UserDTO> signInWithEmail(String email, String password) async {

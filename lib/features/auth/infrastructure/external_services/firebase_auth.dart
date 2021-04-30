@@ -28,16 +28,6 @@ class FirebaseAuthService {
     _auth.signOut();
   }
 
-  /// Check if the user account is verified.
-  Future<bool> isVerified() async {
-    final user = _auth.currentUser;
-    if (user == null) throw UserNotSignedInError();
-
-    // Refresh the user data.
-    await user.reload();
-    return _auth.currentUser!.emailVerified;
-  }
-
   /// Send account verification to given [email].
   Future<void> sendVerificationEmail() async {
     final user = _auth.currentUser;

@@ -5,6 +5,8 @@ abstract class IUserAuthRepository {
 
   Future<User?> getCurrentUser();
 
+  Future<User> reloadUser();
+
   Future<User> getUserWithEmailAndPassword(String email, String password);
 
   Future<User> getUserWithFacebook();

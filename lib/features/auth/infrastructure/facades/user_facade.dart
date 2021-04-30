@@ -18,9 +18,6 @@ class FirebaseAuthFacade extends IUserFacade {
   Future<void> signOut() => _authService.signOut();
 
   @override
-  Future<bool> isVerified() => _authService.isVerified();
-
-  @override
   Future<void> sendVerificationEmail() => _authService.sendVerificationEmail();
 
   @override

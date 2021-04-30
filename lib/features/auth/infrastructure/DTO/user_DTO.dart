@@ -10,10 +10,19 @@ class UserDTO extends User {
     required String uid,
     required String name,
     required String email,
+    required bool isVerified,
     Set<String> purchasedTechniques = const {},
     Set<String> favoriteTechniques = const {},
     Optional<String> profilePictureUrl = const Optional.empty(),
-  }) : super(uid: uid, name: name, email: email, purchasedTechniques: purchasedTechniques, favoriteTechniques: favoriteTechniques, profilePictureUrl: profilePictureUrl);
+  }) : super(
+          uid: uid,
+          name: name,
+          email: email,
+          isVerified: isVerified,
+          purchasedTechniques: purchasedTechniques,
+          favoriteTechniques: favoriteTechniques,
+          profilePictureUrl: profilePictureUrl,
+        );
 
   /// Create [FirebaseUserModel] from [FirebaseAuth.UserCredential]
   static Future<UserDTO> fromFirebaseCredentials(Firebase.UserCredential credentials) async {
@@ -30,6 +39,7 @@ class UserDTO extends User {
       uid: firebaseUser.uid,
       name: firebaseUser.displayName ?? "",
       email: firebaseUser.email!,
+      isVerified: firebaseUser.emailVerified,
       purchasedTechniques: Set<String>.from(snapshot["purchasedTechniques"]),
       favoriteTechniques: Set<String>.from(snapshot["favoriteTechniques"]),
       profilePictureUrl: Optional.ofNullable(firebaseUser.photoURL),

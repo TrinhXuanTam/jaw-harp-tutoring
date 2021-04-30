@@ -29,7 +29,7 @@ import 'core/constants/routes.dart';
 import 'core/constants/settings.dart';
 import 'core/dependency_injection/service_locator.dart';
 import 'core/l10n.dart';
-import 'features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
+import 'features/auth/presentation/BLoCs/auth_state/auth_bloc.dart';
 import 'features/auth/presentation/screens/authentication_screen.dart';
 import 'features/auth/presentation/screens/email_verification_screen.dart';
 import 'features/auth/presentation/screens/sign_up_screen.dart';
@@ -61,16 +61,17 @@ class _EntryPoint extends StatelessWidget {
   void _authBlocListener(BuildContext context, AuthState state) {
     final currentState = globalKey.currentState!;
 
-    if (state is AuthenticatedState) {
-      currentState.pushNamedAndRemoveUntil(USER_SECTION_SCREEN_ROUTE, (route) => false);
-    } else if (state is UnauthenticatedState)
+    if (state is UserAuthenticated) {
+      if (state.user.isVerified)
+        currentState.pushNamedAndRemoveUntil(USER_SECTION_SCREEN_ROUTE, (route) => false);
+      else
+        currentState.pushNamedAndRemoveUntil(
+          EMAIL_VERIFICATION_UP_SCREEN_ROUTE,
+          (route) => false,
+          arguments: EmailVerificationScreenArgs(user: state.user),
+        );
+    } else
       currentState.pushNamedAndRemoveUntil(AUTH_SCREEN_ROUTE, (route) => false);
-    else if (state is NotVerifiedState)
-      currentState.pushNamedAndRemoveUntil(
-        EMAIL_VERIFICATION_UP_SCREEN_ROUTE,
-        (route) => false,
-        arguments: EmailVerificationScreenArgs(user: state.user),
-      );
   }
 
   void _errorBlocListener(BuildContext context, ErrorState state) {
@@ -134,7 +135,7 @@ class _EntryPoint extends StatelessWidget {
           ),
           navigatorKey: globalKey,
           routes: {
-            SPLASH_SCREEN_ROUTE: (ctx) => SplashScreen(onLoad: () => BlocProvider.of<AuthBloc>(ctx).add(SplashScreenDisplayedEvent(AppLocalizations.of(ctx).locale.languageCode))),
+            SPLASH_SCREEN_ROUTE: (ctx) => SplashScreen(),
             USER_SECTION_SCREEN_ROUTE: (_) => UserSection(),
             AUTH_SCREEN_ROUTE: (_) => AuthenticationScreen(),
             SIGN_UP_SCREEN_ROUTE: (_) => SignUpScreen(),

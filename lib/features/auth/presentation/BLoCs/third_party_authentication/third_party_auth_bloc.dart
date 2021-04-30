@@ -9,10 +9,11 @@ import 'package:jews_harp/features/auth/application/use_cases/facebook_authentic
 import 'package:jews_harp/features/auth/application/use_cases/get_authentication_providers.dart';
 import 'package:jews_harp/features/auth/application/use_cases/google_authentication.dart';
 import 'package:jews_harp/features/auth/application/use_cases/link_facebook_provider.dart';
-import 'package:jews_harp/features/auth/domain/entities/user.dart';
+import 'package:jews_harp/features/auth/presentation/BLoCs/auth_state/auth_bloc.dart';
 import 'package:meta/meta.dart';
 
 part 'third_party_auth_event.dart';
+
 part 'third_party_auth_state.dart';
 
 @Injectable(env: [Environment.prod, Environment.dev])
@@ -21,12 +22,14 @@ class ThirdPartyAuthBloc extends Bloc<ThirdPartyAuthEvent, ThirdPartyAuthState> 
   final GoogleAuthentication _googleAuthentication;
   final GetAuthProviders _getAuthProviders;
   final LinkFacebookProvider _linkFacebookProvider;
+  final AuthBloc _authBloc;
 
   ThirdPartyAuthBloc(
     this._facebookAuthentication,
     this._googleAuthentication,
     this._getAuthProviders,
     this._linkFacebookProvider,
+    this._authBloc,
   ) : super(ThirdPartyAuthInitial());
 
   @override
@@ -36,7 +39,7 @@ class ThirdPartyAuthBloc extends Bloc<ThirdPartyAuthEvent, ThirdPartyAuthState> 
     if (event is FacebookAuthEvent) {
       try {
         final user = await _facebookAuthentication();
-        yield ThirdPartyAuthSuccessState(user);
+        _authBloc.add(UserAuthenticatedEvent(user));
       } on EmailAlreadyUsedError catch (e) {
         final providers = await _getAuthProviders(e.email);
 
@@ -44,21 +47,17 @@ class ThirdPartyAuthBloc extends Bloc<ThirdPartyAuthEvent, ThirdPartyAuthState> 
           providers.remove(FACEBOOK_PROVIDER);
           yield MultipleProvidersState(e.email, providers);
         }
-      } on BaseError {
-        // User closed the facebook login screen
-      }
+      } on BaseError {}
     } else if (event is GoogleAuthEvent) {
       try {
         final user = await _googleAuthentication();
-        yield ThirdPartyAuthSuccessState(user);
+        _authBloc.add(UserAuthenticatedEvent(user));
       } on BaseError {}
     } else if (event is LinkFacebookEvent) {
       try {
         final user = await _linkFacebookProvider();
-        yield ThirdPartyAuthSuccessState(user);
-      } on BaseError {
-        // User closed the google login screen
-      }
+        _authBloc.add(UserAuthenticatedEvent(user));
+      } on BaseError {}
     }
   }
 }
