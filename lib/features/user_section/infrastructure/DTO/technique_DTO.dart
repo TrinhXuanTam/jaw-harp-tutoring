@@ -8,6 +8,7 @@ import 'package:jews_harp/features/user_section/infrastructure/DTO/category_DTO.
 import 'package:jews_harp/features/user_section/infrastructure/DTO/mediaDTO.dart';
 import 'package:optional/optional_internal.dart';
 
+/// Technique DTO
 class TechniqueDTO extends Technique {
   final CategoryDTO category;
   final Optional<MediaDTO> thumbnail;
@@ -37,6 +38,7 @@ class TechniqueDTO extends Technique {
           accompanyingText: accompanyingText,
         );
 
+  /// Creates a copy of this object with given params.
   TechniqueDTO copyWith({
     String? id,
     Optional<DateTime>? datePublished,
@@ -63,6 +65,7 @@ class TechniqueDTO extends Technique {
     );
   }
 
+  /// Create technique from entity.
   factory TechniqueDTO.fromEntity(Technique technique) {
     return TechniqueDTO(
       id: technique.id,
@@ -78,6 +81,7 @@ class TechniqueDTO extends Technique {
     );
   }
 
+  /// Extract localized data from Firestore document.
   static Map<String, dynamic> _getLocalizedData(DocumentSnapshot documentSnapshot) {
     final languageCode = FirebaseAuth.instance.languageCode;
 
@@ -91,6 +95,17 @@ class TechniqueDTO extends Technique {
     }
   }
 
+  /// Get download url for displaying thumbnail and videos.
+  static Future<Optional<MediaDTO>> _getDownloadUrl(DocumentSnapshot documentSnapshot, String filename) async {
+    try {
+      final media = FirebaseStorage.instance.ref("techniques");
+      return Optional.of(MediaDTO(url: Optional.of(await media.child(documentSnapshot.id).child(filename).getDownloadURL())));
+    } catch (exception) {
+      return Optional.empty();
+    }
+  }
+
+  /// Create technique from Firestore document.
   static Future<TechniqueDTO> fromFirestore(DocumentSnapshot documentSnapshot) async {
     final localizedData = _getLocalizedData(documentSnapshot);
     final difficulty = TechniqueDifficulty.values[documentSnapshot["difficulty"]];
@@ -110,6 +125,7 @@ class TechniqueDTO extends Technique {
     );
   }
 
+  /// Convert technique to json format.
   Map<String, dynamic> toJson() {
     return {
       "id": id,
@@ -125,6 +141,7 @@ class TechniqueDTO extends Technique {
     };
   }
 
+  /// Load technique from json format.
   factory TechniqueDTO.fromJson(Map<String, dynamic> json) {
     return TechniqueDTO(
       id: json["id"],
@@ -138,14 +155,5 @@ class TechniqueDTO extends Technique {
       description: json["description"],
       accompanyingText: json["accompanyingText"],
     );
-  }
-}
-
-Future<Optional<MediaDTO>> _getDownloadUrl(DocumentSnapshot documentSnapshot, String filename) async {
-  try {
-    final media = FirebaseStorage.instance.ref("techniques");
-    return Optional.of(MediaDTO(url: Optional.of(await media.child(documentSnapshot.id).child(filename).getDownloadURL())));
-  } catch (exception) {
-    return Optional.empty();
   }
 }

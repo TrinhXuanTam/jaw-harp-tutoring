@@ -2,14 +2,18 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/features/admin/utils.dart';
 import 'package:jews_harp/features/user_section/application/get_techniques_by_category.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:meta/meta.dart';
 
 part 'category_detail_event.dart';
+
 part 'category_detail_state.dart';
 
+/// Category detail state management for loading all
+/// contained techniques.
 @Injectable(env: [Environment.prod, Environment.dev])
 class CategoryDetailBloc extends Bloc<CategoryDetailEvent, CategoryDetailState> {
   final GetTechniquesByCategory _getTechniquesByCategory;
@@ -22,8 +26,10 @@ class CategoryDetailBloc extends Bloc<CategoryDetailEvent, CategoryDetailState> 
   ) async* {
     if (event is LoadTechniques) {
       yield CategoryDetailLoading();
-      final techniques = await _getTechniquesByCategory(event.category);
-      yield CategoryDetailLoaded(event.category, techniques.toList());
+      // Load techniques of this category.
+      final techniques = (await _getTechniquesByCategory(event.category)).toList();
+      techniques.sort(techniqueTitleCmp);
+      yield CategoryDetailLoaded(event.category, techniques);
     }
   }
 }

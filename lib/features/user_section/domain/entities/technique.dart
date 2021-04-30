@@ -4,6 +4,7 @@ import 'package:optional/optional.dart';
 
 import 'media.dart';
 
+/// Technique (lecture) entity.
 class Technique extends Equatable {
   final String id;
   final Optional<DateTime> datePublished;
@@ -18,13 +19,13 @@ class Technique extends Equatable {
 
   const Technique({
     required this.id,
-    this.datePublished = const Optional.empty(),
+    this.video = const Optional.empty(),
+    this.thumbnail = const Optional.empty(),
     this.productId = const Optional.empty(),
+    this.datePublished = const Optional.empty(),
+    required this.title,
     required this.category,
     required this.difficulty,
-    this.thumbnail = const Optional.empty(),
-    this.video = const Optional.empty(),
-    required this.title,
     required this.description,
     required this.accompanyingText,
   });

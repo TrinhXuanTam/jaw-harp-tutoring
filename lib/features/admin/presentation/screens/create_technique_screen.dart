@@ -29,23 +29,18 @@ class CreateTechniqueScreen extends StatelessWidget {
               SizedBox(height: 20),
               BlocProvider<TechniqueFormBloc>(
                 create: (ctx) => serviceLocator<TechniqueFormBloc>(),
-                child: _CreateTechniqueForm(),
+                child: Builder(
+                  builder: (ctx) => TechniqueForm(
+                    submitButtonText: "Create",
+                    onSubmit: () => BlocProvider.of<TechniqueFormBloc>(ctx).add(CreateTechniqueEvent()),
+                    onSuccess: (_) => Navigator.pop(ctx),
+                  ),
+                ),
               ),
             ],
           ),
         ],
       ),
-    );
-  }
-}
-
-class _CreateTechniqueForm extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return TechniqueForm(
-      submitButtonText: "Create",
-      onSubmit: () => BlocProvider.of<TechniqueFormBloc>(context).add(CreateTechniqueEvent()),
-      onSuccess: (technique) => Navigator.pop(context),
     );
   }
 }

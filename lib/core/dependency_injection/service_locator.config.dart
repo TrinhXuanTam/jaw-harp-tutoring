@@ -141,12 +141,12 @@ import 'package:jews_harp/features/user_section/application/remove_technique_fro
     as _i32;
 import 'package:jews_harp/features/user_section/domain/facade_interfaces/payment_facade.dart'
     as _i14;
+import 'package:jews_harp/features/user_section/domain/facade_interfaces/user_section_facade.dart'
+    as _i22;
 import 'package:jews_harp/features/user_section/domain/repository_interfaces/category_repository.dart'
     as _i12;
 import 'package:jews_harp/features/user_section/domain/repository_interfaces/technique_repository.dart'
     as _i60;
-import 'package:jews_harp/features/user_section/domain/repository_interfaces/user_repository.dart'
-    as _i22;
 import 'package:jews_harp/features/user_section/infrastructure/data_sources/category_local_data_source.dart'
     as _i3;
 import 'package:jews_harp/features/user_section/infrastructure/data_sources/firebase_user_section_data_source.dart'
@@ -155,12 +155,12 @@ import 'package:jews_harp/features/user_section/infrastructure/data_sources/tech
     as _i38;
 import 'package:jews_harp/features/user_section/infrastructure/facades/payment_facade.dart'
     as _i15;
+import 'package:jews_harp/features/user_section/infrastructure/facades/user_section_facade.dart'
+    as _i23;
 import 'package:jews_harp/features/user_section/infrastructure/repositories/category_repository.dart'
     as _i13;
 import 'package:jews_harp/features/user_section/infrastructure/repositories/technique_repository.dart'
     as _i61;
-import 'package:jews_harp/features/user_section/infrastructure/repositories/user_repository.dart'
-    as _i23;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/categories/categories_bloc.dart'
     as _i67;
 import 'package:jews_harp/features/user_section/presentation/BLoCs/most_recent_techniques/most_recent_techniques_bloc.dart'
@@ -236,8 +236,8 @@ _i1.GetIt initGetIt(_i1.GetIt get,
   gh.lazySingleton<_i20.IUserFacade>(
       () => _i21.FirebaseAuthFacade(get<_i7.FirebaseAuthService>()),
       registerFor: {_prod});
-  gh.lazySingleton<_i22.IUserRepository>(
-      () => _i23.UserRepository(get<_i8.FirebaseUserSectionDataSource>()),
+  gh.lazySingleton<_i22.IUserSectionFacade>(
+      () => _i23.UserSectionFacade(get<_i8.FirebaseUserSectionDataSource>()),
       registerFor: {_prod});
   gh.lazySingleton<_i24.LinkEmailProvider>(
       () => _i24.LinkEmailProvider(get<_i20.IUserFacade>()),
@@ -246,7 +246,7 @@ _i1.GetIt initGetIt(_i1.GetIt get,
       () => _i25.LinkFacebookProvider(get<_i20.IUserFacade>()),
       registerFor: {_prod, _dev, _link_facebook_provider_test_env});
   gh.lazySingleton<_i26.MarkTechniqueAsFavorite>(
-      () => _i26.MarkTechniqueAsFavorite(get<_i22.IUserRepository>()),
+      () => _i26.MarkTechniqueAsFavorite(get<_i22.IUserSectionFacade>()),
       registerFor: {_prod, _dev});
   gh.lazySingleton<_i27.PasswordReset>(
       () => _i27.PasswordReset(get<_i20.IUserFacade>()),
@@ -263,7 +263,7 @@ _i1.GetIt initGetIt(_i1.GetIt get,
       () => _i31.ReloadUser(get<_i18.IUserAuthRepository>()),
       registerFor: {_prod, _dev, _email_verification_check_test_env});
   gh.lazySingleton<_i32.RemoveTechniqueFromFavorites>(
-      () => _i32.RemoveTechniqueFromFavorites(get<_i22.IUserRepository>()),
+      () => _i32.RemoveTechniqueFromFavorites(get<_i22.IUserSectionFacade>()),
       registerFor: {_prod, _dev});
   gh.lazySingleton<_i33.SendEmailVerification>(
       () => _i33.SendEmailVerification(get<_i20.IUserFacade>()),

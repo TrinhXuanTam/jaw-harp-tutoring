@@ -1,11 +1,12 @@
 import 'package:injectable/injectable.dart';
-import 'package:jews_harp/features/user_section/domain/repository_interfaces/user_repository.dart';
+import 'package:jews_harp/features/user_section/domain/facade_interfaces/user_section_facade.dart';
 
+/// Remove technique from favorites.
 @LazySingleton(env: [Environment.prod, Environment.dev])
 class RemoveTechniqueFromFavorites {
-  final IUserRepository _userRepository;
+  final IUserSectionFacade _userSectionFacade;
 
-  RemoveTechniqueFromFavorites(this._userRepository);
+  RemoveTechniqueFromFavorites(this._userSectionFacade);
 
-  Future<void> call(String techniqueId) => _userRepository.removeTechniqueFromFavorites(techniqueId);
+  Future<void> call(String techniqueId) => _userSectionFacade.removeTechniqueFromFavorites(techniqueId);
 }

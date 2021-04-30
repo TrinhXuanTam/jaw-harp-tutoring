@@ -20,8 +20,10 @@ import 'package:meta/meta.dart';
 import 'package:optional/optional.dart';
 
 part 'technique_form_event.dart';
+
 part 'technique_form_state.dart';
 
+/// Default state if no preloaded data have been given.
 final _defaultFormState = TechniqueFormState(
   isPaid: false,
   idController: TextEditingController(),
@@ -32,6 +34,9 @@ final _defaultFormState = TechniqueFormState(
   videoController: VideoPickerController(),
 );
 
+/// State management for technique form.
+/// The form can update existing techniques
+/// and create new ones at the same time.
 @Injectable(env: [Environment.prod, Environment.dev])
 class TechniqueFormBloc extends Bloc<TechniqueFormEvent, TechniqueFormState> {
   final CreateTechnique _createTechnique;
@@ -45,8 +50,9 @@ class TechniqueFormBloc extends Bloc<TechniqueFormEvent, TechniqueFormState> {
     this._createTechnique,
     this._updateTechnique,
     this._errorBloc,
-  ) : super(initialState != null ? initialState : _defaultFormState);
+  ) : super(initialState ?? _defaultFormState);
 
+  /// Load all categories form the database.
   Future<List<Category>> get categories => _getAllCategories().then((iterable) => iterable.toList());
 
   @override
@@ -54,58 +60,74 @@ class TechniqueFormBloc extends Bloc<TechniqueFormEvent, TechniqueFormState> {
     TechniqueFormEvent event,
   ) async* {
     if (event is UpdateTechniquePricing)
+      // Update toggle switch.
+      // Technique will be paid if switch is set.
       yield state.copyWith(isPaid: event.isPaid);
     else if (event is UpdateTechniqueLocalization) {
+      // Update localized data.
       final localizedData = Map.of(state.localizedData);
       localizedData[event.techniqueLocalizedData.languageCode] = event.techniqueLocalizedData;
       yield state.copyWith(localizedData: localizedData);
     } else if (event is RemoveTechniqueLocalization) {
+      // Remove localization of given [languageCode].
       final localizedData = Map.of(state.localizedData);
       localizedData.remove(event.languageCode);
       yield state.copyWith(localizedData: localizedData);
-    } else if (event is CreateTechniqueEvent || event is UpdateTechniqueEvent) {
+    } else if (event is UpdateTechniqueEvent) {
       final categoryId = state.categoryController.value;
       final difficulty = state.difficultyController.value;
 
-      if ((state.isPaid && state.idController.text.isEmpty) || categoryId == null || difficulty == null)
+      // Check for required fields.
+      if ((state.isPaid && state.idController.text.isEmpty) || categoryId == null || difficulty == null) {
         _errorBloc.add(UserErrorEvent("Failed to create technique", "Please fill out all fields!"));
-      else {
-        late final technique;
-        if (event is CreateTechniqueEvent)
-          technique = await _createTechnique(
-            productId: state.isPaid ? Optional.ofNullable(state.idController.text) : Optional.empty(),
-            categoryId: categoryId,
-            difficulty: difficulty,
-            localizedData: state.localizedData.entries.map((e) => e.value),
-            thumbnail: Optional.ofNullable(state.thumbnailController.image),
-            video: Optional.ofNullable(state.videoController.video),
-          );
-        else if (event is UpdateTechniqueEvent) {
-          late final Optional<Media>? thumbnail;
-          late final Optional<Media>? video;
-
-          if (event.technique.thumbnail.toNullable() == state.thumbnailController.image)
-            thumbnail = null;
-          else
-            thumbnail = state.thumbnailController.image != null ? Optional.of(state.thumbnailController.image!) : Optional.empty();
-
-          if (event.technique.video.toNullable() == state.videoController.video)
-            video = null;
-          else
-            video = state.videoController.video != null ? Optional.of(state.videoController.video!) : Optional.empty();
-
-          technique = await _updateTechnique(
-            event.technique.id,
-            productId: state.isPaid ? Optional.of(state.idController.text) : Optional.empty(),
-            categoryId: state.categoryController.value,
-            difficulty: state.difficultyController.value,
-            localizedData: state.localizedData.entries.map((e) => e.value),
-            thumbnail: thumbnail,
-            video: video,
-          );
-        }
-        yield state.copyWith(success: technique);
       }
+
+      late final Optional<Media>? thumbnail;
+      late final Optional<Media>? video;
+
+      // Check if thumbnail has changed.
+      if (event.technique.thumbnail.toNullable() == state.thumbnailController.image)
+        thumbnail = null;
+      else
+        thumbnail = Optional.ofNullable(state.thumbnailController.image);
+
+      // Check if video has changed.
+      if (event.technique.video.toNullable() == state.videoController.video)
+        video = null;
+      else
+        video = Optional.ofNullable(state.videoController.video);
+
+      // Update technique.
+      final technique = await _updateTechnique(
+        event.technique.id,
+        productId: state.isPaid ? Optional.of(state.idController.text) : Optional.empty(),
+        categoryId: state.categoryController.value,
+        difficulty: state.difficultyController.value,
+        localizedData: state.localizedData.entries.map((e) => e.value),
+        thumbnail: thumbnail,
+        video: video,
+      );
+      yield state.copyWith(success: technique);
+    } else if (event is CreateTechniqueEvent) {
+      final categoryId = state.categoryController.value;
+      final difficulty = state.difficultyController.value;
+
+      // Check for required fields.
+      if ((state.isPaid && state.idController.text.isEmpty) || categoryId == null || difficulty == null) {
+        _errorBloc.add(UserErrorEvent("Failed to create technique", "Please fill out all fields!"));
+      }
+
+      // Create techinque.
+      final technique = await _createTechnique(
+        productId: state.isPaid ? Optional.ofNullable(state.idController.text) : Optional.empty(),
+        categoryId: categoryId!,
+        difficulty: difficulty!,
+        localizedData: state.localizedData.entries.map((e) => e.value),
+        thumbnail: Optional.ofNullable(state.thumbnailController.image),
+        video: Optional.ofNullable(state.videoController.video),
+      );
+
+      yield state.copyWith(success: technique);
     }
   }
 }

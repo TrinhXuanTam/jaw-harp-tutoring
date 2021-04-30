@@ -5,6 +5,7 @@ import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:optional/optional.dart';
 
+/// Update category.
 @LazySingleton(env: [Environment.prod, Environment.dev])
 class UpdateCategory {
   final ICategoryAdminRepository _adminRepository;
@@ -18,7 +19,7 @@ class UpdateCategory {
     Iterable<CategoryLocalizedData>? localizedData,
   }) {
     return _adminRepository.updateCategory(
-      id,
+      id: id,
       isVisible: isVisible,
       thumbnail: thumbnail,
       localizedData: localizedData,

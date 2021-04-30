@@ -7,6 +7,7 @@ import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/infrastructure/DTO/mediaDTO.dart';
 import 'package:optional/optional.dart';
 
+/// Category DTO
 class CategoryDTO extends Category {
   final Optional<MediaDTO> thumbnail;
 
@@ -19,6 +20,7 @@ class CategoryDTO extends Category {
     required String description,
   }) : super(id: id, isVisible: isVisible, thumbnail: thumbnail, techniqueIds: techniqueIds, title: title, description: description);
 
+  /// Extract localized data from Firestore document.
   static Map<String, dynamic> _getLocalizedData(DocumentSnapshot documentSnapshot) {
     final languageCode = FirebaseAuth.instance.languageCode;
 
@@ -32,6 +34,19 @@ class CategoryDTO extends Category {
     }
   }
 
+  /// Get download url for displaying thumbnail.
+  static Future<Optional<MediaDTO>> _getDownloadUrl(DocumentSnapshot documentSnapshot, String filename) async {
+    try {
+      final media = FirebaseStorage.instance.ref("categories");
+      final downloadUrl = await media.child(documentSnapshot.id).child(filename).getDownloadURL();
+      return Optional.of(MediaDTO(url: Optional.of(downloadUrl)));
+    } catch (exception) {
+      // Return [Optional.empty()] if file does not exist.
+      return Optional.empty();
+    }
+  }
+
+  /// Create DTO from entity.
   factory CategoryDTO.fromEntity(Category category) {
     return CategoryDTO(
       id: category.id,
@@ -43,6 +58,7 @@ class CategoryDTO extends Category {
     );
   }
 
+  /// Create DTO from Firestore document.
   static Future<CategoryDTO> fromFirestore(DocumentSnapshot documentSnapshot) async {
     final localizedData = _getLocalizedData(documentSnapshot);
 
@@ -56,6 +72,7 @@ class CategoryDTO extends Category {
     );
   }
 
+  /// Convert DTO to json format.
   Map<String, dynamic> toJson() {
     return {
       "id": id,
@@ -67,6 +84,7 @@ class CategoryDTO extends Category {
     };
   }
 
+  /// Load CategoryDTO from json format.
   factory CategoryDTO.fromJson(Map<String, dynamic> json) {
     return CategoryDTO(
       id: json["id"],
@@ -76,14 +94,5 @@ class CategoryDTO extends Category {
       title: json["title"],
       description: json["description"],
     );
-  }
-}
-
-Future<Optional<MediaDTO>> _getDownloadUrl(DocumentSnapshot documentSnapshot, String filename) async {
-  try {
-    final media = FirebaseStorage.instance.ref("categories");
-    return Optional.of(MediaDTO(url: Optional.of(await media.child(documentSnapshot.id).child(filename).getDownloadURL())));
-  } catch (exception) {
-    return Optional.empty();
   }
 }

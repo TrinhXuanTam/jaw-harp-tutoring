@@ -1,12 +1,13 @@
 import 'package:injectable/injectable.dart';
-import 'package:jews_harp/features/user_section/domain/repository_interfaces/user_repository.dart';
+import 'package:jews_harp/features/user_section/domain/facade_interfaces/user_section_facade.dart';
 import 'package:jews_harp/features/user_section/infrastructure/data_sources/firebase_user_section_data_source.dart';
 
-@LazySingleton(as: IUserRepository, env: [Environment.prod])
-class UserRepository extends IUserRepository {
+/// User section facade for handling user related login.
+@LazySingleton(as: IUserSectionFacade, env: [Environment.prod])
+class UserSectionFacade extends IUserSectionFacade {
   final FirebaseUserSectionDataSource _firebaseUserSectionDataSource;
 
-  UserRepository(this._firebaseUserSectionDataSource);
+  UserSectionFacade(this._firebaseUserSectionDataSource);
 
   @override
   Future<void> markTechniqueAsFavorite(String techniqueId) => _firebaseUserSectionDataSource.markTechniqueAsFavorite(techniqueId);

@@ -67,9 +67,12 @@ class EditCategoryScreen extends StatelessWidget {
                           thumbnailController: ThumbnailPickerController(image: this.category.thumbnail.toNullable()),
                           localizedData: state.localizedData,
                         )),
-                        child: _EditCategoryForm(
-                          category: this.category,
-                          onClose: (category) => this.onClose(context, category),
+                        child: Builder(
+                          builder: (ctx) => CategoryForm(
+                            submitButtonText: "Save",
+                            onSubmit: () => BlocProvider.of<CategoryFormBloc>(ctx).add(UpdateCategoryEvent(this.category)),
+                            onSuccess: (updatedCategory) => this.onClose(ctx, updatedCategory),
+                          ),
                         ),
                       ),
                     ],
@@ -81,40 +84,6 @@ class EditCategoryScreen extends StatelessWidget {
             return LoadingScreen();
         },
       ),
-    );
-  }
-}
-
-class _EditCategoryForm extends StatelessWidget {
-  final Category category;
-  final void Function(Category category) onClose;
-
-  const _EditCategoryForm({
-    Key? key,
-    required this.category,
-    required this.onClose,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CategoryForm(
-          submitButtonText: "Save",
-          onSubmit: () => BlocProvider.of<CategoryFormBloc>(context).add(UpdateCategoryEvent(this.category)),
-          onSuccess: (updatedCategory) => this.onClose(updatedCategory),
-        ),
-        SizedBox(height: 5),
-        RoundedButton(
-          text: "Remove",
-          color: Colors.redAccent[200]!,
-          textColor: Colors.white,
-          borderColor: Colors.redAccent[200]!,
-          onPressed: () {
-            this.onClose(this.category);
-          },
-        ),
-      ],
     );
   }
 }
