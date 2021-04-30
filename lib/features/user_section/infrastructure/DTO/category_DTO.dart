@@ -7,8 +7,6 @@ import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/infrastructure/DTO/mediaDTO.dart';
 import 'package:optional/optional.dart';
 
-import 'category_localized_data_DTO.dart';
-
 class CategoryDTO extends Category {
   final Optional<MediaDTO> thumbnail;
 
@@ -21,15 +19,14 @@ class CategoryDTO extends Category {
     required String description,
   }) : super(id: id, isVisible: isVisible, thumbnail: thumbnail, techniqueIds: techniqueIds, title: title, description: description);
 
-  static CategoryLocalizedDataDTO _getLocalizedData(DocumentSnapshot documentSnapshot) {
+  static Map<String, dynamic> _getLocalizedData(DocumentSnapshot documentSnapshot) {
     final languageCode = FirebaseAuth.instance.languageCode;
-    final l10n = CategoryLocalizedDataDTO.getLocalizedData(documentSnapshot);
 
-    final localizedData = l10n[languageCode];
+    final localizedData = documentSnapshot["localization"][languageCode];
     if (localizedData != null)
       return localizedData;
     else {
-      final defaultLocalizedData = l10n[ENGLISH_CODE];
+      final defaultLocalizedData = documentSnapshot["localization"][ENGLISH_CODE];
       if (defaultLocalizedData == null) throw LanguageNotSupportedError();
       return defaultLocalizedData;
     }
@@ -54,8 +51,8 @@ class CategoryDTO extends Category {
       isVisible: documentSnapshot["isVisible"],
       techniqueIds: List<String>.from(documentSnapshot["techniques"]),
       thumbnail: await _getDownloadUrl(documentSnapshot, "thumbnail"),
-      title: localizedData.title,
-      description: localizedData.description,
+      title: localizedData["title"],
+      description: localizedData["description"],
     );
   }
 

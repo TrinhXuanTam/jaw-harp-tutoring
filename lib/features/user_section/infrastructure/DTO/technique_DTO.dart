@@ -6,7 +6,6 @@ import 'package:jews_harp/core/errors/language_not_supported_error.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/infrastructure/DTO/category_DTO.dart';
 import 'package:jews_harp/features/user_section/infrastructure/DTO/mediaDTO.dart';
-import 'package:jews_harp/features/user_section/infrastructure/DTO/technique_localized_data_DTO.dart';
 import 'package:optional/optional_internal.dart';
 
 class TechniqueDTO extends Technique {
@@ -79,15 +78,14 @@ class TechniqueDTO extends Technique {
     );
   }
 
-  static TechniqueLocalizedDataDTO _getLocalizedData(DocumentSnapshot documentSnapshot) {
+  static Map<String, dynamic> _getLocalizedData(DocumentSnapshot documentSnapshot) {
     final languageCode = FirebaseAuth.instance.languageCode;
-    final Map<String, TechniqueLocalizedDataDTO> l10n = TechniqueLocalizedDataDTO.getLocalizedData(documentSnapshot);
 
-    final localizedData = l10n[languageCode];
+    final localizedData = documentSnapshot["localization"][languageCode];
     if (localizedData != null)
       return localizedData;
     else {
-      final defaultLocalizedData = l10n[ENGLISH_CODE];
+      final defaultLocalizedData = documentSnapshot["localization"][ENGLISH_CODE];
       if (defaultLocalizedData == null) throw LanguageNotSupportedError();
       return defaultLocalizedData;
     }
@@ -106,9 +104,9 @@ class TechniqueDTO extends Technique {
       difficulty: difficulty,
       thumbnail: await _getDownloadUrl(documentSnapshot, "thumbnail"),
       video: await _getDownloadUrl(documentSnapshot, "video"),
-      title: localizedData.title,
-      description: localizedData.description,
-      accompanyingText: localizedData.accompanyingText,
+      title: localizedData["title"],
+      description: localizedData["description"],
+      accompanyingText: localizedData["accompanyingText"],
     );
   }
 

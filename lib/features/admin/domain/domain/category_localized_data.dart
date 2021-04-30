@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+/// Entity that encompasses localized data for categories.
 class CategoryLocalizedData extends Equatable {
   final String languageCode;
   final String title;

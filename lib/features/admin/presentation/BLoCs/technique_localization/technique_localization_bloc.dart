@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/features/admin/application/use_cases/get_technique_localized_data.dart';
+import 'package:jews_harp/features/admin/domain/domain/technique_localized_data.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
-import 'package:jews_harp/features/user_section/domain/entities/technique_localized_data.dart';
 import 'package:meta/meta.dart';
 
 part 'technique_localization_event.dart';

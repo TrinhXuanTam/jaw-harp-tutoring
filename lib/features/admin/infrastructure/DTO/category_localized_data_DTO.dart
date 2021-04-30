@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:jews_harp/features/user_section/domain/entities/category_localized_data.dart';
+import 'package:jews_harp/features/admin/domain/domain/category_localized_data.dart';
 
+/// DTO for category localized data.
 class CategoryLocalizedDataDTO extends CategoryLocalizedData {
   const CategoryLocalizedDataDTO({
     required String languageCode,
@@ -8,6 +9,7 @@ class CategoryLocalizedDataDTO extends CategoryLocalizedData {
     required String description,
   }) : super(languageCode: languageCode, title: title, description: description);
 
+  /// Get category localized data from category Firebase document.
   static Map<String, CategoryLocalizedDataDTO> getLocalizedData(DocumentSnapshot documentSnapshot) {
     final Map<String, CategoryLocalizedDataDTO> l10n = {};
     documentSnapshot.data()?["localization"].forEach(
@@ -21,6 +23,7 @@ class CategoryLocalizedDataDTO extends CategoryLocalizedData {
     return l10n;
   }
 
+  /// Create DTO from entity.
   factory CategoryLocalizedDataDTO.fromEntity(CategoryLocalizedData localizedData) {
     return CategoryLocalizedDataDTO(
       languageCode: localizedData.languageCode,
@@ -28,22 +31,4 @@ class CategoryLocalizedDataDTO extends CategoryLocalizedData {
       description: localizedData.description,
     );
   }
-}
-
-extension Serializable on Iterable<CategoryLocalizedDataDTO> {
-  Map<String, Map<String, String>> toJson() {
-    final Map<String, Map<String, String>> localization = {};
-    this.forEach(
-      (element) => localization[element.languageCode] = {
-        "title": element.title,
-        "description": element.description,
-      },
-    );
-
-    return localization;
-  }
-}
-
-extension Conversion on Iterable<CategoryLocalizedData> {
-  Iterable<CategoryLocalizedDataDTO> toDTO() => this.map((e) => CategoryLocalizedDataDTO.fromEntity(e));
 }

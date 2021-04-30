@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:jews_harp/features/user_section/domain/entities/technique_localized_data.dart';
+import 'package:jews_harp/features/admin/domain/domain/technique_localized_data.dart';
 
+/// DTO for technique localized data.
 class TechniqueLocalizedDataDTO extends TechniqueLocalizedData {
   const TechniqueLocalizedDataDTO({
     required String languageCode,
@@ -9,6 +10,7 @@ class TechniqueLocalizedDataDTO extends TechniqueLocalizedData {
     required String accompanyingText,
   }) : super(languageCode: languageCode, title: title, description: description, accompanyingText: accompanyingText);
 
+  /// Get technique localized data from technique Firebase document.
   static Map<String, TechniqueLocalizedDataDTO> getLocalizedData(DocumentSnapshot documentSnapshot) {
     final Map<String, TechniqueLocalizedDataDTO> l10n = {};
     documentSnapshot.data()?["localization"].forEach(
@@ -22,6 +24,7 @@ class TechniqueLocalizedDataDTO extends TechniqueLocalizedData {
     return l10n;
   }
 
+  /// Create DTO from entity.
   factory TechniqueLocalizedDataDTO.fromEntity(TechniqueLocalizedData localizedData) {
     return TechniqueLocalizedDataDTO(
       languageCode: localizedData.languageCode,
@@ -30,23 +33,4 @@ class TechniqueLocalizedDataDTO extends TechniqueLocalizedData {
       accompanyingText: localizedData.accompanyingText,
     );
   }
-}
-
-extension Serializable on Iterable<TechniqueLocalizedDataDTO> {
-  Map<String, Map<String, String>> toJson() {
-    final Map<String, Map<String, String>> localization = {};
-    this.forEach(
-      (element) => localization[element.languageCode] = {
-        "title": element.title,
-        "description": element.description,
-        "accompanyingText": element.accompanyingText,
-      },
-    );
-
-    return localization;
-  }
-}
-
-extension Conversion on Iterable<TechniqueLocalizedData> {
-  Iterable<TechniqueLocalizedDataDTO> toDTO() => this.map((e) => TechniqueLocalizedDataDTO.fromEntity(e));
 }
