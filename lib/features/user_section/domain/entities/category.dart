@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:optional/optional.dart';
 
+/// Category entity that contains techniques.
 class Category extends Equatable {
   final String id;
   final bool isVisible;

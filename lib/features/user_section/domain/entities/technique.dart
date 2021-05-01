@@ -1,13 +1,16 @@
 import 'package:equatable/equatable.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
+import 'package:jews_harp/features/user_section/domain/entities/product_info.dart';
 import 'package:optional/optional.dart';
 
 import 'media.dart';
 
+/// Technique (lecture) entity.
 class Technique extends Equatable {
   final String id;
   final Optional<DateTime> datePublished;
   final Optional<String> productId;
+  final ProductInfo productInfo;
   final Category category;
   final TechniqueDifficulty difficulty;
   final Optional<Media> thumbnail;
@@ -18,13 +21,14 @@ class Technique extends Equatable {
 
   const Technique({
     required this.id,
-    this.datePublished = const Optional.empty(),
+    this.video = const Optional.empty(),
+    this.thumbnail = const Optional.empty(),
     this.productId = const Optional.empty(),
+    this.datePublished = const Optional.empty(),
+    required this.title,
     required this.category,
     required this.difficulty,
-    this.thumbnail = const Optional.empty(),
-    this.video = const Optional.empty(),
-    required this.title,
+    required this.productInfo,
     required this.description,
     required this.accompanyingText,
   });

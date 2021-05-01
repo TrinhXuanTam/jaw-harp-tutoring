@@ -5,7 +5,7 @@ import 'package:jews_harp/core/regex.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
 
-/// Create a new account use case
+/// Create a new account.
 @LazySingleton(env: [Environment.prod, Environment.dev, SIGN_UP_TEST_ENV])
 class SignUp {
   final IUserAuthRepository _userRepository;
@@ -18,12 +18,16 @@ class SignUp {
     String password,
     String passwordRepeat,
   ) async {
+    // Fields must not be empty.
     if (name.isEmpty || email.isEmpty || password.isEmpty || passwordRepeat.isEmpty) throw ValidationError("Please fill out all fields!");
 
+    // Check email format.
     if (!RegExMatchers.email.hasMatch(email)) throw ValidationError("Invalid email format!");
 
+    // Check password format.
     if (!RegExMatchers.password.hasMatch(password)) throw ValidationError("Password must contain 6 to 20 characters with at least one digit and character!");
 
+    // Check if passwords are same.
     if (password != passwordRepeat) throw ValidationError("Passwords don't match!");
 
     return _userRepository.createUser(name, email, password);

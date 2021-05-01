@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/routes.dart';
@@ -12,26 +11,23 @@ import 'package:video_player/video_player.dart';
 
 class VideoPicker extends StatelessWidget {
   final VideoPickerController controller;
-  final double height;
 
   const VideoPicker({
     Key? key,
     required this.controller,
-    this.height = 135,
   }) : super(key: key);
 
   Widget _videoPickerBlocBuilder(BuildContext context, VideoPickerState state) {
     if (state is VideoPickedState)
       return GestureDetector(
         onTap: () => Navigator.pushNamed(context, VIDEO_FULL_SCREEN_SCREEN_ROUTE, arguments: VideoFullScreenModeScreenArgs(state.playableVideo)),
-        child: Container(
-          height: this.height,
+        child: AspectRatio(
+          aspectRatio: 16 / 9,
           child: Stack(
             alignment: Alignment.center,
             children: [
               Container(
                 width: double.infinity,
-                height: this.height,
                 child: FittedBox(
                   fit: BoxFit.cover,
                   child: SizedBox(
@@ -46,7 +42,7 @@ class VideoPicker extends StatelessWidget {
               ),
               Container(
                 width: double.infinity,
-                height: this.height,
+                height: double.infinity,
                 color: BASE_COLOR_VERY_LIGHT.withAlpha(170),
                 child: Icon(
                   Icons.play_circle_outline_rounded,
@@ -73,8 +69,8 @@ class VideoPicker extends StatelessWidget {
     else
       return GestureDetector(
         onTap: () => BlocProvider.of<VideoPickerBloc>(context).add(PickVideoEvent()),
-        child: Container(
-          height: this.height,
+        child: AspectRatio(
+          aspectRatio: 16 / 9,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

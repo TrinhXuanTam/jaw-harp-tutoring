@@ -9,8 +9,10 @@ import 'package:meta/meta.dart';
 import 'package:video_player/video_player.dart';
 
 part 'video_picker_event.dart';
+
 part 'video_picker_state.dart';
 
+/// Video picker state management.
 @Injectable(env: [Environment.prod, Environment.dev])
 class VideoPickerBloc extends Bloc<VideoPickerEvent, VideoPickerState> {
   final PickVideo _pickVideo;
@@ -29,6 +31,7 @@ class VideoPickerBloc extends Bloc<VideoPickerEvent, VideoPickerState> {
         yield VideoPickedState(video, playableVideo);
       }
     } else if (event is PickVideoEvent) {
+      // Open the file browser and pick video.
       final video = await _pickVideo();
       if (video == null)
         yield NoVideoPickedState();

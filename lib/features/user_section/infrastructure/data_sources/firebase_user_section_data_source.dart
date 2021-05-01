@@ -4,12 +4,15 @@ import 'package:injectable/injectable.dart';
 import 'package:jews_harp/features/user_section/infrastructure/DTO/category_DTO.dart';
 import 'package:jews_harp/features/user_section/infrastructure/DTO/technique_DTO.dart';
 
+/// Firebase technique data source.
 @LazySingleton(env: [Environment.prod])
 class FirebaseUserSectionDataSource {
-  CollectionReference _techniques = FirebaseFirestore.instance.collection('techniques');
-  CollectionReference _categories = FirebaseFirestore.instance.collection('categories');
-  CollectionReference _users = FirebaseFirestore.instance.collection('users');
+  final CollectionReference _techniques = FirebaseFirestore.instance.collection('techniques');
+  final CollectionReference _categories = FirebaseFirestore.instance.collection('categories');
+  final CollectionReference _users = FirebaseFirestore.instance.collection('users');
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  /// Get all categories.
   Future<Iterable<CategoryDTO>> getAllCategories() async {
     final snapshot = await _categories.where("isVisible", isEqualTo: true).get();
     final List<CategoryDTO> res = [];
@@ -17,19 +20,20 @@ class FirebaseUserSectionDataSource {
     return res;
   }
 
+  /// Get a technique by given [techniqueId].
   Future<TechniqueDTO> getTechniqueById(String techniqueId) async {
     return TechniqueDTO.fromFirestore(await _techniques.doc(techniqueId).get());
   }
 
+  /// Get all techniques.
   Future<Iterable<TechniqueDTO>> getAllTechniques() async {
     final publishedTechniques = await _techniques.where("datePublished", isNotEqualTo: null).orderBy("datePublished", descending: true).get();
     final List<TechniqueDTO> res = [];
-
     for (final doc in publishedTechniques.docs) res.add(await TechniqueDTO.fromFirestore(doc));
-
     return res;
   }
 
+  /// Get 10 newest techniques.
   Future<Iterable<TechniqueDTO>> getMostRecentTechniques() async {
     final query = await _techniques.where("datePublished", isNotEqualTo: null).orderBy("datePublished", descending: true).limit(10).get();
     final List<TechniqueDTO> res = [];
@@ -37,17 +41,27 @@ class FirebaseUserSectionDataSource {
     return res;
   }
 
+  /// Mark technique as favorite.
   Future<void> markTechniqueAsFavorite(String techniqueId) {
-    final currentUser = FirebaseAuth.instance.currentUser;
-    return _users.doc(currentUser!.uid).update({
+    final uid = _auth.currentUser!.uid;
+    return _users.doc(uid).update({
       "favoriteTechniques": FieldValue.arrayUnion([techniqueId]),
     });
   }
 
+  /// Remove technique from favorites.
   Future<void> removeTechniqueFromFavorites(String techniqueId) {
-    final currentUser = FirebaseAuth.instance.currentUser;
-    return _users.doc(currentUser!.uid).update({
+    final uid = _auth.currentUser!.uid;
+    return _users.doc(uid).update({
       "favoriteTechniques": FieldValue.arrayRemove([techniqueId]),
+    });
+  }
+
+  /// Add purchased technique to user.
+  Future<void> addPurchasedTechnique(String techniqueId) async {
+    final uid = _auth.currentUser!.uid;
+    _users.doc(uid).update({
+      "purchasedTechniques": FieldValue.arrayUnion([techniqueId])
     });
   }
 }

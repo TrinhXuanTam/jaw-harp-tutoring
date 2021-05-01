@@ -3,13 +3,15 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jews_harp/core/constants/locations.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/errors/media_not_found_error.dart';
 import 'package:jews_harp/core/errors/user_not_signed_in_error.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
-import 'package:jews_harp/features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
+import 'package:jews_harp/features/auth/presentation/BLoCs/auth_state/auth_bloc.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/domain/entities/media.dart';
+import 'package:jews_harp/features/user_section/domain/entities/product_info.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:random_color/random_color.dart';
 import 'package:video_player/video_player.dart';
@@ -39,7 +41,7 @@ VideoPlayerController getVideoPlayerControllerFromMedia(Media media) {
 
 User getUser(BuildContext context) {
   final state = BlocProvider.of<AuthBloc>(context).state;
-  if (state is AuthenticatedState) {
+  if (state is UserAuthenticated) {
     return state.user;
   } else
     throw UserNotSignedInError();
@@ -130,4 +132,42 @@ Widget buildProfilePhoto(BuildContext context, {double? size}) {
       placeholder: (context, url) => generateProfilePhoto(context, size: size),
       errorWidget: (ctx, url, error) => generateProfilePhoto(context, size: size),
     );
+}
+
+Widget getTechniqueThumbnail(Technique technique) {
+  if (technique.thumbnail.isPresent)
+    return FittedBox(
+      fit: BoxFit.cover,
+      child: getImageFromMedia(technique.thumbnail.value),
+    );
+  else
+    return Container(
+      padding: const EdgeInsets.all(20),
+      color: BASE_COLOR,
+      child: FittedBox(
+        fit: BoxFit.contain,
+        child: Image.asset(LOGO_LOCATION),
+      ),
+    );
+}
+
+bool hasAccessToTechnique(BuildContext context, Technique technique) {
+  final productType = technique.productInfo.type;
+
+  if (productType == ProductType.free)
+    return true;
+  else if (productType == ProductType.unavailable)
+    return false;
+  else {
+    final user = getUser(context);
+    return user.purchasedTechniques.contains(technique.id);
+  }
+}
+
+String getPriceTag(BuildContext context, Technique technique) {
+  final user = getUser(context);
+  if (user.purchasedTechniques.contains(technique.id))
+    return "Purchased";
+  else
+    return technique.productInfo.toString();
 }

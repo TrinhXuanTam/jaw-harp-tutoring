@@ -6,7 +6,9 @@ class TechniqueSideScroll extends StatelessWidget {
   final List<String> techniqueIds;
   final String? title;
 
-  factory TechniqueSideScroll.fromTechniques(List<Technique> techniques, {String? title}) => TechniqueSideScroll(techniqueIds: techniques.map((e) => e.id).toList(), title: title);
+  factory TechniqueSideScroll.fromTechniques(List<Technique> techniques, {String? title}) {
+    return TechniqueSideScroll(techniqueIds: techniques.map((e) => e.id).toList(), title: title);
+  }
 
   const TechniqueSideScroll({Key? key, required this.techniqueIds, this.title}) : super(key: key);
 

@@ -15,9 +15,8 @@ class CategoryScreen extends StatelessWidget {
   }) : super(key: key);
 
   Widget _buildThumbnail(BuildContext ctx) {
-    return Container(
-      height: 250,
-      width: double.infinity,
+    return AspectRatio(
+      aspectRatio: 16 / 9,
       child: this
           .category
           .thumbnail
@@ -27,9 +26,11 @@ class CategoryScreen extends StatelessWidget {
               child: getImageFromMedia(media),
             ),
           )
-          .orElseGet(() => Container(
-                color: this.category.getColor(),
-              )),
+          .orElseGet(
+            () => Container(
+              color: this.category.getColor(),
+            ),
+          ),
     );
   }
 

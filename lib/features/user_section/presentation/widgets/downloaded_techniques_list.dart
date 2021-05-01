@@ -1,7 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jews_harp/core/constants/locations.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_local_storage/technique_local_storage_bloc.dart';
@@ -9,26 +8,6 @@ import 'package:jews_harp/features/user_section/presentation/screens/technique_s
 import 'package:jews_harp/features/user_section/utils.dart';
 
 class DownloadedTechniquesList extends StatelessWidget {
-  Widget _buildThumbnail(Technique technique) {
-    if (technique.thumbnail.isPresent)
-      return FittedBox(
-        fit: BoxFit.cover,
-        child: getImageFromMedia(technique.thumbnail.value),
-      );
-    else
-      return Container(
-        padding: const EdgeInsets.all(20),
-        color: BASE_COLOR,
-        child: FittedBox(
-          fit: BoxFit.contain,
-          child: Image.asset(
-            LOGO_LOCATION,
-            width: 30,
-          ),
-        ),
-      );
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TechniqueLocalStorageBloc, TechniqueLocalStorageState>(builder: (ctx, state) {
@@ -44,29 +23,27 @@ class DownloadedTechniquesList extends StatelessWidget {
             openElevation: 0,
             closedElevation: 0,
             transitionType: ContainerTransitionType.fadeThrough,
-            openBuilder: (ctx, _) => TechniqueScreen(technique: item),
+            openBuilder: (ctx, _) => TechniqueScreen(technique: item, hasAccess: true),
             closedBuilder: (ctx, openContainer) => GestureDetector(
               onTap: openContainer,
               child: Container(
-                height: 140,
+                height: 100,
                 width: double.infinity,
                 color: Colors.transparent,
                 child: Row(
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Container(
-                        child: Container(
-                          width: 170,
-                          height: double.infinity,
-                          child: _buildThumbnail(item),
-                        ),
+                      child: AspectRatio(
+                        aspectRatio: 16 / 9,
+                        child: getTechniqueThumbnail(item),
                       ),
                     ),
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(5),
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
@@ -100,19 +77,6 @@ class DownloadedTechniquesList extends StatelessWidget {
                                             ),
                                             SizedBox(width: 4),
                                             Text(item.difficulty.string),
-                                          ],
-                                        ),
-                                        SizedBox(height: 5),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.attach_money_rounded,
-                                              color: BASE_COLOR,
-                                              size: 15,
-                                            ),
-                                            SizedBox(width: 4),
-                                            // TODO
-                                            Text(item.productId.isPresent ? "99.99\$" : "Free"),
                                           ],
                                         ),
                                       ],

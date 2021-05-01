@@ -73,6 +73,12 @@ dependencies:
   path_provider: ^2.0.1
   # Http client for Dart
   dio: ^4.0.0-prev3
+  # In-app purchases
+  in_app_purchase: ^0.5.1+1
+  # file compression
+  light_compressor: ^1.0.2
+  # Check internet connectivity
+  connectivity: ^3.0.3
 
 dev_dependencies:
   mocktail: ^0.1.1

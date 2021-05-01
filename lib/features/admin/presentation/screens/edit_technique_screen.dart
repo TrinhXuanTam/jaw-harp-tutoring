@@ -4,7 +4,6 @@ import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/extensions.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/loading_wrapper.dart';
-import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/core/widgets/rounded_dropdown.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
@@ -70,7 +69,13 @@ class EditTechniqueScreen extends StatelessWidget {
                           videoController: VideoPickerController(video: technique.video.toNullable()),
                         ),
                       ),
-                      child: _EditTechniqueForm(technique: this.technique, onClose: this.onClose),
+                      child: Builder(
+                        builder: (ctx) => TechniqueForm(
+                          submitButtonText: "Save",
+                          onSubmit: () => BlocProvider.of<TechniqueFormBloc>(ctx).add(UpdateTechniqueEvent(this.technique)),
+                          onSuccess: (_) => this.onClose(ctx),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -80,36 +85,6 @@ class EditTechniqueScreen extends StatelessWidget {
         else
           return LoadingScreen();
       }),
-    );
-  }
-}
-
-class _EditTechniqueForm extends StatelessWidget {
-  final Technique technique;
-  final void Function(BuildContext ctx) onClose;
-
-  const _EditTechniqueForm({Key? key, required this.technique, required this.onClose}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TechniqueForm(
-          submitButtonText: "Save",
-          onSubmit: () => BlocProvider.of<TechniqueFormBloc>(context).add(UpdateTechniqueEvent(technique)),
-          onSuccess: (_) => this.onClose(context),
-        ),
-        SizedBox(height: 5),
-        RoundedButton(
-          text: "Remove",
-          color: Colors.redAccent[200]!,
-          textColor: Colors.white,
-          borderColor: Colors.redAccent[200]!,
-          onPressed: () {
-            this.onClose(context);
-          },
-        ),
-      ],
     );
   }
 }

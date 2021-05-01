@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:jews_harp/core/BLoCs/connectivity/connectivity_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
+import 'package:jews_harp/core/widgets/no_internet_widget.dart';
 import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/categories/categories_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/screens/category_screen.dart';
@@ -17,55 +19,61 @@ class CategoriesScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CenteredStack(
-      children: [
-        BlocBuilder<CategoriesBloc, CategoriesState>(builder: (ctx, state) {
-          if (state is CategoriesLoaded)
-            return Container(
-              padding: EdgeInsets.all(10),
-              child: Scrollbar(
-                child: StaggeredGridView.countBuilder(
-                  crossAxisCount: 4,
-                  itemCount: state.categories.length + 1,
-                  itemBuilder: (BuildContext context, int index) {
-                    if (index == 0)
-                      return _CategoryCard(
-                        color: getRandomShade("All Techniques".hashCode),
-                        techniquesCnt: state.categories.fold<int>(0, (acc, element) => acc + element.techniqueIds.length),
-                        title: "All Techniques",
-                        description: "View all techniques",
-                        dst: DefaultCategoryScreen(categories: state.categories),
-                      );
-                    else {
-                      final category = state.categories[index - 1];
-                      final color = category.getColor();
-                      return _CategoryCard(
-                        color: color,
-                        techniquesCnt: category.techniqueIds.length,
-                        thumbnail: category.thumbnail,
-                        title: category.title,
-                        description: category.description,
-                        dst: CategoryScreen(category: category),
-                      );
-                    }
-                  },
-                  staggeredTileBuilder: (int index) => StaggeredTile.fit(2),
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                ),
-              ),
-            );
-          else
-            return Container(
-              width: double.infinity,
-              height: double.infinity,
-              child: SpinKitPulse(
-                color: BASE_COLOR,
-                size: 100,
-              ),
-            );
-        }),
-      ],
+    return BlocBuilder<ConnectivityBloc, ConnectivityState>(
+      builder: (context, state) {
+        if (state is NoInternetConnection) return NoInternetWidget();
+
+        return CenteredStack(
+          children: [
+            BlocBuilder<CategoriesBloc, CategoriesState>(builder: (ctx, state) {
+              if (state is CategoriesLoaded)
+                return Container(
+                  padding: EdgeInsets.all(10),
+                  child: Scrollbar(
+                    child: StaggeredGridView.countBuilder(
+                      crossAxisCount: 4,
+                      itemCount: state.categories.length + 1,
+                      itemBuilder: (BuildContext context, int index) {
+                        if (index == 0)
+                          return _CategoryCard(
+                            color: getRandomShade("All Techniques".hashCode),
+                            techniquesCnt: state.categories.fold<int>(0, (acc, element) => acc + element.techniqueIds.length),
+                            title: "All Techniques",
+                            description: "View all techniques",
+                            dst: DefaultCategoryScreen(categories: state.categories),
+                          );
+                        else {
+                          final category = state.categories[index - 1];
+                          final color = category.getColor();
+                          return _CategoryCard(
+                            color: color,
+                            techniquesCnt: category.techniqueIds.length,
+                            thumbnail: category.thumbnail,
+                            title: category.title,
+                            description: category.description,
+                            dst: CategoryScreen(category: category),
+                          );
+                        }
+                      },
+                      staggeredTileBuilder: (int index) => StaggeredTile.fit(2),
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                    ),
+                  ),
+                );
+              else
+                return Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  child: SpinKitPulse(
+                    color: BASE_COLOR,
+                    size: 100,
+                  ),
+                );
+            }),
+          ],
+        );
+      },
     );
   }
 }

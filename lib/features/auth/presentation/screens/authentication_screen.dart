@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/features/auth/presentation/widgets/authentication_methods.dart';
-import 'package:jews_harp/features/auth/presentation/widgets/authentication_screen_background.dart';
 import 'package:jews_harp/features/auth/presentation/widgets/sign_up_text.dart';
 
+/// Authentication Screen.
 class AuthenticationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -11,13 +11,9 @@ class AuthenticationScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: CenteredStack(
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AuthenticationScreenBackground(),
-              AuthMethods(),
-            ],
-          ),
+          // Authentication methods.
+          AuthMethods(),
+          // Sign up text.
           Positioned(
             bottom: 20,
             child: SignUpText(),

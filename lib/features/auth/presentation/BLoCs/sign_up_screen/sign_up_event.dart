@@ -17,10 +17,3 @@ class SignUpButtonPressedEvent extends SignUpEvent {
     this.passwordRepeat,
   );
 }
-
-class LinkEmailEvent extends SignUpEvent {
-  final String email;
-  final String password;
-
-  LinkEmailEvent(this.email, this.password);
-}

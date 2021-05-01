@@ -1,7 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jews_harp/core/constants/locations.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/shimmer_effect.dart';
@@ -13,28 +12,9 @@ import 'package:jews_harp/features/user_section/utils.dart';
 class TechniqueList extends StatelessWidget {
   final List<String> techniqueIds;
   final bool showFavoriteIcon;
+  final bool showPrice;
 
-  const TechniqueList({Key? key, required this.techniqueIds, this.showFavoriteIcon = false}) : super(key: key);
-
-  Widget _buildThumbnail(Technique technique) {
-    if (technique.thumbnail.isPresent)
-      return FittedBox(
-        fit: BoxFit.cover,
-        child: getImageFromMedia(technique.thumbnail.value),
-      );
-    else
-      return Container(
-        padding: const EdgeInsets.all(20),
-        color: BASE_COLOR,
-        child: FittedBox(
-          fit: BoxFit.contain,
-          child: Image.asset(
-            LOGO_LOCATION,
-            width: 30,
-          ),
-        ),
-      );
-  }
+  const TechniqueList({Key? key, required this.techniqueIds, this.showFavoriteIcon = false, this.showPrice = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,28 +34,28 @@ class TechniqueList extends StatelessWidget {
                   openElevation: 0,
                   closedElevation: 0,
                   transitionType: ContainerTransitionType.fadeThrough,
-                  openBuilder: (ctx, _) => TechniqueScreen(technique: technique),
+                  openBuilder: (ctx, _) => TechniqueScreen(
+                    technique: technique,
+                    hasAccess: hasAccessToTechnique(context, technique),
+                  ),
                   closedBuilder: (ctx, openContainer) => GestureDetector(
                     onTap: openContainer,
                     child: Container(
-                      height: 140,
+                      height: 100,
                       width: double.infinity,
                       color: Colors.transparent,
                       child: Row(
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                            child: Container(
-                              child: Container(
-                                width: 170,
-                                height: double.infinity,
-                                child: _buildThumbnail(technique),
-                              ),
+                            child: AspectRatio(
+                              aspectRatio: 16 / 9,
+                              child: getTechniqueThumbnail(technique),
                             ),
                           ),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.all(15),
+                              padding: const EdgeInsets.all(5),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -112,19 +92,23 @@ class TechniqueList extends StatelessWidget {
                                                   Text(technique.difficulty.string),
                                                 ],
                                               ),
-                                              SizedBox(height: 5),
-                                              Row(
-                                                children: [
-                                                  Icon(
-                                                    Icons.attach_money_rounded,
-                                                    color: BASE_COLOR,
-                                                    size: 15,
-                                                  ),
-                                                  SizedBox(width: 4),
-                                                  // TODO
-                                                  Text(technique.productId.isPresent ? "99.99\$" : "Free"),
-                                                ],
-                                              ),
+                                              if (this.showPrice)
+                                                Column(
+                                                  children: [
+                                                    SizedBox(height: 5),
+                                                    Row(
+                                                      children: [
+                                                        Icon(
+                                                          Icons.attach_money_rounded,
+                                                          color: BASE_COLOR,
+                                                          size: 15,
+                                                        ),
+                                                        SizedBox(width: 4),
+                                                        Text(getPriceTag(context, technique)),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
                                             ],
                                           ),
                                         ),
@@ -166,17 +150,16 @@ class _LoadingEffect extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShimmerEffect(
       child: Container(
-        height: 140,
+        height: 100,
         width: double.infinity,
         color: Colors.transparent,
         child: Row(
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Container(
+              child: AspectRatio(
+                aspectRatio: 16 / 9,
                 child: Container(
-                  width: 170,
-                  height: double.infinity,
                   color: Colors.grey,
                 ),
               ),
@@ -230,7 +213,6 @@ class _LoadingEffect extends StatelessWidget {
                                       size: 15,
                                     ),
                                     SizedBox(width: 4),
-                                    // TODO
                                     Container(
                                       height: 12,
                                       width: 50,

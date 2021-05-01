@@ -6,6 +6,7 @@ import 'package:jews_harp/features/auth/presentation/widgets/third_party_authent
 import 'email_authentication_form.dart';
 import 'forgot_password_text.dart';
 
+/// Authentication methods.
 class AuthMethods extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

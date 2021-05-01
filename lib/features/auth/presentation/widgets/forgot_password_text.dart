@@ -3,7 +3,7 @@ import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/l10n.dart';
 
-/// Forgotten password link
+/// Forgotten password link.
 class ForgotPasswordText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

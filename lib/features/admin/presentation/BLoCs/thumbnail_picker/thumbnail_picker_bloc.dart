@@ -7,8 +7,10 @@ import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:meta/meta.dart';
 
 part 'thumbnail_picker_event.dart';
+
 part 'thumbnail_picker_state.dart';
 
+/// Thumbnail picker state management.
 @Injectable(env: [Environment.prod, Environment.dev])
 class ThumbnailPickerBloc extends Bloc<ThumbnailPickerEvent, ThumbnailPickerState> {
   final PickImage _pickImage;
@@ -26,6 +28,7 @@ class ThumbnailPickerBloc extends Bloc<ThumbnailPickerEvent, ThumbnailPickerStat
       else
         yield ImagePickedState(image);
     } else if (event is PickImageEvent) {
+      // Open the file browser and pick image.
       final image = await _pickImage();
       if (image == null)
         yield NoImagePickedState();

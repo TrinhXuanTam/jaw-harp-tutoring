@@ -1,32 +1,42 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jews_harp/core/constants/locations.dart';
+import 'package:jews_harp/core/BLoCs/connectivity/connectivity_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/loading_wrapper.dart';
+import 'package:jews_harp/core/widgets/no_internet_widget.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_detail/technique_detail_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_local_storage/technique_local_storage_bloc.dart';
+import 'package:jews_harp/features/user_section/presentation/screens/unlock_technique_screen.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/small_technique_list.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/video_player_widget.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
 class TechniqueScreenArgs {
   final Technique technique;
+  final bool hasAccess;
 
-  TechniqueScreenArgs(this.technique);
+  TechniqueScreenArgs(this.technique, this.hasAccess);
 }
 
 class TechniqueScreen extends StatelessWidget {
   final Technique technique;
+  final bool hasAccess;
 
-  factory TechniqueScreen.fromArgs(TechniqueScreenArgs args) => TechniqueScreen(technique: args.technique);
+  factory TechniqueScreen.fromArgs(TechniqueScreenArgs args) {
+    return TechniqueScreen(
+      technique: args.technique,
+      hasAccess: args.hasAccess,
+    );
+  }
 
   const TechniqueScreen({
     Key? key,
     required this.technique,
+    required this.hasAccess,
   }) : super(key: key);
 
   Widget _buildHeader(BuildContext context, TechniqueDetailLoaded state) {
@@ -38,27 +48,13 @@ class TechniqueScreen extends StatelessWidget {
     else {
       final size = MediaQuery.of(context).size;
 
-      if (state.technique.thumbnail.isPresent) {
-        return ClipRect(
-          child: Container(
-            height: size.height * 0.3,
-            width: double.infinity,
-            child: FittedBox(
-              fit: BoxFit.cover,
-              child: getImageFromMedia(state.technique.thumbnail.value),
-            ),
-          ),
-        );
-      } else
-        return Container(
+      return ClipRect(
+        child: Container(
           height: size.height * 0.3,
           width: double.infinity,
-          color: BASE_COLOR,
-          child: FittedBox(
-            fit: BoxFit.contain,
-            child: Image.asset(LOGO_LOCATION),
-          ),
-        );
+          child: getTechniqueThumbnail(state.technique),
+        ),
+      );
     }
   }
 
@@ -76,27 +72,20 @@ class TechniqueScreen extends StatelessWidget {
         else
           techniqueDetailBloc.add(MarkTechniqueAsFavoriteEvent(technique, user));
       },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+      child: Column(
         children: [
-          Column(
-            children: [
-              Icon(
-                isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-                color: isFavorite ? BASE_COLOR : Colors.grey,
-                size: 20,
-              ),
-              Text(
-                "Favorite",
-                style: TextStyle(
-                  fontSize: 12,
-                  color: isFavorite ? BASE_COLOR : Colors.grey,
-                ),
-              ),
-            ],
+          Icon(
+            isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+            color: BASE_COLOR,
+            size: 20,
           ),
-          SizedBox(width: 25),
-          _buildDownloadButton(context),
+          Text(
+            "Favorite",
+            style: TextStyle(
+              fontSize: 12,
+              color: BASE_COLOR,
+            ),
+          ),
         ],
       ),
     );
@@ -104,6 +93,8 @@ class TechniqueScreen extends StatelessWidget {
 
   Widget _buildDownloadButton(BuildContext context) {
     return BlocBuilder<TechniqueLocalStorageBloc, TechniqueLocalStorageState>(builder: (ctx, state) {
+      final bool connected = BlocProvider.of<ConnectivityBloc>(ctx).state is ConnectionAvailable;
+
       if (state.downloadingInProgress.contains(this.technique.id))
         return Column(
           children: [
@@ -123,19 +114,19 @@ class TechniqueScreen extends StatelessWidget {
         );
       else if (!state.downloadedTechniques.containsKey(technique.id))
         return GestureDetector(
-          onTap: () => BlocProvider.of<TechniqueLocalStorageBloc>(ctx).add(DownloadTechniqueEvent(this.technique.id)),
+          onTap: connected ? () => BlocProvider.of<TechniqueLocalStorageBloc>(ctx).add(DownloadTechniqueEvent(this.technique.id)) : null,
           child: Column(
             children: [
               Icon(
                 Icons.download_outlined,
-                color: Colors.grey,
+                color: connected ? BASE_COLOR : Colors.grey,
                 size: 20,
               ),
               Text(
                 "Download",
                 style: TextStyle(
                   fontSize: 12,
-                  color: Colors.grey,
+                  color: connected ? BASE_COLOR : Colors.grey,
                 ),
               ),
             ],
@@ -147,7 +138,7 @@ class TechniqueScreen extends StatelessWidget {
           child: Column(
             children: [
               Icon(
-                Icons.delete_forever_rounded,
+                Icons.delete_rounded,
                 color: Colors.redAccent,
                 size: 20,
               ),
@@ -167,6 +158,9 @@ class TechniqueScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // User has no access to this technique.
+    if (!hasAccess) return UnlockTechniqueScreen(technique: technique);
+
     return BlocProvider<TechniqueDetailBloc>(
       create: (_) => serviceLocator<TechniqueDetailBloc>()..add(LoadTechniqueDetail(this.technique)),
       child: BlocBuilder<TechniqueDetailBloc, TechniqueDetailState>(
@@ -200,7 +194,19 @@ class TechniqueScreen extends StatelessWidget {
                                     fontSize: 15,
                                   ),
                                 ),
-                                _buildFavoriteButton(ctx),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    if (BlocProvider.of<ConnectivityBloc>(ctx).state is ConnectionAvailable)
+                                      Row(
+                                        children: [
+                                          _buildFavoriteButton(ctx),
+                                          SizedBox(width: 25),
+                                        ],
+                                      ),
+                                    _buildDownloadButton(context),
+                                  ],
+                                ),
                                 DefaultTabController(
                                   length: 2,
                                   child: Expanded(
@@ -261,9 +267,15 @@ class TechniqueScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                               ),
-                                              Padding(
-                                                padding: const EdgeInsets.all(10),
-                                                child: SmallTechniqueList(techniquesIds: this.technique.category.techniqueIds),
+                                              BlocBuilder<ConnectivityBloc, ConnectivityState>(
+                                                builder: (context, state) {
+                                                  if (state is NoInternetConnection) return NoInternetWidget();
+
+                                                  return Padding(
+                                                    padding: const EdgeInsets.all(10),
+                                                    child: SmallTechniqueList(techniquesIds: this.technique.category.techniqueIds),
+                                                  );
+                                                },
                                               ),
                                             ],
                                           ),
@@ -279,10 +291,13 @@ class TechniqueScreen extends StatelessWidget {
                       ],
                     ),
                     Positioned(
-                      top: 5,
-                      left: 5,
+                      top: 10,
+                      left: 10,
                       child: GestureDetector(
-                        onTap: () => Navigator.pop(context),
+                        onTap: () {
+                          state.videoPlayerController.ifPresent((controller) => controller.pause());
+                          Navigator.pop(context);
+                        },
                         child: Icon(
                           Icons.arrow_back_rounded,
                           color: Colors.white,

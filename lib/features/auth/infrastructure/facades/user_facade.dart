@@ -1,72 +1,31 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
-import 'package:jews_harp/core/errors/user_not_signed_in_error.dart';
 import 'package:jews_harp/features/auth/domain/facade_interfaces/user_facade_interface.dart';
 import 'package:jews_harp/features/auth/infrastructure/DTO/user_DTO.dart';
+import 'package:jews_harp/features/auth/infrastructure/external_services/firebase_auth.dart';
 
+/// User authentication facade.
 @LazySingleton(as: IUserFacade, env: [Environment.prod])
 class FirebaseAuthFacade extends IUserFacade {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  /// Firebase Authentication external service.
+  final FirebaseAuthService _authService;
+
+  FirebaseAuthFacade(this._authService);
 
   @override
-  Future<bool> resetPassword(String email) async {
-    try {
-      await _auth.sendPasswordResetEmail(email: email);
-      return true;
-    } on FirebaseAuthException {
-      return false;
-    }
-  }
+  Future<bool> resetPassword(String email) => _authService.resetPassword(email);
 
   @override
-  Future<void> signOut() async {
-    FacebookAuth.instance.logOut();
-    GoogleSignIn().signOut();
-    _auth.signOut();
-  }
+  Future<void> signOut() => _authService.signOut();
 
   @override
-  Future<bool> isVerified() async {
-    final user = _auth.currentUser;
-    if (user == null) throw UserNotSignedInError();
-    await user.reload();
-    return _auth.currentUser!.emailVerified;
-  }
+  Future<void> sendVerificationEmail() => _authService.sendVerificationEmail();
 
   @override
-  Future<void> sendVerificationEmail() async {
-    final user = _auth.currentUser;
-    if (user == null) throw UserNotSignedInError();
-    return user.sendEmailVerification();
-  }
+  Future<UserDTO> linkAccountToEmail(String email, String password) => _authService.linkAccountToEmail(email, password);
 
   @override
-  Future<UserDTO> linkAccountToEmail(String email, String password) async {
-    final user = _auth.currentUser;
-    if (user == null) throw UserNotSignedInError();
-    final credentials = EmailAuthProvider.credential(email: email, password: password);
-    await user.linkWithCredential(credentials);
-    await _auth.signOut();
-    await _auth.signInWithEmailAndPassword(email: email, password: password);
-    return UserDTO.fromFirebaseUser(_auth.currentUser!);
-  }
+  Future<UserDTO> linkAccountToFacebook() => _authService.linkAccountToFacebook();
 
   @override
-  Future<UserDTO> linkAccountToFacebook() async {
-    final user = _auth.currentUser;
-    final accessToken = await FacebookAuth.instance.accessToken;
-    if (user == null || accessToken == null) throw UserNotSignedInError();
-    final credentials = FacebookAuthProvider.credential(accessToken.token);
-    await user.linkWithCredential(credentials);
-    await _auth.signOut();
-    await _auth.signInWithCredential(credentials);
-    return UserDTO.fromFirebaseUser(_auth.currentUser!);
-  }
-
-  @override
-  Future<void> setLocale(String languageCode) async {
-    _auth.setLanguageCode(languageCode);
-  }
+  Future<void> setLocale(String languageCode) => _authService.setLocale(languageCode);
 }

@@ -1,11 +1,12 @@
 import 'package:injectable/injectable.dart';
-import 'package:jews_harp/features/user_section/domain/repository_interfaces/user_repository.dart';
+import 'package:jews_harp/features/user_section/domain/facade_interfaces/user_section_facade.dart';
 
+/// Mark technique as favrite.
 @LazySingleton(env: [Environment.prod, Environment.dev])
 class MarkTechniqueAsFavorite {
-  final IUserRepository _userRepository;
+  final IUserSectionFacade _userSectionFacade;
 
-  MarkTechniqueAsFavorite(this._userRepository);
+  MarkTechniqueAsFavorite(this._userSectionFacade);
 
-  Future<void> call(String techniqueId) => _userRepository.markTechniqueAsFavorite(techniqueId);
+  Future<void> call(String techniqueId) => _userSectionFacade.markTechniqueAsFavorite(techniqueId);
 }

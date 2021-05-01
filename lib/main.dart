@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:jews_harp/core/BLoCs/connectivity/connectivity_bloc.dart';
 import 'package:jews_harp/core/BLoCs/errors/error_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/widgets/one_button_alert_dialog.dart';
@@ -29,7 +31,7 @@ import 'core/constants/routes.dart';
 import 'core/constants/settings.dart';
 import 'core/dependency_injection/service_locator.dart';
 import 'core/l10n.dart';
-import 'features/auth/presentation/BLoCs/login_screen_redirect/auth_bloc.dart';
+import 'features/auth/presentation/BLoCs/auth_state/auth_bloc.dart';
 import 'features/auth/presentation/screens/authentication_screen.dart';
 import 'features/auth/presentation/screens/email_verification_screen.dart';
 import 'features/auth/presentation/screens/sign_up_screen.dart';
@@ -41,6 +43,7 @@ import 'features/user_section/presentation/screens/video_full_screen_mode_screen
 Future<void> main() async {
   // Initialize dependencies
   WidgetsFlutterBinding.ensureInitialized();
+  InAppPurchaseConnection.enablePendingPurchases();
   await Firebase.initializeApp();
   configureDependencies();
 
@@ -61,16 +64,18 @@ class _EntryPoint extends StatelessWidget {
   void _authBlocListener(BuildContext context, AuthState state) {
     final currentState = globalKey.currentState!;
 
-    if (state is AuthenticatedState) {
-      currentState.pushNamedAndRemoveUntil(USER_SECTION_SCREEN_ROUTE, (route) => false);
-    } else if (state is UnauthenticatedState)
+    if (state is UserAuthenticated) {
+      if (state.user.isVerified)
+        currentState.pushNamedAndRemoveUntil(USER_SECTION_SCREEN_ROUTE, (route) => false);
+      else {
+        currentState.pushNamedAndRemoveUntil(AUTH_SCREEN_ROUTE, (route) => false);
+        currentState.pushNamed(
+          EMAIL_VERIFICATION_UP_SCREEN_ROUTE,
+          arguments: EmailVerificationScreenArgs(user: state.user),
+        );
+      }
+    } else
       currentState.pushNamedAndRemoveUntil(AUTH_SCREEN_ROUTE, (route) => false);
-    else if (state is NotVerifiedState)
-      currentState.pushNamedAndRemoveUntil(
-        EMAIL_VERIFICATION_UP_SCREEN_ROUTE,
-        (route) => false,
-        arguments: EmailVerificationScreenArgs(user: state.user),
-      );
   }
 
   void _errorBlocListener(BuildContext context, ErrorState state) {
@@ -102,6 +107,7 @@ class _EntryPoint extends StatelessWidget {
         BlocProvider<AuthBloc>(create: (_) => serviceLocator<AuthBloc>()),
         BlocProvider<ErrorBloc>(create: (_) => serviceLocator<ErrorBloc>()),
         BlocProvider<TechniqueLocalStorageBloc>(create: (_) => serviceLocator<TechniqueLocalStorageBloc>()..add(InitTechniqueLocalStorage()), lazy: false),
+        BlocProvider<ConnectivityBloc>(create: (_) => serviceLocator<ConnectivityBloc>()..add(CheckInternetConnection()), lazy: false),
       ],
       child: MultiBlocListener(
         listeners: [
@@ -134,7 +140,7 @@ class _EntryPoint extends StatelessWidget {
           ),
           navigatorKey: globalKey,
           routes: {
-            SPLASH_SCREEN_ROUTE: (ctx) => SplashScreen(onLoad: () => BlocProvider.of<AuthBloc>(ctx).add(SplashScreenDisplayedEvent(AppLocalizations.of(ctx).locale.languageCode))),
+            SPLASH_SCREEN_ROUTE: (ctx) => SplashScreen(),
             USER_SECTION_SCREEN_ROUTE: (_) => UserSection(),
             AUTH_SCREEN_ROUTE: (_) => AuthenticationScreen(),
             SIGN_UP_SCREEN_ROUTE: (_) => SignUpScreen(),

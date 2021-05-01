@@ -2,6 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/domain/repository_interfaces/technique_repository.dart';
 
+/// Get 10 most recent techniques.
 @LazySingleton(env: [Environment.prod, Environment.dev])
 class GetMostRecentTechniques {
   final ITechniqueRepository _techniqueRepository;
