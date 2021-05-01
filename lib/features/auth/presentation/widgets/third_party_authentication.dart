@@ -8,7 +8,10 @@ import 'package:jews_harp/features/auth/presentation/BLoCs/link_providers/link_p
 import 'package:jews_harp/features/auth/presentation/BLoCs/third_party_authentication/third_party_auth_bloc.dart';
 import 'package:jews_harp/features/auth/presentation/screens/link_auth_providers_screen.dart';
 
+/// Third party authentication methods in the sign up screen.
 class ThirdPartyAuthOptions extends StatelessWidget {
+  const ThirdPartyAuthOptions();
+
   void _thirdPartyAuthBlocListener(BuildContext ctx, ThirdPartyAuthState state) {
     if (state is MultipleProvidersState) {
       Navigator.pushNamed(
@@ -33,7 +36,7 @@ class ThirdPartyAuthOptions extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               FacebookButtonMini(onPress: () => BlocProvider.of<ThirdPartyAuthBloc>(ctx).add(FacebookAuthEvent())),
-              SizedBox(width: 30),
+              const SizedBox(width: 30),
               GoogleButtonMini(onPress: () => BlocProvider.of<ThirdPartyAuthBloc>(ctx).add(GoogleAuthEvent())),
             ],
           ),

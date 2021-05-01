@@ -71,7 +71,6 @@ class _EntryPoint extends StatelessWidget {
         currentState.pushNamedAndRemoveUntil(AUTH_SCREEN_ROUTE, (route) => false);
         currentState.pushNamed(
           EMAIL_VERIFICATION_UP_SCREEN_ROUTE,
-          arguments: EmailVerificationScreenArgs(user: state.user),
         );
       }
     } else
@@ -146,7 +145,7 @@ class _EntryPoint extends StatelessWidget {
             SIGN_UP_SCREEN_ROUTE: (_) => SignUpScreen(),
             PASSWORD_RESET_SCREEN_ROUTE: (_) => PasswordResetScreen(),
             PASSWORD_RESET_SENT_SCREEN_ROUTE: (_) => PasswordResetSentScreen(),
-            EMAIL_VERIFICATION_UP_SCREEN_ROUTE: (ctx) => EmailVerificationScreen.fromArgs(_getArgs<EmailVerificationScreenArgs>(ctx)),
+            EMAIL_VERIFICATION_UP_SCREEN_ROUTE: (_) => EmailVerificationScreen(),
             LINK_AUTH_PROVIDERS_SCREEN_ROUTE: (ctx) => LinkAuthProvidersScreen.fromArgs(_getArgs<LinkAuthProvidersScreenArgs>(ctx)),
             CREATE_CATEGORY_SCREEN_ROUTE: (_) => CreateCategoryScreen(),
             EDIT_CATEGORY_SCREEN_ROUTE: (ctx) => EditCategoryScreen.fromArgs(_getArgs<EditCategoryScreenArgs>(ctx)),

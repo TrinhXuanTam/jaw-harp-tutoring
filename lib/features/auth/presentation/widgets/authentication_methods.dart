@@ -8,21 +8,23 @@ import 'forgot_password_text.dart';
 
 /// Authentication methods.
 class AuthMethods extends StatelessWidget {
+  const AuthMethods();
+
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        TitleWithSubtitle(
+        const TitleWithSubtitle(
           titleText: "Welcome!",
           subtitleText: "please sign in to continue",
         ),
-        SizedBox(height: 20),
-        EmailAuthenticationForm(),
-        SizedBox(height: 5),
-        ForgotPasswordText(),
-        TextDivider(text: "OR"),
-        ThirdPartyAuthOptions(),
+        const SizedBox(height: 20),
+        const EmailAuthenticationForm(),
+        const SizedBox(height: 5),
+        const ForgotPasswordText(),
+        const TextDivider(text: "OR"),
+        const ThirdPartyAuthOptions(),
       ],
     );
   }

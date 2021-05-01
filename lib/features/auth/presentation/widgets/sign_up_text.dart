@@ -5,6 +5,8 @@ import 'package:jews_harp/core/l10n.dart';
 
 /// Sign up text that redirects users to a sign up form.
 class SignUpText extends StatelessWidget {
+  const SignUpText();
+
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l10n = AppLocalizations.of(context);

@@ -10,11 +10,9 @@ import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/password_reset/password_reset_bloc.dart';
 import 'package:jews_harp/features/auth/presentation/widgets/title_with_icon.dart';
 
+/// Password reset screen.
+/// Sends reset link to given email.
 class PasswordResetScreen extends StatelessWidget {
-  void _passwordResetBlocListener(BuildContext ctx, PasswordResetState state) {
-    if (state is PasswordResetSuccess) Navigator.pushReplacementNamed(ctx, PASSWORD_RESET_SENT_SCREEN_ROUTE);
-  }
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -36,7 +34,7 @@ class PasswordResetScreen extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TitleWithIcon(
+                    const TitleWithIcon(
                       icon: Icons.settings_backup_restore_rounded,
                       title: "Reset Password",
                     ),
@@ -45,18 +43,20 @@ class PasswordResetScreen extends StatelessWidget {
                       child: Text(
                         l10n.translate("Enter the email associated with your account and we'll send an email with instructions to reset your password."),
                         textAlign: TextAlign.justify,
-                        style: TextStyle(fontSize: 15),
+                        style: const TextStyle(fontSize: 15),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     RoundedTextField(
                       icon: Icons.mail,
                       placeholderText: l10n.translate("Email"),
                       controller: bloc.state.emailController,
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     BlocListener<PasswordResetBloc, PasswordResetState>(
-                      listener: _passwordResetBlocListener,
+                      listener: (ctx, state) {
+                        if (state is PasswordResetSuccess) Navigator.pushReplacementNamed(ctx, PASSWORD_RESET_SENT_SCREEN_ROUTE);
+                      },
                       child: RoundedButton(
                         text: l10n.translate("Send Instructions"),
                         onPressed: () => bloc.add(PasswordResetRequestEvent()),

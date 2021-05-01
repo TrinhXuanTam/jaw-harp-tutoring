@@ -22,10 +22,10 @@ class UserAuthFacade extends IUserAuthFacade {
   Future<User> signInWithEmailAndPassword(String email, String password) => _authService.signInWithEmail(email, password);
 
   @override
-  Future<User> signInWithFacebook() => signInWithFacebook();
+  Future<User> signInWithFacebook() => _authService.authenticateWithFacebook();
 
   @override
-  Future<User> signInWithGoogle() => signInWithGoogle();
+  Future<User> signInWithGoogle() => _authService.authenticateWithGoogle();
 
   @override
   Future<void> signOut() => _authService.signOut();

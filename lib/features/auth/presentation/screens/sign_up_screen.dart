@@ -12,6 +12,7 @@ import 'package:jews_harp/features/auth/presentation/BLoCs/sign_up_screen/sign_u
 import 'package:jews_harp/features/auth/presentation/screens/link_auth_providers_screen.dart';
 import 'package:jews_harp/features/auth/presentation/widgets/sign_up_form.dart';
 
+/// Sign up with email and password screen.
 class SignUpScreen extends StatelessWidget {
   void _signUpBlocListener(BuildContext ctx, SignUpState state) {
     if (state is MultipleProvidersState)
@@ -42,12 +43,12 @@ class SignUpScreen extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TitleWithSubtitle(
+                  const TitleWithSubtitle(
                     titleText: "Sign Up",
                     subtitleText: "create a new account",
                   ),
-                  SizedBox(height: 20),
-                  SignUpForm(),
+                  const SizedBox(height: 20),
+                  const SignUpForm(),
                 ],
               ),
             ],

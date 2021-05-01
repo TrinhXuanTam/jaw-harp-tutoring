@@ -5,6 +5,8 @@ import 'package:jews_harp/core/l10n.dart';
 
 /// Forgotten password link.
 class ForgotPasswordText extends StatelessWidget {
+  const ForgotPasswordText();
+
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l10n = AppLocalizations.of(context);
@@ -13,10 +15,10 @@ class ForgotPasswordText extends StatelessWidget {
       borderRadius: BorderRadius.circular(29),
       onTap: () => Navigator.pushNamed(context, PASSWORD_RESET_SCREEN_ROUTE),
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
         child: Text(
           l10n.translate("Forgot Password?"),
-          style: TextStyle(
+          style: const TextStyle(
             color: BASE_COLOR,
             fontWeight: FontWeight.bold,
           ),

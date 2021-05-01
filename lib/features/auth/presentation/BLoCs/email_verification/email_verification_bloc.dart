@@ -46,12 +46,10 @@ class EmailVerificationBloc extends Bloc<EmailVerificationEvent, EmailVerificati
 
         // Send email confirmation.
         _sendEmailVerification();
-        yield EmailVerificationSentState();
       } else if (event is EmailVerificationClosedEvent) {
         // Verification page has been closed,
         // therefore sign out the user.
         _signOut();
-        yield EmailVerificationClosedState();
       } else if (event is EmailVerificationContinueEvent) {
         // No internet connection found.
         if (_connectivityBloc.state is NoInternetConnection) throw NoInternetConnectionError();
