@@ -12,8 +12,9 @@ import 'package:jews_harp/features/user_section/utils.dart';
 class TechniqueList extends StatelessWidget {
   final List<String> techniqueIds;
   final bool showFavoriteIcon;
+  final bool showPrice;
 
-  const TechniqueList({Key? key, required this.techniqueIds, this.showFavoriteIcon = false}) : super(key: key);
+  const TechniqueList({Key? key, required this.techniqueIds, this.showFavoriteIcon = false, this.showPrice = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,10 @@ class TechniqueList extends StatelessWidget {
                   openElevation: 0,
                   closedElevation: 0,
                   transitionType: ContainerTransitionType.fadeThrough,
-                  openBuilder: (ctx, _) => TechniqueScreen(technique: technique),
+                  openBuilder: (ctx, _) => TechniqueScreen(
+                    technique: technique,
+                    hasAccess: hasAccessToTechnique(context, technique),
+                  ),
                   closedBuilder: (ctx, openContainer) => GestureDetector(
                     onTap: openContainer,
                     child: Container(
@@ -88,19 +92,23 @@ class TechniqueList extends StatelessWidget {
                                                   Text(technique.difficulty.string),
                                                 ],
                                               ),
-                                              SizedBox(height: 5),
-                                              Row(
-                                                children: [
-                                                  Icon(
-                                                    Icons.attach_money_rounded,
-                                                    color: BASE_COLOR,
-                                                    size: 15,
-                                                  ),
-                                                  SizedBox(width: 4),
-                                                  // TODO
-                                                  Text(technique.productId.isPresent ? "99.99\$" : "Free"),
-                                                ],
-                                              ),
+                                              if (this.showPrice)
+                                                Column(
+                                                  children: [
+                                                    SizedBox(height: 5),
+                                                    Row(
+                                                      children: [
+                                                        Icon(
+                                                          Icons.attach_money_rounded,
+                                                          color: BASE_COLOR,
+                                                          size: 15,
+                                                        ),
+                                                        SizedBox(width: 4),
+                                                        Text(getPriceTag(context, technique)),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
                                             ],
                                           ),
                                         ),
@@ -205,7 +213,6 @@ class _LoadingEffect extends StatelessWidget {
                                       size: 15,
                                     ),
                                     SizedBox(width: 4),
-                                    // TODO
                                     Container(
                                       height: 12,
                                       width: 50,

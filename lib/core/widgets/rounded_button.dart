@@ -3,13 +3,13 @@ import 'package:jews_harp/core/constants/theme.dart';
 
 class RoundedButton extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Color color, textColor, borderColor;
 
   const RoundedButton({
     Key? key,
     required this.text,
-    required this.onPressed,
+    this.onPressed,
     this.color = BASE_COLOR,
     this.textColor = Colors.white,
     this.borderColor = BASE_COLOR,

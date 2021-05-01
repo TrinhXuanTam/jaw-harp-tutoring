@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/shimmer_effect.dart';
+import 'package:jews_harp/features/user_section/domain/entities/product_info.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique/technique_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/screens/technique_screen.dart';
@@ -34,7 +35,10 @@ class SmallTechniqueCard extends StatelessWidget {
             openElevation: 0,
             closedElevation: 0,
             transitionType: ContainerTransitionType.fadeThrough,
-            openBuilder: (ctx, _) => TechniqueScreen(technique: technique),
+            openBuilder: (ctx, _) => TechniqueScreen(
+              technique: technique,
+              hasAccess: hasAccessToTechnique(context, technique),
+            ),
             closedBuilder: (ctx, openContainer) => GestureDetector(
               onTap: openContainer,
               child: Container(
@@ -73,9 +77,8 @@ class SmallTechniqueCard extends StatelessWidget {
                               color: BASE_COLOR,
                               size: 12,
                             ),
-                            // TODO
                             Text(
-                              technique.productId.isPresent ? "99.99\$" : "Free",
+                              getPriceTag(context, technique),
                               style: TextStyle(fontSize: 12),
                             ),
                           ],
@@ -102,7 +105,7 @@ class SmallTechniqueCard extends StatelessWidget {
             ),
           );
         } else
-        return SmallTechniqueCardLoading(width: width);
+          return SmallTechniqueCardLoading(width: width);
       }),
     );
   }

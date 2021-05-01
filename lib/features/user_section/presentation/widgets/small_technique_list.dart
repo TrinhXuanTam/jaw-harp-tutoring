@@ -34,7 +34,14 @@ class SmallTechniqueList extends StatelessWidget {
                 final user = getUser(ctx);
 
                 return GestureDetector(
-                  onTap: () => Navigator.pushReplacementNamed(context, TECHNIQUE_DETAIL_SCREEN_ROUTE, arguments: TechniqueScreenArgs(technique)),
+                  onTap: () => Navigator.pushReplacementNamed(
+                    context,
+                    TECHNIQUE_DETAIL_SCREEN_ROUTE,
+                    arguments: TechniqueScreenArgs(
+                      technique,
+                      hasAccessToTechnique(context, technique),
+                    ),
+                  ),
                   child: Container(
                     height: 90,
                     width: double.infinity,
@@ -91,9 +98,8 @@ class SmallTechniqueList extends StatelessWidget {
                                                 size: 15,
                                               ),
                                               SizedBox(width: 4),
-                                              // TODO
                                               Text(
-                                                technique.productId.isPresent ? "99.99\$" : "Free",
+                                                getPriceTag(context, technique),
                                                 style: TextStyle(fontSize: 12),
                                               ),
                                             ],

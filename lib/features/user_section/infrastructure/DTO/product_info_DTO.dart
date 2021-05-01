@@ -38,7 +38,6 @@ class ProductInfoDTO extends ProductInfo {
 
   /// Convert DTO to json format.
   Map<String, dynamic> toJson() {
-    ;
     return {
       "type": type.index,
       if (this.type == ProductType.available) "price": this.price!,

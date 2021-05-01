@@ -5,27 +5,37 @@ import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/loading_wrapper.dart';
+import 'package:jews_harp/features/user_section/domain/entities/product_info.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_detail/technique_detail_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_local_storage/technique_local_storage_bloc.dart';
+import 'package:jews_harp/features/user_section/presentation/screens/unlock_technique_screen.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/small_technique_list.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/video_player_widget.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
 class TechniqueScreenArgs {
   final Technique technique;
+  final bool hasAccess;
 
-  TechniqueScreenArgs(this.technique);
+  TechniqueScreenArgs(this.technique, this.hasAccess);
 }
 
 class TechniqueScreen extends StatelessWidget {
   final Technique technique;
+  final bool hasAccess;
 
-  factory TechniqueScreen.fromArgs(TechniqueScreenArgs args) => TechniqueScreen(technique: args.technique);
+  factory TechniqueScreen.fromArgs(TechniqueScreenArgs args) {
+    return TechniqueScreen(
+      technique: args.technique,
+      hasAccess: args.hasAccess,
+    );
+  }
 
   const TechniqueScreen({
     Key? key,
     required this.technique,
+    required this.hasAccess,
   }) : super(key: key);
 
   Widget _buildHeader(BuildContext context, TechniqueDetailLoaded state) {
@@ -152,6 +162,9 @@ class TechniqueScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // User has no access to this technique.
+    if (!hasAccess) return UnlockTechniqueScreen(technique: technique);
+
     return BlocProvider<TechniqueDetailBloc>(
       create: (_) => serviceLocator<TechniqueDetailBloc>()..add(LoadTechniqueDetail(this.technique)),
       child: BlocBuilder<TechniqueDetailBloc, TechniqueDetailState>(

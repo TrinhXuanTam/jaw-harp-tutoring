@@ -6,6 +6,7 @@ import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
+import 'package:jews_harp/features/user_section/domain/entities/product_info.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/purchase_technique/purchase_technique_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/screens/technique_screen.dart';
@@ -20,6 +21,7 @@ class UnlockTechniqueScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final thumbnail = getTechniqueThumbnail(this.technique);
+    final isAvailable = technique.productInfo.type == ProductType.available;
 
     return SafeArea(
       child: Scaffold(
@@ -132,33 +134,34 @@ class UnlockTechniqueScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: BASE_COLOR_VERY_LIGHT,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Price",
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
+                    if (isAvailable)
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: BASE_COLOR_VERY_LIGHT,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Price",
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          Text(
-                            "99.99\$",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                            Text(
+                              "99.99\$",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
                     SizedBox(height: 10),
                     Builder(
                       builder: (ctx) => BlocListener<PurchaseTechniqueBloc, PurchaseTechniqueState>(
@@ -166,12 +169,15 @@ class UnlockTechniqueScreen extends StatelessWidget {
                           if (state is TechniquePurchased)
                             Navigator.of(context).pushReplacementNamed(
                               TECHNIQUE_DETAIL_SCREEN_ROUTE,
-                              arguments: TechniqueScreen(technique: this.technique),
+                              arguments: TechniqueScreenArgs(
+                                this.technique,
+                                true,
+                              ),
                             );
                         },
                         child: RoundedButton(
-                          text: "Unlock now",
-                          onPressed: () => BlocProvider.of<PurchaseTechniqueBloc>(ctx).add(PurchaseTechniqueEvent(getUser(ctx), this.technique)),
+                          text: isAvailable ? "Unlock now" : "Coming soon",
+                          onPressed: isAvailable ? () => BlocProvider.of<PurchaseTechniqueBloc>(ctx).add(PurchaseTechniqueEvent(getUser(ctx), this.technique)) : null,
                         ),
                       ),
                     ),

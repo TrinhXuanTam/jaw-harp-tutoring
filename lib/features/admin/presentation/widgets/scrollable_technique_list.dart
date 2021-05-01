@@ -57,7 +57,7 @@ class ScrollableTechniqueList extends StatelessWidget {
     else
       return Text(
         productInfo.price!,
-        style: TextStyle(color: Colors.grey),
+        style: TextStyle(color: Colors.green),
       );
   }
 

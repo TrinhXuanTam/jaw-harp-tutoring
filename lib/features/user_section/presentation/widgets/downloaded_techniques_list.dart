@@ -23,7 +23,7 @@ class DownloadedTechniquesList extends StatelessWidget {
             openElevation: 0,
             closedElevation: 0,
             transitionType: ContainerTransitionType.fadeThrough,
-            openBuilder: (ctx, _) => TechniqueScreen(technique: item),
+            openBuilder: (ctx, _) => TechniqueScreen(technique: item, hasAccess: true),
             closedBuilder: (ctx, openContainer) => GestureDetector(
               onTap: openContainer,
               child: Container(
@@ -77,19 +77,6 @@ class DownloadedTechniquesList extends StatelessWidget {
                                             ),
                                             SizedBox(width: 4),
                                             Text(item.difficulty.string),
-                                          ],
-                                        ),
-                                        SizedBox(height: 5),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.attach_money_rounded,
-                                              color: BASE_COLOR,
-                                              size: 15,
-                                            ),
-                                            SizedBox(width: 4),
-                                            // TODO
-                                            Text(item.productId.isPresent ? "99.99\$" : "Free"),
                                           ],
                                         ),
                                       ],

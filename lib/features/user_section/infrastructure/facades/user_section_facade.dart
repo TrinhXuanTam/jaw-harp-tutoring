@@ -23,7 +23,7 @@ class UserSectionFacade extends IUserSectionFacade {
   /// Purchase technique and save to Firebase.
   @override
   Future<void> purchaseTechnique(Technique technique) async {
-    _paymentService.purchaseTechnique(technique.productId.value);
+    await _paymentService.purchaseTechnique(technique.productId.value);
     _firebaseUserSectionDataSource.addPurchasedTechnique(technique.id);
   }
 }

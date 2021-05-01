@@ -351,7 +351,8 @@ _i1.GetIt initGetIt(_i1.GetIt get,
       () => _i59.PurchaseTechnique(get<_i56.IUserSectionFacade>()),
       registerFor: {_prod, _dev});
   gh.factory<_i60.PurchaseTechniqueBloc>(
-      () => _i60.PurchaseTechniqueBloc(get<_i59.PurchaseTechnique>()),
+      () => _i60.PurchaseTechniqueBloc(
+          get<_i59.PurchaseTechnique>(), get<_i4.ErrorBloc>()),
       registerFor: {_prod, _dev});
   gh.lazySingleton<_i61.RemoveTechniqueFromFavorites>(
       () => _i61.RemoveTechniqueFromFavorites(get<_i56.IUserSectionFacade>()),

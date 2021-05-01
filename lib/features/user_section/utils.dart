@@ -11,6 +11,7 @@ import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/auth_state/auth_bloc.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/domain/entities/media.dart';
+import 'package:jews_harp/features/user_section/domain/entities/product_info.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:random_color/random_color.dart';
 import 'package:video_player/video_player.dart';
@@ -148,4 +149,27 @@ Widget getTechniqueThumbnail(Technique technique) {
         child: Image.asset(LOGO_LOCATION),
       ),
     );
+}
+
+bool hasAccessToTechnique(BuildContext context, Technique technique) {
+  final productType = technique.productInfo.type;
+
+  if (productType == ProductType.free)
+    return true;
+  else if (productType == ProductType.unavailable)
+    return false;
+  else {
+    final user = getUser(context);
+    return user.purchasedTechniques.contains(technique.id);
+  }
+}
+
+String getPriceTag(BuildContext context, Technique technique) {
+  final user = getUser(context);
+  if (user.purchasedTechniques.contains(technique.id))
+    return "Purchased";
+  else if (technique.productInfo.type == ProductType.unavailable)
+    return "Coming soon";
+  else
+    return technique.productInfo.toString();
 }
