@@ -1,24 +1,37 @@
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/facade_interfaces/user_facade_interface.dart';
 import 'package:jews_harp/features/auth/infrastructure/DTO/user_DTO.dart';
 import 'package:jews_harp/features/auth/infrastructure/external_services/firebase_auth.dart';
 
-/// User authentication facade.
-@LazySingleton(as: IUserFacade, env: [Environment.prod])
-class FirebaseAuthFacade extends IUserFacade {
+/// User authentication facade that communicates with Firebase Authentication.
+@LazySingleton(as: IUserAuthFacade, env: [Environment.prod])
+class UserAuthFacade extends IUserAuthFacade {
   /// Firebase Authentication external service.
   final FirebaseAuthService _authService;
 
-  FirebaseAuthFacade(this._authService);
+  UserAuthFacade(this._authService);
 
   @override
-  Future<bool> resetPassword(String email) => _authService.resetPassword(email);
+  Future<User> signUpWithEmailAndPassword(String name, String email, String password) => signUpWithEmailAndPassword(name, email, password);
+
+  @override
+  Future<void> sendVerificationEmail() => _authService.sendVerificationEmail();
+
+  @override
+  Future<User> signInWithEmailAndPassword(String email, String password) => _authService.signInWithEmail(email, password);
+
+  @override
+  Future<User> signInWithFacebook() => signInWithFacebook();
+
+  @override
+  Future<User> signInWithGoogle() => signInWithGoogle();
 
   @override
   Future<void> signOut() => _authService.signOut();
 
   @override
-  Future<void> sendVerificationEmail() => _authService.sendVerificationEmail();
+  Future<bool> resetPassword(String email) => _authService.resetPassword(email);
 
   @override
   Future<UserDTO> linkAccountToEmail(String email, String password) => _authService.linkAccountToEmail(email, password);

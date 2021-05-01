@@ -3,14 +3,15 @@ import 'package:jews_harp/core/constants/test_environments.dart';
 import 'package:jews_harp/core/errors/validation_error.dart';
 import 'package:jews_harp/core/regex.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
+import 'package:jews_harp/features/auth/domain/facade_interfaces/user_facade_interface.dart';
 import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
 
 /// Create a new account.
 @LazySingleton(env: [Environment.prod, Environment.dev, SIGN_UP_TEST_ENV])
 class SignUp {
-  final IUserAuthRepository _userRepository;
+  final IUserAuthFacade _userAuthFacade;
 
-  SignUp(this._userRepository);
+  SignUp(this._userAuthFacade);
 
   Future<User> call(
     String name,
@@ -30,6 +31,6 @@ class SignUp {
     // Check if passwords are same.
     if (password != passwordRepeat) throw ValidationError("Passwords don't match!");
 
-    return _userRepository.createUser(name, email, password);
+    return _userAuthFacade.signUpWithEmailAndPassword(name, email, password);
   }
 }

@@ -94,17 +94,17 @@ import 'package:jews_harp/features/auth/application/use_cases/sign_out.dart'
 import 'package:jews_harp/features/auth/application/use_cases/sign_up.dart'
     as _i33;
 import 'package:jews_harp/features/auth/domain/facade_interfaces/user_facade_interface.dart'
-    as _i20;
-import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart'
     as _i18;
+import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart'
+    as _i20;
 import 'package:jews_harp/features/auth/infrastructure/data_sources/firebase_auth_data_source.dart'
     as _i7;
 import 'package:jews_harp/features/auth/infrastructure/external_services/firebase_auth.dart'
     as _i9;
 import 'package:jews_harp/features/auth/infrastructure/facades/user_facade.dart'
-    as _i21;
-import 'package:jews_harp/features/auth/infrastructure/repositories/user_repository.dart'
     as _i19;
+import 'package:jews_harp/features/auth/infrastructure/repositories/user_repository.dart'
+    as _i21;
 import 'package:jews_harp/features/auth/presentation/BLoCs/auth_state/auth_bloc.dart'
     as _i41;
 import 'package:jews_harp/features/auth/presentation/BLoCs/email_form/email_form_bloc.dart'
@@ -239,7 +239,10 @@ _i1.GetIt testInitGetIt(_i1.GetIt get,
   gh.lazySingleton<_i16.ITechniqueAdminRepository>(
       () => _i17.TechniqueAdminRepository(get<_i6.FirebaseAdminDataSource>()),
       registerFor: {_prod});
-  gh.lazySingleton<_i18.IUserAuthRepository>(() => _i8.IUserRepositoryMock(),
+  gh.lazySingleton<_i18.IUserAuthFacade>(
+      () => _i19.UserAuthFacade(get<_i9.FirebaseAuthService>()),
+      registerFor: {_prod});
+  gh.lazySingleton<_i20.IUserAuthRepository>(() => _i8.IUserRepositoryMock(),
       registerFor: {
         _email_authentication_test_env,
         _get_current_user_test_env,
@@ -248,30 +251,28 @@ _i1.GetIt testInitGetIt(_i1.GetIt get,
         _google_authentication_test_env,
         _get_authentication_providers_test_env
       });
-  gh.lazySingleton<_i18.IUserAuthRepository>(
-      () => _i19.UserAuthRepository(get<_i7.FirebaseAuthDataSource>()),
+  gh.lazySingleton<_i20.IUserAuthRepository>(
+      () => _i21.UserAuthRepository(get<_i7.FirebaseAuthDataSource>()),
       registerFor: {_prod, _user_repository_test_env});
-  gh.lazySingleton<_i20.IUserFacade>(
-      () => _i21.FirebaseAuthFacade(get<_i9.FirebaseAuthService>()),
-      registerFor: {_prod});
-  gh.lazySingleton<_i20.IUserFacade>(() => _i8.IUserFacadeMock(), registerFor: {
-    _email_authentication_test_env,
-    _get_current_user_test_env,
-    _sign_up_test_env,
-    _email_verification_check_test_env,
-    _link_email_provider_test_env,
-    _link_facebook_provider_test_env,
-    _password_reset_test_env,
-    _send_email_verification_test_env
-  });
+  gh.lazySingleton<_i8.IUserFacadeMock>(() => _i8.IUserFacadeMock(),
+      registerFor: {
+        _email_authentication_test_env,
+        _get_current_user_test_env,
+        _sign_up_test_env,
+        _email_verification_check_test_env,
+        _link_email_provider_test_env,
+        _link_facebook_provider_test_env,
+        _password_reset_test_env,
+        _send_email_verification_test_env
+      });
   gh.lazySingleton<_i22.LinkEmailProvider>(
-      () => _i22.LinkEmailProvider(get<_i20.IUserFacade>()),
+      () => _i22.LinkEmailProvider(get<_i18.IUserAuthFacade>()),
       registerFor: {_prod, _dev, _link_email_provider_test_env});
   gh.lazySingleton<_i23.LinkFacebookProvider>(
-      () => _i23.LinkFacebookProvider(get<_i20.IUserFacade>()),
+      () => _i23.LinkFacebookProvider(get<_i18.IUserAuthFacade>()),
       registerFor: {_prod, _dev, _link_facebook_provider_test_env});
   gh.lazySingleton<_i24.PasswordReset>(
-      () => _i24.PasswordReset(get<_i20.IUserFacade>()),
+      () => _i24.PasswordReset(get<_i18.IUserAuthFacade>()),
       registerFor: {_prod, _dev, _password_reset_test_env});
   gh.factory<_i25.PasswordResetBloc>(
       () => _i25.PasswordResetBloc(get<_i24.PasswordReset>(),
@@ -284,19 +285,18 @@ _i1.GetIt testInitGetIt(_i1.GetIt get,
   gh.lazySingleton<_i28.PickVideo>(() => _i28.PickVideo(),
       registerFor: {_prod, _dev});
   gh.lazySingleton<_i29.ReloadUser>(
-      () => _i29.ReloadUser(get<_i18.IUserAuthRepository>()),
+      () => _i29.ReloadUser(get<_i20.IUserAuthRepository>()),
       registerFor: {_prod, _dev, _email_verification_check_test_env});
   gh.lazySingleton<_i30.SendEmailVerification>(
-      () => _i30.SendEmailVerification(get<_i20.IUserFacade>()),
+      () => _i30.SendEmailVerification(get<_i18.IUserAuthFacade>()),
       registerFor: {_prod, _dev, _send_email_verification_test_env});
   gh.lazySingleton<_i31.SetLocale>(
-      () => _i31.SetLocale(
-          get<_i20.IUserFacade>(), get<_i18.IUserAuthRepository>()),
+      () => _i31.SetLocale(get<_i18.IUserAuthFacade>()),
       registerFor: {_prod, _dev});
-  gh.lazySingleton<_i32.SignOut>(() => _i32.SignOut(get<_i20.IUserFacade>()),
+  gh.lazySingleton<_i32.SignOut>(
+      () => _i32.SignOut(get<_i18.IUserAuthFacade>()),
       registerFor: {_prod, _dev});
-  gh.lazySingleton<_i33.SignUp>(
-      () => _i33.SignUp(get<_i18.IUserAuthRepository>()),
+  gh.lazySingleton<_i33.SignUp>(() => _i33.SignUp(get<_i18.IUserAuthFacade>()),
       registerFor: {_prod, _dev, _sign_up_test_env});
   gh.lazySingleton<_i34.TechniqueLocalDataSource>(
       () => _i34.TechniqueLocalDataSource(),
@@ -328,7 +328,7 @@ _i1.GetIt testInitGetIt(_i1.GetIt get,
       () => _i43.CreateTechnique(get<_i16.ITechniqueAdminRepository>()),
       registerFor: {_prod, _dev});
   gh.lazySingleton<_i44.EmailAuthentication>(
-      () => _i44.EmailAuthentication(get<_i18.IUserAuthRepository>()),
+      () => _i44.EmailAuthentication(get<_i18.IUserAuthFacade>()),
       registerFor: {_prod, _dev, _email_authentication_test_env});
   gh.factory<_i45.EmailFormBloc>(() => _i45.EmailFormBloc(
       get<_i44.EmailAuthentication>(),
@@ -345,7 +345,7 @@ _i1.GetIt testInitGetIt(_i1.GetIt get,
           get<_i41.AuthBloc>()),
       registerFor: {_prod, _dev});
   gh.lazySingleton<_i47.FacebookAuthentication>(
-      () => _i47.FacebookAuthentication(get<_i18.IUserAuthRepository>()),
+      () => _i47.FacebookAuthentication(get<_i18.IUserAuthFacade>()),
       registerFor: {_prod, _dev, _facebook_authentication_test_env});
   gh.lazySingleton<_i48.GetAllCategories>(
       () => _i48.GetAllCategories(get<_i12.ICategoryAdminRepository>()),
@@ -354,7 +354,7 @@ _i1.GetIt testInitGetIt(_i1.GetIt get,
       () => _i49.GetAllTechniques(get<_i16.ITechniqueAdminRepository>()),
       registerFor: {_prod, _dev});
   gh.lazySingleton<_i50.GetAuthProviders>(
-      () => _i50.GetAuthProviders(get<_i18.IUserAuthRepository>()),
+      () => _i50.GetAuthProviders(get<_i20.IUserAuthRepository>()),
       registerFor: {_prod, _dev, _get_authentication_providers_test_env});
   gh.lazySingleton<_i51.GetCategories>(
       () => _i51.GetCategories(get<_i14.ICategoryRepository>()),
@@ -363,7 +363,7 @@ _i1.GetIt testInitGetIt(_i1.GetIt get,
       () => _i52.GetCategoryLocalizedData(get<_i12.ICategoryAdminRepository>()),
       registerFor: {_prod, _dev});
   gh.lazySingleton<_i53.GetCurrentUser>(
-      () => _i53.GetCurrentUser(get<_i18.IUserAuthRepository>()),
+      () => _i53.GetCurrentUser(get<_i20.IUserAuthRepository>()),
       registerFor: {_prod, _dev, _get_current_user_test_env});
   gh.lazySingleton<_i54.GetHiddenCategories>(
       () => _i54.GetHiddenCategories(get<_i12.ICategoryAdminRepository>()),
@@ -376,7 +376,7 @@ _i1.GetIt testInitGetIt(_i1.GetIt get,
       () => _i56.GetVisibleCategories(get<_i12.ICategoryAdminRepository>()),
       registerFor: {_prod, _dev});
   gh.lazySingleton<_i57.GoogleAuthentication>(
-      () => _i57.GoogleAuthentication(get<_i18.IUserAuthRepository>()),
+      () => _i57.GoogleAuthentication(get<_i18.IUserAuthFacade>()),
       registerFor: {_prod, _dev, _google_authentication_test_env});
   gh.factory<_i58.HiddenCategoriesBloc>(
       () => _i58.HiddenCategoriesBloc(get<_i54.GetHiddenCategories>()),

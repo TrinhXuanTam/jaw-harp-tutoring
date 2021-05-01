@@ -13,26 +13,11 @@ class UserAuthRepository extends IUserAuthRepository {
   UserAuthRepository(this._firebaseAuthDataSource);
 
   @override
-  Future<User> createUser(String name, String email, String password) => _firebaseAuthDataSource.signUpWithEmail(name, email, password);
-
-  @override
   Future<User?> getCurrentUser() => _firebaseAuthDataSource.getCurrentUser();
 
   @override
   Future<User> reloadUser() => _firebaseAuthDataSource.reloadUser();
 
   @override
-  Future<User> getUserWithEmailAndPassword(String email, String password) => _firebaseAuthDataSource.signInWithEmail(email, password);
-
-  @override
-  Future<User> getUserWithFacebook() => _firebaseAuthDataSource.authenticateWithFacebook();
-
-  @override
-  Future<User> getUserWithGoogle() => _firebaseAuthDataSource.authenticateWithGoogle();
-
-  @override
   Future<Set<String>> getAuthProviders(String email) => _firebaseAuthDataSource.getAuthProviders(email);
-
-  @override
-  Future<void> setLocale(String languageCode) => _firebaseAuthDataSource.setLocale(languageCode);
 }

@@ -5,9 +5,9 @@ import 'package:jews_harp/features/auth/domain/facade_interfaces/user_facade_int
 /// Send an account verification to a given [email].
 @LazySingleton(env: [Environment.prod, Environment.dev, SEND_EMAIL_VERIFICATION_TEST_ENV])
 class SendEmailVerification {
-  final IUserFacade _userFacade;
+  final IUserAuthFacade _userAuthFacade;
 
-  SendEmailVerification(this._userFacade);
+  SendEmailVerification(this._userAuthFacade);
 
-  Future<void> call() async => _userFacade.sendVerificationEmail();
+  Future<void> call() async => _userAuthFacade.sendVerificationEmail();
 }

@@ -4,9 +4,9 @@ import 'package:jews_harp/features/auth/domain/facade_interfaces/user_facade_int
 /// Sign out the current user.
 @LazySingleton(env: [Environment.prod, Environment.dev])
 class SignOut {
-  final IUserFacade _userFacade;
+  final IUserAuthFacade _userAuthFacade;
 
-  SignOut(this._userFacade);
+  SignOut(this._userAuthFacade);
 
-  Future<void> call() async => _userFacade.signOut();
+  Future<void> call() async => _userAuthFacade.signOut();
 }

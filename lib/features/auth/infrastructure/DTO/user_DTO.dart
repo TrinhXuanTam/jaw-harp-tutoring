@@ -7,6 +7,7 @@ import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:optional/optional.dart';
 
 /// User data transfer object.
+/// The DTO is used to convert Firebase Authentication data.
 class UserDTO extends User {
   const UserDTO({
     required String uid,
@@ -39,11 +40,12 @@ class UserDTO extends User {
   static Future<UserDTO> fromFirebaseUser(Firebase.User firebaseUser) async {
     final connectionAvailable = (await Connectivity().checkConnectivity()) != ConnectivityResult.none;
 
+    // Default configuration if no internet connection is available.
     Set<String> roles = {USER_ROLE};
     Set<String> purchases = {};
     Set<String> favorites = {};
 
-    /// Load additional data if internet connection is available.
+    // Load additional data if internet connection is available.
     if (connectionAvailable) {
       final snapshot = await FirebaseFirestore.instance.collection('users').doc(firebaseUser.uid).get();
       roles = Set<String>.from(snapshot["roles"]);

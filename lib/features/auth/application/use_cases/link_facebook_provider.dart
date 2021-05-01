@@ -6,9 +6,9 @@ import 'package:jews_harp/features/auth/domain/facade_interfaces/user_facade_int
 /// Link currently signed in account to a Facebook profile.
 @LazySingleton(env: [Environment.prod, Environment.dev, LINK_FACEBOOK_PROVIDER_TEST_ENV])
 class LinkFacebookProvider {
-  final IUserFacade _userFacade;
+  final IUserAuthFacade _userAuthFacade;
 
-  LinkFacebookProvider(this._userFacade);
+  LinkFacebookProvider(this._userAuthFacade);
 
-  Future<User> call() async => _userFacade.linkAccountToFacebook();
+  Future<User> call() async => _userAuthFacade.linkAccountToFacebook();
 }
