@@ -176,7 +176,7 @@ class UnlockTechniqueScreen extends StatelessWidget {
                             );
                         },
                         child: RoundedButton(
-                          text: isAvailable ? "Unlock now" : "Coming soon",
+                          text: isAvailable ? "Unlock now" : "Coming soon!",
                           onPressed: isAvailable ? () => BlocProvider.of<PurchaseTechniqueBloc>(ctx).add(PurchaseTechniqueEvent(getUser(ctx), this.technique)) : null,
                         ),
                       ),

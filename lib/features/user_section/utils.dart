@@ -168,8 +168,6 @@ String getPriceTag(BuildContext context, Technique technique) {
   final user = getUser(context);
   if (user.purchasedTechniques.contains(technique.id))
     return "Purchased";
-  else if (technique.productInfo.type == ProductType.unavailable)
-    return "Coming soon";
   else
     return technique.productInfo.toString();
 }

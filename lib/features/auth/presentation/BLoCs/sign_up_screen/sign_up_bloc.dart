@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/BLoCs/connectivity/connectivity_bloc.dart';
 import 'package:jews_harp/core/BLoCs/errors/error_bloc.dart';
 import 'package:jews_harp/core/constants/auth_providers_id.dart';
 import 'package:jews_harp/core/errors/base_error.dart';
 import 'package:jews_harp/core/errors/email_already_used_error.dart';
+import 'package:jews_harp/core/errors/no_internet_connection_error.dart';
 import 'package:jews_harp/features/auth/application/use_cases/get_authentication_providers.dart';
 import 'package:jews_harp/features/auth/application/use_cases/sign_up.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/auth_state/auth_bloc.dart';
@@ -20,12 +22,14 @@ part 'sign_up_state.dart';
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   final SignUp _signUp;
   final GetAuthProviders _getAuthProviders;
+  final ConnectivityBloc _connectivityBloc;
   final ErrorBloc _errorBloc;
   final AuthBloc _authBloc;
 
   SignUpBloc(
     this._signUp,
     this._getAuthProviders,
+    this._connectivityBloc,
     this._errorBloc,
     this._authBloc,
   ) : super(SignUpInitialState());
@@ -36,6 +40,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   ) async* {
     if (event is SignUpButtonPressedEvent) {
       try {
+        // No internet connection found.
+        if (_connectivityBloc.state is NoInternetConnection) throw NoInternetConnectionError();
+
         // Create the new account with given email and password.
         final user = await _signUp(event.name, event.email, event.password, event.passwordRepeat);
         _authBloc.add(UserAuthenticatedEvent(user));

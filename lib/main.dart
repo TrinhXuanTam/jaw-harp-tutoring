@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:jews_harp/core/BLoCs/connectivity/connectivity_bloc.dart';
 import 'package:jews_harp/core/BLoCs/errors/error_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/widgets/one_button_alert_dialog.dart';
@@ -105,6 +106,7 @@ class _EntryPoint extends StatelessWidget {
         BlocProvider<AuthBloc>(create: (_) => serviceLocator<AuthBloc>()),
         BlocProvider<ErrorBloc>(create: (_) => serviceLocator<ErrorBloc>()),
         BlocProvider<TechniqueLocalStorageBloc>(create: (_) => serviceLocator<TechniqueLocalStorageBloc>()..add(InitTechniqueLocalStorage()), lazy: false),
+        BlocProvider<ConnectivityBloc>(create: (_) => serviceLocator<ConnectivityBloc>()..add(CheckInternetConnection()), lazy: false),
       ],
       child: MultiBlocListener(
         listeners: [

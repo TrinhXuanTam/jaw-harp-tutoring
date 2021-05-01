@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jews_harp/core/BLoCs/connectivity/connectivity_bloc.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
+import 'package:jews_harp/core/widgets/no_internet_widget.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/downloaded_techniques_list.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/technique_list.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
@@ -33,17 +36,29 @@ class MyTechniquesScreenBody extends StatelessWidget {
                 Expanded(
                   child: TabBarView(
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: TechniqueList(techniqueIds: user.purchasedTechniques.toList(), showFavoriteIcon: true),
+                      BlocBuilder<ConnectivityBloc, ConnectivityState>(
+                        builder: (context, state) {
+                          if (state is NoInternetConnection) return NoInternetWidget();
+
+                          return Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: TechniqueList(techniqueIds: user.purchasedTechniques.toList(), showFavoriteIcon: true),
+                          );
+                        },
                       ),
                       Padding(
                         padding: const EdgeInsets.all(10),
                         child: DownloadedTechniquesList(),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: TechniqueList(techniqueIds: user.favoriteTechniques.toList()),
+                      BlocBuilder<ConnectivityBloc, ConnectivityState>(
+                        builder: (context, state) {
+                          if (state is NoInternetConnection) return NoInternetWidget();
+
+                          return Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: TechniqueList(techniqueIds: user.favoriteTechniques.toList()),
+                          );
+                        },
                       ),
                     ],
                   ),

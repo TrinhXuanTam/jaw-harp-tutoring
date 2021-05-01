@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jews_harp/core/BLoCs/connectivity/connectivity_bloc.dart';
 import 'package:jews_harp/core/constants/routes.dart';
+import 'package:jews_harp/core/constants/settings.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/auth_state/auth_bloc.dart';
@@ -20,7 +22,12 @@ class ProfileSectionBody extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                buildProfilePhoto(context, size: 120),
+                BlocBuilder<ConnectivityBloc, ConnectivityState>(
+                  builder: (context, state) {
+                    if (state is NoInternetConnection) return generateProfilePhoto(context, size: 120);
+                    return buildProfilePhoto(context, size: 120);
+                  },
+                ),
                 SizedBox(height: 20),
                 Text(
                   user.name,
@@ -49,17 +56,22 @@ class ProfileSectionBody extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 30),
-                SimpleMenu(
-                  title: "Admin",
-                  items: [
-                    SimpleMenuItem("Create Technique", () => Navigator.pushNamed(context, CREATE_TECHNIQUE_SCREEN_ROUTE)),
-                    SimpleMenuItem("Create Category", () => Navigator.pushNamed(context, CREATE_CATEGORY_SCREEN_ROUTE)),
-                    SimpleMenuItem("View Techniques", () => Navigator.pushNamed(context, TECHNIQUE_LIST_SCREEN_ROUTE)),
-                    SimpleMenuItem("Visible Categories", () => Navigator.pushNamed(context, VISIBLE_CATEGORIES_LIST_SCREEN_ROUTE)),
-                    SimpleMenuItem("Hidden Categories", () => Navigator.pushNamed(context, HIDDEN_CATEGORIES_LIST_SCREEN_ROUTE)),
-                  ],
-                ),
-                SizedBox(height: 20),
+                if (user.roles.contains(ADMIN_ROLE))
+                  Column(
+                    children: [
+                      SimpleMenu(
+                        title: "Admin",
+                        items: [
+                          SimpleMenuItem("Create Technique", () => Navigator.pushNamed(context, CREATE_TECHNIQUE_SCREEN_ROUTE)),
+                          SimpleMenuItem("Create Category", () => Navigator.pushNamed(context, CREATE_CATEGORY_SCREEN_ROUTE)),
+                          SimpleMenuItem("View Techniques", () => Navigator.pushNamed(context, TECHNIQUE_LIST_SCREEN_ROUTE)),
+                          SimpleMenuItem("Visible Categories", () => Navigator.pushNamed(context, VISIBLE_CATEGORIES_LIST_SCREEN_ROUTE)),
+                          SimpleMenuItem("Hidden Categories", () => Navigator.pushNamed(context, HIDDEN_CATEGORIES_LIST_SCREEN_ROUTE)),
+                        ],
+                      ),
+                      SizedBox(height: 20),
+                    ],
+                  ),
                 SimpleMenu(
                   title: "Account settings",
                   items: [

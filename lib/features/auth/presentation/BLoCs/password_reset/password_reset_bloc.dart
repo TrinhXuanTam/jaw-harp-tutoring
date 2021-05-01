@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/BLoCs/connectivity/connectivity_bloc.dart';
 import 'package:jews_harp/core/BLoCs/errors/error_bloc.dart';
 import 'package:jews_harp/core/errors/base_error.dart';
+import 'package:jews_harp/core/errors/no_internet_connection_error.dart';
 import 'package:jews_harp/features/auth/application/use_cases/password_reset.dart';
 import 'package:meta/meta.dart';
 
@@ -16,9 +18,10 @@ part 'password_reset_state.dart';
 @Injectable(env: [Environment.prod, Environment.dev])
 class PasswordResetBloc extends Bloc<PasswordResetEvent, PasswordResetState> {
   final PasswordReset _resetPassword;
+  final ConnectivityBloc _connectivityBloc;
   final ErrorBloc _errorBloc;
 
-  PasswordResetBloc(this._resetPassword, this._errorBloc) : super(PasswordResetInitial());
+  PasswordResetBloc(this._resetPassword, this._connectivityBloc, this._errorBloc) : super(PasswordResetInitial());
 
   @override
   Stream<PasswordResetState> mapEventToState(
@@ -26,6 +29,9 @@ class PasswordResetBloc extends Bloc<PasswordResetEvent, PasswordResetState> {
   ) async* {
     if (event is PasswordResetRequestEvent) {
       try {
+        // No internet connection found.
+        if (_connectivityBloc.state is NoInternetConnection) throw NoInternetConnectionError();
+
         // Send email with password reset link.
         await _resetPassword(state.emailController.text);
         yield PasswordResetSuccess();

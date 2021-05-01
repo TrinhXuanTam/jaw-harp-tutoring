@@ -7,6 +7,7 @@ class User extends Equatable {
   final String name;
   final String email;
   final bool isVerified;
+  final Set<String> roles;
   final Set<String> purchasedTechniques;
   final Set<String> favoriteTechniques;
   final Optional<String> profilePictureUrl;
@@ -16,6 +17,7 @@ class User extends Equatable {
     required this.name,
     required this.email,
     required this.isVerified,
+    this.roles = const {},
     this.purchasedTechniques = const {},
     this.favoriteTechniques = const {},
     this.profilePictureUrl = const Optional.empty(),

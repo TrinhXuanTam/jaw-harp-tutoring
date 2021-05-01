@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jews_harp/core/BLoCs/connectivity/connectivity_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/loading_wrapper.dart';
-import 'package:jews_harp/features/user_section/domain/entities/product_info.dart';
+import 'package:jews_harp/core/widgets/no_internet_widget.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_detail/technique_detail_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_local_storage/technique_local_storage_bloc.dart';
@@ -71,27 +72,20 @@ class TechniqueScreen extends StatelessWidget {
         else
           techniqueDetailBloc.add(MarkTechniqueAsFavoriteEvent(technique, user));
       },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+      child: Column(
         children: [
-          Column(
-            children: [
-              Icon(
-                isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-                color: isFavorite ? BASE_COLOR : Colors.grey,
-                size: 20,
-              ),
-              Text(
-                "Favorite",
-                style: TextStyle(
-                  fontSize: 12,
-                  color: isFavorite ? BASE_COLOR : Colors.grey,
-                ),
-              ),
-            ],
+          Icon(
+            isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+            color: isFavorite ? BASE_COLOR : Colors.grey,
+            size: 20,
           ),
-          SizedBox(width: 25),
-          _buildDownloadButton(context),
+          Text(
+            "Favorite",
+            style: TextStyle(
+              fontSize: 12,
+              color: isFavorite ? BASE_COLOR : Colors.grey,
+            ),
+          ),
         ],
       ),
     );
@@ -99,6 +93,8 @@ class TechniqueScreen extends StatelessWidget {
 
   Widget _buildDownloadButton(BuildContext context) {
     return BlocBuilder<TechniqueLocalStorageBloc, TechniqueLocalStorageState>(builder: (ctx, state) {
+      final bool connected = BlocProvider.of<ConnectivityBloc>(ctx).state is ConnectionAvailable;
+
       if (state.downloadingInProgress.contains(this.technique.id))
         return Column(
           children: [
@@ -118,19 +114,19 @@ class TechniqueScreen extends StatelessWidget {
         );
       else if (!state.downloadedTechniques.containsKey(technique.id))
         return GestureDetector(
-          onTap: () => BlocProvider.of<TechniqueLocalStorageBloc>(ctx).add(DownloadTechniqueEvent(this.technique.id)),
+          onTap: connected ? () => BlocProvider.of<TechniqueLocalStorageBloc>(ctx).add(DownloadTechniqueEvent(this.technique.id)) : null,
           child: Column(
             children: [
               Icon(
                 Icons.download_outlined,
-                color: Colors.grey,
+                color: connected ? BASE_COLOR : Colors.grey,
                 size: 20,
               ),
               Text(
                 "Download",
                 style: TextStyle(
                   fontSize: 12,
-                  color: Colors.grey,
+                  color: connected ? BASE_COLOR : Colors.grey,
                 ),
               ),
             ],
@@ -142,7 +138,7 @@ class TechniqueScreen extends StatelessWidget {
           child: Column(
             children: [
               Icon(
-                Icons.delete_forever_rounded,
+                Icons.delete_rounded,
                 color: Colors.redAccent,
                 size: 20,
               ),
@@ -198,7 +194,19 @@ class TechniqueScreen extends StatelessWidget {
                                     fontSize: 15,
                                   ),
                                 ),
-                                _buildFavoriteButton(ctx),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    if (BlocProvider.of<ConnectivityBloc>(ctx).state is ConnectionAvailable)
+                                      Row(
+                                        children: [
+                                          _buildFavoriteButton(ctx),
+                                          SizedBox(width: 25),
+                                        ],
+                                      ),
+                                    _buildDownloadButton(context),
+                                  ],
+                                ),
                                 DefaultTabController(
                                   length: 2,
                                   child: Expanded(
@@ -259,9 +267,15 @@ class TechniqueScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                               ),
-                                              Padding(
-                                                padding: const EdgeInsets.all(10),
-                                                child: SmallTechniqueList(techniquesIds: this.technique.category.techniqueIds),
+                                              BlocBuilder<ConnectivityBloc, ConnectivityState>(
+                                                builder: (context, state) {
+                                                  if (state is NoInternetConnection) return NoInternetWidget();
+
+                                                  return Padding(
+                                                    padding: const EdgeInsets.all(10),
+                                                    child: SmallTechniqueList(techniquesIds: this.technique.category.techniqueIds),
+                                                  );
+                                                },
                                               ),
                                             ],
                                           ),

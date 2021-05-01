@@ -10,5 +10,8 @@ class UserAuthenticatedEvent extends AuthEvent {
   UserAuthenticatedEvent(this.user);
 }
 
+/// Refresh user data.
+class ReloadUserData extends AuthEvent {}
+
 /// User signs out.
 class UserSignOutEvent extends AuthEvent {}
