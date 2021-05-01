@@ -67,12 +67,13 @@ class _EntryPoint extends StatelessWidget {
     if (state is UserAuthenticated) {
       if (state.user.isVerified)
         currentState.pushNamedAndRemoveUntil(USER_SECTION_SCREEN_ROUTE, (route) => false);
-      else
-        currentState.pushNamedAndRemoveUntil(
+      else {
+        currentState.pushNamedAndRemoveUntil(AUTH_SCREEN_ROUTE, (route) => false);
+        currentState.pushNamed(
           EMAIL_VERIFICATION_UP_SCREEN_ROUTE,
-          (route) => false,
           arguments: EmailVerificationScreenArgs(user: state.user),
         );
+      }
     } else
       currentState.pushNamedAndRemoveUntil(AUTH_SCREEN_ROUTE, (route) => false);
   }

@@ -107,7 +107,8 @@ class TechniqueDTO extends Technique {
   static Future<Optional<MediaDTO>> _getDownloadUrl(DocumentSnapshot documentSnapshot, String filename) async {
     try {
       final media = FirebaseStorage.instance.ref("techniques");
-      return Optional.of(MediaDTO(url: Optional.of(await media.child(documentSnapshot.id).child(filename).getDownloadURL())));
+      final url = await media.child(documentSnapshot.id).child(filename).getDownloadURL();
+      return Optional.of(MediaDTO(url: Optional.of(url)));
     } catch (exception) {
       return Optional.empty();
     }

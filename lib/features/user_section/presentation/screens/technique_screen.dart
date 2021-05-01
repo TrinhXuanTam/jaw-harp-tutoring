@@ -76,14 +76,14 @@ class TechniqueScreen extends StatelessWidget {
         children: [
           Icon(
             isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-            color: isFavorite ? BASE_COLOR : Colors.grey,
+            color: BASE_COLOR,
             size: 20,
           ),
           Text(
             "Favorite",
             style: TextStyle(
               fontSize: 12,
-              color: isFavorite ? BASE_COLOR : Colors.grey,
+              color: BASE_COLOR,
             ),
           ),
         ],
@@ -294,7 +294,10 @@ class TechniqueScreen extends StatelessWidget {
                       top: 10,
                       left: 10,
                       child: GestureDetector(
-                        onTap: () => Navigator.pop(context),
+                        onTap: () {
+                          state.videoPlayerController.ifPresent((controller) => controller.pause());
+                          Navigator.pop(context);
+                        },
                         child: Icon(
                           Icons.arrow_back_rounded,
                           color: Colors.white,

@@ -28,7 +28,10 @@ class VideoFullScreenModeScreen extends StatelessWidget {
       appBar: IconAppBar(
         icon: Icons.close_rounded,
         iconColor: Colors.white,
-        onPressed: () => Navigator.pop(context),
+        onPressed: () {
+          controller.pause();
+          Navigator.pop(context);
+        },
       ),
       body: VideoPlayerWidget(
         controller: this.controller,

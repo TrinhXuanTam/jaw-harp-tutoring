@@ -42,6 +42,7 @@ class VideoPicker extends StatelessWidget {
               ),
               Container(
                 width: double.infinity,
+                height: double.infinity,
                 color: BASE_COLOR_VERY_LIGHT.withAlpha(170),
                 child: Icon(
                   Icons.play_circle_outline_rounded,
