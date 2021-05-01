@@ -2,6 +2,7 @@ part of 'technique_form_bloc.dart';
 
 @immutable
 class TechniqueFormState {
+  final bool formSubmitted;
   final bool isPaid;
   final TextEditingController idController;
   final DropdownButtonFormFieldController<String> categoryController;
@@ -12,6 +13,7 @@ class TechniqueFormState {
   final Technique? success;
 
   TechniqueFormState({
+    this.formSubmitted = false,
     required this.isPaid,
     required this.idController,
     required this.categoryController,
@@ -23,6 +25,7 @@ class TechniqueFormState {
   });
 
   TechniqueFormState copyWith({
+    bool? formSubmitted,
     bool? isPaid,
     TextEditingController? idController,
     DropdownButtonFormFieldController<String>? categoryController,
@@ -33,6 +36,7 @@ class TechniqueFormState {
     Technique? success,
   }) {
     return TechniqueFormState(
+      formSubmitted: formSubmitted ?? this.formSubmitted,
       isPaid: isPaid ?? this.isPaid,
       idController: idController ?? this.idController,
       categoryController: categoryController ?? this.categoryController,

@@ -15,13 +15,11 @@ import 'language_side_scroll_grid.dart';
 class CategoryForm extends StatelessWidget {
   final String submitButtonText;
   final VoidCallback onSubmit;
-  final void Function(Category category) onSuccess;
 
   const CategoryForm({
     Key? key,
     this.submitButtonText = "Submit",
     required this.onSubmit,
-    required this.onSuccess,
   }) : super(key: key);
 
   @override
@@ -30,142 +28,137 @@ class CategoryForm extends StatelessWidget {
     final bloc = BlocProvider.of<CategoryFormBloc>(context);
     final size = MediaQuery.of(context).size;
 
-    return BlocListener<CategoryFormBloc, CategoryFormState>(
-      listener: (ctx, state) {
-        if (state.success != null) onSuccess(state.success!);
-      },
-      child: Column(
-        children: [
-          Container(
-            width: size.width * 0.75,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Visibility:",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),
+    return Column(
+      children: [
+        Container(
+          width: size.width * 0.75,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Visibility:",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
                           ),
-                          Text(
-                            "The category and its content will be visible to the public if set.",
-                            textAlign: TextAlign.justify,
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 12,
-                            ),
+                        ),
+                        Text(
+                          "The category and its content will be visible to the public if set.",
+                          textAlign: TextAlign.justify,
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 12,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    SizedBox(width: 50),
-                    BlocBuilder<CategoryFormBloc, CategoryFormState>(
-                      builder: (ctx, state) => Switch(
-                        value: state.isVisible,
-                        activeColor: BASE_COLOR,
-                        onChanged: (val) => bloc.add(UpdateCategoryVisibility(val)),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Upload files:",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),
-                          ),
-                          Text(
-                            "Upload additional to improve the user experience.",
-                            textAlign: TextAlign.justify,
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
+                  ),
+                  SizedBox(width: 50),
+                  BlocBuilder<CategoryFormBloc, CategoryFormState>(
+                    builder: (ctx, state) => Switch(
+                      value: state.isVisible,
+                      activeColor: BASE_COLOR,
+                      onChanged: (val) => bloc.add(UpdateCategoryVisibility(val)),
                     ),
-                    SizedBox(width: 20),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(29),
-                      child: Material(
-                        color: BASE_COLOR,
-                        child: InkWell(
-                          onTap: () => Navigator.pushNamed(
-                            context,
-                            UPLOAD_FILES_SCREEN_ROUTE,
-                            arguments: UploadFilesScreenArgs(thumbnailController: BlocProvider.of<CategoryFormBloc>(context).state.thumbnailController),
+                  )
+                ],
+              ),
+              SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Upload files:",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Icon(
-                              Icons.cloud_upload,
-                              color: BASE_COLOR_VERY_LIGHT,
-                            ),
+                        ),
+                        Text(
+                          "Upload additional to improve the user experience.",
+                          textAlign: TextAlign.justify,
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 20),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(29),
+                    child: Material(
+                      color: BASE_COLOR,
+                      child: InkWell(
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          UPLOAD_FILES_SCREEN_ROUTE,
+                          arguments: UploadFilesScreenArgs(thumbnailController: BlocProvider.of<CategoryFormBloc>(context).state.thumbnailController),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Icon(
+                            Icons.cloud_upload,
+                            color: BASE_COLOR_VERY_LIGHT,
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Localization:",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                      ),
-                    ),
-                    Text(
-                      "Translate your content into different languages.",
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 5),
-                BlocBuilder<CategoryFormBloc, CategoryFormState>(
-                  builder: (ctx, state) => LanguageSideScrollGrid(
-                    displayAddButton: SupportedLanguages.languages.length != bloc.state.localizedData.length,
-                    data: _buildLanguageSideScrollGridItems(ctx, bloc),
-                    onAddButtonTap: () => Navigator.pushNamed(
-                      context,
-                      CATEGORY_LOCALIZATION_ADD_SCREEN_ROUTE,
-                      arguments: CategoryLocalizationAddScreenArgs(categoryFormBloc: bloc),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Localization:",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
                     ),
                   ),
+                  Text(
+                    "Translate your content into different languages.",
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 5),
+              BlocBuilder<CategoryFormBloc, CategoryFormState>(
+                builder: (ctx, state) => LanguageSideScrollGrid(
+                  displayAddButton: SupportedLanguages.languages.length != bloc.state.localizedData.length,
+                  data: _buildLanguageSideScrollGridItems(ctx, bloc),
+                  onAddButtonTap: () => Navigator.pushNamed(
+                    context,
+                    CATEGORY_LOCALIZATION_ADD_SCREEN_ROUTE,
+                    arguments: CategoryLocalizationAddScreenArgs(categoryFormBloc: bloc),
+                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          SizedBox(height: 10),
-          RoundedButton(
-            text: this.submitButtonText,
-            onPressed: this.onSubmit,
-          ),
-        ],
-      ),
+        ),
+        SizedBox(height: 10),
+        RoundedButton(
+          text: this.submitButtonText,
+          onPressed: this.onSubmit,
+        ),
+      ],
     );
   }
 

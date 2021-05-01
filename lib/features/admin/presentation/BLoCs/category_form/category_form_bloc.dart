@@ -58,6 +58,8 @@ class CategoryFormBloc extends Bloc<CategoryFormEvent, CategoryFormState> {
       localizedData.remove(event.languageCode);
       yield state.copyWith(localizedData: localizedData);
     } else if (event is UpdateCategoryEvent) {
+      yield state.copyWith(formSubmitted: true);
+
       late final Optional<Media>? thumbnail;
 
       // Check if thumbnail has changed.
@@ -76,12 +78,15 @@ class CategoryFormBloc extends Bloc<CategoryFormEvent, CategoryFormState> {
 
       yield state.copyWith(success: category);
     } else if (event is CreateCategoryEvent) {
+      yield state.copyWith(formSubmitted: true);
+
       // Create category.
       final Category category = await _createCategory(
         state.isVisible,
         Optional.ofNullable(state.thumbnailController.image),
         state.localizedData.entries.map((e) => e.value),
       );
+
       yield state.copyWith(success: category);
     }
   }

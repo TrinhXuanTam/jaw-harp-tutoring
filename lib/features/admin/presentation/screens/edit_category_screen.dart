@@ -4,7 +4,6 @@ import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/extensions.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/loading_wrapper.dart';
-import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_form/category_form_bloc.dart';
@@ -42,42 +41,49 @@ class EditCategoryScreen extends StatelessWidget {
     return BlocProvider<CategoryLocalizationBloc>(
       create: (_) => serviceLocator<CategoryLocalizationBloc>()..add(LoadCategoryLocalizedData(this.category)),
       child: BlocBuilder<CategoryLocalizationBloc, CategoryLocalizationState>(
-        builder: (ctx, state) {
+        builder: (_, state) {
           if (state is CategoryLocalizationLoaded)
-            return Scaffold(
-              extendBodyBehindAppBar: true,
-              appBar: IconAppBar(
-                onPressed: () => this.onClose(context, this.category),
+            return BlocProvider(
+              create: (_) => serviceLocator<CategoryFormBloc>(
+                param1: CategoryFormState(
+                  isVisible: this.category.isVisible,
+                  thumbnailController: ThumbnailPickerController(image: this.category.thumbnail.toNullable()),
+                  localizedData: state.localizedData,
+                ),
               ),
-              body: CenteredStack(
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TitleWithSubtitle(
-                        titleText: "Edit Category",
-                        titleSize: 35,
-                        subtitleText: "Edit details of your category.",
-                      ),
-                      SizedBox(height: 20),
-                      BlocProvider<CategoryFormBloc>(
-                        create: (ctx) => serviceLocator<CategoryFormBloc>(
-                            param1: CategoryFormState(
-                          isVisible: this.category.isVisible,
-                          thumbnailController: ThumbnailPickerController(image: this.category.thumbnail.toNullable()),
-                          localizedData: state.localizedData,
-                        )),
-                        child: Builder(
-                          builder: (ctx) => CategoryForm(
-                            submitButtonText: "Save",
-                            onSubmit: () => BlocProvider.of<CategoryFormBloc>(ctx).add(UpdateCategoryEvent(this.category)),
-                            onSuccess: (updatedCategory) => this.onClose(ctx, updatedCategory),
-                          ),
+              child: BlocConsumer<CategoryFormBloc, CategoryFormState>(
+                listener: (ctx, state) {
+                  if (state.success != null) this.onClose(ctx, state.success!);
+                },
+                builder: (ctx, state) {
+                  if (state.formSubmitted) return LoadingScreen(showCloseButton: false);
+
+                  return Scaffold(
+                    extendBodyBehindAppBar: true,
+                    appBar: IconAppBar(
+                      onPressed: () => this.onClose(context, this.category),
+                    ),
+                    body: CenteredStack(
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TitleWithSubtitle(
+                              titleText: "Edit Category",
+                              titleSize: 35,
+                              subtitleText: "Edit details of your category.",
+                            ),
+                            SizedBox(height: 20),
+                            CategoryForm(
+                              submitButtonText: "Save",
+                              onSubmit: () => BlocProvider.of<CategoryFormBloc>(ctx).add(UpdateCategoryEvent(this.category)),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  );
+                },
               ),
             );
           else

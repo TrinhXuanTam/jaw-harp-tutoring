@@ -11,6 +11,7 @@ import 'package:optional/optional.dart';
 /// Technique admin repository.
 @LazySingleton(as: ITechniqueAdminRepository, env: [Environment.prod])
 class TechniqueAdminRepository extends ITechniqueAdminRepository {
+  /// Firebase admin data source.
   final FirebaseAdminDataSource _adminDataSource;
 
   TechniqueAdminRepository(this._adminDataSource);

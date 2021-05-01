@@ -224,8 +224,7 @@ _i1.GetIt initGetIt(_i1.GetIt get,
   gh.factory<_i10.HideFieldInputBloc>(() => _i10.HideFieldInputBloc(),
       registerFor: {_prod, _dev});
   gh.lazySingleton<_i11.ICategoryAdminRepository>(
-      () => _i12.CategoryAdminRepository(get<_i6.FirebaseAdminDataSource>(),
-          get<_i9.FirebaseUserSectionDataSource>()),
+      () => _i12.CategoryAdminRepository(get<_i6.FirebaseAdminDataSource>()),
       registerFor: {_prod});
   gh.lazySingleton<_i13.ICategoryRepository>(
       () => _i14.CategoryRepository(get<_i9.FirebaseUserSectionDataSource>(),

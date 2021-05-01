@@ -41,10 +41,15 @@ import 'features/user_section/presentation/screens/video_full_screen_mode_screen
 
 /// Driver function
 Future<void> main() async {
-  // Initialize dependencies
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Enable in app purchases.
   InAppPurchaseConnection.enablePendingPurchases();
+
+  // Create Firebase connection.
   await Firebase.initializeApp();
+
+  // Initialize dependency injection.
   configureDependencies();
 
   // Disable landscape mode
@@ -96,9 +101,6 @@ class _EntryPoint extends StatelessWidget {
 
   T _getArgs<T>(ctx) => ModalRoute.of(ctx)!.settings.arguments as T;
 
-  /// Display splash screen for [Constants.SPLASH_SCREEN_DURATION] and then check for check if user is signed in.
-  /// Redirect the user into the authentication screen if user is not signed in.
-  /// Otherwise, redirect the user into the main screen.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(

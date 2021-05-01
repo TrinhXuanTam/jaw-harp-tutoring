@@ -80,34 +80,37 @@ class TechniqueFormBloc extends Bloc<TechniqueFormEvent, TechniqueFormState> {
       // Check for required fields.
       if ((state.isPaid && state.idController.text.isEmpty) || categoryId == null || difficulty == null) {
         _errorBloc.add(UserErrorEvent("Failed to create technique", "Please fill out all fields!"));
+      } else {
+        yield state.copyWith(formSubmitted: true);
+
+        late final Optional<Media>? thumbnail;
+        late final Optional<Media>? video;
+
+        // Check if thumbnail has changed.
+        if (event.technique.thumbnail.toNullable() == state.thumbnailController.image)
+          thumbnail = null;
+        else
+          thumbnail = Optional.ofNullable(state.thumbnailController.image);
+
+        // Check if video has changed.
+        if (event.technique.video.toNullable() == state.videoController.video)
+          video = null;
+        else
+          video = Optional.ofNullable(state.videoController.video);
+
+        // Update technique.
+        final technique = await _updateTechnique(
+          event.technique.id,
+          productId: state.isPaid ? Optional.of(state.idController.text) : Optional.empty(),
+          categoryId: categoryId,
+          difficulty: difficulty,
+          localizedData: state.localizedData.entries.map((e) => e.value),
+          thumbnail: thumbnail,
+          video: video,
+        );
+
+        yield state.copyWith(success: technique);
       }
-
-      late final Optional<Media>? thumbnail;
-      late final Optional<Media>? video;
-
-      // Check if thumbnail has changed.
-      if (event.technique.thumbnail.toNullable() == state.thumbnailController.image)
-        thumbnail = null;
-      else
-        thumbnail = Optional.ofNullable(state.thumbnailController.image);
-
-      // Check if video has changed.
-      if (event.technique.video.toNullable() == state.videoController.video)
-        video = null;
-      else
-        video = Optional.ofNullable(state.videoController.video);
-
-      // Update technique.
-      final technique = await _updateTechnique(
-        event.technique.id,
-        productId: state.isPaid ? Optional.of(state.idController.text) : Optional.empty(),
-        categoryId: state.categoryController.value,
-        difficulty: state.difficultyController.value,
-        localizedData: state.localizedData.entries.map((e) => e.value),
-        thumbnail: thumbnail,
-        video: video,
-      );
-      yield state.copyWith(success: technique);
     } else if (event is CreateTechniqueEvent) {
       final categoryId = state.categoryController.value;
       final difficulty = state.difficultyController.value;
@@ -115,19 +118,21 @@ class TechniqueFormBloc extends Bloc<TechniqueFormEvent, TechniqueFormState> {
       // Check for required fields.
       if ((state.isPaid && state.idController.text.isEmpty) || categoryId == null || difficulty == null) {
         _errorBloc.add(UserErrorEvent("Failed to create technique", "Please fill out all fields!"));
+      } else {
+        yield state.copyWith(formSubmitted: true);
+
+        // Create techinque.
+        final technique = await _createTechnique(
+          productId: state.isPaid ? Optional.ofNullable(state.idController.text) : Optional.empty(),
+          categoryId: categoryId,
+          difficulty: difficulty,
+          localizedData: state.localizedData.entries.map((e) => e.value),
+          thumbnail: Optional.ofNullable(state.thumbnailController.image),
+          video: Optional.ofNullable(state.videoController.video),
+        );
+
+        yield state.copyWith(success: technique);
       }
-
-      // Create techinque.
-      final technique = await _createTechnique(
-        productId: state.isPaid ? Optional.ofNullable(state.idController.text) : Optional.empty(),
-        categoryId: categoryId!,
-        difficulty: difficulty!,
-        localizedData: state.localizedData.entries.map((e) => e.value),
-        thumbnail: Optional.ofNullable(state.thumbnailController.image),
-        video: Optional.ofNullable(state.videoController.video),
-      );
-
-      yield state.copyWith(success: technique);
     }
   }
 }

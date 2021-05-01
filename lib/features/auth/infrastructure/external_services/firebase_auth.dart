@@ -90,13 +90,6 @@ class FirebaseAuthService {
         _addUserToFirestore(user);
       }
 
-      // Update profile photo in Firebase Authentication.
-      final user = firebaseCredential.user!;
-      if (user.photoURL != null) {
-        String photoUrl = user.photoURL! + "?height=500&access_token=" + accessToken;
-        await user.updateProfile(photoURL: photoUrl);
-      }
-
       return UserDTO.fromFirebaseCredentials(firebaseCredential);
     } on FirebaseAuthException catch (e) {
       throw EmailAlreadyUsedError(e.email!);

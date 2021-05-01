@@ -15,27 +15,28 @@ import 'package:light_compressor/light_compressor.dart';
 import 'package:optional/optional.dart';
 import 'package:path_provider/path_provider.dart';
 
-/// Firebase Admin Section data source
+/// Firebase Admin Section data source.
 @LazySingleton(env: [Environment.prod])
 class FirebaseAdminDataSource {
-  /// Category collection
-  CollectionReference _categories = FirebaseFirestore.instance.collection('categories');
+  /// Category collection.
+  final CollectionReference _categories = FirebaseFirestore.instance.collection('categories');
 
-  /// Technique collection
-  CollectionReference _techniques = FirebaseFirestore.instance.collection('techniques');
+  /// Technique collection.
+  final CollectionReference _techniques = FirebaseFirestore.instance.collection('techniques');
 
-  /// Cloud storage technique location
-  Reference _techniqueMedia = FirebaseStorage.instance.ref("techniques");
+  /// Cloud storage technique location.
+  final Reference _techniqueMedia = FirebaseStorage.instance.ref("techniques");
 
-  /// Cloud storage categories location
-  Reference _categoryMedia = FirebaseStorage.instance.ref("categories");
+  /// Cloud storage categories location.
+  final Reference _categoryMedia = FirebaseStorage.instance.ref("categories");
 
-  /// Compress and upload the file to cloud storage
-  Future<String> _uploadFile(Reference media, String techniqueId, String filename, String path) async {
+  /// Compress and upload a video to cloud storage.
+  Future<String> _uploadVideo(Reference media, String techniqueId, String path) async {
     // get temporary directory
     final tmp = await getTemporaryDirectory();
     final filePath = tmp.path + "/compressedVideo";
-    // Compress the file
+
+    // Compress the video
     final response = await LightCompressor.compressVideo(
       path: path,
       destinationPath: filePath,
@@ -44,14 +45,22 @@ class FirebaseAdminDataSource {
       keepOriginalResolution: false,
     );
 
-    // Upload the file to cloud storage
+    // Upload the video to cloud storage
     final compressedFile = File(response!['onSuccess']);
-    final task = await media.child(techniqueId).child(filename).putFile(compressedFile);
+    final task = await media.child(techniqueId).child("video").putFile(compressedFile);
     final url = await task.ref.getDownloadURL();
 
-    // Delete the file
+    // Delete the compressed video
     compressedFile.delete();
 
+    return url;
+  }
+
+  /// Upload an image to cloud storage
+  Future<String> _uploadThumbnail(Reference media, String techniqueId, String path) async {
+    // Upload the image to cloud storage
+    final task = await media.child(techniqueId).child("thumbnail").putFile(File(path));
+    final url = await task.ref.getDownloadURL();
     return url;
   }
 
@@ -112,12 +121,12 @@ class FirebaseAdminDataSource {
 
     // Upload video if provided.
     if (video.isPresent && video.value.filePath.isPresent) {
-      await _uploadFile(_techniqueMedia, snapshot.id, "video", video.value.filePath.value);
+      await _uploadVideo(_techniqueMedia, snapshot.id, video.value.filePath.value);
     }
 
-    // Upload thumbnail ifi provided.
+    // Upload thumbnail if provided.
     if (thumbnail.isPresent && thumbnail.value.filePath.isPresent) {
-      await _uploadFile(_techniqueMedia, snapshot.id, "thumbnail", thumbnail.value.filePath.value);
+      await _uploadThumbnail(_techniqueMedia, snapshot.id, thumbnail.value.filePath.value);
     }
 
     // Update techniques of the given category.
@@ -137,65 +146,16 @@ class FirebaseAdminDataSource {
     // Save to Firestore
     final snapshot = await _categories.add({
       "isVisible": isVisible,
-      "techniques": FieldValue.arrayUnion([]),
+      "techniques": [],
       "localization": _createCategoryL10nFromIterable(localizedData),
     }).then((value) => value.get());
 
     // Upload thumbnail if provided.
     if (thumbnail.isPresent && thumbnail.value.filePath.isPresent) {
-      await _uploadFile(_categoryMedia, snapshot.id, "thumbnail", thumbnail.value.filePath.value);
+      await _uploadThumbnail(_categoryMedia, snapshot.id, thumbnail.value.filePath.value);
     }
 
     return CategoryDTO.fromFirestore(snapshot);
-  }
-
-  /// Update and save new category data to Firestore database.
-  Future<CategoryDTO> updateCategory(
-    String id, {
-    bool? isVisible,
-    Optional<MediaDTO>? thumbnail,
-    Iterable<CategoryLocalizedDataDTO>? localizedData,
-  }) async {
-    // Check if category exists.
-    final category = await _categories.doc(id).get();
-    if (!category.exists) throw NotFoundError("Category with the given ID doesn't exist!");
-
-    final Map<String, dynamic> updatedData = {};
-
-    // set category to visible and publish all contained techniques.
-    if (isVisible != null) {
-      updatedData["isVisible"] = isVisible;
-
-      // Set [datePublished] to server time
-      if (isVisible == true) {
-        final techniqueIds = List<String>.from(category["techniques"]);
-        for (String id in techniqueIds) {
-          final technique = await _techniques.doc(id).get();
-          if (technique["datePublished"] == null) technique.reference.update({"datePublished": FieldValue.serverTimestamp()});
-        }
-      }
-    }
-
-    // Update localization
-    if (localizedData != null) {
-      updatedData["localization"] = _createCategoryL10nFromIterable(localizedData);
-    }
-
-    // Update category.
-    await _categories.doc(id).update(updatedData);
-
-    // Update thumbnail.
-    if (thumbnail != null) {
-      if (thumbnail.isEmpty) {
-        // Delete the old one.
-        await _deleteFile(_categoryMedia, id, "thumbnail");
-      } else if (thumbnail.isPresent && thumbnail.value.filePath.isPresent) {
-        // Upload new file.
-        await _uploadFile(_categoryMedia, id, "thumbnail", thumbnail.value.filePath.value);
-      }
-    }
-
-    return CategoryDTO.fromFirestore(await _categories.doc(id).get());
   }
 
   /// Update and save new technique data to Firestore database.
@@ -212,10 +172,13 @@ class FirebaseAdminDataSource {
     final technique = await _techniques.doc(id).get();
     if (!technique.exists) throw NotFoundError("Technique with the given ID doesn't exist!");
 
+    // The data to update.
     final Map<String, dynamic> updatedData = {};
 
+    // Update the product id to either disable or enable payments.
     if (productId != null) updatedData["productId"] = productId.toNullable();
 
+    // Update category.
     if (categoryId != null) {
       updatedData["category"] = categoryId;
 
@@ -243,7 +206,7 @@ class FirebaseAdminDataSource {
         await _deleteFile(_techniqueMedia, id, "thumbnail");
       } else if (thumbnail.isPresent && thumbnail.value.filePath.isPresent) {
         // Upload the new one.
-        await _uploadFile(_techniqueMedia, id, "thumbnail", thumbnail.value.filePath.value);
+        await _uploadThumbnail(_techniqueMedia, id, thumbnail.value.filePath.value);
       }
     }
 
@@ -254,7 +217,7 @@ class FirebaseAdminDataSource {
         await _deleteFile(_techniqueMedia, id, "video");
       } else if (video.isPresent && video.value.filePath.isPresent) {
         // Upload the new one.
-        await _uploadFile(_techniqueMedia, id, "video", video.value.filePath.value);
+        await _uploadVideo(_techniqueMedia, id, video.value.filePath.value);
       }
     }
 
@@ -264,24 +227,54 @@ class FirebaseAdminDataSource {
     return TechniqueDTO.fromFirestore(await _techniques.doc(id).get());
   }
 
-  /// Get hidden categories.
-  Future<Iterable<CategoryDTO>> getHiddenCategories() async {
-    final snapshot = await _categories.where("isVisible", isEqualTo: false).get();
-    final List<CategoryDTO> res = [];
+  /// Update and save new category data to Firestore database.
+  Future<CategoryDTO> updateCategory(
+    String id, {
+    bool? isVisible,
+    Optional<MediaDTO>? thumbnail,
+    Iterable<CategoryLocalizedDataDTO>? localizedData,
+  }) async {
+    // Check if category exists.
+    final category = await _categories.doc(id).get();
+    if (!category.exists) throw NotFoundError("Category with the given ID doesn't exist!");
 
-    for (final document in snapshot.docs) res.add(await CategoryDTO.fromFirestore(document));
+    // The data to be updated.
+    final Map<String, dynamic> updatedData = {};
 
-    return res;
-  }
+    // Set category to visible and publish all contained techniques.
+    if (isVisible != null) {
+      updatedData["isVisible"] = isVisible;
 
-  /// Get all categories.
-  Future<Iterable<CategoryDTO>> getAllCategories() async {
-    final snapshot = await _categories.get();
-    final List<CategoryDTO> res = [];
+      // Set [datePublished] to server time.
+      if (isVisible == true) {
+        final techniqueIds = List<String>.from(category["techniques"]);
+        for (String id in techniqueIds) {
+          final technique = await _techniques.doc(id).get();
+          if (technique["datePublished"] == null) technique.reference.update({"datePublished": FieldValue.serverTimestamp()});
+        }
+      }
+    }
 
-    for (final document in snapshot.docs) res.add(await CategoryDTO.fromFirestore(document));
+    // Update localization
+    if (localizedData != null) {
+      updatedData["localization"] = _createCategoryL10nFromIterable(localizedData);
+    }
 
-    return res;
+    // Update category.
+    await _categories.doc(id).update(updatedData);
+
+    // Update thumbnail.
+    if (thumbnail != null) {
+      if (thumbnail.isEmpty) {
+        // Delete the old one.
+        await _deleteFile(_categoryMedia, id, "thumbnail");
+      } else if (thumbnail.isPresent && thumbnail.value.filePath.isPresent) {
+        // Upload new file.
+        await _uploadThumbnail(_categoryMedia, id, thumbnail.value.filePath.value);
+      }
+    }
+
+    return CategoryDTO.fromFirestore(await _categories.doc(id).get());
   }
 
   /// Get all techniques.
@@ -296,7 +289,36 @@ class FirebaseAdminDataSource {
     return res;
   }
 
-  /// Get categoy localized data from category document.
+  /// Get all categories.
+  Future<Iterable<CategoryDTO>> getAllCategories() async {
+    final snapshot = await _categories.get();
+    final List<CategoryDTO> res = [];
+
+    for (final document in snapshot.docs) res.add(await CategoryDTO.fromFirestore(document));
+
+    return res;
+  }
+
+  /// Get all categories.
+  Future<Iterable<CategoryDTO>> getVisibleCategories() async {
+    final snapshot = await _categories.where("isVisible", isEqualTo: true).get();
+    final List<CategoryDTO> res = [];
+
+    for (final document in snapshot.docs) res.add(await CategoryDTO.fromFirestore(document));
+    return res;
+  }
+
+  /// Get hidden categories.
+  Future<Iterable<CategoryDTO>> getHiddenCategories() async {
+    final snapshot = await _categories.where("isVisible", isEqualTo: false).get();
+    final List<CategoryDTO> res = [];
+
+    for (final document in snapshot.docs) res.add(await CategoryDTO.fromFirestore(document));
+
+    return res;
+  }
+
+  /// Get category localized data from category document.
   Future<Map<String, CategoryLocalizedDataDTO>> getCategoryLocalizedData(String categoryId) async {
     final category = await _categories.doc(categoryId).get();
 
