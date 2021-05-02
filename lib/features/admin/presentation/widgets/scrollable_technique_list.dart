@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
-import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:jews_harp/features/user_section/domain/entities/product_info.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
+/// Technique list for admin menu.
 class ScrollableTechniqueList extends StatelessWidget {
   final void Function(Technique technique) onTap;
   final List<Technique> items;
@@ -89,20 +89,20 @@ class ScrollableTechniqueList extends StatelessWidget {
                           child: InkWell(
                             onTap: () => onTap(items[index]),
                             child: Container(
-                              padding: EdgeInsets.all(14),
+                              padding: const EdgeInsets.all(14),
                               child: Row(
                                 children: [
                                   _getThumbnail(items[index]),
-                                  SizedBox(width: 10),
+                                  const SizedBox(width: 10),
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         _getProductStatus(items[index]),
-                                        SizedBox(height: 1),
+                                        const SizedBox(height: 1),
                                         Text(
                                           items[index].title,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -116,17 +116,17 @@ class ScrollableTechniqueList extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Divider(height: 1.5, color: Colors.grey),
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: const Divider(height: 1.5, color: Colors.grey),
                         ),
                       ],
                     );
                   },
                 ),
               )
-            : Text(
+            : const Text(
                 "No techniques",
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
                 ),

@@ -8,6 +8,7 @@ import 'package:jews_harp/features/admin/presentation/BLoCs/thumbnail_picker/thu
 import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
+/// Image picker button with preview.
 class ThumbnailPicker extends StatelessWidget {
   final ThumbnailPickerController controller;
 

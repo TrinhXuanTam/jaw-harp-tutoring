@@ -21,6 +21,7 @@ class EditTechniqueScreenArgs {
   EditTechniqueScreenArgs(this.technique, this.onClose);
 }
 
+/// Technique form with preloaded data.
 class EditTechniqueScreen extends StatelessWidget {
   final Technique technique;
   final void Function(BuildContext ctx) onClose;
@@ -38,59 +39,64 @@ class EditTechniqueScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<TechniqueLocalizationBloc>(
       create: (_) => serviceLocator<TechniqueLocalizationBloc>()..add(LoadTechniqueLocalizedData(this.technique)),
-      child: BlocBuilder<TechniqueLocalizationBloc, TechniqueLocalizationState>(builder: (ctx, state) {
-        if (state is TechniqueLocalizationLoaded)
-          return BlocProvider(
-            create: (_) => serviceLocator<TechniqueFormBloc>(
-              param1: TechniqueFormState(
-                isPaid: technique.productId.isPresent,
-                idController: TextEditingController(text: technique.productId.orElseGet(() => "")),
-                categoryController: DropdownButtonFormFieldController<String>(value: technique.category.id),
-                difficultyController: DropdownButtonFormFieldController<TechniqueDifficulty>(value: technique.difficulty),
-                localizedData: state.localizedData,
-                thumbnailController: ThumbnailPickerController(image: technique.thumbnail.toNullable()),
-                videoController: VideoPickerController(video: technique.video.toNullable()),
+      child: BlocBuilder<TechniqueLocalizationBloc, TechniqueLocalizationState>(
+        builder: (ctx, state) {
+          if (state is TechniqueLocalizationLoaded)
+            return BlocProvider(
+              // Initialize form with preloaded data.
+              create: (_) => serviceLocator<TechniqueFormBloc>(
+                param1: TechniqueFormState(
+                  isPaid: technique.productId.isPresent,
+                  idController: TextEditingController(text: technique.productId.orElseGet(() => "")),
+                  categoryController: DropdownButtonFormFieldController<String>(value: technique.category.id),
+                  difficultyController: DropdownButtonFormFieldController<TechniqueDifficulty>(value: technique.difficulty),
+                  localizedData: state.localizedData,
+                  thumbnailController: ThumbnailPickerController(image: technique.thumbnail.toNullable()),
+                  videoController: VideoPickerController(video: technique.video.toNullable()),
+                ),
               ),
-            ),
-            child: BlocConsumer<TechniqueFormBloc, TechniqueFormState>(
-              listener: (ctx, state) {
-                if (state.success != null) this.onClose(ctx);
-              },
-              builder: (ctx, state) {
-                if (state.formSubmitted) return LoadingScreen(showCloseButton: false);
+              child: BlocConsumer<TechniqueFormBloc, TechniqueFormState>(
+                listener: (ctx, state) {
+                  // Close form on success.
+                  if (state.success != null) this.onClose(ctx);
+                },
+                builder: (ctx, state) {
+                  // Show loading screen on submit.
+                  if (state.formSubmitted) return LoadingScreen(showCloseButton: false);
 
-                return Scaffold(
-                  resizeToAvoidBottomInset: false,
-                  extendBodyBehindAppBar: true,
-                  appBar: IconAppBar(
-                    onPressed: () => this.onClose(context),
-                  ),
-                  body: CenteredStack(
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          TitleWithSubtitle(
-                            titleText: "Edit Technique",
-                            titleSize: 35,
-                            subtitleText: "Edit details of your technique.",
-                          ),
-                          SizedBox(height: 20),
-                          TechniqueForm(
-                            submitButtonText: "Save",
-                            onSubmit: () => BlocProvider.of<TechniqueFormBloc>(ctx).add(UpdateTechniqueEvent(this.technique)),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          );
-        else
-          return LoadingScreen();
-      }),
+                  return Scaffold(
+                    resizeToAvoidBottomInset: false,
+                    extendBodyBehindAppBar: true,
+                    appBar: IconAppBar(
+                      onPressed: () => this.onClose(context),
+                    ),
+                    body: CenteredStack(
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const TitleWithSubtitle(
+                              titleText: "Edit Technique",
+                              titleSize: 35,
+                              subtitleText: "Edit details of your technique.",
+                            ),
+                            const SizedBox(height: 20),
+                            TechniqueForm(
+                              submitButtonText: "Save",
+                              onSubmit: () => BlocProvider.of<TechniqueFormBloc>(ctx).add(UpdateTechniqueEvent(this.technique)),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            );
+          else
+            return const LoadingScreen();
+        },
+      ),
     );
   }
 }

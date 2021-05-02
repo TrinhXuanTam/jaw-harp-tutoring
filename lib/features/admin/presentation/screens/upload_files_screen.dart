@@ -13,6 +13,7 @@ class UploadFilesScreenArgs {
   UploadFilesScreenArgs({this.thumbnailController, this.videoController});
 }
 
+/// Screen for uploading files.
 class UploadFilesScreen extends StatelessWidget {
   final ThumbnailPickerController? thumbnailController;
   final VideoPickerController? videoController;
@@ -43,21 +44,21 @@ class UploadFilesScreen extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TitleWithSubtitle(
+              const TitleWithSubtitle(
                 titleText: "Choose Files",
                 titleSize: 35,
                 subtitleText: "Choose files to upload",
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               if (thumbnailController != null)
                 Column(
                   children: [
                     ThumbnailPicker(controller: thumbnailController!),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                   ],
                 ),
               if (videoController != null) VideoPicker(controller: videoController!),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               RoundedButton(
                 text: "Done",
                 onPressed: () => Navigator.pop(context),

@@ -3,6 +3,7 @@ import 'package:jews_harp/features/admin/domain/domain/technique_localized_data.
 import 'package:jews_harp/features/admin/domain/repository_interfaces/technique_admin_repository.dart';
 import 'package:jews_harp/features/admin/infrastructure/DTO/technique_localized_data_DTO.dart';
 import 'package:jews_harp/features/admin/infrastructure/data_sources/firebase_admin_data_source.dart';
+import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/infrastructure/DTO/mediaDTO.dart';
@@ -61,6 +62,21 @@ class TechniqueAdminRepository extends ITechniqueAdminRepository {
   /// Get all techniques.
   @override
   Future<Iterable<Technique>> getAllTechniques() => _adminDataSource.getAllTechniques();
+
+  /// Get techniques by category.
+  @override
+  Future<Iterable<Technique>> getTechniquesByCategory(Category category) async {
+    final List<Technique> res = [];
+
+    for (final techniqueId in category.techniqueIds) {
+      try {
+        final technique = await _adminDataSource.getTechniqueByID(techniqueId);
+        res.add(technique);
+      } catch (exception) {}
+    }
+
+    return res;
+  }
 
   /// Get localized technique data of given [id].
   @override

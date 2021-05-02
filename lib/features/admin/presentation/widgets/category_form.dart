@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/routes.dart';
-import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_form/category_form_bloc.dart';
 import 'package:jews_harp/features/admin/presentation/screens/category_localization_add_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/category_localization_edit_screen.dart';
-import 'package:jews_harp/features/admin/presentation/screens/upload_files_screen.dart';
-import 'package:jews_harp/features/user_section/domain/entities/category.dart';
+import 'package:jews_harp/features/admin/presentation/widgets/file_upload_field.dart';
+import 'package:jews_harp/features/admin/presentation/widgets/localization_field.dart';
+import 'package:jews_harp/features/admin/presentation/widgets/toggle_switch_field.dart';
 
 import 'language_side_scroll_grid.dart';
 
+/// Category form.
 class CategoryForm extends StatelessWidget {
   final String submitButtonText;
   final VoidCallback onSubmit;
@@ -22,162 +23,70 @@ class CategoryForm extends StatelessWidget {
     required this.onSubmit,
   }) : super(key: key);
 
+  List<LanguageSideScrollGridItem> _buildLanguageSideScrollGridItems(BuildContext context) {
+    final categoryFormBloc = BlocProvider.of<CategoryFormBloc>(context);
+    final localizedData = categoryFormBloc.state.localizedData;
+    final List<LanguageSideScrollGridItem> languageScrollGridItems = [];
+
+    localizedData.forEach((key, value) {
+      languageScrollGridItems.add(LanguageSideScrollGridItem(
+        languageCode: key,
+        onTap: () => Navigator.pushNamed(
+          context,
+          CATEGORY_LOCALIZATION_EDIT_SCREEN_ROUTE,
+          arguments: CategoryLocalizationEditScreenArgs(
+            data: value,
+            categoryFormBloc: categoryFormBloc,
+          ),
+        ),
+      ));
+    });
+
+    return languageScrollGridItems;
+  }
+
   @override
   Widget build(BuildContext context) {
-    // ignore: close_sinks
-    final bloc = BlocProvider.of<CategoryFormBloc>(context);
     final size = MediaQuery.of(context).size;
 
-    return Column(
-      children: [
-        Container(
+    return BlocBuilder<CategoryFormBloc, CategoryFormState>(
+      builder: (context, state) {
+        final bloc = BlocProvider.of<CategoryFormBloc>(context);
+
+        return Container(
           width: size.width * 0.75,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Visibility:",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
-                        ),
-                        Text(
-                          "The category and its content will be visible to the public if set.",
-                          textAlign: TextAlign.justify,
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(width: 50),
-                  BlocBuilder<CategoryFormBloc, CategoryFormState>(
-                    builder: (ctx, state) => Switch(
-                      value: state.isVisible,
-                      activeColor: BASE_COLOR,
-                      onChanged: (val) => bloc.add(UpdateCategoryVisibility(val)),
-                    ),
-                  )
-                ],
+              ToggleSwitchField(
+                title: "Visibility:",
+                description: "The category and its content will be visible to the public if set.",
+                value: state.isVisible,
+                onChanged: (val) => bloc.add(UpdateCategoryVisibility(val)),
               ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Upload files:",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
-                        ),
-                        Text(
-                          "Upload additional to improve the user experience.",
-                          textAlign: TextAlign.justify,
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(width: 20),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(29),
-                    child: Material(
-                      color: BASE_COLOR,
-                      child: InkWell(
-                        onTap: () => Navigator.pushNamed(
-                          context,
-                          UPLOAD_FILES_SCREEN_ROUTE,
-                          arguments: UploadFilesScreenArgs(thumbnailController: BlocProvider.of<CategoryFormBloc>(context).state.thumbnailController),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Icon(
-                            Icons.cloud_upload,
-                            color: BASE_COLOR_VERY_LIGHT,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+              const SizedBox(height: 10),
+              FileUploadField(
+                thumbnailController: state.thumbnailController,
               ),
-              SizedBox(height: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Localization:",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                    ),
-                  ),
-                  Text(
-                    "Translate your content into different languages.",
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 5),
-              BlocBuilder<CategoryFormBloc, CategoryFormState>(
-                builder: (ctx, state) => LanguageSideScrollGrid(
-                  displayAddButton: SupportedLanguages.languages.length != bloc.state.localizedData.length,
-                  data: _buildLanguageSideScrollGridItems(ctx, bloc),
-                  onAddButtonTap: () => Navigator.pushNamed(
-                    context,
-                    CATEGORY_LOCALIZATION_ADD_SCREEN_ROUTE,
-                    arguments: CategoryLocalizationAddScreenArgs(categoryFormBloc: bloc),
-                  ),
+              const SizedBox(height: 20),
+              LocalizationField(
+                displayAddButton: SupportedLanguages.languages.length != state.localizedData.length,
+                data: _buildLanguageSideScrollGridItems(context),
+                onAddButtonTap: () => Navigator.pushNamed(
+                  context,
+                  CATEGORY_LOCALIZATION_ADD_SCREEN_ROUTE,
+                  arguments: CategoryLocalizationAddScreenArgs(categoryFormBloc: BlocProvider.of<CategoryFormBloc>(context)),
                 ),
+              ),
+              const SizedBox(height: 10),
+              RoundedButton(
+                text: this.submitButtonText,
+                onPressed: this.onSubmit,
               ),
             ],
           ),
-        ),
-        SizedBox(height: 10),
-        RoundedButton(
-          text: this.submitButtonText,
-          onPressed: this.onSubmit,
-        ),
-      ],
+        );
+      },
     );
-  }
-
-  List<LanguageSideScrollGridItem> _buildLanguageSideScrollGridItems(BuildContext ctx, CategoryFormBloc bloc) {
-    return bloc.state.localizedData.entries
-        .map(
-          (e) => LanguageSideScrollGridItem(
-            languageCode: e.key,
-            onTap: () => Navigator.pushNamed(
-              ctx,
-              CATEGORY_LOCALIZATION_EDIT_SCREEN_ROUTE,
-              arguments: CategoryLocalizationEditScreenArgs(
-                data: e.value,
-                onSave: (localizedData) => bloc.add(UpdateCategoryLocalization(localizedData)),
-                onRemove: () => bloc.add(RemoveCategoryLocalization(e.key)),
-              ),
-            ),
-          ),
-        )
-        .toList();
   }
 }

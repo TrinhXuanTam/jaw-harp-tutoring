@@ -8,6 +8,7 @@ import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/category_form/category_form_bloc.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/category_form.dart';
 
+/// Create category form.
 class CreateCategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -15,10 +16,12 @@ class CreateCategoryScreen extends StatelessWidget {
       create: (ctx) => serviceLocator<CategoryFormBloc>(),
       child: BlocConsumer<CategoryFormBloc, CategoryFormState>(
         listener: (ctx, state) {
+          // Close the screen if form was successfully submitted.
           if (state.success != null) Navigator.pop(ctx);
         },
         builder: (ctx, state) {
-          if (state.formSubmitted) return LoadingScreen(showCloseButton: false);
+          // Display loading screen on form submission.
+          if (state.formSubmitted) return const LoadingScreen(showCloseButton: false);
 
           return Scaffold(
             extendBodyBehindAppBar: true,
@@ -30,12 +33,12 @@ class CreateCategoryScreen extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TitleWithSubtitle(
+                    const TitleWithSubtitle(
                       titleText: "Create Category",
                       titleSize: 35,
                       subtitleText: "Create a new category to group techniques",
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     CategoryForm(
                       submitButtonText: "Create",
                       onSubmit: () => BlocProvider.of<CategoryFormBloc>(ctx).add(CreateCategoryEvent()),

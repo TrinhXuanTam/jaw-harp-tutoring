@@ -3,63 +3,42 @@ import 'package:jews_harp/core/constants/language_codes.dart';
 import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
-import 'package:jews_harp/core/widgets/rounded_multiline_text_field.dart';
-import 'package:jews_harp/core/widgets/rounded_text_field.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/domain/domain/category_localized_data.dart';
+import 'package:jews_harp/features/admin/presentation/BLoCs/category_form/category_form_bloc.dart';
+import 'package:jews_harp/features/admin/presentation/widgets/category_localization_form.dart';
 
 class CategoryLocalizationEditScreenArgs {
   final CategoryLocalizedData data;
-  final void Function(CategoryLocalizedData) onSave;
-  final VoidCallback onRemove;
+  final CategoryFormBloc categoryFormBloc;
 
   CategoryLocalizationEditScreenArgs({
     required this.data,
-    required this.onSave,
-    required this.onRemove,
+    required this.categoryFormBloc,
   });
 }
 
-class CategoryLocalizationEditScreen extends StatefulWidget {
+/// Edit category localization data form.
+class CategoryLocalizationEditScreen extends StatelessWidget {
   final CategoryLocalizedData data;
-  final void Function(CategoryLocalizedData) onSave;
-  final VoidCallback onRemove;
+  final CategoryFormBloc categoryFormBloc;
 
   factory CategoryLocalizationEditScreen.fromArgs(CategoryLocalizationEditScreenArgs args) {
     return CategoryLocalizationEditScreen(
       data: args.data,
-      onSave: args.onSave,
-      onRemove: args.onRemove,
+      categoryFormBloc: args.categoryFormBloc,
     );
   }
 
   const CategoryLocalizationEditScreen({
     Key? key,
     required this.data,
-    required this.onRemove,
-    required this.onSave,
+    required this.categoryFormBloc,
   }) : super(key: key);
 
   @override
-  _CategoryLocalizationEditScreenState createState() => _CategoryLocalizationEditScreenState();
-}
-
-class _CategoryLocalizationEditScreenState extends State<CategoryLocalizationEditScreen> {
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-
-  @override
-  void initState() {
-    _titleController.text = widget.data.title;
-    _descriptionController.text = widget.data.description;
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
@@ -78,46 +57,28 @@ class _CategoryLocalizationEditScreenState extends State<CategoryLocalizationEdi
                   TitleWithSubtitle(
                     titleText: "Edit Localization",
                     titleSize: 30,
-                    subtitleText: "Edit localized data for " + SupportedLanguages.getName(this.widget.data.languageCode).toLowerCase(),
+                    subtitleText: "Edit localized data for " + SupportedLanguages.getName(this.data.languageCode).toLowerCase(),
                   ),
-                  SizedBox(height: 20),
-                  RoundedTextField(
-                    icon: Icons.title_rounded,
-                    placeholderText: l10n.translate("Title"),
-                    controller: _titleController,
-                  ),
-                  SizedBox(height: 10),
-                  RoundedMultilineTextField(
-                    height: 100,
-                    icon: Icons.description_outlined,
-                    placeholderText: l10n.translate("Description"),
-                    controller: _descriptionController,
-                  ),
-                  SizedBox(height: 10),
-                  RoundedButton(
-                    text: "Save",
-                    onPressed: () {
-                      widget.onSave(
-                        CategoryLocalizedData(
-                          languageCode: widget.data.languageCode,
-                          title: _titleController.text,
-                          description: _descriptionController.text,
-                        ),
-                      );
+                  const SizedBox(height: 20),
+                  CategoryLocalizationForm(
+                    data: this.data,
+                    bloc: this.categoryFormBloc,
+                    onSubmit: (newData) {
+                      this.categoryFormBloc.add(UpdateCategoryLocalization(newData));
                       Navigator.pop(context);
                     },
                   ),
-                  if (widget.data.languageCode != ENGLISH_CODE)
+                  if (this.data.languageCode != ENGLISH_CODE)
                     Column(
                       children: [
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         RoundedButton(
                           text: "Remove",
                           color: Colors.redAccent[200]!,
                           textColor: Colors.white,
                           borderColor: Colors.redAccent[200]!,
                           onPressed: () {
-                            widget.onRemove();
+                            this.categoryFormBloc.add(RemoveCategoryLocalization(this.data.languageCode));
                             Navigator.pop(context);
                           },
                         ),

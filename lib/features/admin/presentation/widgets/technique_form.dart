@@ -9,11 +9,14 @@ import 'package:jews_harp/core/widgets/rounded_text_field.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/technique_form/technique_form_bloc.dart';
 import 'package:jews_harp/features/admin/presentation/screens/technique_localization_add_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/technique_localization_edit_screen.dart';
-import 'package:jews_harp/features/admin/presentation/screens/upload_files_screen.dart';
+import 'package:jews_harp/features/admin/presentation/widgets/file_upload_field.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/language_side_scroll_grid.dart';
+import 'package:jews_harp/features/admin/presentation/widgets/localization_field.dart';
+import 'package:jews_harp/features/admin/presentation/widgets/toggle_switch_field.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 
+/// Technique form.
 class TechniqueForm extends StatelessWidget {
   final String submitButtonText;
   final VoidCallback onSubmit;
@@ -24,227 +27,148 @@ class TechniqueForm extends StatelessWidget {
     required this.onSubmit,
   }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    // ignore: close_sinks
-    final bloc = BlocProvider.of<TechniqueFormBloc>(context);
-    final size = MediaQuery.of(context).size;
+  Widget _buildCategoryField(BuildContext context) {
+    final techniqueFormBloc = BlocProvider.of<TechniqueFormBloc>(context);
     final visibleIcon = Icon(Icons.public, color: BASE_COLOR.withAlpha(100), size: 18);
-    final hiddenIcon = Icon(Icons.public_off_rounded, color: Colors.grey, size: 18);
+    final hiddenIcon = const Icon(Icons.public_off_rounded, color: Colors.grey, size: 18);
 
-    return Column(
-      children: [
-        Container(
-          width: size.width * 0.75,
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Paid:",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                      ),
-                    ),
-                    Text(
-                      "User has to pay for access to this technique.",
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
+    /// Build category picker.
+    return FutureBuilder<List<Category>>(
+      future: techniqueFormBloc.categories,
+      builder: (ctx, snapshot) {
+        var items = [DropdownMenuItem<String>(child: Text("Loading categories..."))];
+        var controller = DropdownButtonFormFieldController<String>();
+
+        if (snapshot.hasData) {
+          controller = techniqueFormBloc.state.categoryController;
+          final categories = snapshot.data!;
+          items.clear();
+
+          categories.forEach((category) {
+            items.add(
+              DropdownMenuItem<String>(
+                child: Row(children: [
+                  Text(category.title),
+                  SizedBox(width: 5),
+                  category.isVisible ? visibleIcon : hiddenIcon,
+                ]),
+                value: category.id,
               ),
-              SizedBox(width: 50),
-              BlocBuilder<TechniqueFormBloc, TechniqueFormState>(
-                builder: (ctx, state) => Switch(
-                  value: state.isPaid,
-                  activeColor: BASE_COLOR,
-                  onChanged: (val) => bloc.add(UpdateTechniquePricing(val)),
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: 10),
-        BlocBuilder<TechniqueFormBloc, TechniqueFormState>(builder: (ctx, state) {
-          if (state.isPaid)
-            return Column(
-              children: [
-                RoundedTextField(
-                  icon: Icons.attach_money_rounded,
-                  controller: state.idController,
-                  placeholderText: "Product ID",
-                ),
-                SizedBox(height: 10),
-              ],
             );
-          else
-            return Container();
-        }),
-        FutureBuilder<List<Category>>(
-          future: bloc.categories,
-          builder: (ctx, snapshot) {
-            late final items;
-            late final controller;
+          });
+        }
 
-            if (snapshot.hasData) {
-              controller = bloc.state.categoryController;
-              items = snapshot.data!
-                  .map(
-                    (e) => DropdownMenuItem<String>(
-                      child: Row(children: [
-                        Text(e.title),
-                        SizedBox(width: 5),
-                        e.isVisible ? visibleIcon : hiddenIcon,
-                      ]),
-                      value: e.id,
-                    ),
-                  )
-                  .toList();
-            } else {
-              controller = DropdownButtonFormFieldController<String>();
-              items = [DropdownMenuItem<String>(child: Text("Loading categories..."))];
-            }
-
-            return RoundedDropdown<String>(
-              items: items,
-              placeholderText: "Category",
-              icon: Icons.folder_open_rounded,
-              controller: controller,
-            );
-          },
-        ),
-        SizedBox(height: 10),
-        RoundedDropdown<TechniqueDifficulty>(
-          items: TechniqueDifficulty.values
-              .map(
-                (e) => DropdownMenuItem<TechniqueDifficulty>(
-                  value: e,
-                  child: Text(e.string),
-                ),
-              )
-              .toList(),
-          placeholderText: "Difficulty",
-          icon: Icons.timelapse_rounded,
-          controller: bloc.state.difficultyController,
-        ),
-        SizedBox(height: 15),
-        Container(
-          width: size.width * 0.75,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Upload files:",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
-                        ),
-                        Text(
-                          "Upload additional to improve the user experience.",
-                          textAlign: TextAlign.justify,
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(width: 20),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(29),
-                    child: Material(
-                      color: BASE_COLOR,
-                      child: InkWell(
-                        onTap: () => Navigator.pushNamed(
-                          context,
-                          UPLOAD_FILES_SCREEN_ROUTE,
-                          arguments: UploadFilesScreenArgs(thumbnailController: bloc.state.thumbnailController, videoController: bloc.state.videoController),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Icon(
-                            Icons.cloud_upload,
-                            color: BASE_COLOR_VERY_LIGHT,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 15),
-              Text(
-                "Localization:",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                ),
-              ),
-              Text(
-                "Translate your content into different languages.",
-                textAlign: TextAlign.justify,
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 12,
-                ),
-              ),
-              SizedBox(height: 5),
-              BlocBuilder<TechniqueFormBloc, TechniqueFormState>(
-                builder: (ctx, state) => LanguageSideScrollGrid(
-                  displayAddButton: SupportedLanguages.languages.length != bloc.state.localizedData.length,
-                  data: _buildLanguageSideScrollGridItems(ctx, bloc),
-                  onAddButtonTap: () => Navigator.pushNamed(context, TECHNIQUE_LOCALIZATION_ADD_SCREEN_ROUTE, arguments: TechniqueLocalizationAddScreenArgs(bloc)),
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: 10),
-        RoundedButton(
-          text: this.submitButtonText,
-          onPressed: this.onSubmit,
-        ),
-      ],
+        return RoundedDropdown<String>(
+          items: items,
+          placeholderText: "Category",
+          icon: Icons.folder_open_rounded,
+          controller: controller,
+        );
+      },
     );
   }
 
-  List<LanguageSideScrollGridItem> _buildLanguageSideScrollGridItems(BuildContext ctx, TechniqueFormBloc bloc) {
-    return bloc.state.localizedData.entries
-        .map(
-          (entry) => LanguageSideScrollGridItem(
-            languageCode: entry.key,
-            onTap: () => Navigator.pushNamed(
-              ctx,
-              TECHNIQUE_LOCALIZATION_EDIT_SCREEN_ROUTE,
-              arguments: TechniqueLocalizationEditScreenArgs(
-                data: entry.value,
-                onSave: (localizedData) {
-                  bloc.add(UpdateTechniqueLocalization(localizedData));
-                  Navigator.pop(ctx);
-                },
-                onRemove: () {
-                  bloc.add(RemoveTechniqueLocalization(entry.key));
-                  Navigator.pop(ctx);
-                },
-              ),
-            ),
+  /// Build difficulty picker.
+  Widget _buildDifficultyField(BuildContext context) {
+    final techniqueFormBloc = BlocProvider.of<TechniqueFormBloc>(context);
+    final List<DropdownMenuItem<TechniqueDifficulty>> items = [];
+
+    TechniqueDifficulty.values.forEach((difficulty) {
+      items.add(
+        DropdownMenuItem<TechniqueDifficulty>(
+          value: difficulty,
+          child: Text(difficulty.string),
+        ),
+      );
+    });
+
+    return RoundedDropdown<TechniqueDifficulty>(
+      items: items,
+      placeholderText: "Difficulty",
+      icon: Icons.timelapse_rounded,
+      controller: techniqueFormBloc.state.difficultyController,
+    );
+  }
+
+  List<LanguageSideScrollGridItem> _buildLanguageSideScrollGridItems(BuildContext context) {
+    final techniqueFormBloc = BlocProvider.of<TechniqueFormBloc>(context);
+    final localizedData = techniqueFormBloc.state.localizedData;
+    final List<LanguageSideScrollGridItem> languageScrollGridItems = [];
+
+    localizedData.forEach((key, value) {
+      languageScrollGridItems.add(LanguageSideScrollGridItem(
+        languageCode: key,
+        onTap: () => Navigator.pushNamed(
+          context,
+          TECHNIQUE_LOCALIZATION_EDIT_SCREEN_ROUTE,
+          arguments: TechniqueLocalizationEditScreenArgs(
+            data: value,
+            techniqueFormBloc: techniqueFormBloc,
           ),
-        )
-        .toList();
+        ),
+      ));
+    });
+
+    return languageScrollGridItems;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    return BlocBuilder<TechniqueFormBloc, TechniqueFormState>(
+      builder: (context, state) {
+        final bloc = BlocProvider.of<TechniqueFormBloc>(context);
+
+        return Container(
+          width: size.width * 0.75,
+          child: Column(
+            children: [
+              ToggleSwitchField(
+                title: "Paid:",
+                description: "User has to pay for access to this technique.",
+                value: state.isPaid,
+                onChanged: (val) => bloc.add(UpdateTechniquePricing(val)),
+              ),
+              SizedBox(height: 10),
+              if (state.isPaid)
+                Column(
+                  children: [
+                    RoundedTextField(
+                      icon: Icons.attach_money_rounded,
+                      controller: state.idController,
+                      placeholderText: "Product ID",
+                    ),
+                    const SizedBox(height: 10),
+                  ],
+                ),
+              _buildCategoryField(context),
+              const SizedBox(height: 10),
+              _buildDifficultyField(context),
+              const SizedBox(height: 15),
+              FileUploadField(
+                thumbnailController: state.thumbnailController,
+                videoController: state.videoController,
+              ),
+              const SizedBox(height: 15),
+              LocalizationField(
+                displayAddButton: SupportedLanguages.languages.length != state.localizedData.length,
+                onAddButtonTap: () => Navigator.pushNamed(
+                  context,
+                  TECHNIQUE_LOCALIZATION_ADD_SCREEN_ROUTE,
+                  arguments: TechniqueLocalizationAddScreenArgs(bloc),
+                ),
+                data: _buildLanguageSideScrollGridItems(context),
+              ),
+              const SizedBox(height: 10),
+              RoundedButton(
+                text: this.submitButtonText,
+                onPressed: this.onSubmit,
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

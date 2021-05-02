@@ -289,6 +289,13 @@ class FirebaseAdminDataSource {
     return res;
   }
 
+  /// Get technique with given [id].
+  Future<TechniqueDTO> getTechniqueByID(String techniqueId) async {
+    final snapshot = await _techniques.doc(techniqueId).get();
+    if (!snapshot.exists) throw NotFoundError("Technique with given ID was not found!");
+    return TechniqueDTO.fromFirestore(snapshot);
+  }
+
   /// Get all categories.
   Future<Iterable<CategoryDTO>> getAllCategories() async {
     final snapshot = await _categories.get();

@@ -19,6 +19,7 @@ class EditCategoryScreenArgs {
   EditCategoryScreenArgs(this.category, this.onClose);
 }
 
+/// Category form with preloaded data.
 class EditCategoryScreen extends StatelessWidget {
   final Category category;
   final void Function(BuildContext ctx, Category category) onClose;
@@ -53,10 +54,12 @@ class EditCategoryScreen extends StatelessWidget {
               ),
               child: BlocConsumer<CategoryFormBloc, CategoryFormState>(
                 listener: (ctx, state) {
+                  // Close form when successfully submitted.
                   if (state.success != null) this.onClose(ctx, state.success!);
                 },
                 builder: (ctx, state) {
-                  if (state.formSubmitted) return LoadingScreen(showCloseButton: false);
+                  // Display loading screen on form submission.
+                  if (state.formSubmitted) return const LoadingScreen(showCloseButton: false);
 
                   return Scaffold(
                     extendBodyBehindAppBar: true,
@@ -68,12 +71,12 @@ class EditCategoryScreen extends StatelessWidget {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            TitleWithSubtitle(
+                            const TitleWithSubtitle(
                               titleText: "Edit Category",
                               titleSize: 35,
                               subtitleText: "Edit details of your category.",
                             ),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             CategoryForm(
                               submitButtonText: "Save",
                               onSubmit: () => BlocProvider.of<CategoryFormBloc>(ctx).add(UpdateCategoryEvent(this.category)),
@@ -87,7 +90,7 @@ class EditCategoryScreen extends StatelessWidget {
               ),
             );
           else
-            return LoadingScreen();
+            return const LoadingScreen();
         },
       ),
     );

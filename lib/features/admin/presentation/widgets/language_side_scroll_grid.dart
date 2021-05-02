@@ -2,6 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/l10n.dart';
 
+class LanguageSideScrollGridItem {
+  final String languageCode;
+  final VoidCallback onTap;
+
+  LanguageSideScrollGridItem({
+    required this.languageCode,
+    required this.onTap,
+  });
+}
+
+/// Side scroll panel for adding localization data.
 class LanguageSideScrollGrid<T> extends StatelessWidget {
   final List<LanguageSideScrollGridItem> data;
   final VoidCallback onAddButtonTap;
@@ -22,14 +33,14 @@ class LanguageSideScrollGrid<T> extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
+              const Icon(
                 Icons.translate_rounded,
                 color: Colors.white,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 label,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
                 ),
@@ -57,14 +68,14 @@ class LanguageSideScrollGrid<T> extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
+              const Icon(
                 Icons.add,
                 color: Colors.white,
               ),
-              SizedBox(height: 5),
-              Text(
+              const SizedBox(height: 5),
+              const Text(
                 "Add",
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 17,
                   fontWeight: FontWeight.w500,
@@ -108,14 +119,4 @@ class LanguageSideScrollGrid<T> extends StatelessWidget {
       ),
     );
   }
-}
-
-class LanguageSideScrollGridItem {
-  final String languageCode;
-  final VoidCallback onTap;
-
-  LanguageSideScrollGridItem({
-    required this.languageCode,
-    required this.onTap,
-  });
 }

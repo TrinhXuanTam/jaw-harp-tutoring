@@ -43,6 +43,7 @@ class TechniqueFormBloc extends Bloc<TechniqueFormEvent, TechniqueFormState> {
   final UpdateTechnique _updateTechnique;
   final GetAllCategories _getAllCategories;
   final ErrorBloc _errorBloc;
+  List<Category>? cachedCategories;
 
   TechniqueFormBloc(
     @factoryParam TechniqueFormState? initialState,
@@ -52,8 +53,15 @@ class TechniqueFormBloc extends Bloc<TechniqueFormEvent, TechniqueFormState> {
     this._errorBloc,
   ) : super(initialState ?? _defaultFormState);
 
-  /// Load all categories form the database.
-  Future<List<Category>> get categories => _getAllCategories().then((iterable) => iterable.toList());
+  /// Load all categories form the database and cache them.
+  Future<List<Category>> get categories async {
+    if (cachedCategories == null) {
+      final categories = await _getAllCategories();
+      cachedCategories = categories.toList();
+    }
+
+    return cachedCategories!;
+  }
 
   @override
   Stream<TechniqueFormState> mapEventToState(

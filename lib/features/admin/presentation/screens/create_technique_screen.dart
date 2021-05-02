@@ -8,6 +8,7 @@ import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/technique_form/technique_form_bloc.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/technique_form.dart';
 
+/// Create technique form.
 class CreateTechniqueScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -15,10 +16,12 @@ class CreateTechniqueScreen extends StatelessWidget {
       create: (context) => serviceLocator<TechniqueFormBloc>(),
       child: BlocConsumer<TechniqueFormBloc, TechniqueFormState>(
         listener: (ctx, state) {
+          // Close the screen if form was successfully submitted.
           if (state.success != null) Navigator.pop(ctx);
         },
         builder: (ctx, state) {
-          if (state.formSubmitted) return LoadingScreen(showCloseButton: false);
+          // Display loading screen on form submission.
+          if (state.formSubmitted) return const LoadingScreen(showCloseButton: false);
 
           return Scaffold(
             resizeToAvoidBottomInset: false,
@@ -31,12 +34,12 @@ class CreateTechniqueScreen extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TitleWithSubtitle(
+                    const TitleWithSubtitle(
                       titleText: "Create Technique",
                       titleSize: 35,
                       subtitleText: "Create a new technique",
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     TechniqueForm(
                       submitButtonText: "Create",
                       onSubmit: () => BlocProvider.of<TechniqueFormBloc>(ctx).add(CreateTechniqueEvent()),

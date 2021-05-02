@@ -1,4 +1,5 @@
 import 'package:jews_harp/features/admin/domain/domain/technique_localized_data.dart';
+import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:optional/optional.dart';
@@ -29,6 +30,9 @@ abstract class ITechniqueAdminRepository {
 
   /// Get all techniques.
   Future<Iterable<Technique>> getAllTechniques();
+
+  /// Get techniques by category.
+  Future<Iterable<Technique>> getTechniquesByCategory(Category category);
 
   /// Get localized data of a category with the specified [techniqueId].
   Future<Map<String, TechniqueLocalizedData>> getLocalizedData(String techniqueId);

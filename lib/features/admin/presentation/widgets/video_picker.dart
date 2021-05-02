@@ -9,6 +9,7 @@ import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:jews_harp/features/user_section/presentation/screens/video_full_screen_mode_screen.dart';
 import 'package:video_player/video_player.dart';
 
+/// Video picker button with preview.
 class VideoPicker extends StatelessWidget {
   final VideoPickerController controller;
 

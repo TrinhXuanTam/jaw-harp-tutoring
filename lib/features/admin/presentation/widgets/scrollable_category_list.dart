@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
+import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 
 class ScrollableCategoryList extends StatelessWidget {
-  final List<ScrollableCategoryListItem> items;
+  final List<Category> items;
+  final void Function(Category category) onTap;
   final double? height;
 
   const ScrollableCategoryList({
     Key? key,
     required this.items,
+    required this.onTap,
     this.height,
   }) : super(key: key);
 
@@ -37,7 +40,7 @@ class ScrollableCategoryList extends StatelessWidget {
                         Material(
                           color: Colors.transparent,
                           child: InkWell(
-                            onTap: items[index].onTap,
+                            onTap: () => this.onTap(items[index]),
                             child: Container(
                               padding: EdgeInsets.all(14),
                               child: Row(
@@ -47,7 +50,7 @@ class ScrollableCategoryList extends StatelessWidget {
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        items[index].techniqueCnt.toString(),
+                                        items[index].techniqueIds.length.toString(),
                                         style: TextStyle(
                                           color: BASE_COLOR,
                                           fontSize: 18,
@@ -109,18 +112,4 @@ class ScrollableCategoryList extends StatelessWidget {
       ),
     );
   }
-}
-
-class ScrollableCategoryListItem {
-  final VoidCallback onTap;
-  final int techniqueCnt;
-  final String title;
-  final String description;
-
-  ScrollableCategoryListItem(
-    this.onTap,
-    this.techniqueCnt,
-    this.title,
-    this.description,
-  );
 }
