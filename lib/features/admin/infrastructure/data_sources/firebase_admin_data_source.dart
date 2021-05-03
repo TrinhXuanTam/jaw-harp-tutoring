@@ -11,9 +11,9 @@ import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/infrastructure/DTO/category_DTO.dart';
 import 'package:jews_harp/features/user_section/infrastructure/DTO/mediaDTO.dart';
 import 'package:jews_harp/features/user_section/infrastructure/DTO/technique_DTO.dart';
-import 'package:light_compressor/light_compressor.dart';
 import 'package:optional/optional.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:video_compress/video_compress.dart';
 
 /// Firebase Admin Section data source.
 @LazySingleton(env: [Environment.prod])
@@ -32,27 +32,11 @@ class FirebaseAdminDataSource {
 
   /// Compress and upload a video to cloud storage.
   Future<String> _uploadVideo(Reference media, String techniqueId, String path) async {
-    // get temporary directory
-    final tmp = await getTemporaryDirectory();
-    final filePath = tmp.path + "/compressedVideo";
-
-    // Compress the video
-    final response = await LightCompressor.compressVideo(
-      path: path,
-      destinationPath: filePath,
-      videoQuality: VideoQuality.medium,
-      isMinBitRateEnabled: false,
-      keepOriginalResolution: false,
-    );
-
+    // Compress the file.
+    final mediaInfo = await VideoCompress.compressVideo(path, quality: VideoQuality.LowQuality);
     // Upload the video to cloud storage
-    final compressedFile = File(response!['onSuccess']);
-    final task = await media.child(techniqueId).child("video").putFile(compressedFile);
+    final task = await media.child(techniqueId).child("video").putFile(mediaInfo!.file!);
     final url = await task.ref.getDownloadURL();
-
-    // Delete the compressed video
-    compressedFile.delete();
-
     return url;
   }
 

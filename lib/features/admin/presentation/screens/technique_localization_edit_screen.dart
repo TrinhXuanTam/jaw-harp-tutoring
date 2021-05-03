@@ -57,7 +57,7 @@ class TechniqueLocalizationEditScreen extends StatelessWidget {
                   TitleWithSubtitle(
                     titleText: "Edit Localization",
                     titleSize: 30,
-                    subtitleText: l10n.translate("Edit localized data for") + "" + l10n.translate(SupportedLanguages.getName(this.data.languageCode)).toLowerCase(),
+                    subtitleText: l10n.translate("Edit localized data for") + " " + l10n.translate(SupportedLanguages.getName(this.data.languageCode)).toLowerCase(),
                   ),
                   const SizedBox(height: 20),
                   TechniqueLocalizationForm(
