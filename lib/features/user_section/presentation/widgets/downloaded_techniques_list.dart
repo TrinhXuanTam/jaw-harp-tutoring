@@ -2,14 +2,18 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
+import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_local_storage/technique_local_storage_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/screens/technique_screen.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
+/// Downloaded techniques list.
 class DownloadedTechniquesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return BlocBuilder<TechniqueLocalStorageBloc, TechniqueLocalStorageState>(builder: (ctx, state) {
       final techniques = state.downloadedTechniques.values.toList();
       final user = getUser(context);
@@ -48,14 +52,14 @@ class DownloadedTechniquesList extends StatelessWidget {
                           children: [
                             Text(
                               item.title,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16,
                               ),
                             ),
                             Text(
                               item.category.title,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.grey,
                                 fontSize: 12,
                               ),
@@ -70,13 +74,13 @@ class DownloadedTechniquesList extends StatelessWidget {
                                       children: [
                                         Row(
                                           children: [
-                                            Icon(
+                                            const Icon(
                                               Icons.timelapse_rounded,
                                               color: BASE_COLOR,
                                               size: 15,
                                             ),
-                                            SizedBox(width: 4),
-                                            Text(item.difficulty.string),
+                                            const SizedBox(width: 4),
+                                            Text(l10n.translate(item.difficulty.string)),
                                           ],
                                         ),
                                       ],
@@ -100,7 +104,7 @@ class DownloadedTechniquesList extends StatelessWidget {
             ),
           );
         },
-        separatorBuilder: (BuildContext context, int index) => SizedBox(height: 10),
+        separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 10),
       );
     });
   }

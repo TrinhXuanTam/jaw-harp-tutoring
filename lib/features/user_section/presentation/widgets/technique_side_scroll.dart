@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/small_technique_card.dart';
 
+/// Technique side scroll list.
 class TechniqueSideScroll extends StatelessWidget {
   final List<String> techniqueIds;
   final String? title;
@@ -21,7 +22,7 @@ class TechniqueSideScroll extends StatelessWidget {
           Container(
             child: Text(
               this.title!,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 16,
               ),
@@ -34,7 +35,7 @@ class TechniqueSideScroll extends StatelessWidget {
           child: ListView.separated(
             itemCount: techniqueIds.length,
             scrollDirection: Axis.horizontal,
-            separatorBuilder: (BuildContext context, int index) => SizedBox(width: 20),
+            separatorBuilder: (BuildContext context, int index) => const SizedBox(width: 20),
             itemBuilder: (ctx, index) => SmallTechniqueCard(techniqueId: techniqueIds[index], width: 160),
           ),
         ),
@@ -44,6 +45,8 @@ class TechniqueSideScroll extends StatelessWidget {
 }
 
 class TechniqueSideScrollLoading extends StatelessWidget {
+  const TechniqueSideScrollLoading();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -53,8 +56,8 @@ class TechniqueSideScrollLoading extends StatelessWidget {
       child: ListView.separated(
         itemCount: 10,
         scrollDirection: Axis.horizontal,
-        separatorBuilder: (BuildContext context, _) => SizedBox(width: 20),
-        itemBuilder: (ctx, index) => SmallTechniqueCardLoading(width: 160),
+        separatorBuilder: (BuildContext context, _) => const SizedBox(width: 20),
+        itemBuilder: (ctx, index) => const SmallTechniqueCardLoading(width: 160),
       ),
     );
   }

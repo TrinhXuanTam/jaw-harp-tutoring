@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/l10n.dart';
 
+/// Alert dialog box.
 class OneButtonAlertDialog extends StatelessWidget {
   final String title;
   final String message;
@@ -26,7 +27,7 @@ class OneButtonAlertDialog extends StatelessWidget {
       ),
       title: Text(
         l10n.translate(this.title),
-        style: TextStyle(color: BASE_COLOR),
+        style: const TextStyle(color: BASE_COLOR),
       ),
       content: Text(l10n.translate(this.message)),
       actions: [
@@ -34,7 +35,7 @@ class OneButtonAlertDialog extends StatelessWidget {
           onPressed: onPressed,
           child: Text(
             l10n.translate(this.buttonText),
-            style: TextStyle(
+            style: const TextStyle(
               color: BASE_COLOR,
               fontSize: 20,
               fontWeight: FontWeight.bold,

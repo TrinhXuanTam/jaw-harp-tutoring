@@ -11,7 +11,10 @@ import 'package:jews_harp/features/user_section/infrastructure/data_sources/tech
 /// If not present, data gets loaded from Firstore and cached afterwards.
 @LazySingleton(as: ITechniqueRepository, env: [Environment.prod])
 class TechniqueRepository extends ITechniqueRepository {
+  /// Firebase data source.
   final FirebaseUserSectionDataSource _firebaseUserSectionDataSource;
+
+  /// Local storage for downloading and caching techniques.
   final TechniqueLocalDataSource _techniqueLocalDataSource;
 
   TechniqueRepository(this._firebaseUserSectionDataSource, this._techniqueLocalDataSource);
@@ -29,15 +32,6 @@ class TechniqueRepository extends ITechniqueRepository {
     }
   }
 
-  /// Get a single category.
-  @override
-  Future<Iterable<Technique>> getTechniquesByCategory(Category category) async {
-    final List<Technique> techniques = [];
-    // Save to cache.
-    for (final techniqueId in category.techniqueIds) techniques.add(await getTechniquesById(techniqueId));
-    return techniques;
-  }
-
   /// Get 10 most recent techniques.
   @override
   Future<Iterable<Technique>> getMostRecentTechniques() async {
@@ -53,20 +47,30 @@ class TechniqueRepository extends ITechniqueRepository {
 
   /// Get a technique by given [id].
   @override
-  Future<Technique> getTechniquesById(String id) async {
+  Future<Technique> getTechniqueById(String id) async {
     try {
       return _techniqueLocalDataSource.getCachedTechnique(id);
     } on NotFoundError {
       final technique = await _firebaseUserSectionDataSource.getTechniqueById(id);
+      // Save to cache.
       _techniqueLocalDataSource.cacheTechnique(technique);
       return technique;
     }
   }
 
+  /// Get a single category.
+  @override
+  Future<Iterable<Technique>> getTechniquesByCategory(Category category) async {
+    final List<Technique> techniques = [];
+    // Save to cache.
+    for (final techniqueId in category.techniqueIds) techniques.add(await getTechniqueById(techniqueId));
+    return techniques;
+  }
+
   /// Save a technique to local storage.
   @override
   Future<Technique> downloadTechnique(String techniqueId) async {
-    final technique = await getTechniquesById(techniqueId);
+    final technique = await getTechniqueById(techniqueId);
     return _techniqueLocalDataSource.downloadTechnique(TechniqueDTO.fromEntity(technique));
   }
 

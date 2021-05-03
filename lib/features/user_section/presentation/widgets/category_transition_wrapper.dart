@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 
+/// Category transition effect.
 class CategoryTransitionWrapper extends StatelessWidget {
   final Color color;
   final Widget src;

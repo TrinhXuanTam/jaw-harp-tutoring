@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/l10n.dart';
 
+/// Generic rounded button.
 class RoundedButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
@@ -29,7 +30,7 @@ class RoundedButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(29),
             side: BorderSide(color: this.borderColor),
           ),
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
           backgroundColor: this.color,
         ),
         onPressed: this.onPressed,

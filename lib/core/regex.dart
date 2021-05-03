@@ -1,4 +1,5 @@
 class RegExMatchers {
+  /// Email must bet in format: "{name}@{domain}.{code}"
   static final RegExp email = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 
   /// Password must contain:

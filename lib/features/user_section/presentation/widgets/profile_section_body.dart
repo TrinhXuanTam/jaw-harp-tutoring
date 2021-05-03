@@ -9,7 +9,10 @@ import 'package:jews_harp/features/auth/presentation/BLoCs/auth_state/auth_bloc.
 import 'package:jews_harp/features/user_section/presentation/widgets/simple_menu.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
+/// Profile section screen.
 class ProfileSectionBody extends StatelessWidget {
+  const ProfileSectionBody();
+
   @override
   Widget build(BuildContext context) {
     final user = getUser(context);
@@ -28,34 +31,34 @@ class ProfileSectionBody extends StatelessWidget {
                     return buildProfilePhoto(context, size: 120);
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Text(
                   user.name,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 25,
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.email_outlined,
                       color: BASE_COLOR,
                       size: 25,
                     ),
-                    SizedBox(width: 5),
+                    const SizedBox(width: 5),
                     Text(
                       user.email,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18,
                         color: Colors.grey,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 if (user.roles.contains(ADMIN_ROLE))
                   Column(
                     children: [

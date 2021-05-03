@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/BLoCs/connectivity/connectivity_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
+import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/no_internet_widget.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/most_recent_techniques/most_recent_techniques_bloc.dart';
@@ -10,9 +11,13 @@ import 'package:jews_harp/features/user_section/utils.dart';
 
 import 'category_side_scroll.dart';
 
+/// Home page were technique lists are displayed.
 class HomePageBody extends StatelessWidget {
+  const HomePageBody();
+
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final user = getUser(context);
 
     return BlocBuilder<ConnectivityBloc, ConnectivityState>(
@@ -32,31 +37,28 @@ class HomePageBody extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Hello, " + getUser(context).name + "!",
-                        style: TextStyle(fontWeight: FontWeight.bold, color: BASE_COLOR, fontSize: 17),
+                        l10n.translate("Hello") + ", " + getUser(context).name + "!",
+                        style: const TextStyle(fontWeight: FontWeight.bold, color: BASE_COLOR, fontSize: 17),
                       ),
                       Text(
-                        "Are you ready to learn new techniques?",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 23,
-                        ),
+                        l10n.translate("Are you ready to learn new techniques?"),
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
                       ),
-                      SizedBox(height: 20),
-                      CategorySideScroll(),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 20),
+                      const CategorySideScroll(),
+                      const SizedBox(height: 15),
                       BlocBuilder<MostRecentTechniquesBloc, MostRecentTechniquesState>(
                         builder: (ctx, state) {
                           if (state is MostRecentTechniquesLoaded)
                             return TechniqueSideScroll.fromTechniques(state.techniques, title: "What's new?");
                           else
-                            return TechniqueSideScrollLoading();
+                            return const TechniqueSideScrollLoading();
                         },
                       ),
                       if (user.favoriteTechniques.isNotEmpty)
                         TechniqueSideScroll(
                           techniqueIds: user.favoriteTechniques.toList(),
-                          title: "Your favorites",
+                          title: l10n.translate("Your favorites"),
                         ),
                     ],
                   ),

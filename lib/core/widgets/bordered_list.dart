@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/l10n.dart';
 
+/// A list with borders.
 class BorderedList extends StatelessWidget {
   final List<BorderedListItem> items;
 
@@ -31,18 +32,18 @@ class BorderedList extends StatelessWidget {
                   child: InkWell(
                     onTap: item.onTap,
                     child: Container(
-                      padding: EdgeInsets.all(14),
+                      padding: const EdgeInsets.all(14),
                       child: Row(
                         children: [
                           Icon(item.icon, color: BASE_COLOR),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   l10n.translate(item.title),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -50,7 +51,7 @@ class BorderedList extends StatelessWidget {
                                 SizedBox(height: 1),
                                 Text(
                                   l10n.translate(item.description),
-                                  style: TextStyle(color: Colors.grey),
+                                  style: const TextStyle(color: Colors.grey),
                                 ),
                               ],
                             ),
@@ -62,8 +63,8 @@ class BorderedList extends StatelessWidget {
                 ),
                 if (items.indexOf(item) != items.length - 1)
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Divider(height: 1.5, color: Colors.grey),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: const Divider(height: 1.5, color: Colors.grey),
                   ),
               ],
             );

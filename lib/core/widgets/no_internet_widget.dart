@@ -1,10 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jews_harp/core/l10n.dart';
 
+/// No internet widget.
 class NoInternetWidget extends StatelessWidget {
+  const NoInternetWidget();
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final l10n = AppLocalizations.of(context);
 
     return Container(
       width: double.infinity,
@@ -18,8 +23,8 @@ class NoInternetWidget extends StatelessWidget {
             color: Colors.grey,
           ),
           Text(
-            "No connection",
-            style: TextStyle(
+            l10n.translate("No connection"),
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.grey,
               fontSize: 18,

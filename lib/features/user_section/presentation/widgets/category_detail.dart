@@ -1,28 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:jews_harp/core/constants/locations.dart';
+import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
-import 'package:jews_harp/features/user_section/domain/entities/category.dart';
+import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/small_technique_card.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
+import 'package:optional/optional.dart';
 
-class DefaultCategoryScreen extends StatelessWidget {
-  final List<Category> categories;
+/// Category detail with a list of techniques.
+class CategoryDetail extends StatelessWidget {
+  final String title;
+  final String description;
+  final Optional<Media> thumbnail;
+  final List<String> techniqueIds;
 
-  const DefaultCategoryScreen({Key? key, required this.categories}) : super(key: key);
+  const CategoryDetail({
+    Key? key,
+    required this.title,
+    required this.description,
+    this.thumbnail = const Optional.empty(),
+    required this.techniqueIds,
+  }) : super(key: key);
+
+  Widget _buildThumbnail(Color categoryColor) {
+    final thumbnail = this.thumbnail;
+
+    if (thumbnail.isPresent) {
+      return AspectRatio(
+        aspectRatio: 16 / 9,
+        child: FittedBox(
+          fit: BoxFit.cover,
+          child: getImageFromMedia(thumbnail.value),
+        ),
+      );
+    } else {
+      return AspectRatio(
+        aspectRatio: 16 / 9,
+        child: Container(
+          color: categoryColor,
+          child: Image.asset(
+            LOGO_LOCATION,
+            color: Colors.white.withOpacity(0.3),
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final techniqueIds = categories.map((category) => category.techniqueIds).expand((e) => e).toList();
+    final l10n = AppLocalizations.of(context);
+    final categoryColor = getRandomShade(this.title.hashCode);
 
     return Scaffold(
       appBar: IconAppBar(
-        title: "All Techniques",
-        titleColor: Colors.white,
-        iconColor: Colors.white,
+        backgroundColor: this.thumbnail.isPresent ? Colors.white : categoryColor,
+        iconColor: this.thumbnail.isPresent ? Colors.black : Colors.white,
         onPressed: () => Navigator.pop(context),
       ),
-      backgroundColor: getRandomShade("All Techniques".hashCode),
       body: CenteredStack(
         children: [
           Container(
@@ -32,12 +69,7 @@ class DefaultCategoryScreen extends StatelessWidget {
               children: [
                 Stack(
                   children: [
-                    AspectRatio(
-                      aspectRatio: 16 / 9,
-                      child: Container(
-                        color: getRandomShade("All Techniques".hashCode),
-                      ),
-                    ),
+                    _buildThumbnail(categoryColor),
                     Positioned(
                       bottom: 20,
                       left: 20,
@@ -53,7 +85,7 @@ class DefaultCategoryScreen extends StatelessWidget {
                               ),
                               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                               child: Text(
-                                "All Techniques",
+                                l10n.translate(this.title),
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500,
@@ -64,7 +96,7 @@ class DefaultCategoryScreen extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                               child: Text(
-                                "View all techniques",
+                                l10n.translate(this.description),
                                 style: TextStyle(
                                   color: Colors.white.withOpacity(0.7),
                                 ),
@@ -82,12 +114,10 @@ class DefaultCategoryScreen extends StatelessWidget {
                     color: Colors.white,
                     child: StaggeredGridView.countBuilder(
                       crossAxisCount: 2,
-                      itemCount: techniqueIds.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          child: SmallTechniqueCard(techniqueId: techniqueIds[index]),
-                        );
-                      },
+                      itemCount: this.techniqueIds.length,
+                      itemBuilder: (BuildContext context, int index) => Container(
+                        child: SmallTechniqueCard(techniqueId: this.techniqueIds[index]),
+                      ),
                       staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
                       mainAxisSpacing: 20,
                       crossAxisSpacing: 20,

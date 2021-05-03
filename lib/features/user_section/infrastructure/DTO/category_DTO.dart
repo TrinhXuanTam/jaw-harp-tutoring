@@ -23,11 +23,12 @@ class CategoryDTO extends Category {
   /// Extract localized data from Firestore document.
   static Map<String, dynamic> _getLocalizedData(DocumentSnapshot documentSnapshot) {
     final languageCode = FirebaseAuth.instance.languageCode;
-
     final localizedData = documentSnapshot["localization"][languageCode];
+
     if (localizedData != null)
       return localizedData;
     else {
+      // Get english localization if language is not supported.
       final defaultLocalizedData = documentSnapshot["localization"][ENGLISH_CODE];
       if (defaultLocalizedData == null) throw LanguageNotSupportedError();
       return defaultLocalizedData;

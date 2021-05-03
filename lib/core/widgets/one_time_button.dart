@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
 
+/// One time button that disables on click.
 class OneTimeButton extends StatefulWidget {
   final String text;
   final String? inactiveText;

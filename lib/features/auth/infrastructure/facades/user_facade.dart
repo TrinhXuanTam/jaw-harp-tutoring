@@ -13,7 +13,7 @@ class UserAuthFacade extends IUserAuthFacade {
   UserAuthFacade(this._authService);
 
   @override
-  Future<User> signUpWithEmailAndPassword(String name, String email, String password) => signUpWithEmailAndPassword(name, email, password);
+  Future<User> signUpWithEmailAndPassword(String name, String email, String password) => _authService.signUpWithEmail(name, email, password);
 
   @override
   Future<void> sendVerificationEmail() => _authService.sendVerificationEmail();

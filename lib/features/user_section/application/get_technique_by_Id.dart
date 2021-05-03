@@ -9,5 +9,5 @@ class GetTechniqueById {
 
   GetTechniqueById(this._techniqueRepository);
 
-  Future<Technique> call(String id) => _techniqueRepository.getTechniquesById(id);
+  Future<Technique> call(String id) => _techniqueRepository.getTechniqueById(id);
 }

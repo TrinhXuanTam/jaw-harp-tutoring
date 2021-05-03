@@ -9,7 +9,10 @@ import 'package:jews_harp/features/user_section/infrastructure/data_sources/fire
 /// else get them from Firestore and cached them afterwards.
 @LazySingleton(as: ICategoryRepository, env: [Environment.prod])
 class CategoryRepository extends ICategoryRepository {
+  /// Firebase data source.
   final FirebaseUserSectionDataSource _firebaseUserSectionDataSource;
+
+  /// Local storage for caching categories.
   final CategoryLocalDataSource _categoryLocalDataSource;
 
   CategoryRepository(this._firebaseUserSectionDataSource, this._categoryLocalDataSource);
@@ -21,6 +24,7 @@ class CategoryRepository extends ICategoryRepository {
       return _categoryLocalDataSource.getCachedAllCategories();
     } on NotFoundError {
       final categories = await _firebaseUserSectionDataSource.getAllCategories();
+      // Save to cache.
       _categoryLocalDataSource.cacheAllCategories(categories);
       return categories;
     }

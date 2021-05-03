@@ -66,6 +66,7 @@ Future<void> main() async {
 class _EntryPoint extends StatelessWidget {
   final GlobalKey<NavigatorState> globalKey = new GlobalKey();
 
+  /// Sign in user if user data is cached.
   void _authBlocListener(BuildContext context, AuthState state) {
     final currentState = globalKey.currentState!;
 
@@ -82,6 +83,7 @@ class _EntryPoint extends StatelessWidget {
       currentState.pushNamedAndRemoveUntil(AUTH_SCREEN_ROUTE, (route) => false);
   }
 
+  /// Display dialog pop up on error.
   void _errorBlocListener(BuildContext context, ErrorState state) {
     if (state is UserErrorOccurredState)
       showDialog(
@@ -99,6 +101,7 @@ class _EntryPoint extends StatelessWidget {
       );
   }
 
+  /// Pass arguments on route change.
   T _getArgs<T>(ctx) => ModalRoute.of(ctx)!.settings.arguments as T;
 
   @override
@@ -118,12 +121,15 @@ class _EntryPoint extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: APP_TITLE,
+          // Set up localization.
           localizationsDelegates: [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
           ],
+          // Supported languages.
           supportedLocales: SupportedLanguages.getCodes().map((e) => Locale(e)),
+          // Localization translation resolution method.
           localeResolutionCallback: (locale, supportedLocales) {
             if (locale == null) return supportedLocales.first;
 

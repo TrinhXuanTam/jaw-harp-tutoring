@@ -3,6 +3,7 @@ import 'package:jews_harp/features/user_section/presentation/widgets/video_contr
 import 'package:jews_harp/features/user_section/utils.dart';
 import 'package:video_player/video_player.dart';
 
+/// Video player.
 class VideoPlayerWidget extends StatelessWidget {
   final VideoPlayerController controller;
   final bool fullscreen;

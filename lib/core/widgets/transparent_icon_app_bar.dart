@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 
+/// Custom transparent appbar.
 class IconAppBar extends StatelessWidget implements PreferredSizeWidget {
   final IconData icon;
   final Color iconColor;
