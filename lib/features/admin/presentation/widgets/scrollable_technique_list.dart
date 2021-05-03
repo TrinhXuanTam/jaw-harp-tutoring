@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
+import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/features/user_section/domain/entities/product_info.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
@@ -42,28 +43,29 @@ class ScrollableTechniqueList extends StatelessWidget {
     );
   }
 
-  Widget _getProductStatus(Technique technique) {
+  Widget _getProductStatus(AppLocalizations l10n, Technique technique) {
     final productInfo = technique.productInfo;
     if (productInfo.type == ProductType.free)
       return Text(
-        "Free",
-        style: TextStyle(color: Colors.grey),
+        l10n.translate("Free"),
+        style: const TextStyle(color: Colors.grey),
       );
     else if (productInfo.type == ProductType.unavailable)
       return Text(
-        "Unavailable",
-        style: TextStyle(color: Colors.redAccent),
+        l10n.translate("Unavailable"),
+        style: const TextStyle(color: Colors.redAccent),
       );
     else
       return Text(
         productInfo.price!,
-        style: TextStyle(color: Colors.green),
+        style: const TextStyle(color: Colors.green),
       );
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final l10n = AppLocalizations.of(context);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
@@ -98,7 +100,7 @@ class ScrollableTechniqueList extends StatelessWidget {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        _getProductStatus(items[index]),
+                                        _getProductStatus(l10n, items[index]),
                                         const SizedBox(height: 1),
                                         Text(
                                           items[index].title,
@@ -124,8 +126,8 @@ class ScrollableTechniqueList extends StatelessWidget {
                   },
                 ),
               )
-            : const Text(
-                "No techniques",
+            : Text(
+                l10n.translate("No techniques"),
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w500,

@@ -52,7 +52,9 @@ class LanguageSideScrollGrid<T> extends StatelessWidget {
     );
   }
 
-  Widget _buildAddButton() {
+  Widget _buildAddButton(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
@@ -73,8 +75,8 @@ class LanguageSideScrollGrid<T> extends StatelessWidget {
                 color: Colors.white,
               ),
               const SizedBox(height: 5),
-              const Text(
-                "Add",
+              Text(
+                l10n.translate("Add"),
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 17,
@@ -107,7 +109,7 @@ class LanguageSideScrollGrid<T> extends StatelessWidget {
           itemCount: displayAddButton ? data.length + 1 : data.length,
           itemBuilder: (ctx, index) {
             if (index == data.length)
-              return _buildAddButton();
+              return _buildAddButton(context);
             else {
               final item = data[index];
               final languageName = SupportedLanguages.getName(item.languageCode);

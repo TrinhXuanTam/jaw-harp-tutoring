@@ -25,7 +25,7 @@ class HiddenCategoriesListScreen extends StatelessWidget {
               title: "Hidden Categories",
               description: "Here you can browse through hidden categories and prepare new techniques for future release. Users are not able see these categories and their content.",
               body: ScrollableCategoryList(
-                height: size.height * 0.8,
+                height: size.height * 0.7,
                 items: state.categories,
                 onTap: (category) => Navigator.pushReplacementNamed(
                   context,

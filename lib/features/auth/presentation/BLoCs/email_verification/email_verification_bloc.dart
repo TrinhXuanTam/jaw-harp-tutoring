@@ -49,7 +49,7 @@ class EmailVerificationBloc extends Bloc<EmailVerificationEvent, EmailVerificati
       } else if (event is EmailVerificationClosedEvent) {
         // Verification page has been closed,
         // therefore sign out the user.
-        _signOut();
+        _authBloc.add(UserSignOutEvent());
       } else if (event is EmailVerificationContinueEvent) {
         // No internet connection found.
         if (_connectivityBloc.state is NoInternetConnection) throw NoInternetConnectionError();

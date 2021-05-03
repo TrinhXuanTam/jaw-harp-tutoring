@@ -25,7 +25,7 @@ class VisibleCategoriesListScreen extends StatelessWidget {
               title: "Visible Categories",
               description: "Here you can browse through visible categories. Users can see these categories and their content in their app.",
               body: ScrollableCategoryList(
-                height: size.height * 0.8,
+                height: size.height * 0.7,
                 items: state.categories,
                 onTap: (category) => Navigator.pushReplacementNamed(
                   context,

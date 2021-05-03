@@ -19,7 +19,7 @@ class CategoryLocalizationForm extends StatefulWidget {
     required this.bloc,
     this.data,
     required this.onSubmit,
-    this.submitButtonText = "Submit",
+    this.submitButtonText = "Save",
   }) : super(key: key);
 
   @override

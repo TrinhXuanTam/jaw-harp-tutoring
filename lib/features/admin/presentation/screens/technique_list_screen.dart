@@ -22,7 +22,7 @@ class TechniqueListScreen extends StatelessWidget {
             return AdminScaffold(
               onClose: () => Navigator.pop(context),
               title: "Browse Techniques",
-              description: "Here you can browse through techniques and manage their content",
+              description: "Here you can browse through techniques and manage their content.",
               body: ScrollableTechniqueList(
                 items: state.techniques,
                 onTap: (technique) => Navigator.pushReplacementNamed(
@@ -33,7 +33,7 @@ class TechniqueListScreen extends StatelessWidget {
                     (ctx) => Navigator.pushReplacementNamed(ctx, TECHNIQUE_LIST_SCREEN_ROUTE),
                   ),
                 ),
-                height: size.height * 0.8,
+                height: size.height * 0.7,
               ),
             );
           else

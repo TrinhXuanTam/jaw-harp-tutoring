@@ -50,7 +50,7 @@ class HomePageBody extends StatelessWidget {
                       BlocBuilder<MostRecentTechniquesBloc, MostRecentTechniquesState>(
                         builder: (ctx, state) {
                           if (state is MostRecentTechniquesLoaded)
-                            return TechniqueSideScroll.fromTechniques(state.techniques, title: "What's new?");
+                            return TechniqueSideScroll.fromTechniques(state.techniques, title: l10n.translate("What's new?"));
                           else
                             return const TechniqueSideScrollLoading();
                         },

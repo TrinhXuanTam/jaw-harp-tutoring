@@ -70,6 +70,7 @@ class TechniqueForm extends StatelessWidget {
 
   /// Build difficulty picker.
   Widget _buildDifficultyField(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final techniqueFormBloc = BlocProvider.of<TechniqueFormBloc>(context);
     final List<DropdownMenuItem<TechniqueDifficulty>> items = [];
 
@@ -77,7 +78,7 @@ class TechniqueForm extends StatelessWidget {
       items.add(
         DropdownMenuItem<TechniqueDifficulty>(
           value: difficulty,
-          child: Text(difficulty.string),
+          child: Text(l10n.translate(difficulty.string)),
         ),
       );
     });

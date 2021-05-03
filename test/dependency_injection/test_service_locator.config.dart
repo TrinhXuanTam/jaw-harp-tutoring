@@ -243,9 +243,6 @@ _i1.GetIt testInitGetIt(_i1.GetIt get,
   gh.lazySingleton<_i18.IUserAuthFacade>(
       () => _i19.UserAuthFacade(get<_i9.FirebaseAuthService>()),
       registerFor: {_prod});
-  gh.lazySingleton<_i20.IUserAuthRepository>(
-      () => _i21.UserAuthRepository(get<_i7.FirebaseAuthDataSource>()),
-      registerFor: {_prod, _user_repository_test_env});
   gh.lazySingleton<_i20.IUserAuthRepository>(() => _i8.IUserRepositoryMock(),
       registerFor: {
         _email_authentication_test_env,
@@ -255,6 +252,9 @@ _i1.GetIt testInitGetIt(_i1.GetIt get,
         _google_authentication_test_env,
         _get_authentication_providers_test_env
       });
+  gh.lazySingleton<_i20.IUserAuthRepository>(
+      () => _i21.UserAuthRepository(get<_i7.FirebaseAuthDataSource>()),
+      registerFor: {_prod, _user_repository_test_env});
   gh.lazySingleton<_i8.IUserFacadeMock>(() => _i8.IUserFacadeMock(),
       registerFor: {
         _email_authentication_test_env,

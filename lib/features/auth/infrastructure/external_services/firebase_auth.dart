@@ -79,13 +79,14 @@ class FirebaseAuthService {
       if (loginResult.status == LoginStatus.failed || loginResult.accessToken == null) throw UserNotSignedInError();
 
       // Sign in to Firebase with Facebook credentials.
-      final accessToken = loginResult.accessToken!.token;
-      final AuthCredential facebookCredential = FacebookAuthProvider.credential(accessToken);
+      final accessToken = loginResult.accessToken!;
+      final AuthCredential facebookCredential = FacebookAuthProvider.credential(accessToken.token);
       final UserCredential firebaseCredential = await _auth.signInWithCredential(facebookCredential);
 
       // Send verification email and create new Firestore document if user is new.
       if (firebaseCredential.additionalUserInfo!.isNewUser) {
         final user = firebaseCredential.user!;
+        user.updateProfile(photoURL: "https://graph.facebook.com/${accessToken.userId}/picture?width=500&access_token=${accessToken.token}");
         user.sendEmailVerification();
         _addUserToFirestore(user);
       }
@@ -173,10 +174,11 @@ class FirebaseAuthService {
   Future<UserDTO> linkAccountToFacebook() async {
     // Get the signed in account.
     final user = _auth.currentUser;
+    if (user == null) throw UserNotSignedInError();
 
     // Get the access token from last Facebook login.
     final accessToken = await FacebookAuth.instance.accessToken;
-    if (user == null || accessToken == null) throw UserNotSignedInError();
+    if (accessToken == null) throw UserNotSignedInError();
     final credentials = FacebookAuthProvider.credential(accessToken.token);
 
     // Link accounts together.
@@ -185,7 +187,12 @@ class FirebaseAuthService {
 
     // Sing in with Facebook account.
     await _auth.signInWithCredential(credentials);
-    return UserDTO.fromFirebaseUser(_auth.currentUser!);
+    final fbUser = _auth.currentUser!;
+
+    // Update profile picture.
+    await fbUser.updateProfile(photoURL: "https://graph.facebook.com/${accessToken.userId}/picture?width=500&access_token=${accessToken.token}");
+
+    return UserDTO.fromFirebaseUser(fbUser);
   }
 
   /// Set language for sending email.

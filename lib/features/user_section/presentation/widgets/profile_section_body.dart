@@ -65,11 +65,11 @@ class ProfileSectionBody extends StatelessWidget {
                       SimpleMenu(
                         title: "Admin",
                         items: [
-                          SimpleMenuItem("Create Technique", () => Navigator.pushNamed(context, CREATE_TECHNIQUE_SCREEN_ROUTE)),
-                          SimpleMenuItem("Create Category", () => Navigator.pushNamed(context, CREATE_CATEGORY_SCREEN_ROUTE)),
-                          SimpleMenuItem("View Techniques", () => Navigator.pushNamed(context, TECHNIQUE_LIST_SCREEN_ROUTE)),
-                          SimpleMenuItem("Visible Categories", () => Navigator.pushNamed(context, VISIBLE_CATEGORIES_LIST_SCREEN_ROUTE)),
-                          SimpleMenuItem("Hidden Categories", () => Navigator.pushNamed(context, HIDDEN_CATEGORIES_LIST_SCREEN_ROUTE)),
+                          SimpleMenuItem("Create technique", () => Navigator.pushNamed(context, CREATE_TECHNIQUE_SCREEN_ROUTE)),
+                          SimpleMenuItem("Create category", () => Navigator.pushNamed(context, CREATE_CATEGORY_SCREEN_ROUTE)),
+                          SimpleMenuItem("View techniques", () => Navigator.pushNamed(context, TECHNIQUE_LIST_SCREEN_ROUTE)),
+                          SimpleMenuItem("Visible categories", () => Navigator.pushNamed(context, VISIBLE_CATEGORIES_LIST_SCREEN_ROUTE)),
+                          SimpleMenuItem("Hidden categories", () => Navigator.pushNamed(context, HIDDEN_CATEGORIES_LIST_SCREEN_ROUTE)),
                         ],
                       ),
                       SizedBox(height: 20),

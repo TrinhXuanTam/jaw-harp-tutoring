@@ -37,6 +37,8 @@ class TechniqueLocalizationEditScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
@@ -55,7 +57,7 @@ class TechniqueLocalizationEditScreen extends StatelessWidget {
                   TitleWithSubtitle(
                     titleText: "Edit Localization",
                     titleSize: 30,
-                    subtitleText: "Edit localized data for " + SupportedLanguages.getName(this.data.languageCode).toLowerCase(),
+                    subtitleText: l10n.translate("Edit localized data for") + "" + l10n.translate(SupportedLanguages.getName(this.data.languageCode)).toLowerCase(),
                   ),
                   const SizedBox(height: 20),
                   TechniqueLocalizationForm(

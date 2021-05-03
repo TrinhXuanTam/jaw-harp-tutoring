@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
+import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/rounded_input_field_container.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/thumbnail_picker/thumbnail_picker_bloc.dart';
 import 'package:jews_harp/features/user_section/domain/entities/media.dart';
@@ -24,6 +25,8 @@ class ThumbnailPicker extends StatelessWidget {
   }
 
   Widget _thumbnailPickerBlocBuilder(BuildContext ctx, ThumbnailPickerState state) {
+    final l10n = AppLocalizations.of(ctx);
+
     if (state is ImagePickedState)
       return AspectRatio(
         aspectRatio: 16 / 9,
@@ -42,7 +45,7 @@ class ThumbnailPicker extends StatelessWidget {
               right: 10,
               child: GestureDetector(
                 onTap: () => BlocProvider.of<ThumbnailPickerBloc>(ctx).add(RemoveImageEvent()),
-                child: Icon(
+                child: const Icon(
                   Icons.close_rounded,
                   color: BASE_COLOR,
                   size: 30,
@@ -62,14 +65,14 @@ class ThumbnailPicker extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.image_outlined,
                     color: BASE_COLOR,
                     size: 70,
                   ),
                   Text(
-                    "Choose Thumbnail",
-                    style: TextStyle(
+                    l10n.translate("Choose Thumbnail"),
+                    style: const TextStyle(
                       color: BASE_COLOR,
                       fontSize: 18,
                       fontWeight: FontWeight.w500,

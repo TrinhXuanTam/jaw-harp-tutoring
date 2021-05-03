@@ -74,7 +74,7 @@ class EditCategoryScreen extends StatelessWidget {
                             const TitleWithSubtitle(
                               titleText: "Edit Category",
                               titleSize: 35,
-                              subtitleText: "Edit details of your category.",
+                              subtitleText: "Edit details of your category",
                             ),
                             const SizedBox(height: 20),
                             CategoryForm(

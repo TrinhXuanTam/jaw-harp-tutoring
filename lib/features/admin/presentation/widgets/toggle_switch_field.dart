@@ -36,7 +36,6 @@ class ToggleSwitchField extends StatelessWidget {
               ),
               Text(
                 l10n.translate(this.description),
-                textAlign: TextAlign.justify,
                 style: const TextStyle(
                   color: Colors.grey,
                   fontSize: 12,

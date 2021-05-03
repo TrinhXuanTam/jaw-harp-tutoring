@@ -17,7 +17,7 @@ class FileUploadField extends StatelessWidget {
   const FileUploadField({
     Key? key,
     this.title = "Upload files:",
-    this.description = "Upload additional to improve the user experience.",
+    this.description = "Upload additional files to improve the user experience.",
     this.thumbnailController,
     this.videoController,
   }) : super(key: key);
@@ -41,7 +41,6 @@ class FileUploadField extends StatelessWidget {
               ),
               Text(
                 l10n.translate(this.description),
-                textAlign: TextAlign.justify,
                 style: TextStyle(
                   color: Colors.grey,
                   fontSize: 12,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
+import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 
+/// List of categories
 class ScrollableCategoryList extends StatelessWidget {
   final List<Category> items;
   final void Function(Category category) onTap;
@@ -16,6 +18,7 @@ class ScrollableCategoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final size = MediaQuery.of(context).size;
 
     return ClipRRect(
@@ -42,7 +45,7 @@ class ScrollableCategoryList extends StatelessWidget {
                           child: InkWell(
                             onTap: () => this.onTap(items[index]),
                             child: Container(
-                              padding: EdgeInsets.all(14),
+                              padding: const EdgeInsets.all(14),
                               child: Row(
                                 children: [
                                   Column(
@@ -51,7 +54,7 @@ class ScrollableCategoryList extends StatelessWidget {
                                     children: [
                                       Text(
                                         items[index].techniqueIds.length.toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: BASE_COLOR,
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
@@ -59,8 +62,8 @@ class ScrollableCategoryList extends StatelessWidget {
                                       ),
                                       SizedBox(height: 4),
                                       Text(
-                                        "items",
-                                        style: TextStyle(
+                                        l10n.translate("items"),
+                                        style: const TextStyle(
                                           fontSize: 13,
                                           color: BASE_COLOR,
                                           fontWeight: FontWeight.bold,
@@ -68,19 +71,19 @@ class ScrollableCategoryList extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(width: 10),
+                                  const SizedBox(width: 10),
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           items[index].title,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        SizedBox(height: 1),
+                                        const SizedBox(height: 1),
                                         Text(
                                           items[index].description,
                                           style: TextStyle(color: Colors.grey),
@@ -94,8 +97,8 @@ class ScrollableCategoryList extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Divider(height: 1.5, color: Colors.grey),
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: const Divider(height: 1.5, color: Colors.grey),
                         ),
                       ],
                     );
@@ -103,8 +106,8 @@ class ScrollableCategoryList extends StatelessWidget {
                 ),
               )
             : Text(
-                "No categories",
-                style: TextStyle(
+                l10n.translate("No categories"),
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
                 ),

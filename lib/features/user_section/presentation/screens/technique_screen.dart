@@ -134,7 +134,7 @@ class TechniqueScreen extends StatelessWidget {
                                                       fontSize: 16,
                                                     ),
                                                   ),
-                                                  Text(technique.difficulty.string),
+                                                  Text(l10n.translate(technique.difficulty.string)),
                                                   SizedBox(height: 20),
                                                   Text(
                                                     l10n.translate("Description"),

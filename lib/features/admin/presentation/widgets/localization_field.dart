@@ -35,7 +35,6 @@ class LocalizationField extends StatelessWidget {
         ),
         Text(
           l10n.translate(this.description),
-          textAlign: TextAlign.justify,
           style: TextStyle(
             color: Colors.grey,
             fontSize: 12,

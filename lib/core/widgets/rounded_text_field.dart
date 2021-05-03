@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
+import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/rounded_input_field_container.dart';
 
 /// Rounded text field.
@@ -25,6 +26,8 @@ class RoundedTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return RoundedInputField(
       padding: this.padding,
       color: this.color,
@@ -36,7 +39,7 @@ class RoundedTextField extends StatelessWidget {
             this.icon,
             color: this.iconColor,
           ),
-          hintText: this.placeholderText,
+          hintText: l10n.translate(this.placeholderText),
           border: InputBorder.none,
         ),
       ),

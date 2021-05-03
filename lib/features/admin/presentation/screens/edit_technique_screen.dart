@@ -78,7 +78,7 @@ class EditTechniqueScreen extends StatelessWidget {
                             const TitleWithSubtitle(
                               titleText: "Edit Technique",
                               titleSize: 35,
-                              subtitleText: "Edit details of your technique.",
+                              subtitleText: "Edit details of your technique",
                             ),
                             const SizedBox(height: 20),
                             TechniqueForm(
