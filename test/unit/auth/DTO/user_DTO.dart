@@ -31,7 +31,7 @@ void main() {
     when(() => firebaseUser.photoURL).thenReturn(photoUrl);
   });
 
-  test("[fromFirebaseUser] should return 'UserDTO' without user data if no connection is found.", () async {
+  test("[fromFirebaseUser] should return 'UserDTO' without user data when no connection is found.", () async {
     final userDTO = UserDTO.fromFirebaseUser(firebaseUser);
 
     expect(uid, userDTO.uid);
@@ -45,7 +45,7 @@ void main() {
     expect(Set<String>(), userDTO.purchasedTechniques);
   });
 
-  test("[fromFirebaseUser] should return 'UserDTO' with user data if connected to the internet.", () async {
+  test("[fromFirebaseUser] should return 'UserDTO' with user data when connected to the internet.", () async {
     final roles = {USER_ROLE, ADMIN_ROLE};
     final favorites = {USER_ROLE, ADMIN_ROLE};
     final purchases = {"technique1", "technique2"};

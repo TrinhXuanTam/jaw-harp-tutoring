@@ -182,24 +182,45 @@ import 'package:jews_harp/features/user_section/presentation/BLoCs/user_section_
 
 const String _prod = 'prod';
 const String _dev = 'dev';
+const String _category_admin_repository_test_env =
+    'category_admin_repository_test_env';
+const String _technique_admin_repository_test_env =
+    'technique_admin_repository_test_env';
 const String _user_auth_facade_test_env = 'user_auth_facade_test_env';
 const String _user_auth_repository_test_env = 'user_auth_repository_test_env';
 const String _link_email_provider_test_env = 'link_email_provider_test_env';
 const String _link_facebook_provider_test_env =
     'link_facebook_provider_test_env';
 const String _password_reset_test_env = 'password_reset_test_env';
+const String _pick_image_test_env = 'pick_image_test_env';
+const String _pick_video_test_env = 'pick_video_test_env';
 const String _reload_user_test_env = 'reload_user_test_env';
 const String _send_email_verification_test_env =
     'send_email_verification_test_env';
 const String _set_locale_test_env = 'set_locale_test_env';
 const String _sign_out_test_env = 'sign_out_test_env';
 const String _sign_up_test_env = 'sign_up_test_env';
+const String _update_category_test_env = 'update_category_test_env';
+const String _update_technique_test_env = 'update_technique_test_env';
+const String _create_category_test_env = 'create_category_test_env';
+const String _create_technique_test_env = 'create_technique_test_env';
 const String _email_authentication_test_env = 'email_authentication_test_env';
 const String _facebook_authentication_test_env =
     'facebook_authentication_test_env';
+const String _get_all_categories_test_env = 'get_all_categories_test_env';
+const String _get_all_techniques_test_env = 'get_all_techniques_test_env';
 const String _get_authentication_providers_test_env =
     'get_authentication_providers_test_env';
+const String _get_category_localized_data_test_env =
+    'get_category_localized_data_test_env';
 const String _get_current_user_test_env = 'get_current_user_test_env';
+const String _get_hidden_categories_test_env = 'get_hidden_categories_test_env';
+const String _get_technique_localized_data_test_env =
+    'get_technique_localized_data_test_env';
+const String _get_techniques_by_category_test_env =
+    'get_techniques_by_category_test_env';
+const String _get_visible_categories_test_env =
+    'get_visible_categories_test_env';
 const String _google_authentication_test_env = 'google_authentication_test_env';
 // ignore_for_file: unnecessary_lambdas
 // ignore_for_file: lines_longer_than_80_chars
@@ -229,14 +250,14 @@ _i1.GetIt initGetIt(_i1.GetIt get,
       registerFor: {_prod, _dev});
   gh.lazySingleton<_i11.ICategoryAdminRepository>(
       () => _i12.CategoryAdminRepository(get<_i6.FirebaseAdminDataSource>()),
-      registerFor: {_prod});
+      registerFor: {_prod, _category_admin_repository_test_env});
   gh.lazySingleton<_i13.ICategoryRepository>(
       () => _i14.CategoryRepository(get<_i9.FirebaseUserSectionDataSource>(),
           get<_i3.CategoryLocalDataSource>()),
       registerFor: {_prod});
   gh.lazySingleton<_i15.ITechniqueAdminRepository>(
       () => _i16.TechniqueAdminRepository(get<_i6.FirebaseAdminDataSource>()),
-      registerFor: {_prod});
+      registerFor: {_prod, _technique_admin_repository_test_env});
   gh.lazySingleton<_i17.IUserAuthFacade>(
       () => _i18.UserAuthFacade(get<_i8.FirebaseAuthService>()),
       registerFor: {_prod, _user_auth_facade_test_env});
@@ -259,9 +280,9 @@ _i1.GetIt initGetIt(_i1.GetIt get,
   gh.lazySingleton<_i25.PaymentService>(() => _i25.PaymentService(),
       registerFor: {_prod});
   gh.lazySingleton<_i26.PickImage>(() => _i26.PickImage(),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _pick_image_test_env});
   gh.lazySingleton<_i27.PickVideo>(() => _i27.PickVideo(),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _pick_video_test_env});
   gh.lazySingleton<_i28.ReloadUser>(
       () => _i28.ReloadUser(get<_i19.IUserAuthRepository>()),
       registerFor: {_prod, _dev, _reload_user_test_env});
@@ -286,10 +307,10 @@ _i1.GetIt initGetIt(_i1.GetIt get,
       registerFor: {_prod, _dev});
   gh.lazySingleton<_i36.UpdateCategory>(
       () => _i36.UpdateCategory(get<_i11.ICategoryAdminRepository>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _update_category_test_env});
   gh.lazySingleton<_i37.UpdateTechnique>(
       () => _i37.UpdateTechnique(get<_i15.ITechniqueAdminRepository>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _update_technique_test_env});
   gh.factory<_i38.UserSectionNavigationBloc>(
       () => _i38.UserSectionNavigationBloc(),
       registerFor: {_prod, _dev});
@@ -301,10 +322,10 @@ _i1.GetIt initGetIt(_i1.GetIt get,
       registerFor: {_prod, _dev});
   gh.lazySingleton<_i41.CreateCategory>(
       () => _i41.CreateCategory(get<_i11.ICategoryAdminRepository>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _create_category_test_env});
   gh.lazySingleton<_i42.CreateTechnique>(
       () => _i42.CreateTechnique(get<_i15.ITechniqueAdminRepository>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _create_technique_test_env});
   gh.lazySingleton<_i43.EmailAuthentication>(
       () => _i43.EmailAuthentication(get<_i17.IUserAuthFacade>()),
       registerFor: {_prod, _dev, _email_authentication_test_env});
@@ -326,10 +347,10 @@ _i1.GetIt initGetIt(_i1.GetIt get,
       registerFor: {_prod, _dev, _facebook_authentication_test_env});
   gh.lazySingleton<_i47.GetAllCategories>(
       () => _i47.GetAllCategories(get<_i11.ICategoryAdminRepository>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _get_all_categories_test_env});
   gh.lazySingleton<_i48.GetAllTechniques>(
       () => _i48.GetAllTechniques(get<_i15.ITechniqueAdminRepository>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _get_all_techniques_test_env});
   gh.lazySingleton<_i49.GetAuthProviders>(
       () => _i49.GetAuthProviders(get<_i19.IUserAuthRepository>()),
       registerFor: {_prod, _dev, _get_authentication_providers_test_env});
@@ -338,23 +359,23 @@ _i1.GetIt initGetIt(_i1.GetIt get,
       registerFor: {_prod, _dev});
   gh.lazySingleton<_i51.GetCategoryLocalizedData>(
       () => _i51.GetCategoryLocalizedData(get<_i11.ICategoryAdminRepository>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _get_category_localized_data_test_env});
   gh.lazySingleton<_i52.GetCurrentUser>(
       () => _i52.GetCurrentUser(get<_i19.IUserAuthRepository>()),
       registerFor: {_prod, _dev, _get_current_user_test_env});
   gh.lazySingleton<_i53.GetHiddenCategories>(
       () => _i53.GetHiddenCategories(get<_i11.ICategoryAdminRepository>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _get_hidden_categories_test_env});
   gh.lazySingleton<_i54.GetTechniqueLocalizedData>(
       () =>
           _i54.GetTechniqueLocalizedData(get<_i15.ITechniqueAdminRepository>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _get_technique_localized_data_test_env});
   gh.lazySingleton<_i55.GetTechniquesByCategory>(
       () => _i55.GetTechniquesByCategory(get<_i15.ITechniqueAdminRepository>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _get_techniques_by_category_test_env});
   gh.lazySingleton<_i56.GetVisibleCategories>(
       () => _i56.GetVisibleCategories(get<_i11.ICategoryAdminRepository>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _get_visible_categories_test_env});
   gh.lazySingleton<_i57.GoogleAuthentication>(
       () => _i57.GoogleAuthentication(get<_i17.IUserAuthFacade>()),
       registerFor: {_prod, _dev, _google_authentication_test_env});

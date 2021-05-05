@@ -147,8 +147,8 @@ class FirebaseAdminDataSource {
   }
 
   /// Update and save new technique data to Firestore database.
-  Future<TechniqueDTO> updateTechnique(
-    String id, {
+  Future<TechniqueDTO> updateTechnique({
+    required String id,
     Optional<String>? productId,
     String? categoryId,
     TechniqueDifficulty? difficulty,
@@ -216,8 +216,8 @@ class FirebaseAdminDataSource {
   }
 
   /// Update and save new category data to Firestore database.
-  Future<CategoryDTO> updateCategory(
-    String id, {
+  Future<CategoryDTO> updateCategory({
+    required String id,
     bool? isVisible,
     Optional<MediaDTO>? thumbnail,
     Iterable<CategoryLocalizedDataDTO>? localizedData,

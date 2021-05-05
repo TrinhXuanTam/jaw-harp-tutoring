@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/constants/test_environments.dart';
 import 'package:jews_harp/features/admin/domain/domain/category_localized_data.dart';
 import 'package:jews_harp/features/admin/domain/repository_interfaces/category_admin_repository.dart';
 import 'package:jews_harp/features/admin/infrastructure/DTO/category_localized_data_DTO.dart';
@@ -9,7 +10,7 @@ import 'package:jews_harp/features/user_section/infrastructure/DTO/mediaDTO.dart
 import 'package:optional/optional.dart';
 
 /// Category admin repository.
-@LazySingleton(as: ICategoryAdminRepository, env: [Environment.prod])
+@LazySingleton(as: ICategoryAdminRepository, env: [Environment.prod, CATEGORY_ADMIN_REPOSITORY_TEST_ENV])
 class CategoryAdminRepository extends ICategoryAdminRepository {
   /// Firebase admin data source.
   final FirebaseAdminDataSource _adminDataSource;
@@ -39,7 +40,7 @@ class CategoryAdminRepository extends ICategoryAdminRepository {
     Iterable<CategoryLocalizedData>? localizedData,
   }) {
     return _adminDataSource.updateCategory(
-      id,
+      id: id,
       isVisible: isVisible,
       thumbnail: thumbnail?.map((t) => MediaDTO.fromEntity(t)),
       localizedData: localizedData?.map((e) => CategoryLocalizedDataDTO.fromEntity(e)),

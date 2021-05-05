@@ -69,7 +69,7 @@ class CategoryFormBloc extends Bloc<CategoryFormEvent, CategoryFormState> {
 
       // Update category.
       final category = await _updateCategory(
-        event.category.id,
+        id: event.category.id,
         isVisible: state.isVisible,
         thumbnail: thumbnail,
         localizedData: state.localizedData.entries.map((e) => e.value),

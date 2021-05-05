@@ -65,7 +65,7 @@ void main() {
     expect(res, null);
   });
 
-  test("[reloadUser] should return 'User' entity if user is signed in.", () async {
+  test("[reloadUser] should return 'User' entity when user is signed in.", () async {
     final userAuthRepository = serviceLocator<IUserAuthRepository>();
     final firebaseAuthDataSourceMock = serviceLocator<FirebaseAuthDataSource>();
     when(() => firebaseAuthDataSourceMock.reloadUser()).thenAnswer((_) async => user);
@@ -75,7 +75,7 @@ void main() {
     expect(res, user);
   });
 
-  test("[getAuthProviders] should return 'User' entity if user is signed in.", () async {
+  test("[getAuthProviders] should return 'User' entity when user is signed in.", () async {
     final userAuthRepository = serviceLocator<IUserAuthRepository>();
     final firebaseAuthDataSourceMock = serviceLocator<FirebaseAuthDataSource>();
     when(() => firebaseAuthDataSourceMock.getAuthProviders(user.email)).thenAnswer((_) async => providers);

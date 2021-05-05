@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/constants/test_environments.dart';
 import 'package:jews_harp/features/admin/domain/domain/technique_localized_data.dart';
 import 'package:jews_harp/features/admin/domain/repository_interfaces/technique_admin_repository.dart';
 import 'package:jews_harp/features/user_section/domain/entities/media.dart';
@@ -6,7 +7,7 @@ import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:optional/optional.dart';
 
 /// Create a new technique.
-@LazySingleton(env: [Environment.prod, Environment.dev])
+@LazySingleton(env: [Environment.prod, Environment.dev, CREATE_TECHNIQUE_TEST_ENV])
 class CreateTechnique {
   final ITechniqueAdminRepository _techniqueAdminRepository;
 

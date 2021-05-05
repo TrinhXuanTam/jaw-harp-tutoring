@@ -107,7 +107,7 @@ class TechniqueFormBloc extends Bloc<TechniqueFormEvent, TechniqueFormState> {
 
         // Update technique.
         final technique = await _updateTechnique(
-          event.technique.id,
+          id: event.technique.id,
           productId: state.isPaid ? Optional.of(state.idController.text) : Optional.empty(),
           categoryId: categoryId,
           difficulty: difficulty,

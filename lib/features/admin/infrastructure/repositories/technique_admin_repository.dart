@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/constants/test_environments.dart';
 import 'package:jews_harp/features/admin/domain/domain/technique_localized_data.dart';
 import 'package:jews_harp/features/admin/domain/repository_interfaces/technique_admin_repository.dart';
 import 'package:jews_harp/features/admin/infrastructure/DTO/technique_localized_data_DTO.dart';
@@ -10,7 +11,7 @@ import 'package:jews_harp/features/user_section/infrastructure/DTO/mediaDTO.dart
 import 'package:optional/optional.dart';
 
 /// Technique admin repository.
-@LazySingleton(as: ITechniqueAdminRepository, env: [Environment.prod])
+@LazySingleton(as: ITechniqueAdminRepository, env: [Environment.prod, TECHNIQUE_ADMIN_REPOSITORY_TEST_ENV])
 class TechniqueAdminRepository extends ITechniqueAdminRepository {
   /// Firebase admin data source.
   final FirebaseAdminDataSource _adminDataSource;
@@ -49,7 +50,7 @@ class TechniqueAdminRepository extends ITechniqueAdminRepository {
     Optional<Media>? video,
   }) {
     return _adminDataSource.updateTechnique(
-      id,
+      id: id,
       productId: productId,
       categoryId: categoryId,
       difficulty: difficulty,

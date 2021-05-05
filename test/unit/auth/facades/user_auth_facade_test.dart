@@ -34,7 +34,7 @@ void main() {
     reset(firebaseAuthServiceMock);
   });
 
-  test("[signUpWithEmailAndPassword] should return 'User' entity if account was created.", () async {
+  test("[signUpWithEmailAndPassword] should return 'User' entity when account was created.", () async {
     final userAuthFacade = serviceLocator<IUserAuthFacade>();
     final firebaseAuthServiceMock = serviceLocator<FirebaseAuthService>();
     when(() => firebaseAuthServiceMock.signUpWithEmail(name, email, password)).thenAnswer((_) async => user);
@@ -47,7 +47,7 @@ void main() {
     expect(res.isVerified, isVerified);
   });
 
-  test("[signInWithEmailAndPassword] should return 'User' entity if account exists.", () async {
+  test("[signInWithEmailAndPassword] should return 'User' entity when account exists.", () async {
     final userAuthFacade = serviceLocator<IUserAuthFacade>();
     final firebaseAuthServiceMock = serviceLocator<FirebaseAuthService>();
     when(() => firebaseAuthServiceMock.signInWithEmail(email, password)).thenAnswer((_) async => user);
@@ -60,7 +60,7 @@ void main() {
     expect(res.isVerified, isVerified);
   });
 
-  test("[signInWithGoogle] should return 'User' entity if Google account exists.", () async {
+  test("[signInWithGoogle] should return 'User' entity when Google account exists.", () async {
     final userAuthFacade = serviceLocator<IUserAuthFacade>();
     final firebaseAuthServiceMock = serviceLocator<FirebaseAuthService>();
     when(() => firebaseAuthServiceMock.signInWithGoogle()).thenAnswer((_) async => user);
@@ -73,7 +73,7 @@ void main() {
     expect(res.isVerified, isVerified);
   });
 
-  test("[signInWithFacebook] should return 'User' entity if Facebook profile exists.", () async {
+  test("[signInWithFacebook] should return 'User' entity when Facebook profile exists.", () async {
     final userAuthFacade = serviceLocator<IUserAuthFacade>();
     final firebaseAuthServiceMock = serviceLocator<FirebaseAuthService>();
     when(() => firebaseAuthServiceMock.signInWithFacebook()).thenAnswer((_) async => user);
@@ -86,7 +86,7 @@ void main() {
     expect(res.isVerified, isVerified);
   });
 
-  test("[linkAccountToEmail] should return 'User' entity if linking account to email and password was successful.", () async {
+  test("[linkAccountToEmail] should return 'User' entity when linking account to email and password was successful.", () async {
     final userAuthFacade = serviceLocator<IUserAuthFacade>();
     final firebaseAuthServiceMock = serviceLocator<FirebaseAuthService>();
     when(() => firebaseAuthServiceMock.linkAccountToEmail(email, password)).thenAnswer((_) async => user);
@@ -99,7 +99,7 @@ void main() {
     expect(res.isVerified, isVerified);
   });
 
-  test("[linkAccountToFacebook] should return 'User' entity if linking account to Facebook profile was successful.", () async {
+  test("[linkAccountToFacebook] should return 'User' entity when linking account to Facebook profile was successful.", () async {
     final userAuthFacade = serviceLocator<IUserAuthFacade>();
     final firebaseAuthServiceMock = serviceLocator<FirebaseAuthService>();
     when(() => firebaseAuthServiceMock.linkAccountToFacebook()).thenAnswer((_) async => user);
