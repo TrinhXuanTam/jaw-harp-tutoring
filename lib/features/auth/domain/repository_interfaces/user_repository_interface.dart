@@ -3,7 +3,7 @@ import 'package:jews_harp/features/auth/domain/entities/user.dart';
 /// Repository to fetch and store authentication related data.
 abstract class IUserAuthRepository {
   /// Get the currently signed in user.
-  Future<User?> getCurrentUser();
+  Future<User?> getCurrentUser(bool connectionAvailable);
 
   /// User data is cached locally.
   /// This function reloads the user data if called.

@@ -8,7 +8,6 @@ import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:meta/meta.dart';
 
 part 'technique_localization_event.dart';
-
 part 'technique_localization_state.dart';
 
 /// State management for loading localized data of a technique.

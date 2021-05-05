@@ -1,4 +1,5 @@
-const String USER_REPOSITORY_TEST_ENV = "user_repository_test_env";
+const String FIREBASE_AUTH_DATA_SOURCE = "firebase_auth_data_source_test_env";
+const String USER_AUTH_REPOSITORY_TEST_ENV = "user_auth_repository_test_env";
 const String EMAIL_AUTHENTICATION_TEST_ENV = "email_authentication_test_env";
 const String GET_CURRENT_USER_TEST_ENV = "get_current_user_test_env";
 const String SIGN_UP_TEST_ENV = "sign_up_test_env";

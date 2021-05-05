@@ -7,7 +7,6 @@ import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:meta/meta.dart';
 
 part 'most_recent_techniques_event.dart';
-
 part 'most_recent_techniques_state.dart';
 
 /// Get most recent techniques BLoC.

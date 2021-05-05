@@ -14,7 +14,6 @@ import 'package:meta/meta.dart';
 import 'package:optional/optional.dart';
 
 part 'category_form_event.dart';
-
 part 'category_form_state.dart';
 
 /// Category form state management.

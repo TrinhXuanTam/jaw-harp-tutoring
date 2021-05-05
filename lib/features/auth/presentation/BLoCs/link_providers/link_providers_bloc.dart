@@ -16,7 +16,6 @@ import 'package:jews_harp/features/auth/presentation/BLoCs/auth_state/auth_bloc.
 import 'package:meta/meta.dart';
 
 part 'link_providers_event.dart';
-
 part 'link_providers_state.dart';
 
 /// State management for linking two existing accounts.

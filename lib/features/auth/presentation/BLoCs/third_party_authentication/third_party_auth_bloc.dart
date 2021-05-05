@@ -12,7 +12,6 @@ import 'package:jews_harp/features/auth/presentation/BLoCs/auth_state/auth_bloc.
 import 'package:meta/meta.dart';
 
 part 'third_party_auth_event.dart';
-
 part 'third_party_auth_state.dart';
 
 /// Third party authentication methods state management.

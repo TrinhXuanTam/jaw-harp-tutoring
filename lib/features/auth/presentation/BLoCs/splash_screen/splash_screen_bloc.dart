@@ -10,7 +10,6 @@ import 'package:meta/meta.dart';
 import 'package:wakelock/wakelock.dart';
 
 part 'splash_screen_event.dart';
-
 part 'splash_screen_state.dart';
 
 /// Splash screen state management.

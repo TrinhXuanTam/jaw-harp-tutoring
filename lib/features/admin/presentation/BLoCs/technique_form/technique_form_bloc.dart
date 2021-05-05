@@ -20,7 +20,6 @@ import 'package:meta/meta.dart';
 import 'package:optional/optional.dart';
 
 part 'technique_form_event.dart';
-
 part 'technique_form_state.dart';
 
 /// Default state if no preloaded data have been given.

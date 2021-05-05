@@ -2,15 +2,12 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:jews_harp/core/errors/user_not_signed_in_error.dart';
-import 'package:jews_harp/features/auth/application/use_cases/get_current_user.dart';
 import 'package:jews_harp/features/auth/application/use_cases/reload_user.dart';
 import 'package:jews_harp/features/auth/application/use_cases/sign_out.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:meta/meta.dart';
 
 part 'auth_event.dart';
-
 part 'auth_state.dart';
 
 /// Global authentication state.

@@ -4,7 +4,6 @@ import 'package:jews_harp/core/errors/validation_error.dart';
 import 'package:jews_harp/core/regex.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/domain/facade_interfaces/user_facade_interface.dart';
-import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
 
 /// Create a new account.
 @LazySingleton(env: [Environment.prod, Environment.dev, SIGN_UP_TEST_ENV])

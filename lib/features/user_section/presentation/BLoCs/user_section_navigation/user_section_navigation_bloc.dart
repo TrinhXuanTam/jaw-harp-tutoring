@@ -9,7 +9,6 @@ import 'package:jews_harp/features/user_section/presentation/widgets/home_page_b
 import 'package:meta/meta.dart';
 
 part 'user_section_navigation_event.dart';
-
 part 'user_section_navigation_state.dart';
 
 /// User section navigation state management.

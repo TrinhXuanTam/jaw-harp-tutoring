@@ -7,7 +7,6 @@ import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:meta/meta.dart';
 
 part 'technique_event.dart';
-
 part 'technique_state.dart';
 
 /// Get one single technique BLoC.

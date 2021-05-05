@@ -7,7 +7,6 @@ import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:meta/meta.dart';
 
 part 'categories_event.dart';
-
 part 'categories_state.dart';
 
 /// Get all categories bloc.

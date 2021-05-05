@@ -8,7 +8,6 @@ import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:meta/meta.dart';
 
 part 'technique_list_event.dart';
-
 part 'technique_list_state.dart';
 
 /// State management for loading admin technique list.

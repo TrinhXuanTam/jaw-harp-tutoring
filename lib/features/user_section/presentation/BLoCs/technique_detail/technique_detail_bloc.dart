@@ -13,7 +13,6 @@ import 'package:optional/optional.dart';
 import 'package:video_player/video_player.dart';
 
 part 'technique_detail_event.dart';
-
 part 'technique_detail_state.dart';
 
 /// Technique detail state management.

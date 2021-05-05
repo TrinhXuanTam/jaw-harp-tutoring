@@ -28,6 +28,15 @@ class FirebaseAuthService {
     });
   }
 
+  /// Load user with firestore data.
+  Future<UserDTO> _loadUserWithFirebaseData(User user) async {
+    final firestore = FirebaseFirestore.instance;
+    final userCollection = firestore.collection('users');
+    final userDoc = await userCollection.doc(user.uid).get();
+
+    return UserDTO.fromFirebaseUser(user, userDoc: userDoc);
+  }
+
   /// Sign up with [email] and [password] then set [name].
   /// Throw [EmailAlreadyUsedError] if email is already in use.
   Future<UserDTO> signUpWithEmail(String name, String email, String password) async {
@@ -44,7 +53,7 @@ class FirebaseAuthService {
       // Send email verification.
       user.sendEmailVerification();
 
-      return UserDTO.fromFirebaseUser(user);
+      return _loadUserWithFirebaseData(user);
     } on FirebaseAuthException {
       throw EmailAlreadyUsedError(email);
     }
@@ -62,7 +71,7 @@ class FirebaseAuthService {
   Future<UserDTO> signInWithEmail(String email, String password) async {
     try {
       final userCredential = await _auth.signInWithEmailAndPassword(email: email, password: password);
-      return UserDTO.fromFirebaseCredentials(userCredential);
+      return _loadUserWithFirebaseData(userCredential.user!);
     } on FirebaseAuthException {
       throw WrongEmailOrPasswordError();
     }
@@ -91,7 +100,7 @@ class FirebaseAuthService {
         _addUserToFirestore(user);
       }
 
-      return UserDTO.fromFirebaseCredentials(firebaseCredential);
+      return _loadUserWithFirebaseData(firebaseCredential.user!);
     } on FirebaseAuthException catch (e) {
       throw EmailAlreadyUsedError(e.email!);
     }
@@ -103,8 +112,8 @@ class FirebaseAuthService {
     try {
       // Initialize google sign in object.
       final GoogleSignIn googleLogin = GoogleSignIn(scopes: [
-        "https://www.googleapis.com/auth/userinfo.email",
-        "https://www.googleapis.com/auth/userinfo.profile",
+        "https://www.googleapis.com/_auth/userinfo.email",
+        "https://www.googleapis.com/_auth/userinfo.profile",
       ]);
 
       // Redirect to Google sign in page.
@@ -129,7 +138,7 @@ class FirebaseAuthService {
         _addUserToFirestore(firebaseCredential.user!);
       }
 
-      return UserDTO.fromFirebaseCredentials(firebaseCredential);
+      return _loadUserWithFirebaseData(firebaseCredential.user!);
     } on FirebaseAuthException catch (e) {
       throw EmailAlreadyUsedError(e.email!);
     }
@@ -167,7 +176,7 @@ class FirebaseAuthService {
     // Sign in with new account.
     await _auth.signOut();
     await _auth.signInWithEmailAndPassword(email: email, password: password);
-    return UserDTO.fromFirebaseUser(_auth.currentUser!);
+    return _loadUserWithFirebaseData(_auth.currentUser!);
   }
 
   /// Link an existing account to Facebook profile.
@@ -192,7 +201,7 @@ class FirebaseAuthService {
     // Update profile picture.
     await fbUser.updateProfile(photoURL: "https://graph.facebook.com/${accessToken.userId}/picture?width=500&access_token=${accessToken.token}");
 
-    return UserDTO.fromFirebaseUser(fbUser);
+    return _loadUserWithFirebaseData(fbUser);
   }
 
   /// Set language for sending email.

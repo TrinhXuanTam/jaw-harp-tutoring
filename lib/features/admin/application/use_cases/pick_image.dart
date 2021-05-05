@@ -9,7 +9,9 @@ class PickImage {
   Future<Media?> call() async {
     final picker = ImagePicker();
     // Pick image from gallery.
-    final image = await picker.getImage(source: ImageSource.gallery);
+    final image = await picker.getImage(
+      source: ImageSource.gallery,
+    );
     if (image == null) return null;
     return Media(filePath: Optional.of(image.path));
   }

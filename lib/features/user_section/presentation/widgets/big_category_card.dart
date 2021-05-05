@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:jews_harp/features/user_section/presentation/screens/category_screen.dart';

@@ -10,7 +10,6 @@ import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:meta/meta.dart';
 
 part 'purchase_technique_event.dart';
-
 part 'purchase_technique_state.dart';
 
 /// Purchase technique state management.

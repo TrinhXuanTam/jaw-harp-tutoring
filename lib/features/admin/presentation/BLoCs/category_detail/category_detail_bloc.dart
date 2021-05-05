@@ -9,7 +9,6 @@ import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:meta/meta.dart';
 
 part 'category_detail_event.dart';
-
 part 'category_detail_state.dart';
 
 /// Category detail state management for loading all

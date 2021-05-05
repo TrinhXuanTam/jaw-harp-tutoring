@@ -14,7 +14,6 @@ import 'package:jews_harp/features/auth/presentation/BLoCs/auth_state/auth_bloc.
 import 'package:meta/meta.dart';
 
 part 'sign_up_event.dart';
-
 part 'sign_up_state.dart';
 
 /// Sign up form state management.

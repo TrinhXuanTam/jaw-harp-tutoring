@@ -1,3 +1,4 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/core/constants/test_environments.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
@@ -10,5 +11,11 @@ class GetCurrentUser {
 
   GetCurrentUser(this._userRepository);
 
-  Future<User?> call() => _userRepository.getCurrentUser();
+  /// Check internet connection.
+  Future<bool> get checkConnection async {
+    final connectivity = await Connectivity().checkConnectivity();
+    return connectivity != ConnectivityResult.none;
+  }
+
+  Future<User?> call() async => _userRepository.getCurrentUser(await checkConnection);
 }

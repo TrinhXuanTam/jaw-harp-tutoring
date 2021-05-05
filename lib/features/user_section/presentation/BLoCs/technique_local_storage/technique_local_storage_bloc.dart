@@ -9,7 +9,6 @@ import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:meta/meta.dart';
 
 part 'technique_local_storage_event.dart';
-
 part 'technique_local_storage_state.dart';
 
 /// Local storage state management.

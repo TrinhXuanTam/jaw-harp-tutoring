@@ -12,7 +12,6 @@ import 'package:jews_harp/features/user_section/infrastructure/DTO/category_DTO.
 import 'package:jews_harp/features/user_section/infrastructure/DTO/mediaDTO.dart';
 import 'package:jews_harp/features/user_section/infrastructure/DTO/technique_DTO.dart';
 import 'package:optional/optional.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:video_compress/video_compress.dart';
 
 /// Firebase Admin Section data source.
@@ -32,11 +31,16 @@ class FirebaseAdminDataSource {
 
   /// Compress and upload a video to cloud storage.
   Future<String> _uploadVideo(Reference media, String techniqueId, String path) async {
-    // Compress the file.
-    final mediaInfo = await VideoCompress.compressVideo(path, quality: VideoQuality.LowQuality);
+    // Compress video
+    final mediaInfo = await VideoCompress.compressVideo(
+      path,
+      quality: VideoQuality.DefaultQuality,
+    );
+
     // Upload the video to cloud storage
     final task = await media.child(techniqueId).child("video").putFile(mediaInfo!.file!);
     final url = await task.ref.getDownloadURL();
+
     return url;
   }
 

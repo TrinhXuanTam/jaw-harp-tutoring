@@ -6,7 +6,6 @@ import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 
 part 'connectivity_event.dart';
-
 part 'connectivity_state.dart';
 
 /// Global internet connection state
