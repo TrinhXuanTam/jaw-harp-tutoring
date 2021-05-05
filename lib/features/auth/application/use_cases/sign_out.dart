@@ -1,8 +1,9 @@
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/constants/test_environments.dart';
 import 'package:jews_harp/features/auth/domain/facade_interfaces/user_facade_interface.dart';
 
 /// Sign out the current user.
-@LazySingleton(env: [Environment.prod, Environment.dev])
+@LazySingleton(env: [Environment.prod, Environment.dev, SIGN_OUT_TEST_ENV])
 class SignOut {
   final IUserAuthFacade _userAuthFacade;
 

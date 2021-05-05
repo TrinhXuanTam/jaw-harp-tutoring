@@ -182,15 +182,17 @@ import 'package:jews_harp/features/user_section/presentation/BLoCs/user_section_
 
 const String _prod = 'prod';
 const String _dev = 'dev';
+const String _user_auth_facade_test_env = 'user_auth_facade_test_env';
 const String _user_auth_repository_test_env = 'user_auth_repository_test_env';
 const String _link_email_provider_test_env = 'link_email_provider_test_env';
 const String _link_facebook_provider_test_env =
     'link_facebook_provider_test_env';
 const String _password_reset_test_env = 'password_reset_test_env';
-const String _email_verification_check_test_env =
-    'email_verification_check_test_env';
+const String _reload_user_test_env = 'reload_user_test_env';
 const String _send_email_verification_test_env =
     'send_email_verification_test_env';
+const String _set_locale_test_env = 'set_locale_test_env';
+const String _sign_out_test_env = 'sign_out_test_env';
 const String _sign_up_test_env = 'sign_up_test_env';
 const String _email_authentication_test_env = 'email_authentication_test_env';
 const String _facebook_authentication_test_env =
@@ -237,7 +239,7 @@ _i1.GetIt initGetIt(_i1.GetIt get,
       registerFor: {_prod});
   gh.lazySingleton<_i17.IUserAuthFacade>(
       () => _i18.UserAuthFacade(get<_i8.FirebaseAuthService>()),
-      registerFor: {_prod});
+      registerFor: {_prod, _user_auth_facade_test_env});
   gh.lazySingleton<_i19.IUserAuthRepository>(
       () => _i20.UserAuthRepository(get<_i7.FirebaseAuthDataSource>()),
       registerFor: {_prod, _user_auth_repository_test_env});
@@ -262,16 +264,16 @@ _i1.GetIt initGetIt(_i1.GetIt get,
       registerFor: {_prod, _dev});
   gh.lazySingleton<_i28.ReloadUser>(
       () => _i28.ReloadUser(get<_i19.IUserAuthRepository>()),
-      registerFor: {_prod, _dev, _email_verification_check_test_env});
+      registerFor: {_prod, _dev, _reload_user_test_env});
   gh.lazySingleton<_i29.SendEmailVerification>(
       () => _i29.SendEmailVerification(get<_i17.IUserAuthFacade>()),
       registerFor: {_prod, _dev, _send_email_verification_test_env});
   gh.lazySingleton<_i30.SetLocale>(
       () => _i30.SetLocale(get<_i17.IUserAuthFacade>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _set_locale_test_env});
   gh.lazySingleton<_i31.SignOut>(
       () => _i31.SignOut(get<_i17.IUserAuthFacade>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _sign_out_test_env});
   gh.lazySingleton<_i32.SignUp>(() => _i32.SignUp(get<_i17.IUserAuthFacade>()),
       registerFor: {_prod, _dev, _sign_up_test_env});
   gh.lazySingleton<_i33.TechniqueLocalDataSource>(

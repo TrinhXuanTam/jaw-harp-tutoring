@@ -22,7 +22,7 @@ abstract class IUserAuthFacade {
   Future<void> signOut();
 
   /// Send password reset email.
-  Future<bool> resetPassword(String email);
+  Future<void> resetPassword(String email);
 
   /// Link currently signed in account to email and password.
   Future<UserDTO> linkAccountToEmail(String email, String password);

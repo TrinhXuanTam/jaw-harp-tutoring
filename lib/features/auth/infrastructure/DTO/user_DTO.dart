@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Firebase;
-import 'package:flutter/cupertino.dart';
 import 'package:jews_harp/core/constants/settings.dart';
-import 'package:jews_harp/core/errors/user_does_not_exist_error.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:optional/optional.dart';
 

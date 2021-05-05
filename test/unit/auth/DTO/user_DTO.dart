@@ -49,7 +49,6 @@ void main() {
     final roles = {USER_ROLE, ADMIN_ROLE};
     final favorites = {USER_ROLE, ADMIN_ROLE};
     final purchases = {"technique1", "technique2"};
-
     when(() => userDoc["roles"]).thenReturn(roles);
     when(() => userDoc["favoriteTechniques"]).thenReturn(favorites);
     when(() => userDoc["purchasedTechniques"]).thenReturn(purchases);

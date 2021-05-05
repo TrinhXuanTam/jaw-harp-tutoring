@@ -1,9 +1,7 @@
-import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 
 import 'test_service_locator.config.dart';
-
-final testServiceLocator = GetIt.instance;
 
 @InjectableInit(
   initializerName: r'testInitGetIt',
@@ -11,4 +9,4 @@ final testServiceLocator = GetIt.instance;
   asExtension: false,
   generateForDir: ["test", "lib"],
 )
-void testConfigureDependencies(String environment) => testInitGetIt(testServiceLocator, environment: environment);
+void testConfigureDependencies(String environment) => testInitGetIt(serviceLocator, environment: environment);

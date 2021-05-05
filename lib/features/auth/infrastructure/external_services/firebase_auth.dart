@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jews_harp/core/constants/settings.dart';
 import 'package:jews_harp/core/errors/email_already_used_error.dart';
+import 'package:jews_harp/core/errors/email_not_found_error.dart';
 import 'package:jews_harp/core/errors/user_not_signed_in_error.dart';
 import 'package:jews_harp/core/errors/wrong_email_or_password_error.dart';
 import 'package:jews_harp/features/auth/infrastructure/DTO/user_DTO.dart';
@@ -79,7 +80,7 @@ class FirebaseAuthService {
 
   /// Authenticate with Facebook account and create new account if it doesn't exist.
   /// Throws [EmailAlreadyUsedError] when creating new account with a used email.
-  Future<UserDTO> authenticateWithFacebook() async {
+  Future<UserDTO> signInWithFacebook() async {
     try {
       // Redirect to Facebook page and log in.
       final loginResult = await FacebookAuth.instance.login();
@@ -108,7 +109,7 @@ class FirebaseAuthService {
 
   /// Authenticate with Google account and create new account if it doesn't exist.
   /// Throws [EmailAlreadyUsedError] when creating new account with a used email.
-  Future<UserDTO> authenticateWithGoogle() async {
+  Future<UserDTO> signInWithGoogle() async {
     try {
       // Initialize google sign in object.
       final GoogleSignIn googleLogin = GoogleSignIn(scopes: [
@@ -152,12 +153,11 @@ class FirebaseAuthService {
   }
 
   /// Send password reset to given [email].
-  Future<bool> resetPassword(String email) async {
+  Future<void> resetPassword(String email) async {
     try {
       await _auth.sendPasswordResetEmail(email: email);
-      return true;
     } on FirebaseAuthException {
-      return false;
+      throw EmailNotFoundError();
     }
   }
 
