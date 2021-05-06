@@ -212,6 +212,7 @@ const String _get_all_categories_test_env = 'get_all_categories_test_env';
 const String _get_all_techniques_test_env = 'get_all_techniques_test_env';
 const String _get_authentication_providers_test_env =
     'get_authentication_providers_test_env';
+const String _get_categories_test_env = 'get_categories_test_env';
 const String _get_category_localized_data_test_env =
     'get_category_localized_data_test_env';
 const String _get_current_user_test_env = 'get_current_user_test_env';
@@ -225,6 +226,22 @@ const String _get_visible_categories_test_env =
 const String _google_authentication_test_env = 'google_authentication_test_env';
 const String _technique_repository_test_env = 'technique_repository_test_env';
 const String _user_section_facade_test_env = 'user_section_facade_test_env';
+const String _mark_technique_as_favorite_test_env =
+    'mark_technique_as_favorite_test_env';
+const String _purchase_technique_test_env = 'purchase_technique_test_env';
+const String _remove_technique_from_favorites_test_env =
+    'remove_technique_from_favorites_test_env';
+const String _delete_downloaded_technique_test_env =
+    'delete_downloaded_technique_test_env';
+const String _download_technique_test_env = 'download_technique_test_env';
+const String _get_downloaded_techniques_test_env =
+    'get_downloaded_techniques_test_env';
+const String _get_most_recent_techniques_test_env =
+    'get_most_recent_techniques_test_env';
+const String _get_technique_by_id_test_env = 'get_technique_by_id_test_env';
+const String _get_techniques_test_env = 'get_techniques_test_env';
+const String _get_published_techniques_by_category_test_env =
+    'get_published_techniques_by_category_test_env';
 // ignore_for_file: unnecessary_lambdas
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -359,7 +376,7 @@ _i1.GetIt initGetIt(_i1.GetIt get,
       registerFor: {_prod, _dev, _get_authentication_providers_test_env});
   gh.lazySingleton<_i50.GetCategories>(
       () => _i50.GetCategories(get<_i13.ICategoryRepository>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _get_categories_test_env});
   gh.lazySingleton<_i51.GetCategoryLocalizedData>(
       () => _i51.GetCategoryLocalizedData(get<_i11.ICategoryAdminRepository>()),
       registerFor: {_prod, _dev, _get_category_localized_data_test_env});
@@ -407,17 +424,17 @@ _i1.GetIt initGetIt(_i1.GetIt get,
       registerFor: {_prod, _dev});
   gh.lazySingleton<_i64.MarkTechniqueAsFavorite>(
       () => _i64.MarkTechniqueAsFavorite(get<_i61.IUserSectionFacade>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _mark_technique_as_favorite_test_env});
   gh.lazySingleton<_i65.PurchaseTechnique>(
       () => _i65.PurchaseTechnique(get<_i61.IUserSectionFacade>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _purchase_technique_test_env});
   gh.factory<_i66.PurchaseTechniqueBloc>(
       () => _i66.PurchaseTechniqueBloc(
           get<_i65.PurchaseTechnique>(), get<_i5.ErrorBloc>()),
       registerFor: {_prod, _dev});
   gh.lazySingleton<_i67.RemoveTechniqueFromFavorites>(
       () => _i67.RemoveTechniqueFromFavorites(get<_i61.IUserSectionFacade>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _remove_technique_from_favorites_test_env});
   gh.factory<_i68.SignUpBloc>(
       () => _i68.SignUpBloc(
           get<_i32.SignUp>(),
@@ -474,25 +491,29 @@ _i1.GetIt initGetIt(_i1.GetIt get,
       registerFor: {_prod, _dev});
   gh.lazySingleton<_i80.DeleteDownloadedTechnique>(
       () => _i80.DeleteDownloadedTechnique(get<_i59.ITechniqueRepository>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _delete_downloaded_technique_test_env});
   gh.lazySingleton<_i81.DownloadTechnique>(
       () => _i81.DownloadTechnique(get<_i59.ITechniqueRepository>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _download_technique_test_env});
   gh.lazySingleton<_i82.GetDownloadedTechniques>(
       () => _i82.GetDownloadedTechniques(get<_i59.ITechniqueRepository>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _get_downloaded_techniques_test_env});
   gh.lazySingleton<_i83.GetMostRecentTechniques>(
       () => _i83.GetMostRecentTechniques(get<_i59.ITechniqueRepository>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _get_most_recent_techniques_test_env});
   gh.lazySingleton<_i84.GetTechniqueById>(
       () => _i84.GetTechniqueById(get<_i59.ITechniqueRepository>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _get_technique_by_id_test_env});
   gh.lazySingleton<_i85.GetTechniques>(
       () => _i85.GetTechniques(get<_i59.ITechniqueRepository>()),
-      registerFor: {_prod, _dev});
+      registerFor: {_prod, _dev, _get_techniques_test_env});
   gh.lazySingleton<_i86.GetTechniquesByCategory>(
       () => _i86.GetTechniquesByCategory(get<_i59.ITechniqueRepository>()),
-      registerFor: {_prod, _dev});
+      registerFor: {
+        _prod,
+        _dev,
+        _get_published_techniques_by_category_test_env
+      });
   gh.factory<_i87.MostRecentTechniquesBloc>(
       () => _i87.MostRecentTechniquesBloc(get<_i83.GetMostRecentTechniques>()),
       registerFor: {_prod, _dev});
