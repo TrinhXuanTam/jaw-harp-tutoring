@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 
+/// Big circular appbar.
 class BigAppBarBackground extends StatelessWidget {
   final double? height;
   final Color color;

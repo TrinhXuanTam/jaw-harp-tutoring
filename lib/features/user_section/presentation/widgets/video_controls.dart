@@ -5,6 +5,7 @@ import 'package:jews_harp/features/user_section/presentation/screens/video_full_
 import 'package:jews_harp/features/user_section/utils.dart';
 import 'package:video_player/video_player.dart';
 
+/// Video control panel.
 class VideoControls extends StatelessWidget {
   final VideoPlayerController controller;
   final List<double> _playbackSpeeds = const [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
@@ -59,7 +60,7 @@ class VideoControls extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(width: 5),
+        const SizedBox(width: 5),
         ValueListenableBuilder(
           valueListenable: controller,
           builder: (ctx, value, child) {
@@ -84,12 +85,12 @@ class VideoControls extends StatelessWidget {
             );
           },
         ),
-        SizedBox(width: 5),
+        const SizedBox(width: 5),
         Expanded(
           child: VideoProgressIndicator(
             controller,
             allowScrubbing: true,
-            colors: VideoProgressColors(
+            colors: const VideoProgressColors(
               backgroundColor: Colors.white,
               bufferedColor: BASE_COLOR_VERY_LIGHT,
               playedColor: BASE_COLOR,
@@ -103,7 +104,7 @@ class VideoControls extends StatelessWidget {
             valueListenable: controller,
             builder: (ctx, value, child) => Text(
               _getPosition(),
-              style: TextStyle(fontSize: 12, color: Colors.white),
+              style: const TextStyle(fontSize: 12, color: Colors.white),
             ),
           ),
         ),
@@ -111,7 +112,7 @@ class VideoControls extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Text(
             " / " + _getVideoLength(),
-            style: TextStyle(fontSize: 12, color: Colors.white),
+            style: const TextStyle(fontSize: 12, color: Colors.white),
           ),
         ),
         SizedBox(width: 10),
@@ -123,16 +124,16 @@ class VideoControls extends StatelessWidget {
             itemBuilder: (_) => _playbackSpeeds.map((speed) => PopupMenuItem(child: Text("${speed}x"), value: speed)).toList(),
             child: Text(
               "${controller.value.playbackSpeed}x",
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w500,
               ),
             ),
           ),
         ),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         _buildFullscreenButton(context),
-        SizedBox(width: 5),
+        const SizedBox(width: 5),
       ],
     );
   }

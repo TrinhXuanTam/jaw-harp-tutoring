@@ -9,6 +9,7 @@ import 'package:meta/meta.dart';
 part 'categories_event.dart';
 part 'categories_state.dart';
 
+/// Get all categories bloc.
 @LazySingleton(env: [Environment.prod, Environment.dev])
 class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   final GetCategories _getCategories;
@@ -21,6 +22,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   ) async* {
     if (event is LoadCategories) {
       final categories = (await _getCategories()).toList();
+      // Sort categories by number of techniques contained.
       categories.sort((lhs, rhs) => rhs.techniqueIds.length.compareTo(lhs.techniqueIds.length));
       yield CategoriesLoaded(categories);
     }

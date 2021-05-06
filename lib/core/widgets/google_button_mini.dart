@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/locations.dart';
 
+/// Small Google auth button.
 class GoogleButtonMini extends StatelessWidget {
   final double iconWidth;
   final VoidCallback onPress;

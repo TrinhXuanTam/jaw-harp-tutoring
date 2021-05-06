@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/l10n.dart';
 
+/// Title with subtitle widget.
 class TitleWithSubtitle extends StatelessWidget {
   final String titleText;
   final String subtitleText;

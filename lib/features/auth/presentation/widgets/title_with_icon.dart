@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/l10n.dart';
 
+/// title with an icon positioned under.
 class TitleWithIcon extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
@@ -29,7 +30,7 @@ class TitleWithIcon extends StatelessWidget {
         ),
         Text(
           l10n.translate(this.title),
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
         ),
       ],
     );

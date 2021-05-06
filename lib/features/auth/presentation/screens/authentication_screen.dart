@@ -7,16 +7,16 @@ import 'package:jews_harp/features/auth/presentation/widgets/sign_up_text.dart';
 class AuthenticationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       resizeToAvoidBottomInset: false,
-      body: CenteredStack(
+      body: const CenteredStack(
         children: [
           // Authentication methods.
-          AuthMethods(),
+          const AuthMethods(),
           // Sign up text.
-          Positioned(
+          const Positioned(
             bottom: 20,
-            child: SignUpText(),
+            child: const SignUpText(),
           ),
         ],
       ),

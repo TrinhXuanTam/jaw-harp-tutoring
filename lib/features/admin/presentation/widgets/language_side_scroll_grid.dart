@@ -2,6 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/l10n.dart';
 
+class LanguageSideScrollGridItem {
+  final String languageCode;
+  final VoidCallback onTap;
+
+  LanguageSideScrollGridItem({
+    required this.languageCode,
+    required this.onTap,
+  });
+}
+
+/// Side scroll panel for adding localization data.
 class LanguageSideScrollGrid<T> extends StatelessWidget {
   final List<LanguageSideScrollGridItem> data;
   final VoidCallback onAddButtonTap;
@@ -22,14 +33,14 @@ class LanguageSideScrollGrid<T> extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
+              const Icon(
                 Icons.translate_rounded,
                 color: Colors.white,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 label,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
                 ),
@@ -41,7 +52,9 @@ class LanguageSideScrollGrid<T> extends StatelessWidget {
     );
   }
 
-  Widget _buildAddButton() {
+  Widget _buildAddButton(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
@@ -57,14 +70,14 @@ class LanguageSideScrollGrid<T> extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
+              const Icon(
                 Icons.add,
                 color: Colors.white,
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Text(
-                "Add",
-                style: TextStyle(
+                l10n.translate("Add"),
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 17,
                   fontWeight: FontWeight.w500,
@@ -96,7 +109,7 @@ class LanguageSideScrollGrid<T> extends StatelessWidget {
           itemCount: displayAddButton ? data.length + 1 : data.length,
           itemBuilder: (ctx, index) {
             if (index == data.length)
-              return _buildAddButton();
+              return _buildAddButton(context);
             else {
               final item = data[index];
               final languageName = SupportedLanguages.getName(item.languageCode);
@@ -108,14 +121,4 @@ class LanguageSideScrollGrid<T> extends StatelessWidget {
       ),
     );
   }
-}
-
-class LanguageSideScrollGridItem {
-  final String languageCode;
-  final VoidCallback onTap;
-
-  LanguageSideScrollGridItem({
-    required this.languageCode,
-    required this.onTap,
-  });
 }

@@ -3,60 +3,36 @@ import 'package:jews_harp/core/constants/language_codes.dart';
 import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
-import 'package:jews_harp/core/widgets/rounded_multiline_text_field.dart';
-import 'package:jews_harp/core/widgets/rounded_text_field.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/admin/domain/domain/technique_localized_data.dart';
+import 'package:jews_harp/features/admin/presentation/BLoCs/technique_form/technique_form_bloc.dart';
+import 'package:jews_harp/features/admin/presentation/widgets/technique_localization_form.dart';
 
 class TechniqueLocalizationEditScreenArgs {
   final TechniqueLocalizedData data;
-  final void Function(TechniqueLocalizedData) onSave;
-  final VoidCallback onRemove;
+  final TechniqueFormBloc techniqueFormBloc;
 
-  TechniqueLocalizationEditScreenArgs({
-    required this.data,
-    required this.onSave,
-    required this.onRemove,
-  });
+  TechniqueLocalizationEditScreenArgs({required this.data, required this.techniqueFormBloc});
 }
 
-class TechniqueLocalizationEditScreen extends StatefulWidget {
+/// Edit technique localization data form.
+class TechniqueLocalizationEditScreen extends StatelessWidget {
   final TechniqueLocalizedData data;
-  final void Function(TechniqueLocalizedData) onSave;
-  final VoidCallback onRemove;
+  final TechniqueFormBloc techniqueFormBloc;
 
   factory TechniqueLocalizationEditScreen.fromArgs(TechniqueLocalizationEditScreenArgs args) {
     return TechniqueLocalizationEditScreen(
       data: args.data,
-      onSave: args.onSave,
-      onRemove: args.onRemove,
+      techniqueFormBloc: args.techniqueFormBloc,
     );
   }
 
   const TechniqueLocalizationEditScreen({
     Key? key,
     required this.data,
-    required this.onRemove,
-    required this.onSave,
+    required this.techniqueFormBloc,
   }) : super(key: key);
-
-  @override
-  _TechniqueLocalizationEditScreenState createState() => _TechniqueLocalizationEditScreenState();
-}
-
-class _TechniqueLocalizationEditScreenState extends State<TechniqueLocalizationEditScreen> {
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _accompanyingTextController = TextEditingController();
-
-  @override
-  void initState() {
-    _titleController.text = widget.data.title;
-    _descriptionController.text = widget.data.description;
-    _accompanyingTextController.text = widget.data.accompanyingText;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,50 +56,31 @@ class _TechniqueLocalizationEditScreenState extends State<TechniqueLocalizationE
                   TitleWithSubtitle(
                     titleText: "Edit Localization",
                     titleSize: 30,
-                    subtitleText: "Edit localized data for " + SupportedLanguages.getName(this.widget.data.languageCode).toLowerCase(),
+                    subtitleText: l10n.translate("Edit localized data for") + " " + l10n.translate(SupportedLanguages.getName(this.data.languageCode)).toLowerCase(),
                   ),
-                  SizedBox(height: 20),
-                  RoundedTextField(
-                    icon: Icons.title_rounded,
-                    placeholderText: l10n.translate("Title"),
-                    controller: _titleController,
+                  const SizedBox(height: 20),
+                  TechniqueLocalizationForm(
+                    bloc: this.techniqueFormBloc,
+                    data: this.data,
+                    submitButtonText: "Save",
+                    onSubmit: (newData) {
+                      this.techniqueFormBloc.add(UpdateTechniqueLocalization(newData));
+                      Navigator.pop(context);
+                    },
                   ),
-                  SizedBox(height: 10),
-                  RoundedMultilineTextField(
-                    height: 100,
-                    icon: Icons.description_outlined,
-                    placeholderText: l10n.translate("Description"),
-                    controller: _descriptionController,
-                  ),
-                  SizedBox(height: 10),
-                  RoundedMultilineTextField(
-                    height: 250,
-                    icon: Icons.library_books_outlined,
-                    placeholderText: l10n.translate("Accompanying text"),
-                    controller: _accompanyingTextController,
-                  ),
-                  SizedBox(height: 10),
-                  RoundedButton(
-                    text: "Save",
-                    onPressed: () => widget.onSave(
-                      TechniqueLocalizedData(
-                        languageCode: widget.data.languageCode,
-                        title: _titleController.text,
-                        description: _descriptionController.text,
-                        accompanyingText: _accompanyingTextController.text,
-                      ),
-                    ),
-                  ),
-                  if (widget.data.languageCode != ENGLISH_CODE)
+                  if (this.data.languageCode != ENGLISH_CODE)
                     Column(
                       children: [
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         RoundedButton(
                           text: "Remove",
                           color: Colors.redAccent[200]!,
                           textColor: Colors.white,
                           borderColor: Colors.redAccent[200]!,
-                          onPressed: widget.onRemove,
+                          onPressed: () {
+                            this.techniqueFormBloc.add(RemoveTechniqueLocalization(this.data.languageCode));
+                            Navigator.pop(context);
+                          },
                         ),
                       ],
                     ),

@@ -11,6 +11,7 @@ import 'package:meta/meta.dart';
 part 'user_section_navigation_event.dart';
 part 'user_section_navigation_state.dart';
 
+/// User section navigation state management.
 @Injectable(env: [Environment.prod, Environment.dev])
 class UserSectionNavigationBloc extends Bloc<UserSectionNavigationEvent, UserSectionNavigationState> {
   UserSectionNavigationBloc() : super(UserSectionNavigationState(body: HomePageBody(), bottomNavigatorIndex: HOME_INDEX));

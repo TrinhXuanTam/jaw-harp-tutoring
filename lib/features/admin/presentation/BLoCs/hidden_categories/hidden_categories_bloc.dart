@@ -8,7 +8,6 @@ import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:meta/meta.dart';
 
 part 'hidden_categories_event.dart';
-
 part 'hidden_categories_state.dart';
 
 /// State management for loading categories marked as hidden.

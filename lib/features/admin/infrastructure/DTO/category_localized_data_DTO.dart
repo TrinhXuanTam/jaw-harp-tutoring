@@ -12,13 +12,13 @@ class CategoryLocalizedDataDTO extends CategoryLocalizedData {
   /// Get category localized data from category Firebase document.
   static Map<String, CategoryLocalizedDataDTO> getLocalizedData(DocumentSnapshot documentSnapshot) {
     final Map<String, CategoryLocalizedDataDTO> l10n = {};
-    documentSnapshot.data()?["localization"].forEach(
-          (key, value) => l10n[key] = CategoryLocalizedDataDTO(
-            languageCode: key,
-            title: value["title"],
-            description: value["description"],
-          ),
-        );
+    documentSnapshot["localization"].forEach(
+      (key, value) => l10n[key] = CategoryLocalizedDataDTO(
+        languageCode: key,
+        title: value["title"],
+        description: value["description"],
+      ),
+    );
 
     return l10n;
   }

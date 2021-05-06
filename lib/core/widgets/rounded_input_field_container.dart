@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 
+/// Rounded input field container.
 class RoundedInputField extends StatelessWidget {
   final Widget child;
   final Color color;

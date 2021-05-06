@@ -5,6 +5,7 @@ import 'package:jews_harp/features/admin/presentation/screens/category_detail_sc
 import 'package:jews_harp/features/admin/presentation/screens/edit_category_screen.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 
+/// Circular category edit button.
 class EditCategoryButton extends StatelessWidget {
   final Category category;
 
@@ -31,7 +32,7 @@ class EditCategoryButton extends StatelessWidget {
           ),
           child: Container(
             padding: const EdgeInsets.all(15),
-            child: Icon(
+            child: const Icon(
               Icons.edit_outlined,
               size: 30,
               color: BASE_COLOR,

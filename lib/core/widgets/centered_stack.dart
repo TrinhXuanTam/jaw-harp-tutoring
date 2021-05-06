@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+/// Full screen stack that centers its children.
 class CenteredStack extends StatelessWidget {
   final List<Widget> children;
 

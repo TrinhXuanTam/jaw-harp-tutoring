@@ -1,41 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
-import 'package:jews_harp/core/l10n.dart';
+import 'package:jews_harp/core/widgets/one_time_button.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
-import 'package:jews_harp/features/auth/domain/entities/user.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/email_verification/email_verification_bloc.dart';
 
-/// Continue and "send verification email" buttons
+/// Verification screen buttons.
 class EmailVerificationButtons extends StatelessWidget {
-  final bool sendButtonActive;
-  final User user;
-
-  const EmailVerificationButtons({
-    Key? key,
-    required this.sendButtonActive,
-    required this.user,
-  }) : super(key: key);
+  const EmailVerificationButtons();
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations l10n = AppLocalizations.of(context);
-
     return Column(
       children: [
+        // Button to check confirmation status.
         RoundedButton(
-          text: l10n.translate("Continue"),
+          text: "Continue",
           onPressed: () => BlocProvider.of<EmailVerificationBloc>(context).add(
             EmailVerificationContinueEvent(),
           ),
         ),
-        SizedBox(height: 5),
-        RoundedButton(
-          text: sendButtonActive ? l10n.translate("Verification Email Sent") : l10n.translate("Resend Verification Email"),
-          color: Colors.white,
-          borderColor: sendButtonActive ? Colors.grey : BASE_COLOR,
-          textColor: sendButtonActive ? Colors.grey : BASE_COLOR,
-          onPressed: sendButtonActive ? () {} : () => BlocProvider.of<EmailVerificationBloc>(context).add(EmailVerificationRequestEvent()),
+        const SizedBox(height: 5),
+        // One time button for resending email.
+        OneTimeButton(
+          text: "Resend Verification Email",
+          inactiveText: "Verification Email Sent",
+          color: Colors.transparent,
+          textColor: BASE_COLOR,
+          borderColor: BASE_COLOR,
+          onPressed: () => BlocProvider.of<EmailVerificationBloc>(context).add(EmailVerificationRequestEvent()),
         ),
       ],
     );

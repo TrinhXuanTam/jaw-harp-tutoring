@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
+import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/rounded_button.dart';
 import 'package:jews_harp/features/user_section/domain/entities/product_info.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
@@ -12,6 +13,7 @@ import 'package:jews_harp/features/user_section/presentation/BLoCs/purchase_tech
 import 'package:jews_harp/features/user_section/presentation/screens/technique_screen.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
+/// Technique purchase screen.
 class UnlockTechniqueScreen extends StatelessWidget {
   final Technique technique;
 
@@ -19,6 +21,7 @@ class UnlockTechniqueScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final size = MediaQuery.of(context).size;
     final thumbnail = getTechniqueThumbnail(this.technique);
     final isAvailable = technique.productInfo.type == ProductType.available;
@@ -67,25 +70,25 @@ class UnlockTechniqueScreen extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                                     child: Text(
                                       this.technique.title,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 25,
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 5),
+                                  const SizedBox(height: 5),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                                     child: Text(
                                       this.technique.category.title,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 15,
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 5),
+                                  const SizedBox(height: 5),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                                     child: Text(
@@ -96,7 +99,7 @@ class UnlockTechniqueScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 30),
+                                  const SizedBox(height: 30),
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
                                     child: Container(
@@ -114,7 +117,7 @@ class UnlockTechniqueScreen extends StatelessWidget {
                             left: 10,
                             child: GestureDetector(
                               onTap: () => Navigator.pop(context),
-                              child: Icon(
+                              child: const Icon(
                                 Icons.arrow_back_rounded,
                                 color: Colors.white,
                                 size: 35,
@@ -146,15 +149,15 @@ class UnlockTechniqueScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Price",
-                              style: TextStyle(
+                              l10n.translate("Price"),
+                              style: const TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
-                              "99.99\$",
-                              style: TextStyle(
+                              technique.productInfo.price!,
+                              style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -162,7 +165,7 @@ class UnlockTechniqueScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Builder(
                       builder: (ctx) => BlocListener<PurchaseTechniqueBloc, PurchaseTechniqueState>(
                         listener: (_, state) {
@@ -176,7 +179,7 @@ class UnlockTechniqueScreen extends StatelessWidget {
                             );
                         },
                         child: RoundedButton(
-                          text: isAvailable ? "Unlock now" : "Coming soon!",
+                          text: isAvailable ? l10n.translate("Unlock now") : l10n.translate("Coming soon!"),
                           onPressed: isAvailable ? () => BlocProvider.of<PurchaseTechniqueBloc>(ctx).add(PurchaseTechniqueEvent(getUser(ctx), this.technique)) : null,
                         ),
                       ),

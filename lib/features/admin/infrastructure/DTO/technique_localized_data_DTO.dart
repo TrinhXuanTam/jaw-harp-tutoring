@@ -13,7 +13,7 @@ class TechniqueLocalizedDataDTO extends TechniqueLocalizedData {
   /// Get technique localized data from technique Firebase document.
   static Map<String, TechniqueLocalizedDataDTO> getLocalizedData(DocumentSnapshot documentSnapshot) {
     final Map<String, TechniqueLocalizedDataDTO> l10n = {};
-    documentSnapshot.data()?["localization"].forEach(
+    documentSnapshot["localization"].forEach(
           (key, value) => l10n[key] = TechniqueLocalizedDataDTO(
             languageCode: key,
             title: value["title"],

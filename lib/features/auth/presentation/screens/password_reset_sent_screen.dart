@@ -6,6 +6,7 @@ import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/transparent_icon_app_bar.dart';
 import 'package:jews_harp/features/auth/presentation/widgets/title_with_icon.dart';
 
+/// Confirmation screen that reset link has been sent to email.
 class PasswordResetSentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -61,7 +62,7 @@ class PasswordResetSentScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 50),
+                    const SizedBox(height: 50),
                   ],
                 ),
               ),

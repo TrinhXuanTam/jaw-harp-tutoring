@@ -3,6 +3,7 @@ import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/rounded_input_field_container.dart';
 
+/// Rounded dropdown field.
 class RoundedDropdown<T> extends StatelessWidget {
   final List<DropdownMenuItem<T>> items;
   final String placeholderText;

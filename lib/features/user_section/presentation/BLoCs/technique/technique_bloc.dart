@@ -9,6 +9,7 @@ import 'package:meta/meta.dart';
 part 'technique_event.dart';
 part 'technique_state.dart';
 
+/// Get one single technique BLoC.
 @Injectable(env: [Environment.prod, Environment.dev])
 class TechniqueBloc extends Bloc<TechniqueEvent, TechniqueState> {
   final GetTechniqueById _getTechniqueById;

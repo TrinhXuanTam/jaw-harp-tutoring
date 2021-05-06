@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
+/// Shimmer loading effect.
 class ShimmerEffect extends StatelessWidget {
   final Widget child;
 

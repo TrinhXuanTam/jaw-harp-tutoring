@@ -8,7 +8,6 @@ import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:meta/meta.dart';
 
 part 'category_localization_event.dart';
-
 part 'category_localization_state.dart';
 
 /// Localization form state management for loading

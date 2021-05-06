@@ -7,25 +7,19 @@ import 'package:jews_harp/features/user_section/infrastructure/DTO/technique_DTO
 /// Firebase technique data source.
 @LazySingleton(env: [Environment.prod])
 class FirebaseUserSectionDataSource {
+  /// Firestore technique collection.
   final CollectionReference _techniques = FirebaseFirestore.instance.collection('techniques');
+
+  /// Firestore category collection.
   final CollectionReference _categories = FirebaseFirestore.instance.collection('categories');
+
+  /// Firestore user collection.
   final CollectionReference _users = FirebaseFirestore.instance.collection('users');
+
+  /// Firebase Authentication service connection.
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  /// Get all categories.
-  Future<Iterable<CategoryDTO>> getAllCategories() async {
-    final snapshot = await _categories.where("isVisible", isEqualTo: true).get();
-    final List<CategoryDTO> res = [];
-    for (final document in snapshot.docs) res.add(await CategoryDTO.fromFirestore(document));
-    return res;
-  }
-
-  /// Get a technique by given [techniqueId].
-  Future<TechniqueDTO> getTechniqueById(String techniqueId) async {
-    return TechniqueDTO.fromFirestore(await _techniques.doc(techniqueId).get());
-  }
-
-  /// Get all techniques.
+  /// Get all published techniques.
   Future<Iterable<TechniqueDTO>> getAllTechniques() async {
     final publishedTechniques = await _techniques.where("datePublished", isNotEqualTo: null).orderBy("datePublished", descending: true).get();
     final List<TechniqueDTO> res = [];
@@ -38,6 +32,19 @@ class FirebaseUserSectionDataSource {
     final query = await _techniques.where("datePublished", isNotEqualTo: null).orderBy("datePublished", descending: true).limit(10).get();
     final List<TechniqueDTO> res = [];
     for (final document in query.docs) res.add(await TechniqueDTO.fromFirestore(document));
+    return res;
+  }
+
+  /// Get a technique by given [techniqueId].
+  Future<TechniqueDTO> getTechniqueById(String techniqueId) async {
+    return TechniqueDTO.fromFirestore(await _techniques.doc(techniqueId).get());
+  }
+
+  /// Get all categories.
+  Future<Iterable<CategoryDTO>> getAllCategories() async {
+    final snapshot = await _categories.where("isVisible", isEqualTo: true).get();
+    final List<CategoryDTO> res = [];
+    for (final document in snapshot.docs) res.add(await CategoryDTO.fromFirestore(document));
     return res;
   }
 

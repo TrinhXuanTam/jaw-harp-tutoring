@@ -3,6 +3,7 @@ import 'package:jews_harp/core/constants/locations.dart';
 
 import '../l10n.dart';
 
+/// Big Facebook auth button.
 class FacebookButton extends StatelessWidget {
   final String text;
   final VoidCallback onPress;
@@ -35,7 +36,7 @@ class FacebookButton extends StatelessWidget {
                   fit: BoxFit.fitWidth,
                   child: Text(
                     l10n.translate(this.text),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),

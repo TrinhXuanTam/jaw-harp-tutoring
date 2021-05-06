@@ -4,25 +4,23 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:jews_harp/core/BLoCs/connectivity/connectivity_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
+import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/no_internet_widget.dart';
-import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/categories/categories_bloc.dart';
-import 'package:jews_harp/features/user_section/presentation/screens/category_screen.dart';
-import 'package:jews_harp/features/user_section/presentation/screens/default_category_screen.dart';
-import 'package:jews_harp/features/user_section/presentation/widgets/category_transition_wrapper.dart';
-import 'package:jews_harp/features/user_section/utils.dart';
-import 'package:optional/optional.dart';
+import 'package:jews_harp/features/user_section/presentation/widgets/big_category_card.dart';
 
+/// Big category list screen.
 class CategoriesScreenBody extends StatelessWidget {
   const CategoriesScreenBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return BlocBuilder<ConnectivityBloc, ConnectivityState>(
       builder: (context, state) {
-        if (state is NoInternetConnection) return NoInternetWidget();
-
+        if (state is NoInternetConnection) return const NoInternetWidget();
         return CenteredStack(
           children: [
             BlocBuilder<CategoriesBloc, CategoriesState>(builder: (ctx, state) {
@@ -34,28 +32,20 @@ class CategoriesScreenBody extends StatelessWidget {
                       crossAxisCount: 4,
                       itemCount: state.categories.length + 1,
                       itemBuilder: (BuildContext context, int index) {
-                        if (index == 0)
-                          return _CategoryCard(
-                            color: getRandomShade("All Techniques".hashCode),
-                            techniquesCnt: state.categories.fold<int>(0, (acc, element) => acc + element.techniqueIds.length),
-                            title: "All Techniques",
-                            description: "View all techniques",
-                            dst: DefaultCategoryScreen(categories: state.categories),
+                        if (index == 0) {
+                          final techniqueIds = state.categories.map((category) => category.techniqueIds).expand((e) => e).toList();
+                          return BigCategoryCard(
+                            title: l10n.translate("All Techniques"),
+                            description: l10n.translate("View all techniques"),
+                            techniqueIds: techniqueIds,
                           );
-                        else {
-                          final category = state.categories[index - 1];
-                          final color = category.getColor();
-                          return _CategoryCard(
-                            color: color,
-                            techniquesCnt: category.techniqueIds.length,
-                            thumbnail: category.thumbnail,
-                            title: category.title,
-                            description: category.description,
-                            dst: CategoryScreen(category: category),
+                        } else {
+                          return BigCategoryCard.fromCategory(
+                            category: state.categories[index - 1],
                           );
                         }
                       },
-                      staggeredTileBuilder: (int index) => StaggeredTile.fit(2),
+                      staggeredTileBuilder: (int index) => const StaggeredTile.fit(2),
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
                     ),
@@ -65,7 +55,7 @@ class CategoriesScreenBody extends StatelessWidget {
                 return Container(
                   width: double.infinity,
                   height: double.infinity,
-                  child: SpinKitPulse(
+                  child: const SpinKitPulse(
                     color: BASE_COLOR,
                     size: 100,
                   ),
@@ -74,89 +64,6 @@ class CategoriesScreenBody extends StatelessWidget {
           ],
         );
       },
-    );
-  }
-}
-
-class _CategoryCard extends StatelessWidget {
-  final Color color;
-  final int techniquesCnt;
-  final Optional<Media> thumbnail;
-  final String title;
-  final String description;
-  final Widget dst;
-
-  const _CategoryCard({
-    Key? key,
-    required this.color,
-    required this.techniquesCnt,
-    this.thumbnail = const Optional.empty(),
-    required this.title,
-    required this.description,
-    required this.dst,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15),
-      child: IntrinsicHeight(
-        child: CategoryTransitionWrapper(
-          color: this.color,
-          src: Stack(
-            children: [
-              if (thumbnail.isPresent)
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    child: FittedBox(fit: BoxFit.cover, child: getImageFromMedia(thumbnail.value)),
-                  ),
-                ),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: thumbnail.isPresent ? this.color.withOpacity(0.8) : this.color,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "${this.techniquesCnt}",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 50,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      this.title,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      this.description,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          dst: this.dst,
-        ),
-      ),
     );
   }
 }

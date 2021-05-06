@@ -28,43 +28,41 @@ dependencies:
     sdk: flutter
   # Firebase
   firebase_core: ^1.0.2
-  firebase_auth: ^1.0.0
-  firebase_storage: ^8.0.0
+  firebase_auth: ^1.1.2
+  firebase_storage: ^8.0.5
   # Cloud Firestore
-  cloud_firestore: ^1.0.2
+  cloud_firestore: ^1.0.7
   # Google authentication
-  google_sign_in: ^5.0.1
+  google_sign_in: ^5.0.2
   # Facebook authentication
-  flutter_facebook_auth: ^3.2.0
+  flutter_facebook_auth: ^3.3.3
   # Business logic components
   flutter_bloc: ^7.0.0
   # Dependency injection
-  injectable: ^1.2.1
-  # Service locator
-  get_it: ^6.0.0
+  injectable: ^1.3.0
   # Object value comparison
   equatable: ^2.0.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   # Pick images and videos
-  image_picker: ^0.7.3
+  image_picker: ^0.7.4
   # Play videos
-  video_player: ^2.0.2
+  video_player: ^2.1.1
   # Keep the screen awake
-  wakelock: ^0.5.0+2
+  wakelock: ^0.5.1
   # Spinner
   flutter_spinkit: ^5.0.0
   # Optional type
-  optional: ^6.0.0-nullsafety.0
+  optional: ^6.0.0-nullsafety.2
   # Staggered grid list
-  flutter_staggered_grid_view: ^0.4.0-nullsafety.3
+  flutter_staggered_grid_view: ^0.4.0
   # random colors
   random_color: ^1.0.6-nullsafety
   # Shimmer effect
-  shimmer: ^2.0.0-nullsafety.0
+  shimmer: ^2.0.0
   # Bottom navigation bar
-  bottom_navy_bar: ^6.0.0-nullsafety.0
+  bottom_navy_bar: ^6.0.0
   # Animations
   animations: ^2.0.0
   # Animations
@@ -74,14 +72,14 @@ dependencies:
   # Http client for Dart
   dio: ^4.0.0-prev3
   # In-app purchases
-  in_app_purchase: ^0.5.1+1
-  # file compression
-  light_compressor: ^1.0.2
+  in_app_purchase: ^0.5.2
   # Check internet connectivity
   connectivity: ^3.0.3
+  # Video compression
+  video_compress: ^3.0.0
 
 dev_dependencies:
-  mocktail: ^0.1.1
+  mocktail: ^0.1.2
   injectable_generator:
   build_runner: ^1.11.5
   flutter_test:

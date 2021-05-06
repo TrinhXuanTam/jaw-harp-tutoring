@@ -14,7 +14,6 @@ import 'package:meta/meta.dart';
 import 'package:optional/optional.dart';
 
 part 'category_form_event.dart';
-
 part 'category_form_state.dart';
 
 /// Category form state management.
@@ -58,6 +57,8 @@ class CategoryFormBloc extends Bloc<CategoryFormEvent, CategoryFormState> {
       localizedData.remove(event.languageCode);
       yield state.copyWith(localizedData: localizedData);
     } else if (event is UpdateCategoryEvent) {
+      yield state.copyWith(formSubmitted: true);
+
       late final Optional<Media>? thumbnail;
 
       // Check if thumbnail has changed.
@@ -68,7 +69,7 @@ class CategoryFormBloc extends Bloc<CategoryFormEvent, CategoryFormState> {
 
       // Update category.
       final category = await _updateCategory(
-        event.category.id,
+        id: event.category.id,
         isVisible: state.isVisible,
         thumbnail: thumbnail,
         localizedData: state.localizedData.entries.map((e) => e.value),
@@ -76,12 +77,15 @@ class CategoryFormBloc extends Bloc<CategoryFormEvent, CategoryFormState> {
 
       yield state.copyWith(success: category);
     } else if (event is CreateCategoryEvent) {
+      yield state.copyWith(formSubmitted: true);
+
       // Create category.
       final Category category = await _createCategory(
         state.isVisible,
         Optional.ofNullable(state.thumbnailController.image),
         state.localizedData.entries.map((e) => e.value),
       );
+
       yield state.copyWith(success: category);
     }
   }

@@ -11,6 +11,7 @@ import 'package:meta/meta.dart';
 part 'technique_local_storage_event.dart';
 part 'technique_local_storage_state.dart';
 
+/// Local storage state management.
 @Injectable(env: [Environment.prod, Environment.dev])
 class TechniqueLocalStorageBloc extends Bloc<TechniqueLocalStorageEvent, TechniqueLocalStorageState> {
   final DownloadTechnique _downloadTechnique;
@@ -26,6 +27,7 @@ class TechniqueLocalStorageBloc extends Bloc<TechniqueLocalStorageEvent, Techniq
   @override
   Stream<TechniqueLocalStorageState> mapEventToState(TechniqueLocalStorageEvent event) async* {
     if (event is InitTechniqueLocalStorage) {
+      // Get all downloaded techniques.
       final downloadedTechniques = await _getDownloadedTechniques();
       final downloadedTechniquesCopy = Map.of(state.downloadedTechniques);
 
@@ -37,6 +39,7 @@ class TechniqueLocalStorageBloc extends Bloc<TechniqueLocalStorageEvent, Techniq
 
       yield state.copyWith(downloadedTechniques: downloadedTechniquesCopy);
     } else if (event is DownloadTechniqueEvent) {
+      // Download a new technique to local storage.
       yield state.copyWith(downloadingInProgress: state.downloadingInProgress.toSet()..add(event.techniqueId));
 
       final technique = await _downloadTechnique(event.techniqueId);
@@ -48,6 +51,7 @@ class TechniqueLocalStorageBloc extends Bloc<TechniqueLocalStorageEvent, Techniq
         downloadingInProgress: state.downloadingInProgress.toSet()..remove(technique.id),
       );
     } else if (event is DeleteDownloadedTechniqueEvent) {
+      // Delete a technique from local storage.
       final downloadedTechniquesCopy = Map.of(state.downloadedTechniques);
       downloadedTechniquesCopy.remove(event.techniqueId);
       _deleteDownloadedTechnique(event.techniqueId);

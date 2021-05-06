@@ -9,6 +9,7 @@ import 'package:meta/meta.dart';
 part 'most_recent_techniques_event.dart';
 part 'most_recent_techniques_state.dart';
 
+/// Get most recent techniques BLoC.
 @Injectable(env: [Environment.prod, Environment.dev])
 class MostRecentTechniquesBloc extends Bloc<MostRecentTechniquesEvent, MostRecentTechniquesState> {
   final GetMostRecentTechniques _getMostRecentTechniques;

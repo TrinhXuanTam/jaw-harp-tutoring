@@ -7,7 +7,6 @@ import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:meta/meta.dart';
 
 part 'thumbnail_picker_event.dart';
-
 part 'thumbnail_picker_state.dart';
 
 /// Thumbnail picker state management.

@@ -3,19 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
+import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/shimmer_effect.dart';
-import 'package:jews_harp/features/user_section/domain/entities/product_info.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique/technique_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/screens/technique_screen.dart';
-import 'package:jews_harp/features/user_section/presentation/screens/unlock_technique_screen.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
+/// Small technique card button.
 class SmallTechniqueCard extends StatelessWidget {
   final String techniqueId;
   final double? width;
 
-  factory SmallTechniqueCard.fromTechnique({required Technique technique, double? width}) => SmallTechniqueCard(techniqueId: technique.id, width: width);
+  factory SmallTechniqueCard.fromTechnique({required Technique technique, double? width}) {
+    return SmallTechniqueCard(techniqueId: technique.id, width: width);
+  }
 
   const SmallTechniqueCard({
     Key? key,
@@ -25,6 +27,8 @@ class SmallTechniqueCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return BlocProvider<TechniqueBloc>(
       create: (_) => serviceLocator<TechniqueBloc>()..add(LoadTechnique(this.techniqueId)),
       child: BlocBuilder<TechniqueBloc, TechniqueState>(builder: (ctx, state) {
@@ -53,47 +57,47 @@ class SmallTechniqueCard extends StatelessWidget {
                         child: getTechniqueThumbnail(technique),
                       ),
                     ),
-                    SizedBox(height: 3),
+                    const SizedBox(height: 3),
                     Text(
                       technique.title,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     Text(
                       technique.category.title,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: Colors.grey, fontSize: 12),
+                      style: const TextStyle(color: Colors.grey, fontSize: 12),
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.attach_money_rounded,
                               color: BASE_COLOR,
                               size: 12,
                             ),
                             Text(
                               getPriceTag(context, technique),
-                              style: TextStyle(fontSize: 12),
+                              style: const TextStyle(fontSize: 12),
                             ),
                           ],
                         ),
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.timelapse_rounded,
                               color: BASE_COLOR,
                               size: 12,
                             ),
-                            SizedBox(width: 2),
+                            const SizedBox(width: 2),
                             Text(
-                              technique.difficulty.string,
-                              style: TextStyle(fontSize: 12),
+                              l10n.translate(technique.difficulty.string),
+                              style: const TextStyle(fontSize: 12),
                             ),
                           ],
                         ),
@@ -111,6 +115,7 @@ class SmallTechniqueCard extends StatelessWidget {
   }
 }
 
+/// Shimmer loading effect for small technique card.
 class SmallTechniqueCardLoading extends StatelessWidget {
   final double? width;
 
@@ -133,25 +138,25 @@ class SmallTechniqueCardLoading extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 2),
+            const SizedBox(height: 2),
             Container(
               height: 13,
               width: 100,
               color: Colors.grey,
             ),
-            SizedBox(height: 2),
+            const SizedBox(height: 2),
             Container(
               height: 13,
               width: 50,
               color: Colors.grey,
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.attach_money_rounded,
                       color: BASE_COLOR,
                       size: 12,
@@ -165,12 +170,12 @@ class SmallTechniqueCardLoading extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.timelapse_rounded,
                       color: BASE_COLOR,
                       size: 12,
                     ),
-                    SizedBox(width: 2),
+                    const SizedBox(width: 2),
                     Container(
                       height: 10,
                       width: 50,

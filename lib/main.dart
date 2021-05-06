@@ -41,10 +41,15 @@ import 'features/user_section/presentation/screens/video_full_screen_mode_screen
 
 /// Driver function
 Future<void> main() async {
-  // Initialize dependencies
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Enable in app purchases.
   InAppPurchaseConnection.enablePendingPurchases();
+
+  // Create Firebase connection.
   await Firebase.initializeApp();
+
+  // Initialize dependency injection.
   configureDependencies();
 
   // Disable landscape mode
@@ -61,6 +66,7 @@ Future<void> main() async {
 class _EntryPoint extends StatelessWidget {
   final GlobalKey<NavigatorState> globalKey = new GlobalKey();
 
+  /// Sign in user if user data is cached.
   void _authBlocListener(BuildContext context, AuthState state) {
     final currentState = globalKey.currentState!;
 
@@ -71,13 +77,13 @@ class _EntryPoint extends StatelessWidget {
         currentState.pushNamedAndRemoveUntil(AUTH_SCREEN_ROUTE, (route) => false);
         currentState.pushNamed(
           EMAIL_VERIFICATION_UP_SCREEN_ROUTE,
-          arguments: EmailVerificationScreenArgs(user: state.user),
         );
       }
     } else
       currentState.pushNamedAndRemoveUntil(AUTH_SCREEN_ROUTE, (route) => false);
   }
 
+  /// Display dialog pop up on error.
   void _errorBlocListener(BuildContext context, ErrorState state) {
     if (state is UserErrorOccurredState)
       showDialog(
@@ -95,11 +101,9 @@ class _EntryPoint extends StatelessWidget {
       );
   }
 
+  /// Pass arguments on route change.
   T _getArgs<T>(ctx) => ModalRoute.of(ctx)!.settings.arguments as T;
 
-  /// Display splash screen for [Constants.SPLASH_SCREEN_DURATION] and then check for check if user is signed in.
-  /// Redirect the user into the authentication screen if user is not signed in.
-  /// Otherwise, redirect the user into the main screen.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -117,12 +121,15 @@ class _EntryPoint extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: APP_TITLE,
+          // Set up localization.
           localizationsDelegates: [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
           ],
+          // Supported languages.
           supportedLocales: SupportedLanguages.getCodes().map((e) => Locale(e)),
+          // Localization translation resolution method.
           localeResolutionCallback: (locale, supportedLocales) {
             if (locale == null) return supportedLocales.first;
 
@@ -146,7 +153,7 @@ class _EntryPoint extends StatelessWidget {
             SIGN_UP_SCREEN_ROUTE: (_) => SignUpScreen(),
             PASSWORD_RESET_SCREEN_ROUTE: (_) => PasswordResetScreen(),
             PASSWORD_RESET_SENT_SCREEN_ROUTE: (_) => PasswordResetSentScreen(),
-            EMAIL_VERIFICATION_UP_SCREEN_ROUTE: (ctx) => EmailVerificationScreen.fromArgs(_getArgs<EmailVerificationScreenArgs>(ctx)),
+            EMAIL_VERIFICATION_UP_SCREEN_ROUTE: (_) => EmailVerificationScreen(),
             LINK_AUTH_PROVIDERS_SCREEN_ROUTE: (ctx) => LinkAuthProvidersScreen.fromArgs(_getArgs<LinkAuthProvidersScreenArgs>(ctx)),
             CREATE_CATEGORY_SCREEN_ROUTE: (_) => CreateCategoryScreen(),
             EDIT_CATEGORY_SCREEN_ROUTE: (ctx) => EditCategoryScreen.fromArgs(_getArgs<EditCategoryScreenArgs>(ctx)),

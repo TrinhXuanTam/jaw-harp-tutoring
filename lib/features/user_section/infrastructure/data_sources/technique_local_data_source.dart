@@ -99,7 +99,9 @@ class TechniqueLocalDataSource {
 
     // Create file if it doesn't exist.
     var savedFile = File("$savePath/data");
-    if (!(await savedFile.exists())) savedFile = await savedFile.create(recursive: true);
+    if (!(await savedFile.exists())) {
+      savedFile = await savedFile.create(recursive: true);
+    }
 
     // Save to file.
     await savedFile.writeAsString(jsonEncode(savedTechnique.toJson()));
@@ -112,7 +114,10 @@ class TechniqueLocalDataSource {
     final savedPath = "${await techniquePath}/$techniqueId";
     final techniqueDirectory = Directory(savedPath);
 
-    if (await techniqueDirectory.exists()) techniqueDirectory.delete(recursive: true);
+    // Delete the file if it exists.
+    if (await techniqueDirectory.exists()) {
+      techniqueDirectory.delete(recursive: true);
+    }
   }
 
   /// Get all downloaded techniques.

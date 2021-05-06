@@ -8,9 +8,9 @@ import 'package:jews_harp/features/auth/domain/facade_interfaces/user_facade_int
 /// Link currently signed in account to a given [email] and [password].
 @LazySingleton(env: [Environment.prod, Environment.dev, LINK_EMAIL_PROVIDER_TEST_ENV])
 class LinkEmailProvider {
-  final IUserFacade _userFacade;
+  final IUserAuthFacade _userAuthFacade;
 
-  LinkEmailProvider(this._userFacade);
+  LinkEmailProvider(this._userAuthFacade);
 
   Future<User> call(String email, String password) async {
     // Email and password must not be empty.
@@ -22,6 +22,6 @@ class LinkEmailProvider {
     // Check password format.
     if (!RegExMatchers.password.hasMatch(password)) throw ValidationError("Invalid password format!");
 
-    return _userFacade.linkAccountToEmail(email, password);
+    return _userAuthFacade.linkAccountToEmail(email, password);
   }
 }

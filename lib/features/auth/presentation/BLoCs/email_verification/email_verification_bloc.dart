@@ -8,18 +8,15 @@ import 'package:jews_harp/core/errors/base_error.dart';
 import 'package:jews_harp/core/errors/no_internet_connection_error.dart';
 import 'package:jews_harp/features/auth/application/use_cases/reload_user.dart';
 import 'package:jews_harp/features/auth/application/use_cases/send_email_verification.dart';
-import 'package:jews_harp/features/auth/application/use_cases/sign_out.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/auth_state/auth_bloc.dart';
 import 'package:meta/meta.dart';
 
 part 'email_verification_event.dart';
-
 part 'email_verification_state.dart';
 
 /// Email verification screen state management.
 @Injectable(env: [Environment.prod, Environment.dev])
 class EmailVerificationBloc extends Bloc<EmailVerificationEvent, EmailVerificationState> {
-  final SignOut _signOut;
   final SendEmailVerification _sendEmailVerification;
   final ConnectivityBloc _connectivityBloc;
   final ReloadUser _reloadUser;
@@ -27,7 +24,6 @@ class EmailVerificationBloc extends Bloc<EmailVerificationEvent, EmailVerificati
   final AuthBloc _authBloc;
 
   EmailVerificationBloc(
-    this._signOut,
     this._sendEmailVerification,
     this._connectivityBloc,
     this._reloadUser,
@@ -46,12 +42,10 @@ class EmailVerificationBloc extends Bloc<EmailVerificationEvent, EmailVerificati
 
         // Send email confirmation.
         _sendEmailVerification();
-        yield EmailVerificationSentState();
       } else if (event is EmailVerificationClosedEvent) {
         // Verification page has been closed,
         // therefore sign out the user.
-        _signOut();
-        yield EmailVerificationClosedState();
+        _authBloc.add(UserSignOutEvent());
       } else if (event is EmailVerificationContinueEvent) {
         // No internet connection found.
         if (_connectivityBloc.state is NoInternetConnection) throw NoInternetConnectionError();

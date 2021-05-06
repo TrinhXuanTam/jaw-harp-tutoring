@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
+import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/rounded_input_field_container.dart';
 
+/// Rounded multiline text field.
 class RoundedMultilineTextField extends StatefulWidget {
   final String placeholderText;
   final IconData icon;
@@ -29,6 +31,8 @@ class _RoundedMultilineTextFieldState extends State<RoundedMultilineTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return RoundedInputField(
       height: this.widget.height,
       color: this.widget.color,
@@ -50,7 +54,7 @@ class _RoundedMultilineTextFieldState extends State<RoundedMultilineTextField> {
                   controller: this.widget.controller,
                   keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(
-                    hintText: this.widget.placeholderText,
+                    hintText: l10n.translate(this.widget.placeholderText),
                     border: InputBorder.none,
                   ),
                 ),

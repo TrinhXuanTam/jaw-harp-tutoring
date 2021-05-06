@@ -4,12 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
+import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/shimmer_effect.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/technique/technique_bloc.dart';
 import 'package:jews_harp/features/user_section/presentation/screens/technique_screen.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
 
+/// Small technique list.
 class SmallTechniqueList extends StatelessWidget {
   final List<String> techniquesIds;
 
@@ -20,6 +22,8 @@ class SmallTechniqueList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return ListView.separated(
       itemCount: techniquesIds.length,
       itemBuilder: (ctx, index) {
@@ -64,7 +68,7 @@ class SmallTechniqueList extends StatelessWidget {
                                 Text(
                                   technique.title,
                                   overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -77,30 +81,30 @@ class SmallTechniqueList extends StatelessWidget {
                                         children: [
                                           Row(
                                             children: [
-                                              Icon(
+                                              const Icon(
                                                 Icons.timelapse_rounded,
                                                 color: BASE_COLOR,
                                                 size: 15,
                                               ),
-                                              SizedBox(width: 4),
+                                              const SizedBox(width: 4),
                                               Text(
-                                                technique.difficulty.string,
-                                                style: TextStyle(fontSize: 12),
+                                                l10n.translate(technique.difficulty.string),
+                                                style: const TextStyle(fontSize: 12),
                                               ),
                                             ],
                                           ),
-                                          SizedBox(height: 4),
+                                          const SizedBox(height: 4),
                                           Row(
                                             children: [
-                                              Icon(
+                                              const Icon(
                                                 Icons.attach_money_rounded,
                                                 color: BASE_COLOR,
                                                 size: 15,
                                               ),
-                                              SizedBox(width: 4),
+                                              const SizedBox(width: 4),
                                               Text(
                                                 getPriceTag(context, technique),
-                                                style: TextStyle(fontSize: 12),
+                                                style: const TextStyle(fontSize: 12),
                                               ),
                                             ],
                                           ),
@@ -123,17 +127,20 @@ class SmallTechniqueList extends StatelessWidget {
                   ),
                 );
               } else
-                return _LoadingEffect();
+                return const _LoadingEffect();
             },
           ),
         );
       },
-      separatorBuilder: (BuildContext context, int index) => SizedBox(height: 10),
+      separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 10),
     );
   }
 }
 
+/// Loading effect for small technique list.
 class _LoadingEffect extends StatelessWidget {
+  const _LoadingEffect();
+
   @override
   Widget build(BuildContext context) {
     return ShimmerEffect(
@@ -174,12 +181,12 @@ class _LoadingEffect extends StatelessWidget {
                               children: [
                                 Row(
                                   children: [
-                                    Icon(
+                                    const Icon(
                                       Icons.timelapse_rounded,
                                       color: BASE_COLOR,
                                       size: 15,
                                     ),
-                                    SizedBox(width: 4),
+                                    const SizedBox(width: 4),
                                     Container(
                                       height: 12,
                                       width: 50,
@@ -187,15 +194,15 @@ class _LoadingEffect extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 Row(
                                   children: [
-                                    Icon(
+                                    const Icon(
                                       Icons.attach_money_rounded,
                                       color: BASE_COLOR,
                                       size: 15,
                                     ),
-                                    SizedBox(width: 4),
+                                    const SizedBox(width: 4),
                                     Container(
                                       height: 12,
                                       width: 50,
@@ -206,7 +213,7 @@ class _LoadingEffect extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Icon(
+                          const Icon(
                             Icons.favorite_border_rounded,
                             color: Colors.redAccent,
                             size: 20,

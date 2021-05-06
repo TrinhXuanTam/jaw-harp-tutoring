@@ -43,52 +43,6 @@ class TechniqueDTO extends Technique {
           accompanyingText: accompanyingText,
         );
 
-  /// Creates a copy of this object with given params.
-  TechniqueDTO copyWith({
-    String? id,
-    Optional<DateTime>? datePublished,
-    Optional<String>? productId,
-    ProductInfoDTO? productInfo,
-    CategoryDTO? category,
-    TechniqueDifficulty? difficulty,
-    Optional<MediaDTO>? thumbnail,
-    Optional<MediaDTO>? video,
-    String? title,
-    String? description,
-    String? accompanyingText,
-  }) {
-    return TechniqueDTO(
-      id: id != null ? id : this.id,
-      datePublished: datePublished != null ? datePublished : this.datePublished,
-      productId: productId != null ? productId : this.productId,
-      productInfo: productInfo != null ? productInfo : this.productInfo,
-      category: category != null ? category : this.category,
-      difficulty: difficulty != null ? difficulty : this.difficulty,
-      thumbnail: thumbnail != null ? thumbnail : this.thumbnail,
-      video: video != null ? video : this.video,
-      title: title != null ? title : this.title,
-      description: description != null ? description : this.description,
-      accompanyingText: accompanyingText != null ? accompanyingText : this.accompanyingText,
-    );
-  }
-
-  /// Create technique from entity.
-  factory TechniqueDTO.fromEntity(Technique technique) {
-    return TechniqueDTO(
-      id: technique.id,
-      datePublished: technique.datePublished,
-      productId: technique.productId,
-      productInfo: ProductInfoDTO.fromEntity(technique.productInfo),
-      category: CategoryDTO.fromEntity(technique.category),
-      difficulty: technique.difficulty,
-      thumbnail: technique.thumbnail.map((e) => MediaDTO.fromEntity(e)),
-      video: technique.video.map((e) => MediaDTO.fromEntity(e)),
-      title: technique.title,
-      description: technique.description,
-      accompanyingText: technique.accompanyingText,
-    );
-  }
-
   /// Extract localized data from Firestore document.
   static Map<String, dynamic> _getLocalizedData(DocumentSnapshot documentSnapshot) {
     final languageCode = FirebaseAuth.instance.languageCode;
@@ -114,11 +68,57 @@ class TechniqueDTO extends Technique {
     }
   }
 
+  /// Creates a copy of this object with given params.
+  TechniqueDTO copyWith({
+    String? id,
+    Optional<DateTime>? datePublished,
+    Optional<String>? productId,
+    ProductInfoDTO? productInfo,
+    CategoryDTO? category,
+    TechniqueDifficulty? difficulty,
+    Optional<MediaDTO>? thumbnail,
+    Optional<MediaDTO>? video,
+    String? title,
+    String? description,
+    String? accompanyingText,
+  }) {
+    return TechniqueDTO(
+      id: id ?? this.id,
+      datePublished: datePublished ?? this.datePublished,
+      productId: productId ?? this.productId,
+      productInfo: productInfo ?? this.productInfo,
+      category: category ?? this.category,
+      difficulty: difficulty ?? this.difficulty,
+      thumbnail: thumbnail ?? this.thumbnail,
+      video: video ?? this.video,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      accompanyingText: accompanyingText ?? this.accompanyingText,
+    );
+  }
+
+  /// Create technique from entity.
+  factory TechniqueDTO.fromEntity(Technique technique) {
+    return TechniqueDTO(
+      id: technique.id,
+      datePublished: technique.datePublished,
+      productId: technique.productId,
+      productInfo: ProductInfoDTO.fromEntity(technique.productInfo),
+      category: CategoryDTO.fromEntity(technique.category),
+      difficulty: technique.difficulty,
+      thumbnail: technique.thumbnail.map((t) => MediaDTO.fromEntity(t)),
+      video: technique.video.map((v) => MediaDTO.fromEntity(v)),
+      title: technique.title,
+      description: technique.description,
+      accompanyingText: technique.accompanyingText,
+    );
+  }
+
   /// Create technique from Firestore document.
   static Future<TechniqueDTO> fromFirestore(DocumentSnapshot documentSnapshot) async {
+    final firestoreConnection = FirebaseFirestore.instance;
     final localizedData = _getLocalizedData(documentSnapshot);
-    final difficulty = TechniqueDifficulty.values[documentSnapshot["difficulty"]];
-    final category = await CategoryDTO.fromFirestore(await FirebaseFirestore.instance.collection('categories').doc(documentSnapshot["category"]).get());
+    final category = await CategoryDTO.fromFirestore(await firestoreConnection.collection('categories').doc(documentSnapshot["category"]).get());
     final productId = Optional<String>.ofNullable(documentSnapshot["productId"]);
 
     return TechniqueDTO(
@@ -127,7 +127,7 @@ class TechniqueDTO extends Technique {
       productId: productId,
       productInfo: await ProductInfoDTO.fromProductId(productId.toNullable()),
       category: category,
-      difficulty: difficulty,
+      difficulty: TechniqueDifficulty.values[documentSnapshot["difficulty"]],
       thumbnail: await _getDownloadUrl(documentSnapshot, "thumbnail"),
       video: await _getDownloadUrl(documentSnapshot, "video"),
       title: localizedData["title"],

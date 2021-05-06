@@ -3,14 +3,14 @@ import 'package:jews_harp/core/constants/test_environments.dart';
 import 'package:jews_harp/core/errors/validation_error.dart';
 import 'package:jews_harp/core/regex.dart';
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
-import 'package:jews_harp/features/auth/domain/repository_interfaces/user_repository_interface.dart';
+import 'package:jews_harp/features/auth/domain/facade_interfaces/user_facade_interface.dart';
 
 /// Sing in user with email and password use case
 @LazySingleton(env: [Environment.prod, Environment.dev, EMAIL_AUTHENTICATION_TEST_ENV])
 class EmailAuthentication {
-  final IUserAuthRepository _userRepository;
+  final IUserAuthFacade _userAuthFacade;
 
-  EmailAuthentication(this._userRepository);
+  EmailAuthentication(this._userAuthFacade);
 
   Future<User> call(String email, String password) async {
     // Email and password must not be empty.
@@ -22,6 +22,6 @@ class EmailAuthentication {
     // Check password format.
     if (!RegExMatchers.password.hasMatch(password)) throw ValidationError("Invalid password format!");
 
-    return _userRepository.getUserWithEmailAndPassword(email, password);
+    return _userAuthFacade.signInWithEmailAndPassword(email, password);
   }
 }

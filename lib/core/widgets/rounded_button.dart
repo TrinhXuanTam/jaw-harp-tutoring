@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
+import 'package:jews_harp/core/l10n.dart';
 
+/// Generic rounded button.
 class RoundedButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
@@ -18,6 +20,7 @@ class RoundedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final l10n = AppLocalizations.of(context);
 
     return Container(
       width: size.width * 0.8,
@@ -27,13 +30,13 @@ class RoundedButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(29),
             side: BorderSide(color: this.borderColor),
           ),
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
           backgroundColor: this.color,
         ),
         onPressed: this.onPressed,
         child: FittedBox(
           child: Text(
-            this.text,
+            l10n.translate(this.text),
             style: TextStyle(color: this.textColor),
           ),
         ),

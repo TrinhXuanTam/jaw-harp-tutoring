@@ -9,6 +9,7 @@ class VideoFullScreenModeScreenArgs {
   VideoFullScreenModeScreenArgs(this.controller);
 }
 
+/// Video full screen mode.
 class VideoFullScreenModeScreen extends StatelessWidget {
   final VideoPlayerController controller;
 

@@ -9,6 +9,8 @@ import 'package:jews_harp/features/auth/presentation/BLoCs/email_form/email_form
 
 /// Email authentication form
 class EmailAuthenticationForm extends StatelessWidget {
+  const EmailAuthenticationForm();
+
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l10n = AppLocalizations.of(context);
@@ -25,12 +27,12 @@ class EmailAuthenticationForm extends StatelessWidget {
                 placeholderText: l10n.translate("Email"),
                 controller: bloc.state.emailController,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               RoundedPasswordField(
                 placeholderText: l10n.translate("Password"),
                 controller: bloc.state.passwordController,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               RoundedButton(
                 text: l10n.translate("Sign In"),
                 onPressed: () {

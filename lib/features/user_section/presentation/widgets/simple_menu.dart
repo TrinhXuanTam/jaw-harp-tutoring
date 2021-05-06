@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
+import 'package:jews_harp/core/l10n.dart';
 
+/// Menu widget.
 class SimpleMenu extends StatelessWidget {
   final String title;
   final List<SimpleMenuItem> items;
@@ -13,6 +15,8 @@ class SimpleMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Container(
       width: double.infinity,
       child: Column(
@@ -21,8 +25,8 @@ class SimpleMenu extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              this.title,
-              style: TextStyle(
+              l10n.translate(this.title),
+              style: const TextStyle(
                 color: Colors.grey,
                 fontSize: 13,
               ),
@@ -39,10 +43,10 @@ class SimpleMenu extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        item.title,
-                        style: TextStyle(fontSize: 16),
+                        l10n.translate(item.title),
+                        style: const TextStyle(fontSize: 16),
                       ),
-                      Icon(
+                      const Icon(
                         Icons.navigate_next_rounded,
                         color: BASE_COLOR,
                       ),

@@ -3,6 +3,7 @@ import 'package:jews_harp/core/constants/locations.dart';
 
 import '../l10n.dart';
 
+/// Big Google auth button.
 class GoogleButton extends StatelessWidget {
   final String text;
   final VoidCallback onPress;

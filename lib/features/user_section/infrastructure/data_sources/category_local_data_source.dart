@@ -8,12 +8,14 @@ class CategoryLocalDataSource {
   /// Cache all categories if loaded all at once
   List<CategoryDTO>? _cachedAllCategories;
 
-  void cacheAllCategories(Iterable<CategoryDTO> categories) => _cachedAllCategories = categories.toList();
+  /// Cache all categories at once.
+  void cacheAllCategories(Iterable<CategoryDTO> categories) {
+    _cachedAllCategories = categories.toList();
+  }
 
   /// Get all cached categories.
   Iterable<CategoryDTO> getCachedAllCategories() {
     if (_cachedAllCategories == null) throw NotFoundError("All categories were not cached!");
-
     return _cachedAllCategories!;
   }
 }

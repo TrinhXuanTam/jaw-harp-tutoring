@@ -6,6 +6,8 @@ import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/features/auth/presentation/BLoCs/splash_screen/splash_screen_bloc.dart';
 
+/// Splash screen.
+/// First screen that appears when launching the app.
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -14,13 +16,14 @@ class SplashScreen extends StatelessWidget {
     return BlocProvider<SplashScreenBloc>(
       lazy: false,
       create: (ctx) {
+        // Initialize the app in the background.
         final languageCode = AppLocalizations.of(context).locale.languageCode;
         return serviceLocator<SplashScreenBloc>()..add(SplashScreenDisplayedEvent(languageCode));
       },
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           // render linear gradient background
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             colors: [
               BASE_COLOR,
               BASE_COLOR_LIGHT,

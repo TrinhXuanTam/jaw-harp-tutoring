@@ -3,7 +3,10 @@ import 'package:optional/optional.dart';
 
 /// Visual media entity of lectures and categories.
 class Media extends Equatable {
+  /// File path on the physical device.
   final Optional<String> url;
+
+  /// Url for remote access.
   final Optional<String> filePath;
 
   Media({

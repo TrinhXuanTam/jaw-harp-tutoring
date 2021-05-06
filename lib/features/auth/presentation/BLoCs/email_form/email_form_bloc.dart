@@ -12,7 +12,6 @@ import 'package:jews_harp/features/auth/presentation/BLoCs/auth_state/auth_bloc.
 import 'package:meta/meta.dart';
 
 part 'email_form_event.dart';
-
 part 'email_form_state.dart';
 
 /// Email form state management.

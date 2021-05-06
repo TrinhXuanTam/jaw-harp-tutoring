@@ -22,6 +22,7 @@ class LinkAuthProvidersScreenArgs {
   });
 }
 
+/// Link two existing accounts screen.
 class LinkAuthProvidersScreen extends StatelessWidget {
   final Set<String> providers;
   final LinkProvidersState initialState;
@@ -57,13 +58,12 @@ class LinkAuthProvidersScreen extends StatelessWidget {
             Builder(
               builder: (ctx) {
                 final bloc = BlocProvider.of<LinkProvidersBloc>(ctx);
-
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       l10n.translate("Link Accounts"),
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
                     ),
                     Container(
                       width: size.width * 0.7,
@@ -71,7 +71,7 @@ class LinkAuthProvidersScreen extends StatelessWidget {
                         textAlign: TextAlign.justify,
                         text: TextSpan(
                           text: l10n.translate("You've already used"),
-                          style: TextStyle(fontSize: 15, color: Colors.black),
+                          style: const TextStyle(fontSize: 15, color: Colors.black),
                           children: [
                             TextSpan(text: " ${bloc.state.email} ", style: TextStyle(fontWeight: FontWeight.bold)),
                             TextSpan(text: l10n.translate("in the past. Please sign in with that account to continue:")),
@@ -79,7 +79,7 @@ class LinkAuthProvidersScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     if (providers.contains(EMAIL_PROVIDER))
                       Column(
                         children: [
@@ -87,12 +87,12 @@ class LinkAuthProvidersScreen extends StatelessWidget {
                             placeholderText: l10n.translate("Password"),
                             controller: bloc.state.passwordController,
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           RoundedButton(
                             text: l10n.translate("Continue"),
                             onPressed: () => bloc.add(EmailAuthenticationEvent()),
                           ),
-                          if (providers.length > 1) TextDivider(text: "OR"),
+                          if (providers.length > 1) const TextDivider(text: "OR"),
                         ],
                       ),
                     if (providers.contains(FACEBOOK_PROVIDER))
@@ -102,7 +102,7 @@ class LinkAuthProvidersScreen extends StatelessWidget {
                             text: "Continue with Facebook",
                             onPress: () => bloc.add(FacebookAuthenticationEvent()),
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                         ],
                       ),
                     if (providers.contains(GOOGLE_PROVIDER))

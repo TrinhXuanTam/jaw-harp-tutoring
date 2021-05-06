@@ -4,6 +4,7 @@ import 'package:jews_harp/core/constants/theme.dart';
 
 import '../l10n.dart';
 
+/// Line divider with text.
 class TextDivider extends StatelessWidget {
   final String text;
 
@@ -29,7 +30,7 @@ class TextDivider extends StatelessWidget {
     return Container(
       width: size.width * 0.8,
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 10),
+        margin: const EdgeInsets.symmetric(vertical: 10),
         child: Row(
           children: [
             _renderLine(),
@@ -37,7 +38,7 @@ class TextDivider extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Text(
                 l10n.translate(this.text),
-                style: TextStyle(
+                style: const TextStyle(
                   color: BASE_COLOR,
                   fontWeight: FontWeight.w600,
                 ),

@@ -20,7 +20,6 @@ import 'package:meta/meta.dart';
 import 'package:optional/optional.dart';
 
 part 'technique_form_event.dart';
-
 part 'technique_form_state.dart';
 
 /// Default state if no preloaded data have been given.
@@ -43,6 +42,7 @@ class TechniqueFormBloc extends Bloc<TechniqueFormEvent, TechniqueFormState> {
   final UpdateTechnique _updateTechnique;
   final GetAllCategories _getAllCategories;
   final ErrorBloc _errorBloc;
+  List<Category>? cachedCategories;
 
   TechniqueFormBloc(
     @factoryParam TechniqueFormState? initialState,
@@ -52,8 +52,15 @@ class TechniqueFormBloc extends Bloc<TechniqueFormEvent, TechniqueFormState> {
     this._errorBloc,
   ) : super(initialState ?? _defaultFormState);
 
-  /// Load all categories form the database.
-  Future<List<Category>> get categories => _getAllCategories().then((iterable) => iterable.toList());
+  /// Load all categories form the database and cache them.
+  Future<List<Category>> get categories async {
+    if (cachedCategories == null) {
+      final categories = await _getAllCategories();
+      cachedCategories = categories.toList();
+    }
+
+    return cachedCategories!;
+  }
 
   @override
   Stream<TechniqueFormState> mapEventToState(
@@ -80,34 +87,37 @@ class TechniqueFormBloc extends Bloc<TechniqueFormEvent, TechniqueFormState> {
       // Check for required fields.
       if ((state.isPaid && state.idController.text.isEmpty) || categoryId == null || difficulty == null) {
         _errorBloc.add(UserErrorEvent("Failed to create technique", "Please fill out all fields!"));
+      } else {
+        yield state.copyWith(formSubmitted: true);
+
+        late final Optional<Media>? thumbnail;
+        late final Optional<Media>? video;
+
+        // Check if thumbnail has changed.
+        if (event.technique.thumbnail.toNullable() == state.thumbnailController.image)
+          thumbnail = null;
+        else
+          thumbnail = Optional.ofNullable(state.thumbnailController.image);
+
+        // Check if video has changed.
+        if (event.technique.video.toNullable() == state.videoController.video)
+          video = null;
+        else
+          video = Optional.ofNullable(state.videoController.video);
+
+        // Update technique.
+        final technique = await _updateTechnique(
+          id: event.technique.id,
+          productId: state.isPaid ? Optional.of(state.idController.text) : Optional.empty(),
+          categoryId: categoryId,
+          difficulty: difficulty,
+          localizedData: state.localizedData.entries.map((e) => e.value),
+          thumbnail: thumbnail,
+          video: video,
+        );
+
+        yield state.copyWith(success: technique);
       }
-
-      late final Optional<Media>? thumbnail;
-      late final Optional<Media>? video;
-
-      // Check if thumbnail has changed.
-      if (event.technique.thumbnail.toNullable() == state.thumbnailController.image)
-        thumbnail = null;
-      else
-        thumbnail = Optional.ofNullable(state.thumbnailController.image);
-
-      // Check if video has changed.
-      if (event.technique.video.toNullable() == state.videoController.video)
-        video = null;
-      else
-        video = Optional.ofNullable(state.videoController.video);
-
-      // Update technique.
-      final technique = await _updateTechnique(
-        event.technique.id,
-        productId: state.isPaid ? Optional.of(state.idController.text) : Optional.empty(),
-        categoryId: state.categoryController.value,
-        difficulty: state.difficultyController.value,
-        localizedData: state.localizedData.entries.map((e) => e.value),
-        thumbnail: thumbnail,
-        video: video,
-      );
-      yield state.copyWith(success: technique);
     } else if (event is CreateTechniqueEvent) {
       final categoryId = state.categoryController.value;
       final difficulty = state.difficultyController.value;
@@ -115,19 +125,21 @@ class TechniqueFormBloc extends Bloc<TechniqueFormEvent, TechniqueFormState> {
       // Check for required fields.
       if ((state.isPaid && state.idController.text.isEmpty) || categoryId == null || difficulty == null) {
         _errorBloc.add(UserErrorEvent("Failed to create technique", "Please fill out all fields!"));
+      } else {
+        yield state.copyWith(formSubmitted: true);
+
+        // Create techinque.
+        final technique = await _createTechnique(
+          productId: state.isPaid ? Optional.ofNullable(state.idController.text) : Optional.empty(),
+          categoryId: categoryId,
+          difficulty: difficulty,
+          localizedData: state.localizedData.entries.map((e) => e.value),
+          thumbnail: Optional.ofNullable(state.thumbnailController.image),
+          video: Optional.ofNullable(state.videoController.video),
+        );
+
+        yield state.copyWith(success: technique);
       }
-
-      // Create techinque.
-      final technique = await _createTechnique(
-        productId: state.isPaid ? Optional.ofNullable(state.idController.text) : Optional.empty(),
-        categoryId: categoryId!,
-        difficulty: difficulty!,
-        localizedData: state.localizedData.entries.map((e) => e.value),
-        thumbnail: Optional.ofNullable(state.thumbnailController.image),
-        video: Optional.ofNullable(state.videoController.video),
-      );
-
-      yield state.copyWith(success: technique);
     }
   }
 }

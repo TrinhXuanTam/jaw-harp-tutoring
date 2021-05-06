@@ -5,6 +5,7 @@ import 'package:jews_harp/core/constants/theme.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/rounded_input_field_container.dart';
 
+/// Rounded password field with hide and show function.
 class RoundedPasswordField extends StatelessWidget {
   final String placeholderText;
   final Color color;
@@ -31,7 +32,7 @@ class RoundedPasswordField extends StatelessWidget {
               controller: this.controller,
               obscureText: state is InputHiddenState,
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(top: 16),
+                contentPadding: const EdgeInsets.only(top: 16),
                 icon: Icon(
                   Icons.lock,
                   color: this.iconColor,
@@ -42,9 +43,7 @@ class RoundedPasswordField extends StatelessWidget {
                     color: this.iconColor,
                   ),
                   onPressed: () {
-                    BlocProvider.of<HideFieldInputBloc>(ctx).add(
-                      ToggleVisibilityEvent(),
-                    );
+                    BlocProvider.of<HideFieldInputBloc>(ctx).add(ToggleVisibilityEvent());
                   },
                 ),
                 hintText: this.placeholderText,

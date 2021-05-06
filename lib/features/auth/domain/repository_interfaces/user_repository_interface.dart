@@ -1,19 +1,14 @@
 import 'package:jews_harp/features/auth/domain/entities/user.dart';
 
+/// Repository to fetch and store authentication related data.
 abstract class IUserAuthRepository {
-  Future<User> createUser(String name, String email, String password);
+  /// Get the currently signed in user.
+  Future<User?> getCurrentUser(bool connectionAvailable);
 
-  Future<User?> getCurrentUser();
-
+  /// User data is cached locally.
+  /// This function reloads the user data if called.
   Future<User> reloadUser();
 
-  Future<User> getUserWithEmailAndPassword(String email, String password);
-
-  Future<User> getUserWithFacebook();
-
-  Future<User> getUserWithGoogle();
-
+  /// Get identity providers of given [email].
   Future<Set<String>> getAuthProviders(String email);
-
-  Future<void> setLocale(String languageCode);
 }
