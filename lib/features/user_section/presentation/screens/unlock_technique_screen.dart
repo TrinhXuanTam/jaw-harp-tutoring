@@ -43,14 +43,12 @@ class UnlockTechniqueScreen extends StatelessWidget {
                         alignment: Alignment.center,
                         children: [
                           Positioned.fill(child: thumbnail),
-                          Container(
-                            child: ClipRect(
-                              child: BackdropFilter(
-                                filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-                                child: Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(color: Colors.grey.withOpacity(0.1)),
-                                ),
+                          ClipRect(
+                            child: BackdropFilter(
+                              filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
+                              child: Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(color: Colors.grey.withOpacity(0.1)),
                               ),
                             ),
                           ),

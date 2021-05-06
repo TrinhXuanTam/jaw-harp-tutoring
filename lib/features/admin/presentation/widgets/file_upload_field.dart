@@ -64,8 +64,8 @@ class FileUploadField extends StatelessWidget {
                 ),
               ),
               child: const Padding(
-                padding: const EdgeInsets.all(10),
-                child: const Icon(
+                padding: EdgeInsets.all(10),
+                child: Icon(
                   Icons.cloud_upload,
                   color: BASE_COLOR_VERY_LIGHT,
                 ),

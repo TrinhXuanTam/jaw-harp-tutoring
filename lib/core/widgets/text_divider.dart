@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/theme.dart';
-
-import '../l10n.dart';
+import 'package:jews_harp/core/l10n.dart';
 
 /// Line divider with text.
 class TextDivider extends StatelessWidget {

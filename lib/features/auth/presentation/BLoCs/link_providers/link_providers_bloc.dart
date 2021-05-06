@@ -43,7 +43,7 @@ class LinkProvidersBloc extends Bloc<LinkProvidersEvent, LinkProvidersState> {
   ) : super(initialState!);
 
   /// Check if two accounts have the same email and link accounts.
-  void _checkEmail(User user) async {
+  Future<void> _checkEmail(User user) async {
     if (user.email == state.email) {
       // The linked account.
       late final User newUser;

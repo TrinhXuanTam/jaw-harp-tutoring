@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jews_harp/core/constants/locations.dart';
-
-import '../l10n.dart';
+import 'package:jews_harp/core/l10n.dart';
 
 /// Big Facebook auth button.
 class FacebookButton extends StatelessWidget {

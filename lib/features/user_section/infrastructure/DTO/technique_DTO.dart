@@ -12,9 +12,16 @@ import 'package:optional/optional_internal.dart';
 
 /// Technique DTO
 class TechniqueDTO extends Technique {
+  @override
   final CategoryDTO category;
+
+  @override
   final Optional<MediaDTO> thumbnail;
+
+  @override
   final Optional<MediaDTO> video;
+
+  @override
   final ProductInfoDTO productInfo;
 
   const TechniqueDTO({

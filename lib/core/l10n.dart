@@ -2,9 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:jews_harp/core/constants/language_codes.dart';
 import 'package:jews_harp/core/errors/language_not_supported_error.dart';
-
-import 'constants/language_codes.dart';
 
 class Language {
   final String code;

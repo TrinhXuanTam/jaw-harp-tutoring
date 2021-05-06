@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:jews_harp/core/widgets/text_divider.dart';
 import 'package:jews_harp/core/widgets/title_with_subtitle.dart';
+import 'package:jews_harp/features/auth/presentation/widgets/email_authentication_form.dart';
+import 'package:jews_harp/features/auth/presentation/widgets/forgot_password_text.dart';
 import 'package:jews_harp/features/auth/presentation/widgets/third_party_authentication.dart';
-
-import 'email_authentication_form.dart';
-import 'forgot_password_text.dart';
 
 /// Authentication methods.
 class AuthMethods extends StatelessWidget {

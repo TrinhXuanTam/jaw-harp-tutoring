@@ -6,10 +6,9 @@ import 'package:jews_harp/core/l10n.dart';
 import 'package:jews_harp/core/widgets/centered_stack.dart';
 import 'package:jews_harp/core/widgets/no_internet_widget.dart';
 import 'package:jews_harp/features/user_section/presentation/BLoCs/most_recent_techniques/most_recent_techniques_bloc.dart';
+import 'package:jews_harp/features/user_section/presentation/widgets/category_side_scroll.dart';
 import 'package:jews_harp/features/user_section/presentation/widgets/technique_side_scroll.dart';
 import 'package:jews_harp/features/user_section/utils.dart';
-
-import 'category_side_scroll.dart';
 
 /// Home page were technique lists are displayed.
 class HomePageBody extends StatelessWidget {

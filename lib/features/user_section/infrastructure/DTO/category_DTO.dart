@@ -9,6 +9,7 @@ import 'package:optional/optional.dart';
 
 /// Category DTO
 class CategoryDTO extends Category {
+  @override
   final Optional<MediaDTO> thumbnail;
 
   const CategoryDTO({

@@ -115,9 +115,7 @@ class CategoryDetail extends StatelessWidget {
                     child: StaggeredGridView.countBuilder(
                       crossAxisCount: 2,
                       itemCount: this.techniqueIds.length,
-                      itemBuilder: (BuildContext context, int index) => Container(
-                        child: SmallTechniqueCard(techniqueId: this.techniqueIds[index]),
-                      ),
+                      itemBuilder: (BuildContext context, int index) => SmallTechniqueCard(techniqueId: this.techniqueIds[index]),
                       staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
                       mainAxisSpacing: 20,
                       crossAxisSpacing: 20,

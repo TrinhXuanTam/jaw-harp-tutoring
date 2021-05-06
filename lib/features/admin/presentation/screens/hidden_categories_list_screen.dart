@@ -4,10 +4,9 @@ import 'package:jews_harp/core/constants/routes.dart';
 import 'package:jews_harp/core/dependency_injection/service_locator.dart';
 import 'package:jews_harp/core/widgets/loading_wrapper.dart';
 import 'package:jews_harp/features/admin/presentation/BLoCs/hidden_categories/hidden_categories_bloc.dart';
+import 'package:jews_harp/features/admin/presentation/screens/category_detail_screen.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/admin_scaffold.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/scrollable_category_list.dart';
-
-import 'category_detail_screen.dart';
 
 /// Screen that displays a list of hidden categories.
 class HiddenCategoriesListScreen extends StatelessWidget {

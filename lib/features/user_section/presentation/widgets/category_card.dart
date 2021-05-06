@@ -11,9 +11,8 @@ class CategoryCard extends StatelessWidget {
   final String description;
   final List<String> techniqueIds;
   final Optional<Media> thumbnail;
-  final double? width;
 
-  factory CategoryCard.fromCategory({required Category category, double? width}) {
+  factory CategoryCard.fromCategory({required Category category}) {
     return CategoryCard(
       title: category.title,
       description: category.description,
@@ -28,7 +27,6 @@ class CategoryCard extends StatelessWidget {
     required this.description,
     required this.techniqueIds,
     this.thumbnail = const Optional.empty(),
-    this.width,
   }) : super(key: key);
 
   @override
@@ -102,7 +100,7 @@ class CategoryCardLoading extends StatelessWidget {
       width: 100,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(19),
-        color: Colors.grey[300]!,
+        color: Colors.grey[300],
       ),
       margin: const EdgeInsets.only(right: 10),
       padding: const EdgeInsets.all(15),

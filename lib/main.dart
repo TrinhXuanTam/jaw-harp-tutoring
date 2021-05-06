@@ -26,18 +26,17 @@ import 'package:jews_harp/features/auth/presentation/screens/password_reset_scre
 import 'package:jews_harp/features/auth/presentation/screens/password_reset_sent_screen.dart';
 import 'package:jews_harp/features/user_section/presentation/screens/technique_screen.dart';
 import 'package:jews_harp/features/user_section/presentation/screens/user_section.dart';
-
-import 'core/constants/routes.dart';
-import 'core/constants/settings.dart';
-import 'core/dependency_injection/service_locator.dart';
-import 'core/l10n.dart';
-import 'features/auth/presentation/BLoCs/auth_state/auth_bloc.dart';
-import 'features/auth/presentation/screens/authentication_screen.dart';
-import 'features/auth/presentation/screens/email_verification_screen.dart';
-import 'features/auth/presentation/screens/sign_up_screen.dart';
-import 'features/auth/presentation/screens/splash_screen.dart';
-import 'features/user_section/presentation/BLoCs/technique_local_storage/technique_local_storage_bloc.dart';
-import 'features/user_section/presentation/screens/video_full_screen_mode_screen.dart';
+import 'package:jews_harp/core/constants/routes.dart';
+import 'package:jews_harp/core/constants/settings.dart';
+import 'package:jews_harp/core/dependency_injection/service_locator.dart';
+import 'package:jews_harp/core/l10n.dart';
+import 'package:jews_harp/features/auth/presentation/BLoCs/auth_state/auth_bloc.dart';
+import 'package:jews_harp/features/auth/presentation/screens/authentication_screen.dart';
+import 'package:jews_harp/features/auth/presentation/screens/email_verification_screen.dart';
+import 'package:jews_harp/features/auth/presentation/screens/sign_up_screen.dart';
+import 'package:jews_harp/features/auth/presentation/screens/splash_screen.dart';
+import 'package:jews_harp/features/user_section/presentation/BLoCs/technique_local_storage/technique_local_storage_bloc.dart';
+import 'package:jews_harp/features/user_section/presentation/screens/video_full_screen_mode_screen.dart';
 
 /// Driver function
 Future<void> main() async {
@@ -64,7 +63,7 @@ Future<void> main() async {
 
 /// Entry point of the application
 class _EntryPoint extends StatelessWidget {
-  final GlobalKey<NavigatorState> globalKey = new GlobalKey();
+  final GlobalKey<NavigatorState> globalKey = GlobalKey();
 
   /// Sign in user if user data is cached.
   void _authBlocListener(BuildContext context, AuthState state) {
@@ -138,7 +137,7 @@ class _EntryPoint extends StatelessWidget {
             }
             return supportedLocales.first;
           },
-          theme: new ThemeData(
+          theme: ThemeData(
             accentColor: BASE_COLOR,
             textTheme: Theme.of(context).textTheme.apply(
                   bodyColor: Colors.black,

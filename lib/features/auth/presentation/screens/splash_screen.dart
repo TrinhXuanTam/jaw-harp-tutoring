@@ -23,7 +23,7 @@ class SplashScreen extends StatelessWidget {
       child: Container(
         decoration: const BoxDecoration(
           // render linear gradient background
-          gradient: const LinearGradient(
+          gradient: LinearGradient(
             colors: [
               BASE_COLOR,
               BASE_COLOR_LIGHT,

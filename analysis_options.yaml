@@ -1,0 +1,49 @@
+analyzer:
+  errors:
+    missing_required_param: warning
+    missing_return: warning
+    todo: warning
+    unnecessary_null_comparison: warning
+
+linter:
+  rules:
+    - always_declare_return_types
+    - always_use_package_imports
+    - annotate_overrides
+    - avoid_annotating_with_dynamic
+    - avoid_catching_errors
+    - avoid_empty_else
+    - avoid_init_to_null
+    - avoid_print
+    - avoid_relative_lib_imports
+    - avoid_renaming_method_parameters
+    - avoid_return_types_on_setters
+    - avoid_unnecessary_containers
+    - avoid_unused_constructor_parameters
+    - await_only_futures
+    - camel_case_extensions
+    - camel_case_types
+    - cancel_subscriptions
+    - cast_nullable_to_non_nullable
+    - close_sinks
+    - empty_constructor_bodies
+    - empty_statements
+    - exhaustive_cases
+    - hash_and_equals
+    - unnecessary_await_in_return
+    - unnecessary_brace_in_string_interps
+    - unnecessary_const
+    - unnecessary_getters_setters
+    - unnecessary_new
+    - unnecessary_null_aware_assignments
+    - unnecessary_null_checks
+    - unnecessary_null_in_if_null_operators
+    - unnecessary_nullable_for_final_variable_declarations
+    - unnecessary_overrides
+    - unnecessary_parenthesis
+    - unnecessary_statements
+    - unnecessary_string_escapes
+    - unnecessary_string_interpolations
+    - unrelated_type_equality_checks
+    - valid_regexps
+    - void_checks

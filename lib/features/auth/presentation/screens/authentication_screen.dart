@@ -9,14 +9,14 @@ class AuthenticationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       resizeToAvoidBottomInset: false,
-      body: const CenteredStack(
+      body: CenteredStack(
         children: [
           // Authentication methods.
-          const AuthMethods(),
+          AuthMethods(),
           // Sign up text.
-          const Positioned(
+          Positioned(
             bottom: 20,
-            child: const SignUpText(),
+            child: SignUpText(),
           ),
         ],
       ),

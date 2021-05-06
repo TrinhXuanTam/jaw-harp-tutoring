@@ -19,13 +19,11 @@ class TechniqueSideScroll extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (this.title != null)
-          Container(
-            child: Text(
-              this.title!,
-              style: const TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 16,
-              ),
+          Text(
+            this.title!,
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
             ),
           ),
         Container(

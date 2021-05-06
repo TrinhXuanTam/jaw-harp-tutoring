@@ -1,9 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
+import 'package:jews_harp/features/user_section/domain/entities/media.dart';
 import 'package:jews_harp/features/user_section/domain/entities/product_info.dart';
 import 'package:optional/optional.dart';
-
-import 'media.dart';
 
 /// Technique (lecture) entity.
 class Technique extends Equatable {

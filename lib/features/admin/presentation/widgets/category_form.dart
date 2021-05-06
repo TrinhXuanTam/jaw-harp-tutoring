@@ -7,10 +7,9 @@ import 'package:jews_harp/features/admin/presentation/BLoCs/category_form/catego
 import 'package:jews_harp/features/admin/presentation/screens/category_localization_add_screen.dart';
 import 'package:jews_harp/features/admin/presentation/screens/category_localization_edit_screen.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/file_upload_field.dart';
+import 'package:jews_harp/features/admin/presentation/widgets/language_side_scroll_grid.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/localization_field.dart';
 import 'package:jews_harp/features/admin/presentation/widgets/toggle_switch_field.dart';
-
-import 'language_side_scroll_grid.dart';
 
 /// Category form.
 class CategoryForm extends StatelessWidget {
