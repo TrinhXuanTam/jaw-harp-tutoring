@@ -32,3 +32,8 @@ const GET_VISIBLE_CATEGORIES_TEST_ENV = "get_visible_categories_test_env";
 const GET_TECHNIQUES_BY_CATEGORY_TEST_ENV = "get_techniques_by_category_test_env";
 const PICK_IMAGE_TEST_ENV = "pick_image_test_env";
 const PICK_VIDEO_TEST_ENV = "pick_video_test_env";
+
+// User section
+const USER_SECTION_FACADE_TEST_ENV = "user_section_facade_test_env";
+const CATEGORY_REPOSITORY_TEST_ENV = "category_repository_test_env";
+const TECHNIQUE_REPOSITORY_TEST_ENV = "technique_repository_test_env";

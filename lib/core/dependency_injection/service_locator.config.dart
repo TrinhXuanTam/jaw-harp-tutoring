@@ -184,6 +184,7 @@ const String _prod = 'prod';
 const String _dev = 'dev';
 const String _category_admin_repository_test_env =
     'category_admin_repository_test_env';
+const String _category_repository_test_env = 'category_repository_test_env';
 const String _technique_admin_repository_test_env =
     'technique_admin_repository_test_env';
 const String _user_auth_facade_test_env = 'user_auth_facade_test_env';
@@ -222,6 +223,8 @@ const String _get_techniques_by_category_test_env =
 const String _get_visible_categories_test_env =
     'get_visible_categories_test_env';
 const String _google_authentication_test_env = 'google_authentication_test_env';
+const String _technique_repository_test_env = 'technique_repository_test_env';
+const String _user_section_facade_test_env = 'user_section_facade_test_env';
 // ignore_for_file: unnecessary_lambdas
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -254,7 +257,7 @@ _i1.GetIt initGetIt(_i1.GetIt get,
   gh.lazySingleton<_i13.ICategoryRepository>(
       () => _i14.CategoryRepository(get<_i9.FirebaseUserSectionDataSource>(),
           get<_i3.CategoryLocalDataSource>()),
-      registerFor: {_prod});
+      registerFor: {_prod, _category_repository_test_env});
   gh.lazySingleton<_i15.ITechniqueAdminRepository>(
       () => _i16.TechniqueAdminRepository(get<_i6.FirebaseAdminDataSource>()),
       registerFor: {_prod, _technique_admin_repository_test_env});
@@ -385,11 +388,11 @@ _i1.GetIt initGetIt(_i1.GetIt get,
   gh.lazySingleton<_i59.ITechniqueRepository>(
       () => _i60.TechniqueRepository(get<_i9.FirebaseUserSectionDataSource>(),
           get<_i33.TechniqueLocalDataSource>()),
-      registerFor: {_prod});
+      registerFor: {_prod, _technique_repository_test_env});
   gh.lazySingleton<_i61.IUserSectionFacade>(
       () => _i62.UserSectionFacade(
           get<_i25.PaymentService>(), get<_i9.FirebaseUserSectionDataSource>()),
-      registerFor: {_prod});
+      registerFor: {_prod, _user_section_facade_test_env});
   gh.factoryParam<_i63.LinkProvidersBloc, _i63.LinkProvidersState?, dynamic>(
       (initialState, _) => _i63.LinkProvidersBloc(
           initialState,

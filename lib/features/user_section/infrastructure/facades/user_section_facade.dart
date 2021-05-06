@@ -1,11 +1,12 @@
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/constants/test_environments.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
 import 'package:jews_harp/features/user_section/domain/facade_interfaces/user_section_facade.dart';
 import 'package:jews_harp/features/user_section/infrastructure/data_sources/firebase_user_section_data_source.dart';
 import 'package:jews_harp/features/user_section/infrastructure/external_services/payment_service.dart';
 
 /// User section facade for handling user related login.
-@LazySingleton(as: IUserSectionFacade, env: [Environment.prod])
+@LazySingleton(as: IUserSectionFacade, env: [Environment.prod, USER_SECTION_FACADE_TEST_ENV])
 class UserSectionFacade extends IUserSectionFacade {
   /// Service for making purchases.
   final PaymentService _paymentService;

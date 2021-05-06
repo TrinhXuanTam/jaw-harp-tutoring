@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:jews_harp/core/constants/test_environments.dart';
 import 'package:jews_harp/core/errors/NotFoundError.dart';
 import 'package:jews_harp/features/user_section/domain/entities/category.dart';
 import 'package:jews_harp/features/user_section/domain/entities/technique.dart';
@@ -9,7 +10,7 @@ import 'package:jews_harp/features/user_section/infrastructure/data_sources/tech
 
 /// Technique repository that tries load data from cache first.
 /// If not present, data gets loaded from Firstore and cached afterwards.
-@LazySingleton(as: ITechniqueRepository, env: [Environment.prod])
+@LazySingleton(as: ITechniqueRepository, env: [Environment.prod, TECHNIQUE_REPOSITORY_TEST_ENV])
 class TechniqueRepository extends ITechniqueRepository {
   /// Firebase data source.
   final FirebaseUserSectionDataSource _firebaseUserSectionDataSource;
