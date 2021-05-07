@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>709047755574-ffq1lnkvpfns88eiof8slee8d00tirg5.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.709047755574-ffq1lnkvpfns88eiof8slee8d00tirg5</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>709047755574-qarbgkg641g4cphucvl2rbnhoh0628cf.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBUoLgX5JwKY_Km3y1sCrCVfXQ29LIdt14</string>
+	<key>GCM_SENDER_ID</key>
+	<string>709047755574</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>cvut.fit.trinhxu2.jewsHarp</string>
+	<key>PROJECT_ID</key>
+	<string>jew-s-harp-app</string>
+	<key>STORAGE_BUCKET</key>
+	<string>jew-s-harp-app.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:709047755574:ios:3f59d42e54d32c0a154997</string>
+</dict>
+</plist>
