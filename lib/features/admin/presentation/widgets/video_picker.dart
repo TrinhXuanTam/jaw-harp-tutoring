@@ -25,77 +25,83 @@ class VideoPicker extends StatelessWidget {
     if (state is VideoPickedState)
       return GestureDetector(
         onTap: () => Navigator.pushNamed(context, VIDEO_FULL_SCREEN_SCREEN_ROUTE, arguments: VideoFullScreenModeScreenArgs(state.playableVideo)),
-        child: AspectRatio(
-          aspectRatio: 16 / 9,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Container(
-                width: double.infinity,
-                child: FittedBox(
-                  fit: BoxFit.cover,
-                  child: SizedBox(
-                    width: state.playableVideo.value.size.width,
-                    height: state.playableVideo.value.size.height,
-                    child: AspectRatio(
-                      aspectRatio: state.playableVideo.value.aspectRatio,
-                      child: VideoPlayer(state.playableVideo),
+        child: RoundedInputField(
+          padding: EdgeInsets.zero,
+          child: AspectRatio(
+            aspectRatio: 16 / 9,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  width: double.infinity,
+                  child: FittedBox(
+                    fit: BoxFit.cover,
+                    child: SizedBox(
+                      width: state.playableVideo.value.size.width,
+                      height: state.playableVideo.value.size.height,
+                      child: AspectRatio(
+                        aspectRatio: state.playableVideo.value.aspectRatio,
+                        child: VideoPlayer(state.playableVideo),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                width: double.infinity,
-                height: double.infinity,
-                color: BASE_COLOR_VERY_LIGHT.withAlpha(170),
-                child: const Icon(
-                  Icons.play_circle_outline_rounded,
-                  size: 90,
-                  color: BASE_COLOR,
-                ),
-              ),
-              Positioned(
-                top: 10,
-                right: 10,
-                child: GestureDetector(
-                  onTap: () => BlocProvider.of<VideoPickerBloc>(context).add(RemoveVideoEvent()),
+                Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  color: BASE_COLOR_VERY_LIGHT.withAlpha(170),
                   child: const Icon(
-                    Icons.close_rounded,
+                    Icons.play_circle_outline_rounded,
+                    size: 90,
                     color: BASE_COLOR,
-                    size: 30,
                   ),
                 ),
-              ),
-            ],
+                Positioned(
+                  top: 10,
+                  right: 10,
+                  child: GestureDetector(
+                    onTap: () => BlocProvider.of<VideoPickerBloc>(context).add(RemoveVideoEvent()),
+                    child: const Icon(
+                      Icons.close_rounded,
+                      color: BASE_COLOR,
+                      size: 30,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );
     else
       return GestureDetector(
         onTap: () => BlocProvider.of<VideoPickerBloc>(context).add(PickVideoEvent()),
-        child: AspectRatio(
-          aspectRatio: 16 / 9,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                children: [
-                  const Icon(
-                    Icons.movie_outlined,
-                    color: BASE_COLOR,
-                    size: 70,
-                  ),
-                  Text(
-                    l10n.translate("Choose Video"),
-                    style: const TextStyle(
+        child: RoundedInputField(
+          padding: EdgeInsets.zero,
+          child: AspectRatio(
+            aspectRatio: 16 / 9,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    const Icon(
+                      Icons.movie_outlined,
                       color: BASE_COLOR,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
+                      size: 70,
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    Text(
+                      l10n.translate("Choose Video"),
+                      style: const TextStyle(
+                        color: BASE_COLOR,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       );
@@ -115,12 +121,9 @@ class VideoPicker extends StatelessWidget {
         bloc.add(UploadScreenLoadedEvent(video: controller.video));
         return bloc;
       },
-      child: RoundedInputField(
-        padding: EdgeInsets.zero,
-        child: BlocConsumer<VideoPickerBloc, VideoPickerState>(
-          listener: _videoPickerBlocListener,
-          builder: _videoPickerBlocBuilder,
-        ),
+      child: BlocConsumer<VideoPickerBloc, VideoPickerState>(
+        listener: _videoPickerBlocListener,
+        builder: _videoPickerBlocBuilder,
       ),
     );
   }

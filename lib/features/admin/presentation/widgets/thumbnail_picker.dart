@@ -28,59 +28,65 @@ class ThumbnailPicker extends StatelessWidget {
     final l10n = AppLocalizations.of(ctx);
 
     if (state is ImagePickedState)
-      return AspectRatio(
-        aspectRatio: 16 / 9,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Container(
-              width: double.infinity,
-              child: FittedBox(
-                fit: BoxFit.cover,
-                child: getImageFromMedia(state.image),
-              ),
-            ),
-            Positioned(
-              top: 10,
-              right: 10,
-              child: GestureDetector(
-                onTap: () => BlocProvider.of<ThumbnailPickerBloc>(ctx).add(RemoveImageEvent()),
-                child: const Icon(
-                  Icons.close_rounded,
-                  color: BASE_COLOR,
-                  size: 30,
+      return RoundedInputField(
+        padding: EdgeInsets.zero,
+        child: AspectRatio(
+          aspectRatio: 16 / 9,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                width: double.infinity,
+                child: FittedBox(
+                  fit: BoxFit.cover,
+                  child: getImageFromMedia(state.image),
                 ),
               ),
-            ),
-          ],
+              Positioned(
+                top: 10,
+                right: 10,
+                child: GestureDetector(
+                  onTap: () => BlocProvider.of<ThumbnailPickerBloc>(ctx).add(RemoveImageEvent()),
+                  child: const Icon(
+                    Icons.close_rounded,
+                    color: BASE_COLOR,
+                    size: 30,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       );
     else
       return GestureDetector(
         onTap: () => BlocProvider.of<ThumbnailPickerBloc>(ctx).add(PickImageEvent()),
-        child: AspectRatio(
-          aspectRatio: 16 / 9,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                children: [
-                  const Icon(
-                    Icons.image_outlined,
-                    color: BASE_COLOR,
-                    size: 70,
-                  ),
-                  Text(
-                    l10n.translate("Choose Thumbnail"),
-                    style: const TextStyle(
+        child: RoundedInputField(
+          padding: EdgeInsets.zero,
+          child: AspectRatio(
+            aspectRatio: 16 / 9,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    const Icon(
+                      Icons.image_outlined,
                       color: BASE_COLOR,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
+                      size: 70,
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    Text(
+                      l10n.translate("Choose Thumbnail"),
+                      style: const TextStyle(
+                        color: BASE_COLOR,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       );
@@ -94,12 +100,9 @@ class ThumbnailPicker extends StatelessWidget {
         bloc.add(UploadScreenLoadedEvent(image: controller.image));
         return bloc;
       },
-      child: RoundedInputField(
-        padding: EdgeInsets.zero,
-        child: BlocConsumer<ThumbnailPickerBloc, ThumbnailPickerState>(
-          listener: _thumbnailPickerBlocListener,
-          builder: _thumbnailPickerBlocBuilder,
-        ),
+      child: BlocConsumer<ThumbnailPickerBloc, ThumbnailPickerState>(
+        listener: _thumbnailPickerBlocListener,
+        builder: _thumbnailPickerBlocBuilder,
       ),
     );
   }

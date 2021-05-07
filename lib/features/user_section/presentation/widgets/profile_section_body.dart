@@ -81,6 +81,7 @@ class ProfileSectionBody extends StatelessWidget {
                     SimpleMenuItem("Sign out", () => BlocProvider.of<AuthBloc>(context).add(UserSignOutEvent())),
                   ],
                 ),
+                SizedBox(height: 20),
               ],
             ),
           ),

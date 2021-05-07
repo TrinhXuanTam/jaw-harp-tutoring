@@ -87,7 +87,7 @@ class TechniqueLocalDataSource {
 
     // Download the video if it exists.
     if (technique.video.isPresent && technique.video.value.url.isPresent) {
-      videoPath = "$savePath/video";
+      videoPath = "$savePath/video.mp4";
       await dio.download(technique.video.value.url.value, videoPath);
     }
 
