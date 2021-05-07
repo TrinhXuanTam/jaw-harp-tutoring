@@ -38,7 +38,7 @@ class FirebaseAdminDataSource {
     );
 
     // Upload the video to cloud storage
-    final task = await media.child(techniqueId).child("video").putFile(mediaInfo!.file!);
+    final task = await media.child(techniqueId).child("video.mp4").putFile(mediaInfo!.file!);
     final url = await task.ref.getDownloadURL();
 
     return url;
