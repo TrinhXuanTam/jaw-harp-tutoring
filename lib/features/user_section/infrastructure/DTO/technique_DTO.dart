@@ -136,7 +136,7 @@ class TechniqueDTO extends Technique {
       category: category,
       difficulty: TechniqueDifficulty.values[documentSnapshot["difficulty"]],
       thumbnail: await _getDownloadUrl(documentSnapshot, "thumbnail"),
-      video: await _getDownloadUrl(documentSnapshot, "video"),
+      video: await _getDownloadUrl(documentSnapshot, "video.mp4"),
       title: localizedData["title"],
       description: localizedData["description"],
       accompanyingText: localizedData["accompanyingText"],

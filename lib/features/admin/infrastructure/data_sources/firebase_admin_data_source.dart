@@ -34,7 +34,7 @@ class FirebaseAdminDataSource {
     // Compress video
     final mediaInfo = await VideoCompress.compressVideo(
       path,
-      quality: VideoQuality.DefaultQuality,
+      quality: VideoQuality.LowQuality,
     );
 
     // Upload the video to cloud storage
@@ -202,7 +202,7 @@ class FirebaseAdminDataSource {
     if (video != null) {
       if (video.isEmpty) {
         // Delete the old video.
-        await _deleteFile(_techniqueMedia, id, "video");
+        await _deleteFile(_techniqueMedia, id, "video.mp4");
       } else if (video.isPresent && video.value.filePath.isPresent) {
         // Upload the new one.
         await _uploadVideo(_techniqueMedia, id, video.value.filePath.value);
