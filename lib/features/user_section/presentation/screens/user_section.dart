@@ -101,7 +101,8 @@ class UserSection extends StatelessWidget {
                   icon: Icon(Icons.play_circle_outline_rounded),
                   title: Text(
                     l10n.translate("My Techniques"),
-                    style: const TextStyle(fontSize: 12),
+                    softWrap: false,
+                    style: const TextStyle(fontSize: 11.5),
                   ),
                   activeColor: Colors.white,
                   textAlign: TextAlign.center,
