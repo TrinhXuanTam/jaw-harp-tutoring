@@ -5,10 +5,13 @@
     <key>CFBundleURLTypes</key>
     <array>
       <dict>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
         <key>CFBundleURLSchemes</key>
-        <array>
+    	<array>
           <string>fb745303249523049</string>
-        </array>
+    	  <string>com.googleusercontent.apps.709047755574-ffq1lnkvpfns88eiof8slee8d00tirg5</string>
+    	</array>
       </dict>
     </array>
     <key>FacebookAppID</key>
