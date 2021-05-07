@@ -102,7 +102,7 @@ class UserSection extends StatelessWidget {
                   title: Text(
                     l10n.translate("My Techniques"),
                     softWrap: false,
-                    style: const TextStyle(fontSize: 11.5),
+                    style: const TextStyle(fontSize: 11),
                   ),
                   activeColor: Colors.white,
                   textAlign: TextAlign.center,
