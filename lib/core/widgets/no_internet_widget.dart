@@ -12,6 +12,7 @@ class NoInternetWidget extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
 
     return Container(
+      color: Colors.white,
       width: double.infinity,
       height: double.infinity,
       child: Column(

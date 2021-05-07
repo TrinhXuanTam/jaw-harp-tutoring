@@ -96,7 +96,7 @@ class FirebaseAuthService {
       // Send verification email and create new Firestore document if user is new.
       if (firebaseCredential.additionalUserInfo!.isNewUser) {
         final user = firebaseCredential.user!;
-        user.updateProfile(photoURL: "https://graph.facebook.com/${accessToken.userId}/picture?width=500&access_token=${accessToken.token}");
+        user.updateProfile(photoURL: "https://graph.facebook.com/${accessToken.userId}/picture?type=large&access_token=${accessToken.token}");
         user.sendEmailVerification();
         _addUserToFirestore(user);
       }
@@ -196,7 +196,7 @@ class FirebaseAuthService {
     final fbUser = _auth.currentUser!;
 
     // Update profile picture.
-    await fbUser.updateProfile(photoURL: "https://graph.facebook.com/${accessToken.userId}/picture?width=500&access_token=${accessToken.token}");
+    await fbUser.updateProfile(photoURL: "https://graph.facebook.com/${accessToken.userId}/picture?type=large&access_token=${accessToken.token}");
 
     return _loadUserWithFirebaseData(fbUser);
   }
