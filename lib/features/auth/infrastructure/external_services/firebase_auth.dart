@@ -112,10 +112,7 @@ class FirebaseAuthService {
   Future<UserDTO> signInWithGoogle() async {
     try {
       // Initialize google sign in object.
-      final GoogleSignIn googleLogin = GoogleSignIn(scopes: [
-        "https://www.googleapis.com/_auth/userinfo.email",
-        "https://www.googleapis.com/_auth/userinfo.profile",
-      ]);
+      final GoogleSignIn googleLogin = GoogleSignIn();
 
       // Redirect to Google sign in page.
       final GoogleSignInAccount? googleSignInAccount = await googleLogin.signIn();
